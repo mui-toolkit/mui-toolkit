@@ -7,26 +7,24 @@ import Home from './Home';
 import Learn from './Learn';
 import Login from './Login';
 import Signup from './Signup';
-import Start from './Start';
-import ColorPicker from './ColorPicker';
+import Build from './build/Build';
 
 function App() {
-	return (
-		<ThemeProvider theme={theme}>
-			<BrowserRouter>
-				<Header />
-				<Switch>
-					<Route exact path="/" component={Home} />
-					<Route exact path="/learn" component={Learn} />
-					<Route exact path="/start" component={Start} />
-					<Route exact path="/login" component={Login} />
-					<Route exact path="/logout" component={() => <div>logout</div>} />
-					<Route exact path="/signup" component={Signup} />
-					<Route exact path="/design" component={ColorPicker} />
-				</Switch>
-			</BrowserRouter>
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/learn' component={Learn} />
+          <Route exact path='/design' component={Build} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/logout' component={() => <div>logout</div>} />
+          <Route exact path='/signup' component={Signup} />
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
+  );
 }
 
 export default App;

@@ -30,7 +30,7 @@ export default function Header(props) {
     <React.Fragment>
       <AppBar position='fixed'>
         <Toolbar>
-          <Typography variant='h4'>MUI Toolkit</Typography>
+          <Typography variant='h4'>MUI Theme Builder</Typography>
           <Tabs className={classes.tabContainer}>
             <Tab className={classes.tab} component={Link} to='/' label='Home' />
             <Tab
@@ -42,7 +42,7 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              to='/start'
+              to='/design'
               label='Start'
             />
             <Tab
