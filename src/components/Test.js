@@ -15,7 +15,7 @@ import "firebase/firestore";
 import "firebase/storage";
 import firebaseConfig from "../config/firebase";
 
-//TESTING FIREBASE DATABASE CONNECTION HERE, WE WILL MOVE THIS
+//TESTING FIREBASE DATABASE CONNECTION HERE, WE WILL MOVE THIS TO A CENTRALIZED LOCATION
 firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
