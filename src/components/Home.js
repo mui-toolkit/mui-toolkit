@@ -9,8 +9,9 @@ import { unaryExpression } from '@babel/types';
 
 //TESTING FIREBASE DATABASE CONNECTION HERE, WE WILL MOVE THIS
 firebase.initializeApp(firebaseConfig);
+// const auth = auth;
 export const db = firebase.firestore();
-db.settings({ timestampsInSnapshots: true });
+// db.settings({ timestampsInSnapshots: true });
 
 export default function Home() {
   const user = {};

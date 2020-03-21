@@ -17,7 +17,20 @@ export function Signup(props) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  // console.log('e', email, 'p', password);
+  // firebase
+  //   .auth()
+  //   .createUserWithEmailAndPassword(email, password)
+  //   .then(cred => {
+  //     console.log('cred', cred);
+  //   })
+  //   .catch(function(error) {
+  //     console.log('error in signup', error.code);
+  //     // Handle Errors here.
+  //     // var errorCode = error.code;
+  //     // var errorMessage = error.message;
+  //     // ...
+  //   });
   const handleSubmit = e => {
     e.preventDefault();
     console.log('in handle submit');
@@ -30,6 +43,7 @@ export function Signup(props) {
       })
       .catch(function(error) {
         console.log('error in signup', error.code);
+        // Handle Errors here.
         // var errorCode = error.code;
         // var errorMessage = error.message;
         // ...
@@ -68,46 +82,44 @@ export function Signup(props) {
             <Typography variant="h2">Sign Up</Typography>
           </Grid>
         </Grid>
-        <form onSubmit={handleSubmit}>
-          <Grid
-            item
-            container
-            style={{ maxWidth: '20em' }}
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item container justify="center">
-              <TextField
-                label="First Name"
-                id="firstName"
-                value={firstName}
-                onChange={e => setFirstName(e.target.value)}
-              />
-              <TextField
-                label="Last Name"
-                id="lastName"
-                value={lastName}
-                onChange={e => setLastName(e.target.value)}
-              />
-              <TextField
-                label="Email"
-                id="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
-              <TextField
-                type="password"
-                label="Password"
-                id="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
-            </Grid>
-            <Button>
-              <input type="submit" value="Sign Up" />
-            </Button>
+        <Grid
+          item
+          container
+          style={{ maxWidth: '20em' }}
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item container justify="center">
+            <TextField
+              label="First Name"
+              id="firstName"
+              value={firstName}
+              onChange={e => setFirstName(e.target.value)}
+            />
+            <TextField
+              label="Last Name"
+              id="lastName"
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+            />
+            <TextField
+              label="Email"
+              id="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+            <TextField
+              type="password"
+              label="Password"
+              id="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
           </Grid>
-        </form>
+          <Button>
+            <input type="submit" value="Sign Up" onSubmit={handleSubmit} />
+          </Button>
+        </Grid>
       </Grid>
     </Grid>
   );
