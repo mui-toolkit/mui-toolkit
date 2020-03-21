@@ -2,8 +2,9 @@ import React from 'react';
 import saveAs from 'file-saver';
 import { createMuiTheme } from '@material-ui/core/styles';
 
-export const Download = () => {
-  const defaultTheme = createMuiTheme();
+export const Download = props => {
+  // const defaultTheme = createMuiTheme();
+  console.log('PROPS IN DOWNLOAD', props);
 
   const download = async theme => {
     const fileToSave = new Blob([JSON.stringify(theme)], {
@@ -14,7 +15,7 @@ export const Download = () => {
   };
   return (
     <div>
-      <button onClick={() => download(defaultTheme)}>DOWNLOAD</button>
+      <button onClick={() => download(props.customTheme)}>DOWNLOAD</button>
     </div>
   );
 };
