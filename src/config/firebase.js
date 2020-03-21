@@ -1,6 +1,7 @@
-// import firebase from "firebase/app";
-// import firebase from "firebase/firestore";
-// import "firebase/auth";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/storage";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -13,11 +14,11 @@ const firebaseConfig = {
   appId: "1:910262165775:web:51ef7d1564b7a52ae05e7a",
   measurementId: "G-C66ZLEV61P"
 };
-// firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 // firebase.firestore();
-// const db = firebase.firestore();
-// db.settings({ timestampsInSnapshots: true });
+export const db = firebase.firestore();
+db.settings({ timestampsInSnapshots: true });
 
-// export default { firebase, db };
+export default { firebase, db };
 
-export default firebaseConfig;
+// export default firebaseConfig;

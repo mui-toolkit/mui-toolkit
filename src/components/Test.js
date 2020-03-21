@@ -6,28 +6,14 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 // import { GridListTile } from '@material-ui/core';
-// import firebase from "firebase-app";
-// import db from "./Home";
 
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/storage";
-import firebaseConfig from "../config/firebase";
-
-//TESTING FIREBASE DATABASE CONNECTION HERE, WE WILL MOVE THIS TO A CENTRALIZED LOCATION
-firebase.initializeApp(firebaseConfig);
-export const db = firebase.firestore();
-db.settings({ timestampsInSnapshots: true });
+import { firebase, db } from "../config/firebase";
 
 const useStyles = makeStyles(theme => ({}));
 
 export function Test(props) {
-  // const palette = {}; // import this from build
   const [primary, setPrimary] = useState("");
   const [secondary, setSecondary] = useState("");
-  // palette.primary = primary;
-  // palette.secondary = secondary;
   const palette = { primary, secondary };
 
   console.log("Test -> palette", palette);
