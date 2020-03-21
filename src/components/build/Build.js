@@ -46,8 +46,10 @@ export const Build = () => {
 
   let customTheme = {
     palette: {
-      primary: `${color}`,
-      secondary: `${secondaryColor}`,
+      primary: {
+        main: `${color}`,
+      },
+      secondary: { main: `${secondaryColor}` },
     },
   };
 
