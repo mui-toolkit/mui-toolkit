@@ -7,6 +7,7 @@ import saveAs from 'file-saver';
 import { makeStyles } from '@material-ui/styles';
 import { Typography } from '@material-ui/core';
 import Download from '../Download';
+import { firebase, db } from '../../config/firebase';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,6 +56,17 @@ export const Build = () => {
 
   const sendPalette = () => {
     console.log(customTheme);
+    alert('New Customized Theme Sent');
+    let newTheme = db
+      .collection('CustomizedThemes')
+      .add({
+        // palette: customTheme.palette
+        customTheme,
+      })
+      .then(ref => {
+        console.log('Added Theme ', ref.id);
+      });
+    console.log('Test -> newTheme', newTheme);
   };
 
   return (
