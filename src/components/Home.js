@@ -7,6 +7,7 @@ import "firebase/storage";
 import firebaseConfig from "../config/firebase";
 import { unaryExpression } from "@babel/types";
 
+//TESTING FIREBASE DATABASE CONNECTION HERE, WE WILL MOVE THIS
 firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
