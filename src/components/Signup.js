@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 // import { GridListTile } from '@material-ui/core';
 import firebase from "firebase-app";
+// import db from "./Home";
 
 const useStyles = makeStyles(theme => ({}));
 
@@ -18,17 +19,18 @@ export function Signup(props) {
   const handleSubmit = e => {
     e.preventDefault();
 
-    let newUser = db
-      .collection("Users")
-      .add({
-        firstName,
-        lastName,
-        email,
-        password
-      })
-      .then(ref => {
-        console.log("Added User ", ref.id);
-      });
+    // let newUser = db
+    //   .collection("Users")
+    //   .add({
+    //     firstName,
+    //     lastName,
+    //     email,
+    //     password
+    //   })
+    //   .then(ref => {
+    //     console.log("Added User ", ref.id);
+    //   });
+    // console.log("Signup -> newUser", newUser);
   };
 
   return (
