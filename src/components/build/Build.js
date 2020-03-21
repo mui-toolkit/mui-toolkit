@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { SketchPicker } from 'react-color';
-import PreviewAppBar from './preview/PreviewAppBar';
+import PreviewAppBar from '../preview/PreviewAppBar';
 import Palette from './Palette';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import saveAs from 'file-saver';
 import { makeStyles } from '@material-ui/styles';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const ColorPicker = () => {
+export const Build = () => {
   const [color, setColor] = useState('');
   const [secondaryColor, setSecondaryColor] = useState('');
   const classes = useStyles();
@@ -46,24 +46,28 @@ export const ColorPicker = () => {
   return (
     <section className={classes.root}>
       <Grid container>
-        <div className={classes.selector}>
-          <Palette color={color} />
-          <SketchPicker color={color} onChange={changeColor} />
-          <SketchPicker
-            color={secondaryColor}
-            onChange={changeSecondaryColor}
+        <Grid item className={classes.selector}>
+          {/* Theme Builder Start */}
+          <Palette
+            color={color}
+            secondaryColor={secondaryColor}
+            changeColor={changeColor}
+            changeSecondaryColor={changeSecondaryColor}
           />
-        </div>
-        <Grid container className={classes.container}>
+          {/* Theme Builder End */}
+        </Grid>
+        <Grid item className={classes.container}>
+          {/* Preview Start */}
           <PreviewAppBar
             secondaryColor={secondaryColor}
             color={color}
             className={classes.container}
           />
+          {/* Preview End */}
         </Grid>
       </Grid>
     </section>
   );
 };
 
-export default ColorPicker;
+export default Build;

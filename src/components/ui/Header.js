@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   toolBarMargin: {
@@ -30,7 +31,14 @@ export default function Header(props) {
     <React.Fragment>
       <AppBar position='fixed'>
         <Toolbar>
-          <Typography variant='h4'>MUI Toolkit</Typography>
+          <Button
+            component={Link}
+            to='/'
+            disableRipple
+            // className={classes.logoContainer}
+          >
+            MUI Theme Builder
+          </Button>
           <Tabs className={classes.tabContainer}>
             <Tab className={classes.tab} component={Link} to='/' label='Home' />
             <Tab
@@ -42,7 +50,7 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              to='/start'
+              to='/design'
               label='Start'
             />
             <Tab

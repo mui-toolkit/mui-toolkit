@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/storage";
-import firebaseConfig from "../config/firebase";
-import { unaryExpression } from "@babel/types";
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/storage';
+import firebaseConfig from '../config/firebase';
+import { unaryExpression } from '@babel/types';
 
 //TESTING FIREBASE DATABASE CONNECTION HERE, WE WILL MOVE THIS
 firebase.initializeApp(firebaseConfig);
@@ -15,7 +15,7 @@ db.settings({ timestampsInSnapshots: true });
 export default function Home() {
   const user = {};
   const theme = {};
-  db.collection("Users")
+  db.collection('Users')
     .get()
     .then(snapshot => {
       snapshot.docs.forEach(doc => {
@@ -27,10 +27,10 @@ export default function Home() {
       });
     })
     .catch(err => {
-      console.log("Error getting documents", err);
+      console.log('Error getting documents', err);
     });
 
-  db.collection("CustomizedThemes")
+  db.collection('CustomizedThemes')
     .get()
     .then(snapshot => {
       snapshot.docs.forEach(doc => {
@@ -40,9 +40,9 @@ export default function Home() {
       });
     })
     .catch(err => {
-      console.log("Error getting documents", err);
+      console.log('Error getting documents', err);
     });
-  console.log("Home -> user", user, theme);
+  console.log('Home -> user', user, theme);
 
   return <div>Home</div>;
 }

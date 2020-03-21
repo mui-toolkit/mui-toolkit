@@ -40,7 +40,7 @@ export default function PreviewAppBar(props) {
       <Paper className={classes.container}>
         <AppBar position={'sticky'} className={classes.primary}>
           <Toolbar>
-            <Typography>Primary Color AppBar</Typography>
+            <Typography>AppBar (Primary Color)</Typography>
           </Toolbar>
         </AppBar>
         <br />
