@@ -24,9 +24,9 @@ export default function Home() {
         user.email = doc.data().email;
         user.themes = doc.data().themes;
       });
-    });
-    .catch((err) => {
-      console.log('Error getting documents', err);
+    })
+    .catch(err => {
+      console.log("Error getting documents", err);
     });
 
   db.collection("CustomizedThemes")
@@ -37,9 +37,9 @@ export default function Home() {
         theme.palette = doc.data().palette;
         theme.typography = doc.data().typography;
       });
-    });
-    .catch((err) => {
-      console.log('Error getting documents', err);
+    })
+    .catch(err => {
+      console.log("Error getting documents", err);
     });
   console.log("Home -> user", user, theme);
 
