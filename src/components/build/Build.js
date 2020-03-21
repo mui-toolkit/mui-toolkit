@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import saveAs from 'file-saver';
 import { makeStyles } from '@material-ui/styles';
 import { Typography } from '@material-ui/core';
+import Download from '../Download';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,6 +44,17 @@ export const Build = () => {
     setSecondaryColor(secondaryColor.hex);
   };
 
+  let customTheme = {
+    palette: {
+      primary: `${color}`,
+      secondary: `${secondaryColor}`,
+    },
+  };
+
+  const sendPalette = () => {
+    console.log(customTheme);
+  };
+
   return (
     <section className={classes.root}>
       <Grid container>
@@ -63,6 +75,8 @@ export const Build = () => {
             color={color}
             className={classes.container}
           />
+          <button onClick={sendPalette}>SEND</button>
+          <Download customTheme={customTheme} />
           {/* Preview End */}
         </Grid>
       </Grid>
