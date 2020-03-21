@@ -14,11 +14,12 @@ const useStyles = makeStyles(theme => ({}));
 export function Test(props) {
   const [primary, setPrimary] = useState("");
   const [secondary, setSecondary] = useState("");
+
   const palette = { primary, secondary };
 
   console.log("Test -> palette", palette);
 
-  /// TESTING CONNECTION TO CUSTOMIZEDTHEMES
+  /// TESTING CONNECTION TO CUSTOMIZEDTHEMES and USERS collections
   // db.collection("CustomizedThemes")
   //   .get()
   //   .then(snapshot => {
@@ -31,6 +32,21 @@ export function Test(props) {
   //   .catch(err => {
   //     console.log("Error getting documents", err);
   //   });
+  // db.collection('Users')
+  //   .get()
+  //   .then(snapshot => {
+  //     snapshot.docs.forEach(doc => {
+  //       // console.log("Home -> doc", doc.data().firstName);
+  //       user.firstName = doc.data().firstName;
+  //       user.lastName = doc.data().lastName;
+  //       user.email = doc.data().email;
+  //       user.themes = doc.data().themes;
+  //     });
+  //   })
+  //   .catch(err => {
+  //     console.log('Error getting documents', err);
+  //   });
+
   ///
 
   const handleSubmit = e => {
