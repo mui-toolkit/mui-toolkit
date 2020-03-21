@@ -36,13 +36,6 @@ export default function Home() {
       });
     });
   console.log("Home -> user", user, theme);
-  // return !user ? (
-  //   <div>Home</div>
-  // ) : (
-  //   <div>
-  //     Home
-  //     {user.firstName}
-  //   </div>
-  // );
+
   return <div>Home</div>;
 }
