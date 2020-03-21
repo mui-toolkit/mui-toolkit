@@ -1,4 +1,4 @@
-// import firebase from "firebase/app";
+import firebase from 'firebase/app';
 // import firebase from "firebase/firestore";
 import 'firebase/auth';
 
@@ -13,11 +13,8 @@ const firebaseConfig = {
   appId: '1:910262165775:web:51ef7d1564b7a52ae05e7a',
   measurementId: 'G-C66ZLEV61P'
 };
-// firebase.initializeApp(firebaseConfig);
-// firebase.firestore();
-// const db = firebase.firestore();
-// db.settings({ timestampsInSnapshots: true });
+firebase.initializeApp(firebaseConfig);
+export const db = firebase.firestore();
+db.settings({ timestampsInSnapshots: true });
 
-// export default { firebase, db };
-
-export default firebaseConfig;
+export default { firebase, db };
