@@ -8,7 +8,7 @@ import Learn from "./Learn";
 import Login from "./Login";
 import Signup from "./Signup";
 import Build from "./build/Build";
-import Test from "./Test";
+import UsersThemes from "./UsersThemes";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/logout" component={() => <div>logout</div>} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/test" component={Test} />
+          <Route exact path="/usersthemes" component={UsersThemes} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

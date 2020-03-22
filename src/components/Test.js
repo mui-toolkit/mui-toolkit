@@ -1,92 +1,189 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Input from "@material-ui/core/Input";
-import { GridListTile } from "@material-ui/core";
+// import React, { useState, useEffect } from "react";
 // import { makeStyles } from "@material-ui/core/styles";
-// import Table from "@material-ui/core/Table";
-// import TableBody from "@material-ui/core/TableBody";
-// import TableCell from "@material-ui/core/TableCell";
-// import TableContainer from "@material-ui/core/TableContainer";
-// import TableHead from "@material-ui/core/TableHead";
-// import TableRow from "@material-ui/core/TableRow";
-// import Paper from "@material-ui/core/Paper";
+// import Grid from "@material-ui/core/Grid";
+// import Typography from "@material-ui/core/Typography";
+// import Button from "@material-ui/core/Button";
+// import TextField from "@material-ui/core/TextField";
+// import Input from "@material-ui/core/Input";
+// import { GridListTile } from "@material-ui/core";
 
-import { firebase, db } from "../config/firebase";
+// import { firebase, db } from "../config/firebase";
 
-const useStyles = makeStyles(theme => ({}));
+// const useStyles = makeStyles(theme => ({}));
 
-function Test(props) {
-  // const [primary, setPrimary] = useState("");
-  // const [secondary, setSecondary] = useState("");
-  // const palette = { primary, secondary };
-  // console.log("Test -> palette", palette);
+// export const Test = () => {
+//   const [themes, setThemes] = useState([]);
+//   const [foundUser, setUser] = useState("");
 
-  const foundUser = db
-    .collection("Users")
-    .doc("eqrjmljO97c2ccaabw9K")
-    .get()
-    .then(doc => {
-      console.log(doc.data());
-    })
-    .catch(err => {
-      console.log("Error getting document", err);
-    });
-  console.log("Test -> users", foundUser);
+//   const userThemes = [];
+//   useEffect(() => {
+//     const response = async () => {
+//       await db
+//         .collection("Users")
+//         .doc("eqrjmljO97c2ccaabw9K")
+//         .get()
+//         .then(doc => {
+//           console.log(doc.data());
 
-  // const [user, updateUser] = useState({});
-  // const [email, setEmail] = useState("");
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [themes, setThemes] = useState([]);
+//           let foundUser = doc.data();
+//           Promise.all(
+//             foundUser.themes.map(theme => {
+//               db.collection("CustomizedThemes")
+//                 .doc(`${theme.Id}`)
+//                 .get()
+//                 .then(theme => {
+//                   console.log("themes", theme.data());
+//                   userThemes.push(theme.data());
+//                   console.log("response -> userThemes", userThemes);
+//                   setThemes([...userThemes]);
+//                 });
+//             })
+//           );
+//           setUser(doc.data());
+//         })
+//         .catch(err => {
+//           console.log("Error getting document", err);
+//         });
+//     };
+//     response();
+//   }, []);
 
-  // const useStyles = makeStyles({
-  //   table: {
-  //     minWidth: 650
-  //   }
-  // });
-  // const classes = useStyles();
+//   console.log("Test -> foundUser", foundUser, foundUser.themes);
+//   console.log("THEMES", themes);
+//   return themes.length === 0 ? (
+//     <div>no themes found!</div>
+//   ) : (
+//     <div>
+//       <h3>
+//         {foundUser.firstName} {foundUser.lastName}
+//       </h3>
+//       {themes.map(theme => {
+//         return (
+//           <div key={theme.id}>
+//             <li>{JSON.stringify(theme)}</li>
+//           </div>
+//         );
+//       })}
+//     </div>
+//   );
+// };
+// export default Test;
+// const fetchThemes = async () => {
+//   return await db
+//     .collection("CustomizedThemes")
+//     .get()
+//     .then(snapshot => {
+//       snapshot.docs.map(doc => {
+//         return {
+//           ...doc.data(),
+//           id: doc.id,
+//           ref: doc.ref
+//         };
+//       });
+//     });
+// };
 
-  return !foundUser ? (
-    <div>No User found!</div>
-  ) : (
-    <div>
-      <ul>
-        {foundUser.themes.map(theme => {
-          return <li>theme.Id</li>;
-        })}
-      </ul>
-    </div>
-    // <TableContainer component={Paper}>
-    //   <Table className={classes.table} aria-label="simple table">
-    //     <TableHead>
-    //       <TableRow>
-    //         <TableCell>Customized Themes</TableCell>
-    //         <TableCell align="right">Id</TableCell>
-    //         <TableCell align="right">Palette Primary</TableCell>
-    //         <TableCell align="right">Palette Secondary</TableCell>
-    //       </TableRow>
-    //     </TableHead>
-    //     <TableBody>
-    //       {foundUser.themes.map((theme, i) => (
-    //         <TableRow key={i}>
-    //           <TableCell component="th" scope="row">
-    //             Some Name
-    //             {/* {row.name} */}
-    //           </TableCell>
-    //           <TableCell align="right">{theme.id}</TableCell>
-    //           <TableCell align="right">Primary</TableCell>
-    //           <TableCell align="right">Secondary</TableCell>
-    //         </TableRow>
-    //       ))}
-    //     </TableBody>
-    //   </Table>
-    // </TableContainer>
-  );
-}
+// const userThemes = [];
+// foundUser.themes.map(theme => {
+//   Promise.all(
+//     db
+//       .collection("CustomizedThemes")
+//       .doc(`${theme.Id}`)
+//       .get()
+//       .then(doc => {
+//         console.log("themes", doc.data());
+//         // setThemes(doc.data());
+//         userThemes.push(doc.data());
+//         // setThemes(userThemes);
+//       })
+//       .catch(err => {
+//         console.log("Error getting document", err);
+//       })
+//   );
+// });
+// console.log("Test -> userThemes", userThemes);
+
+// Promise.all(userThemes).then(res => console.log(`We have themes: ${res}!`));
+
+// useEffect(() => {
+//   const userThemes = [];
+//   const response = async () => {
+//     foundUser.themes.map(theme => {
+//       db.collection("CustomizedThemes")
+//         .doc(`${theme.Id}`)
+//         .get()
+//         .then(doc => {
+//           console.log("themes", doc.data());
+//           // setThemes(doc.data());
+//           userThemes.push(doc.data());
+//           setThemes(userThemes);
+//         })
+//         .catch(err => {
+//           console.log("Error getting document", err);
+//         });
+//     });
+//   };
+//   response();
+// }, [themes]);
+
+//   console.log("THEMES", themes);
+//   return !themes ? (
+//     <div>no themes found!</div>
+//   ) : (
+//     <div>
+//       <h3>
+//         {foundUser.firstName} {foundUser.lastName}
+//       </h3>
+//       {themes.map(theme => {
+//         return (
+//           <div key={theme.id}>
+//             <li>{JSON.stringify(theme)}</li>
+//           </div>
+//         );
+//       })}
+//     </div>
+//   );
+// };
+//   return !foundUs  er ? (
+//     <div>no user found!</div>
+//   ) : (
+//     foundUser.themes.map(theme => <ul key={theme.id}>{theme.Id}</ul>)
+//   );
+// };
+
+
+// let foundUser = null;
+// db.collection("Users")
+//   .doc("eqrjmljO97c2ccaabw9K")
+//   .get()
+//   .then(doc => {
+//     console.log(doc.data());
+//     foundUser = doc.data();
+//     foundUser.themes.map(theme => {
+//       db.collection("CustomizedThemes")
+//         .doc(`${theme.Id}`)
+//         .get()
+//         .then(theme => {
+//           console.log("themes", theme.data());
+//         });
+//     });
+//   })
+//   .catch(err => {
+//     console.log("Error getting document", err);
+//   });
+// console.log("Test -> users", foundUser);
+
+// foundUser.themes.map(theme => {
+//   db.collection("CustomizedThemes").doc(`${theme.Id}`).get().then(doc => {
+//     console.log(doc.data())
+//   })
+// })
+// const [user, updateUser] = useState({});
+// const [email, setEmail] = useState("");
+// const [firstName, setFirstName] = useState("");
+// const [lastName, setLastName] = useState("");
+// const [themes, setThemes] = useState([]);
+
 /// TESTING CONNECTION TO CUSTOMIZEDTHEMES and USERS collections
 // db.collection("CustomizedThemes")
 //   .get()
@@ -183,4 +280,4 @@ function Test(props) {
 //   );
 // }
 
-export default Test;
+// export default Test;
