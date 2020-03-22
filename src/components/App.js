@@ -11,31 +11,33 @@ import auth from './auth';
 import firebase from 'firebase';
 import 'firebase/auth';
 
-firebase.auth().onAuthStateChanged(user => {
-  console.log('user', user);
-  if (user) {
-    console.log('user logged in:', user);
-  } else {
-    console.log('user logged out');
-  }
+
+firebase.auth().onAuthStateChanged((user) => {
+	console.log('user', user);
+	if (user) {
+		console.log('user logged in:', user);
+	} else {
+		console.log('user logged out');
+	}
 });
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Header />
-      <Switch>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/learn' component={Learn} />
-        <Route exact path='/design' component={Build} />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/logout' component={() => <div>logout</div>} />
-        <Route exact path='/signup' component={Signup} />
-        <Route exact path='/test' component={Test} />
-        <Route exact path="/auth" component={auth} />
-      </Switch>
-    </BrowserRouter>
-  
+	return (
+		<BrowserRouter>
+			<Header />
+			<Switch>
+				<Route exact path="/" component={Home} />
+				<Route exact path="/learn" component={Learn} />
+				<Route exact path="/design" component={Build} />
+				<Route exact path="/login" component={Login} />
+				<Route exact path="/logout" component={() => <div>logout</div>} />
+				<Route exact path="/signup" component={Signup} />
+				<Route exact path="/test" component={Test} />
+				<Route exact path="/auth" component={auth} />
+			</Switch>
+		</BrowserRouter>
+	);
+}
 
 
 export default App;
