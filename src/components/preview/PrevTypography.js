@@ -5,9 +5,6 @@ import Paper from '@material-ui/core/Paper';
 
 export default function PrevTypography() {
   const useStyles = makeStyles(theme => ({
-    buttonRoot: {
-      padding: theme.spacing.unit,
-    },
     paper: {
       background: '',
     },

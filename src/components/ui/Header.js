@@ -9,9 +9,9 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
-  toolBarMargin: {
-    ...theme.mixins.toolbar,
-  },
+  // toolBarMargin: {
+  //   ...theme.mixins.toolbar,
+  // },
   tabContainer: {
     marginLeft: 'auto',
   },
@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1rem',
     minWidth: 10,
     marginLeft: '25px',
+    color: '#000',
   },
 }));
 
@@ -29,7 +30,7 @@ export default function Header(props) {
 
   return (
     <React.Fragment>
-      <AppBar position='fixed'>
+      <AppBar position='fixed' style={{ background: '#fff' }}>
         <Toolbar>
           <Button
             component={Link}

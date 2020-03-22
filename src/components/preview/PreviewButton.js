@@ -7,9 +7,12 @@ import Grid from '@material-ui/core/Grid';
 
 export default function PreviewButton(props) {
   const useStyles = makeStyles(theme => ({
-    buttonRoot: {
-      padding: theme.spacing.unit,
-    },
+    // buttonRoot: {
+    //   padding: theme.spacing.unit,
+    // },
+    // button: {
+    //   margin: theme.spacing.unit,
+    // },
   }));
   const classes = useStyles();
   return (

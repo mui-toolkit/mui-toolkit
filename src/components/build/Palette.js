@@ -19,6 +19,20 @@ export const Palette = props => {
             onChange={props.changeSecondaryColor}
           />
         </Grid>
+        <Grid item>
+          <p>Default color is {props.defaultColor}</p>
+          <SketchPicker
+            color={props.defaultColor}
+            onChange={props.changeDefaultColor}
+          />
+        </Grid>
+        <Grid item>
+          <p>Paper color is {props.paperColor}</p>
+          <SketchPicker
+            color={props.paperColor}
+            onChange={props.changePaperColor}
+          />
+        </Grid>
       </Grid>
     </React.Fragment>
   );
