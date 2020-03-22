@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Input from "@material-ui/core/Input";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
 // import { GridListTile } from '@material-ui/core';
 
-import { firebase, db } from "../config/firebase";
+import { firebase, db } from '../config/firebase';
 
 const useStyles = makeStyles(theme => ({}));
 
 export function Test(props) {
-  const [primary, setPrimary] = useState("");
-  const [secondary, setSecondary] = useState("");
+  const [primary, setPrimary] = useState('');
+  const [secondary, setSecondary] = useState('');
 
   const palette = { primary, secondary };
 
-  console.log("Test -> palette", palette);
+  console.log('Test -> palette', palette);
 
   /// TESTING CONNECTION TO CUSTOMIZEDTHEMES and USERS collections
   // db.collection("CustomizedThemes")
@@ -51,16 +51,16 @@ export function Test(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    alert("button fired");
+    alert('button fired');
     let newTheme = db
-      .collection("CustomizedThemes")
+      .collection('CustomizedThemes')
       .add({
         palette
       })
       .then(ref => {
-        console.log("Added Theme ", ref.id);
+        console.log('Added Theme ', ref.id);
       });
-    console.log("Test -> newTheme", newTheme);
+    console.log('Test -> newTheme', newTheme);
   };
 
   return (
@@ -86,7 +86,7 @@ export function Test(props) {
         <Grid
           item
           container
-          style={{ maxWidth: "20em" }}
+          style={{ maxWidth: '20em' }}
           justify="center"
           alignItems="center"
         >
