@@ -6,7 +6,8 @@ import Learn from './Learn';
 import Login from './Login';
 import Signup from './Signup';
 import Build from './build/Build';
-import Test from './Test';
+import UsersThemes from "./UsersThemes";
+import SavedThemes from "./SavedThemes";
 import auth from './auth';
 import firebase from 'firebase';
 import 'firebase/auth';
@@ -32,8 +33,10 @@ function App() {
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/logout" component={() => <div>logout</div>} />
 				<Route exact path="/signup" component={Signup} />
-				<Route exact path="/test" component={Test} />
+				{/* <Route exact path="/test" component={Test} /> */}
 				<Route exact path="/auth" component={auth} />
+        <Route exact path="/usersthemes" component={UsersThemes} />
+          <Route exact path="/savedthemes" component={SavedThemes} />
 			</Switch>
 		</BrowserRouter>
 	);
