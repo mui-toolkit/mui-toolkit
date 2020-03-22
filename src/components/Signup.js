@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import firebase from 'firebase';
 import 'firebase/auth';
 // import db from "./Home";
-
+import { db } from '../config/firebase';
 const useStyles = makeStyles(theme => ({}));
 
 export function Signup(props) {
@@ -20,13 +20,29 @@ export function Signup(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('in handle submit');
-    console.log('e', email, 'p', password);
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(cred => {
         console.log('cred', cred);
+        return db
+          .collection('Users')
+          .doc(cred.user.uid)
+          .set({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+          })
+          .then(() => {
+            console.log('created new user in db');
+          });
+
+        // firebase.database().ref('users/' + userId).set({
+        //   username: name,
+        //   email: email,
+        //   profile_picture : imageUrl
+        // });
       })
       .catch(function(error) {
         console.log('error in signup', error.code);

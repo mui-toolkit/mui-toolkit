@@ -1,128 +1,18 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-// import { GridListTile } from '@material-ui/core';
-// import firebase from 'firebase-app';
+import React from 'react';
 import firebase from 'firebase';
 import 'firebase/auth';
-// import db from "./Home";
 
-const useStyles = makeStyles(theme => ({}));
+export default function auth(props) {
+  firebase.auth().onAuthStateChanged(async user => {
+    console.log('user in auth', user);
+    if (user) {
+      console.log('user logged in:', user);
+      let test = user.uid;
+      console.log('test', test);
+    } else {
+      console.log('user logged out');
+    }
+  });
 
-export function Signup(props) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  // console.log('e', email, 'p', password);
-  // firebase
-  //   .auth()
-  //   .createUserWithEmailAndPassword(email, password)
-  //   .then(cred => {
-  //     console.log('cred', cred);
-  //   })
-  //   .catch(function(error) {
-  //     console.log('error in signup', error.code);
-  //     // Handle Errors here.
-  //     // var errorCode = error.code;
-  //     // var errorMessage = error.message;
-  //     // ...
-  //   });
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log('in handle submit');
-    console.log('e', email, 'p', password);
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(cred => {
-        console.log('cred', cred);
-      })
-      .catch(function(error) {
-        console.log('error in signup', error.code);
-        // Handle Errors here.
-        // var errorCode = error.code;
-        // var errorMessage = error.message;
-        // ...
-      });
-    // let newUser = db
-    //   .collection("Users")
-    //   .add({
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     password
-    //   })
-    //   .then(ref => {
-    //     console.log("Added User ", ref.id);
-    //   });
-    // console.log("Signup -> newUser", newUser);
-  };
-
-  return (
-    <Grid container direction="row">
-      <Grid
-        item
-        container
-        direction="column"
-        justify="center"
-        alignItems="center"
-      >
-        <Grid item container direction="column">
-          <Grid
-            item
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Typography variant="h2">Sign Up</Typography>
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          container
-          style={{ maxWidth: '20em' }}
-          justify="center"
-          alignItems="center"
-        >
-          <Grid item container justify="center">
-            <TextField
-              label="First Name"
-              id="firstName"
-              value={firstName}
-              onChange={e => setFirstName(e.target.value)}
-            />
-            <TextField
-              label="Last Name"
-              id="lastName"
-              value={lastName}
-              onChange={e => setLastName(e.target.value)}
-            />
-            <TextField
-              label="Email"
-              id="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-            <TextField
-              type="password"
-              label="Password"
-              id="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </Grid>
-          <Button>
-            <input type="submit" value="Sign Up" onSubmit={handleSubmit} />
-          </Button>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
+  return <div>auth</div>;
 }
-
-export default Signup;
