@@ -8,7 +8,7 @@ export const UsersThemes = () => {
 
   useEffect(() => {
     const userThemes = [];
-    const response = async () => {oh co
+    const response = async () => {
       await db
         .collection("Users")
         .doc("eqrjmljO97c2ccaabw9K")
