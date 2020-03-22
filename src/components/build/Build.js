@@ -8,27 +8,44 @@ import { makeStyles } from '@material-ui/styles';
 import { Typography } from '@material-ui/core';
 import Download from '../Download';
 import { firebase, db } from '../../config/firebase';
+import Button from '@material-ui/core/Button';
+import PreviewButton from '../preview/PreviewButton';
+import PrevTypography from '../preview/PrevTypography';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    flex: 3,
-    flexDirection: 'column',
+    // display: 'flex',
+    // flex: 3,
+    // flexDirection: 'column',
+  },
+  buttonRoot: {
+    padding: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
   selector: {
-    alignSelf: 'center',
+    // alignSelf: 'center',
     margin: theme.spacing.unit,
   },
   container: {
-    align: 'center',
+    // align: 'center',
     flex: 1,
     overflow: 'auto',
     width: '50%',
+    // background: '#000',
   },
-  desktop: {},
-  mobile: {
-    maxWidth: 350,
-    maxHeight: 650,
+  builderPaper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  previewPaper: {
+    // padding: theme.spacing(2),
+    textAlign: 'center',
+    // color: theme.palette.text.secondary,
+    // height: '100vh',
+    // background: '#000',
   },
 }));
 
@@ -73,25 +90,39 @@ export const Build = () => {
     <section className={classes.root}>
       <Grid container>
         <Grid item className={classes.selector}>
-          {/* Theme Builder Start */}
-          <Palette
-            color={color}
-            secondaryColor={secondaryColor}
-            changeColor={changeColor}
-            changeSecondaryColor={changeSecondaryColor}
-          />
-          {/* Theme Builder End */}
+          <Paper className={classes.builderPaper}>
+            <Palette
+              color={color}
+              secondaryColor={secondaryColor}
+              changeColor={changeColor}
+              changeSecondaryColor={changeSecondaryColor}
+            />
+            {/* Theme Builder End */}
+          </Paper>
         </Grid>
         <Grid item className={classes.container}>
-          {/* Preview Start */}
-          <PreviewAppBar
-            secondaryColor={secondaryColor}
-            color={color}
-            className={classes.container}
-          />
-          <button onClick={sendPalette}>SEND</button>
-          <Download customTheme={customTheme} />
-          {/* Preview End */}
+          <Paper className={classes.previewPaper}>
+            {/* Preview Start */}
+            <Grid item>
+              <PreviewAppBar
+                secondaryColor={secondaryColor}
+                color={color}
+                className={classes.container}
+              />
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <PreviewButton />
+                </Grid>
+                <Grid item xs={12}>
+                  <PrevTypography />
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <button onClick={sendPalette}>SEND</button>
+            <Download customTheme={customTheme} />
+            {/* Preview End */}
+          </Paper>
         </Grid>
       </Grid>
     </section>

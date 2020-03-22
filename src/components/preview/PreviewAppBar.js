@@ -12,6 +12,7 @@ export default function PreviewAppBar(props) {
       display: 'flex',
       flex: 3,
       flexDirection: 'column',
+      marginTop: '1em',
     },
     selector: {
       alignSelf: 'center',
@@ -37,19 +38,12 @@ export default function PreviewAppBar(props) {
   const classes = useStyles();
   return (
     <section className={classes.root}>
-      <Paper className={classes.container}>
-        <AppBar position={'sticky'} className={classes.primary}>
-          <Toolbar>
-            <Typography>AppBar (Primary Color)</Typography>
-          </Toolbar>
-        </AppBar>
-        <br />
-        <AppBar position={'sticky'} className={classes.secondary}>
-          <Toolbar>
-            <Typography>Secondary Color AppBar</Typography>
-          </Toolbar>
-        </AppBar>
-      </Paper>
+      <AppBar position={'sticky'} className={classes.primary}>
+        <Toolbar>
+          <Typography>AppBar (Primary Color)</Typography>
+        </Toolbar>
+      </AppBar>
+      <br />
     </section>
   );
 }
