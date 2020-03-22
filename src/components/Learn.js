@@ -54,20 +54,20 @@ export default function Learn() {
         </Grid>
         <Grid item className={classes.title}>
           <Typography variant='h4' align='center'>
-            What is MUI toolkit?
+            What is MUI Theme Builder?
           </Typography>
         </Grid>
         <Grid item>
           <Typography variant='body1'>
             <div className={classes.tab}>
-              MUI toolkit allows you to customize your Material UI theme without
-              having to look at the documentation. The interface is user
+              MUI Theme Builder allows you to customize your Material UI theme
+              without having to look at the documentation. The interface is user
               friendly, and gives you a step by step guide on the features you
               are customizing. Once finished, you can download the json file and
               copy an paste the code into your own file.
             </div>
             <p className={classes.tab}>
-              MUI toolkit utilizes the{' '}
+              MUI Theme Builder utilizes the{' '}
               <a href='https://material-ui.com/customization/theming/'>
                 Theme Provider
               </a>{' '}

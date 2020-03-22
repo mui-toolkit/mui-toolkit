@@ -8,48 +8,42 @@ import Grid from '@material-ui/core/Grid';
 
 export default function PreviewAppBar(props) {
   const useStyles = makeStyles(theme => ({
-    root: {
-      display: 'flex',
-      flex: 3,
-      flexDirection: 'column',
-    },
-    selector: {
-      alignSelf: 'center',
-      margin: theme.spacing.unit,
-    },
-    container: {
-      alignSelf: 'center',
-      flex: 1,
-      margin: theme.spacing.unit,
-      overflow: 'auto',
-      width: '100%',
-    },
-    primary: {
-      background: `${props.color}`,
-    },
-    secondary: {
-      background: `${props.secondaryColor}`,
-    },
-    toolBarMargin: {
-      ...theme.mixins.toolbar,
-    },
+    // root: {
+    //   display: 'flex',
+    //   flex: 3,
+    //   flexDirection: 'column',
+    //   marginTop: '1em',
+    // },
+    // selector: {
+    //   alignSelf: 'center',
+    //   margin: theme.spacing.unit,
+    // },
+    // container: {
+    //   alignSelf: 'center',
+    //   flex: 1,
+    //   margin: theme.spacing.unit,
+    //   overflow: 'auto',
+    //   width: '100%',
+    // },
+    // primary: {
+    //   background: `${props.color}`,
+    // },
+    // secondary: {
+    //   background: `${props.secondaryColor}`,
+    // },
+    // toolBarMargin: {
+    //   ...theme.mixins.toolbar,
+    // },
   }));
   const classes = useStyles();
   return (
     <section className={classes.root}>
-      <Paper className={classes.container}>
-        <AppBar position={'sticky'} className={classes.primary}>
-          <Toolbar>
-            <Typography>AppBar (Primary Color)</Typography>
-          </Toolbar>
-        </AppBar>
-        <br />
-        <AppBar position={'sticky'} className={classes.secondary}>
-          <Toolbar>
-            <Typography>Secondary Color AppBar</Typography>
-          </Toolbar>
-        </AppBar>
-      </Paper>
+      <AppBar position={'sticky'} className={classes.primary}>
+        <Toolbar>
+          <Typography>AppBar (Primary Color)</Typography>
+        </Toolbar>
+      </AppBar>
+      <br />
     </section>
   );
 }
