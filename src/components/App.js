@@ -11,6 +11,7 @@ import auth from './auth';
 import firebase from 'firebase';
 import 'firebase/auth';
 
+
 firebase.auth().onAuthStateChanged((user) => {
 	console.log('user', user);
 	if (user) {
@@ -37,5 +38,6 @@ function App() {
 		</BrowserRouter>
 	);
 }
+
 
 export default App;

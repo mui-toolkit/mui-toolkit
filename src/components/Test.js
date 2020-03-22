@@ -12,8 +12,10 @@ import { firebase, db } from '../config/firebase';
 const useStyles = makeStyles((theme) => ({}));
 
 export function Test(props) {
+
 	const [ primary, setPrimary ] = useState('');
 	const [ secondary, setSecondary ] = useState('');
+
 
 	const foundUser = db
 		.collection('Users')
@@ -27,7 +29,9 @@ export function Test(props) {
 		});
 	console.log('Test -> users', foundUser);
 
+
 	// console.log('Test -> palette', palette);
+
 
 	// const useStyles = makeStyles({
 	//   table: {
@@ -37,6 +41,7 @@ export function Test(props) {
 	// const classes = useStyles();
 
 	///
+
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -86,6 +91,7 @@ export function Test(props) {
 			</Grid>
 		</Grid>
 	);
+
 }
 /// TESTING CONNECTION TO CUSTOMIZEDTHEMES and USERS collections
 // db.collection("CustomizedThemes")
