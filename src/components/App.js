@@ -9,6 +9,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Build from "./build/Build";
 import UsersThemes from "./UsersThemes";
+import SavedThemes from "./SavedThemes";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/logout" component={() => <div>logout</div>} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/usersthemes" component={UsersThemes} />
+          <Route exact path="/savedthemes" component={SavedThemes} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
