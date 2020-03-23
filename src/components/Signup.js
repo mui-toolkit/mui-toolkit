@@ -32,7 +32,7 @@ export function Signup(props) {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            password: password
+            password: password,
           })
           .then(() => {
             console.log('created new user in db');
@@ -65,23 +65,23 @@ export function Signup(props) {
   };
 
   return (
-    <Grid container direction="row">
+    <Grid container direction='row' style={{ marginTop: '5em' }}>
       <Grid
         item
         container
-        direction="column"
-        justify="center"
-        alignItems="center"
+        direction='column'
+        justify='center'
+        alignItems='center'
       >
-        <Grid item container direction="column">
+        <Grid item container direction='column'>
           <Grid
             item
             container
-            direction="column"
-            justify="center"
-            alignItems="center"
+            direction='column'
+            justify='center'
+            alignItems='center'
           >
-            <Typography variant="h2">Sign Up</Typography>
+            <Typography variant='h2'>Sign Up</Typography>
           </Grid>
         </Grid>
         <form onSubmit={handleSubmit}>
@@ -89,38 +89,38 @@ export function Signup(props) {
             item
             container
             style={{ maxWidth: '20em' }}
-            justify="center"
-            alignItems="center"
+            justify='center'
+            alignItems='center'
           >
-            <Grid item container justify="center">
+            <Grid item container justify='center'>
               <TextField
-                label="First Name"
-                id="firstName"
+                label='First Name'
+                id='firstName'
                 value={firstName}
                 onChange={e => setFirstName(e.target.value)}
               />
               <TextField
-                label="Last Name"
-                id="lastName"
+                label='Last Name'
+                id='lastName'
                 value={lastName}
                 onChange={e => setLastName(e.target.value)}
               />
               <TextField
-                label="Email"
-                id="email"
+                label='Email'
+                id='email'
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
               <TextField
-                type="password"
-                label="Password"
-                id="password"
+                type='password'
+                label='Password'
+                id='password'
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
             </Grid>
             <Button>
-              <input type="submit" value="Sign Up" />
+              <input type='submit' value='Sign Up' />
             </Button>
           </Grid>
         </form>

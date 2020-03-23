@@ -27,23 +27,23 @@ export function Login(props) {
   };
 
   return (
-    <Grid container direction="row">
+    <Grid container direction='row' style={{ marginTop: '5em' }}>
       <Grid
         item
         container
-        direction="column"
-        justify="center"
-        alignItems="center"
+        direction='column'
+        justify='center'
+        alignItems='center'
       >
-        <Grid item container direction="column">
+        <Grid item container direction='column'>
           <Grid
             item
             container
-            direction="column"
-            justify="center"
-            alignItems="center"
+            direction='column'
+            justify='center'
+            alignItems='center'
           >
-            <Typography variant="h2">Log In</Typography>
+            <Typography variant='h2'>Log In</Typography>
           </Grid>
         </Grid>
         <form onSubmit={handleSubmit}>
@@ -51,26 +51,26 @@ export function Login(props) {
             item
             container
             style={{ maxWidth: '20em' }}
-            justify="center"
-            alignItems="center"
+            justify='center'
+            alignItems='center'
           >
-            <Grid item container justify="center">
+            <Grid item container justify='center'>
               <TextField
-                label="Email"
-                id="email"
+                label='Email'
+                id='email'
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
               <TextField
-                type="password"
-                label="Password"
-                id="password"
+                type='password'
+                label='Password'
+                id='password'
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
             </Grid>
             <Button>
-              <input type="submit" value="Log In" />
+              <input type='submit' value='Log In' />
             </Button>
           </Grid>
         </form>
