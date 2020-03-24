@@ -6,3 +6,4 @@
 export { PreviewAppBar } from './PreviewAppBar';
 export { PreviewButton } from './PreviewButton';
 export { PreviewTypography } from './PreviewTypography';
+export { Panels } from './TabPanel';
