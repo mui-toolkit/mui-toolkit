@@ -73,7 +73,6 @@ export const Store = () => {
           paperColor={paperColor}
           expanded={expanded}
           tab={tab}
-          setTab={setTab}
           changeColor={changeColor}
           changeSecondaryColor={changeSecondaryColor}
           changeDefaultColor={changeDefaultColor}

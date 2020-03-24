@@ -7,3 +7,4 @@ export { PreviewAppBar } from './PreviewAppBar';
 export { PreviewButton } from './PreviewButton';
 export { PreviewTypography } from './PreviewTypography';
 export { PreviewTabs } from './PreviewTabs';
+export { PreviewGeneral } from './PreviewGeneral';

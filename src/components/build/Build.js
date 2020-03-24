@@ -1,16 +1,11 @@
 import React from 'react';
 import { Palette, SaveTheme, BuildNav } from '../build';
-import {
-  PreviewButton,
-  PreviewTypography,
-  PreviewAppBar,
-  PreviewTabs,
-} from '../preview';
+import { PreviewAppBar, PreviewTabs } from '../preview';
 import Download from '../Download';
 
-import { Grid, Paper, Typography, Box } from '@material-ui/core/';
+import { Grid, Paper } from '@material-ui/core/';
 
-import { makeStyles, withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   preview: {
@@ -46,7 +41,6 @@ export const Build = props => {
     changeExpanded,
     downloadTheme,
     tab,
-    setTab,
     changeTab,
   } = props;
 
@@ -77,7 +71,7 @@ export const Build = props => {
         </Grid>
         {/* BUILD END */}
         {/* Preview Start */}
-        <Grid item xs={9}>
+        <Grid item xs={9} className={classes.preview}>
           <Paper
             className={classes.previewPaper}
             style={{ background: `${defaultColor}` }}
@@ -87,9 +81,7 @@ export const Build = props => {
               color={color}
               className={classes.container}
             />
-            <Grid item className={classes.preview}>
-              <PreviewTabs tab={tab} changeTab={changeTab} />
-            </Grid>
+            <PreviewTabs tab={tab} changeTab={changeTab} />
           </Paper>
         </Grid>
         {/* Preview End */}

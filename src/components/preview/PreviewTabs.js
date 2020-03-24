@@ -1,8 +1,8 @@
 import React from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { PreviewButton, PreviewTypography } from '../preview';
-import { Grid, Box, Typography } from '@material-ui/core';
+import { PreviewButton, PreviewTypography, PreviewGeneral } from '../preview';
+import { Box, Typography } from '@material-ui/core';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -31,23 +31,19 @@ export function PreviewTabs(props) {
           aria-label='simple tabs example'
           centered
         >
-          <Tab label='Item One' />
+          <Tab label='General' />
           <Tab label='Buttons' />
           <Tab label='Typography' />
           <Tab label='Alerts' />
         </Tabs>
         <TabPanel value={tab} index={0}>
-          item one
+          <PreviewGeneral />
         </TabPanel>
         <TabPanel value={tab} index={1}>
-          <Grid item xs={12}>
-            <PreviewButton />
-          </Grid>
+          <PreviewButton />
         </TabPanel>
         <TabPanel value={tab} index={2}>
-          <Grid item xs={12}>
-            <PreviewTypography />
-          </Grid>
+          <PreviewTypography />
         </TabPanel>
         <TabPanel value={tab} index={3}>
           Alerts

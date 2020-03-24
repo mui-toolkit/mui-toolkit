@@ -5,6 +5,11 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
+import Popover from '@material-ui/core/Popover';
+import Button from '@material-ui/core/Button';
+
+import { SketchPicker } from 'react-color';
+
 const useStyles = makeStyles(theme => ({
   bubble: {
     borderColor: '#c2c2c2',
@@ -59,6 +64,20 @@ const ExpansionPanelDetails = withStyles(theme => ({
 
 export function BuildNav(props) {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setAnchorEl2(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   const { expanded, changeExpanded } = props;
 
@@ -85,15 +104,17 @@ export function BuildNav(props) {
                 alignItems='center'
                 style={{ marginBottom: '1em' }}
               >
-                <Avatar
-                  style={{
-                    color: '#fff',
-                    background: '#fff',
-                    marginRight: '10px',
-                  }}
-                  className={classes.bubble}
-                />
-                <Typography>Primary Color</Typography>
+                <Button onClick={handleClick}>
+                  <Avatar
+                    style={{
+                      color: '#fff',
+                      background: '#fff',
+                      marginRight: '10px',
+                    }}
+                    className={classes.bubble}
+                  />
+                  <Typography>Primary Color</Typography>
+                </Button>
               </Grid>
               <Grid
                 container
@@ -101,15 +122,17 @@ export function BuildNav(props) {
                 alignItems='center'
                 style={{ marginBottom: '1em' }}
               >
-                <Avatar
-                  style={{
-                    color: '#fff',
-                    background: '#fff',
-                    marginRight: '10px',
-                  }}
-                  className={classes.bubble}
-                />
-                <Typography>Secondary Color</Typography>
+                <Button onClick={handleClick}>
+                  <Avatar
+                    style={{
+                      color: '#fff',
+                      background: '#fff',
+                      marginRight: '10px',
+                    }}
+                    className={classes.bubble}
+                  />
+                  <Typography>Secondary Color</Typography>
+                </Button>
               </Grid>
               <Grid
                 container
@@ -229,6 +252,44 @@ export function BuildNav(props) {
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </Grid>
+
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <Typography className={classes.typography}>
+          <SketchPicker />
+        </Typography>
+      </Popover>
+
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <Typography className={classes.typography}>
+          <SketchPicker />
+        </Typography>
+      </Popover>
     </React.Fragment>
   );
 }
