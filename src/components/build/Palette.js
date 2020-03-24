@@ -21,14 +21,14 @@ export const Palette = (props) => {
 
 				<Grid item>
 					<p>Secondary color is {props.secondaryColor}</p>
-					{/* <ColorPop
+					<ColorPop
 						color={props.secondaryColor}
 						changeColor={props.changeSecondaryColor}
-						displayColorPicker={props.displayColorPicker}
-						changeColorPickerDisplayed={props.changeColorPickerDisplayed}
-					/> */}
-
-					<SketchPicker color={props.secondaryColor} onChange={props.changeSecondaryColor} />
+						displayColorPicker={props.displaySecondaryColorPicker}
+						changeColorPickerDisplayed={props.changeSecondaryColorPickerDisplayed}
+					/>
+					{/* 
+					<SketchPicker color={props.secondaryColor} onChange={props.changeSecondaryColor} /> */}
 				</Grid>
 				<Grid item>
 					<p>Default color is {props.defaultColor}</p>

@@ -11,13 +11,13 @@ export const ColorPop = (props) => {
 	const styles = reactCSS({
 		default: {
 			color: {
-				width: '50px',
-				height: '50px',
+				width: '40px',
+				height: '40px',
 				borderRadius: '50%',
 				background: `${color}`
 			},
 			swatch: {
-				padding: '5px',
+				padding: '3px',
 				background: '#fff',
 				borderRadius: '50%',
 				boxShadow: '0 0 0 1px rgba(0,0,0,.1)',

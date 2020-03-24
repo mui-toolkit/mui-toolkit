@@ -10,6 +10,7 @@ export const Store = () => {
 	const [ paperColor, setPaperColor ] = useState('');
 	const [ expanded, setExpanded ] = React.useState('panel1');
 	const [ displayColorPicker, setDisplayColorPicker ] = useState(false);
+	const [ displaySecondaryColorPicker, setDisplaySecondaryColorPicker ] = useState(false);
 
 	const [ tab, setTab ] = useState(0);
 
@@ -38,6 +39,10 @@ export const Store = () => {
 
 	const changeColorPickerDisplayed = () => {
 		setDisplayColorPicker(!displayColorPicker ? true : false);
+	};
+
+	const changeSecondaryColorPickerDisplayed = () => {
+		setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
 	};
 
 	let downloadTheme = {
@@ -85,6 +90,8 @@ export const Store = () => {
 					changeTab={changeTab}
 					changeColorPickerDisplayed={changeColorPickerDisplayed}
 					downloadTheme={downloadTheme}
+					displaySecondaryColorPicker={displaySecondaryColorPicker}
+					changeSecondaryColorPickerDisplayed={changeSecondaryColorPickerDisplayed}
 				/>
 			</ThemeProvider>
 		</React.Fragment>
