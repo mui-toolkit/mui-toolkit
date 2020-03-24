@@ -44,16 +44,18 @@ function onAuthStateChange(callback) {
     }
   });
 }
-export default function Header() {
+export default function Header(props) {
   const classes = useStyles();
   const [user, setUser] = useState({ loggedIn: false });
   const [error, setError] = useState('');
   useEffect(() => {
+    // do equivalent of unsubscribe
     const unsubscribe = onAuthStateChange(setUser);
-    return () => {
-      unsubscribe();
-    };
+    // return async () => {
+    //   await unsubscribe();
+    // };
   }, []);
+
   if (!user.loggedIn) {
     return (
       <React.Fragment>
@@ -134,6 +136,7 @@ export default function Header() {
               label="Start"
             />
 
+            {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
               component={Link}
