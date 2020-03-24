@@ -146,6 +146,22 @@ export function BuildNav() {
                 />
                 <Typography>Paper</Typography>
               </Grid>
+              <Grid
+                container
+                direction='row'
+                alignItems='center'
+                style={{ marginBottom: '1em' }}
+              >
+                <Avatar
+                  style={{
+                    color: '#fff',
+                    background: '#fff',
+                    marginRight: '10px',
+                  }}
+                  className={classes.bubble}
+                />
+                <Typography>Drop Shadow</Typography>
+              </Grid>
             </Grid>
           </ExpansionPanelDetails>
         </ExpansionPanel>
