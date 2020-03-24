@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -27,10 +27,80 @@ const useStyles = makeStyles(theme => ({
     color: '#000'
   }
 }));
-
+const defaultUser = { loggedIn: false, email: '' };
+const UserContext = React.createContext({});
+const UserProvider = UserContext.Provider;
+const UserConsumer = UserContext.Consumer;
+function onAuthStateChange(callback) {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      callback({ loggedIn: true, email: user.email });
+    } else {
+      callback({ loggedIn: false });
+    }
+  });
+}
 export default function Header() {
   const classes = useStyles();
-
+  const [user, setUser] = useState({ loggedIn: false });
+  const [error, setError] = useState('');
+  useEffect(() => {
+    const unsubscribe = onAuthStateChange(setUser);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  if (!user.loggedIn) {
+    return (
+      <React.Fragment>
+        <AppBar position="fixed" style={{ background: '#fff' }}>
+          <Toolbar>
+            <Button
+              component={Link}
+              to="/"
+              disableRipple
+              // className={classes.logoContainer}
+            >
+              MUI Theme Builder
+            </Button>
+            <Tabs className={classes.tabContainer}>
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/"
+                label="Home"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/learn"
+                label="Learn"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/design"
+                label="Start"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/login"
+                label="Login"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/signup"
+                label="Signup"
+              />
+            </Tabs>
+          </Toolbar>
+        </AppBar>
+        <div className={classes.toolBarMargin} />
+      </React.Fragment>
+    );
+  }
   return (
     <React.Fragment>
       <AppBar position="fixed" style={{ background: '#fff' }}>
@@ -57,12 +127,7 @@ export default function Header() {
               to="/design"
               label="Start"
             />
-            <Tab
-              className={classes.tab}
-              component={Link}
-              to="/login"
-              label="Login"
-            />
+
             <Tab
               className={classes.tab}
               component={Link}
@@ -76,12 +141,6 @@ export default function Header() {
                     // console.log('user signed out');
                   })
               }
-            />
-            <Tab
-              className={classes.tab}
-              component={Link}
-              to="/signup"
-              label="Signup"
             />
           </Tabs>
         </Toolbar>
