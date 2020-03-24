@@ -17,7 +17,7 @@ export function Signup(props) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [username, setUserName] = useState('');
   const handleSubmit = e => {
     e.preventDefault();
     firebase
@@ -33,55 +33,36 @@ export function Signup(props) {
             lastName: lastName,
             email: email,
             password: password,
+            username: username
           })
           .then(() => {
             console.log('created new user in db');
+            props.history.push('/');
           });
-
-        // firebase.database().ref('users/' + userId).set({
-        //   username: name,
-        //   email: email,
-        //   profile_picture : imageUrl
-        // });
       })
       .catch(function(error) {
         console.log('error in signup', error.code);
-        // var errorCode = error.code;
-        // var errorMessage = error.message;
-        // ...
       });
-    // let newUser = db
-    //   .collection("Users")
-    //   .add({
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     password
-    //   })
-    //   .then(ref => {
-    //     console.log("Added User ", ref.id);
-    //   });
-    // console.log("Signup -> newUser", newUser);
   };
 
   return (
-    <Grid container direction='row' style={{ marginTop: '5em' }}>
+    <Grid container direction="row" style={{ marginTop: '5em' }}>
       <Grid
         item
         container
-        direction='column'
-        justify='center'
-        alignItems='center'
+        direction="column"
+        justify="center"
+        alignItems="center"
       >
-        <Grid item container direction='column'>
+        <Grid item container direction="column">
           <Grid
             item
             container
-            direction='column'
-            justify='center'
-            alignItems='center'
+            direction="column"
+            justify="center"
+            alignItems="center"
           >
-            <Typography variant='h2'>Sign Up</Typography>
+            <Typography variant="h2">Sign Up</Typography>
           </Grid>
         </Grid>
         <form onSubmit={handleSubmit}>
@@ -89,38 +70,44 @@ export function Signup(props) {
             item
             container
             style={{ maxWidth: '20em' }}
-            justify='center'
-            alignItems='center'
+            justify="center"
+            alignItems="center"
           >
-            <Grid item container justify='center'>
+            <Grid item container justify="center">
               <TextField
-                label='First Name'
-                id='firstName'
+                label="First Name"
+                id="firstName"
                 value={firstName}
                 onChange={e => setFirstName(e.target.value)}
               />
               <TextField
-                label='Last Name'
-                id='lastName'
+                label="Last Name"
+                id="lastName"
                 value={lastName}
                 onChange={e => setLastName(e.target.value)}
               />
               <TextField
-                label='Email'
-                id='email'
+                label="Username"
+                id="username"
+                value={username}
+                onChange={e => setUserName(e.target.value)}
+              />
+              <TextField
+                label="Email"
+                id="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
               <TextField
-                type='password'
-                label='Password'
-                id='password'
+                type="password"
+                label="Password"
+                id="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
             </Grid>
             <Button>
-              <input type='submit' value='Sign Up' />
+              <input type="submit" value="Sign Up" />
             </Button>
           </Grid>
         </form>
