@@ -4,34 +4,13 @@ import {
   PreviewButton,
   PreviewTypography,
   PreviewAppBar,
-  Panels,
+  PreviewTabs,
 } from '../preview';
 import Download from '../Download';
 
-import { Grid, Paper, Typography, Avatar } from '@material-ui/core/';
+import { Grid, Paper, Typography, Box } from '@material-ui/core/';
 
 import { makeStyles, withStyles } from '@material-ui/styles';
-
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-// import Box from '@material-ui/core/Box';
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <Typography
-      component='div'
-      role='tabpanel'
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={4}>{children}</Box>}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles(theme => ({
   preview: {
@@ -54,8 +33,6 @@ const useStyles = makeStyles(theme => ({
 export const Build = props => {
   const classes = useStyles();
 
-  const [value, setValue] = React.useState(0);
-
   const {
     color,
     secondaryColor,
@@ -68,11 +45,11 @@ export const Build = props => {
     changeDefaultColor,
     changeExpanded,
     downloadTheme,
+    tab,
+    setTab,
+    changeTab,
   } = props;
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   // needs a themeName pop up so user can name their theme and it will be referenced in the table of Saved Themes.  .collection('CT').doc(`${themeName}`.set({})) should create a new collection in CustomizedThemes with doc name themeName and allow the collection to contain any/all fields
 
   return (
@@ -111,36 +88,7 @@ export const Build = props => {
               className={classes.container}
             />
             <Grid item className={classes.preview}>
-              <div className={classes.root}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  aria-label='simple tabs example'
-                  className={classes.tabContainer}
-                  centered
-                >
-                  <Tab label='Item One' />
-                  <Tab label='Buttons' />
-                  <Tab label='Typography' />
-                  <Tab label='Alerts' />
-                </Tabs>
-                <TabPanel value={value} index={0}>
-                  item one
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                  <Grid item xs={12}>
-                    <PreviewButton />
-                  </Grid>
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                  <Grid item xs={12}>
-                    <PreviewTypography />
-                  </Grid>
-                </TabPanel>
-                <TabPanel value={value} index={3}>
-                  Alerts
-                </TabPanel>
-              </div>
+              <PreviewTabs tab={tab} changeTab={changeTab} />
             </Grid>
           </Paper>
         </Grid>
