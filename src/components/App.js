@@ -7,6 +7,7 @@ import Login from './Login';
 import Signup from './Signup';
 import UsersThemes from './UsersThemes';
 import SavedThemes from './SavedThemes';
+import UserDashboard from './UserDashboard';
 import auth from './auth';
 import firebase from 'firebase';
 import 'firebase/auth';
@@ -36,6 +37,7 @@ function App() {
 				<Route exact path="/auth" component={auth} />
 				<Route exact path="/usersthemes" component={UsersThemes} />
 				<Route exact path="/savedthemes" component={SavedThemes} />
+				<Route exact path="/userdashboard" component={UserDashboard} />
 			</Switch>
 		</BrowserRouter>
 	);

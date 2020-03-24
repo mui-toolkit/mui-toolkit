@@ -35,9 +35,8 @@ export const SaveTheme = props => {
       .collection("CustomizedThemes")
       .doc(`${themeName}`)
       .set({ downloadTheme, createdAt: new Date() })
-      // .update({ timestamp: firebase.firestore.FieldValue.serverTimestamp() })
       .then(ref => {
-        console.log("Added Theme ", ref.id);
+        console.log("Added Theme ", `${ref.themeName}`);
       })
       .catch(function(error) {
         console.log("Error creating a new theme: ", error);
