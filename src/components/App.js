@@ -1,3 +1,4 @@
+
 import React from "react";
 import Header from "../components/ui/Header";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -20,6 +21,7 @@ firebase.auth().onAuthStateChanged(user => {
     console.log("user logged in:", user);
   } else {
     console.log("user logged out");
+
   }
 });
 
