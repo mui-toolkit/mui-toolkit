@@ -8,6 +8,14 @@ export const Store = () => {
 	const [ secondaryColor, setSecondaryColor ] = useState('');
 	const [ defaultColor, setDefaultColor ] = useState('');
 	const [ paperColor, setPaperColor ] = useState('');
+	const [ tab, setTab ] = React.useState(0);
+
+	//BuildNav
+	const [ expanded, setExpanded ] = React.useState('panel1');
+
+	const changeExpanded = (panel) => (event, newExpanded) => {
+		setExpanded(newExpanded ? panel : false);
+	};
 
 	const changeColor = (color) => {
 		setColor(color.hex);
@@ -22,6 +30,10 @@ export const Store = () => {
 	};
 	const changePaperColor = (paperColor) => {
 		setPaperColor(paperColor.hex);
+	};
+
+	const changeTab = (event, newValue) => {
+		setTab(tab);
 	};
 
 	let downloadTheme = {
@@ -58,10 +70,14 @@ export const Store = () => {
 					secondaryColor={secondaryColor}
 					defaultColor={defaultColor}
 					paperColor={paperColor}
+					expanded={expanded}
+					tab={tab}
 					changeColor={changeColor}
 					changeSecondaryColor={changeSecondaryColor}
 					changeDefaultColor={changeDefaultColor}
 					changePaperColor={changePaperColor}
+					changeExpanded={changeExpanded}
+					changeTab={changeTab}
 					downloadTheme={downloadTheme}
 				/>
 			</ThemeProvider>
