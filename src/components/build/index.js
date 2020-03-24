@@ -7,3 +7,4 @@ export { Build } from './Build';
 export { Palette } from './Palette';
 export { Store } from './Store';
 export { SaveTheme } from './SaveTheme';
+export { BuildNav } from './BuildNav';
