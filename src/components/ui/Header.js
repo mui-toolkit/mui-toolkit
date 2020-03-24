@@ -11,7 +11,6 @@ import firebase from 'firebase';
 import 'firebase/auth';
 
 const useStyles = makeStyles(theme => ({
-
   // toolBarMargin: {
   //   ...theme.mixins.toolbar,
   // },
@@ -25,19 +24,16 @@ const useStyles = makeStyles(theme => ({
     minWidth: 10,
 
     marginLeft: '25px',
-    color: '#000',
-  },
-
+    color: '#000'
+  }
 }));
 
-export default function Header(props) {
+export default function Header() {
   const classes = useStyles();
 
   return (
     <React.Fragment>
-
-      <AppBar position='fixed' style={{ background: '#fff' }}>
-
+      <AppBar position="fixed" style={{ background: '#fff' }}>
         <Toolbar>
           <Button
             component={Link}
