@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: '5em',
     textAlign: 'center',
     background: '#fff',
+    height: '100%',
   },
   builderPaper: {
     marginTop: '5em',
@@ -74,6 +75,8 @@ export const Build = props => {
           <Paper className={classes.builderPaper}>
             <BuildNav />
             <Grid item>
+              <Download downloadTheme={downloadTheme} />
+              <SaveTheme downloadTheme={downloadTheme} />
               <Palette
                 color={color}
                 secondaryColor={secondaryColor}
@@ -131,9 +134,6 @@ export const Build = props => {
                 </TabPanel>
               </div>
             </Grid>
-
-            <Download downloadTheme={downloadTheme} />
-            <SaveTheme downloadTheme={downloadTheme} />
           </Paper>
         </Grid>
         {/* Preview End */}
