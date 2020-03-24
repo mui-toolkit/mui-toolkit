@@ -84,10 +84,19 @@ export default function Checkout() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   id="password"
                   name="password"
-                  label="Password"
+                  label="New Password"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}></Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="password"
+                  name="password"
+                  label="Repeat Password"
+                  // test if match
                   fullWidth
                 />
               </Grid>
