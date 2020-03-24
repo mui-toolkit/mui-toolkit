@@ -24,7 +24,7 @@ function createData(
   return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
 }
 
-//dummy data // would it be hard to insert a thumbnail?
+//dummy data
 const rows = [
   createData("Haskell", 20200307, "red", "blue", "Roboto"),
   createData("America", 20200101, "amarillo", "azul", "Arial"),

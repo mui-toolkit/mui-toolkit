@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
-
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
@@ -14,7 +14,7 @@ import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
+import HomeIcon from '@material-ui/icons/Home';
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import FaceIcon from "@material-ui/icons/Face";
 import PaletteIcon from "@material-ui/icons/Palette";
@@ -26,6 +26,7 @@ import PostAddIcon from "@material-ui/icons/PostAdd";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import StarIcon from "@material-ui/icons/Star";
+import ThemesTable from "./ThemesTable";
 
 const drawerWidth = 240;
 
@@ -101,10 +102,11 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     display: "flex",
     overflow: "auto",
-    flexDirection: "column"
+    flexDirection: "column",
+    maxHeight: "80vh"
   },
   fixedHeight: {
-    height: 240
+    maxHeight: "80vh"
   }
 }));
 
@@ -194,11 +196,17 @@ export default function UserDashboard() {
             </ListItemIcon>
             <ListItemText primary="Bookmarked Users" />
           </ListItem>
-          <ListItem button>
+          <ListItem button component={Link} to="/design">
             <ListItemIcon>
               <PostAddIcon />
             </ListItemIcon>
             <ListItemText primary="Add New Project" />
+          </ListItem>
+          <ListItem button component={Link} to="/home">
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
           </ListItem>
         </div>
         {/* <Divider />
@@ -208,11 +216,10 @@ export default function UserDashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* SAVED THEMES */}
+            {/* SAVED THEMES TABLE*/}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                {/* <TableComponent /> */}
-                TABLE PLACEHOLDER
+                <ThemesTable />
               </Paper>
             </Grid>
             {/* PREVIEW */}
