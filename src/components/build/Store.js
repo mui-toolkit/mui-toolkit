@@ -42,8 +42,8 @@ export const Store = () => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const changeTab = (event, newValue) => {
-    setTab(tab);
+  const changeTab = (event, newTab) => {
+    setTab(newTab);
   };
 
   const changeColorPickerDisplayed = () => {
