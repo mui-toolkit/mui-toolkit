@@ -4,13 +4,14 @@ import { createMuiTheme } from '@material-ui/core/';
 import { ThemeProvider } from '@material-ui/styles';
 
 export const Store = () => {
-	const [ color, setColor ] = useState('');
+	const [ color, setColor ] = useState('#3f51b5');
 	const [ secondaryColor, setSecondaryColor ] = useState('');
 	const [ defaultColor, setDefaultColor ] = useState('');
 	const [ paperColor, setPaperColor ] = useState('');
 	const [ expanded, setExpanded ] = React.useState('panel1');
+	const [ displayColorPicker, setDisplayColorPicker ] = useState(false);
 
-	const [ tab, setTab ] = React.useState(0);
+	const [ tab, setTab ] = useState(0);
 
 	const changeColor = (color) => {
 		setColor(color.hex);
@@ -33,6 +34,10 @@ export const Store = () => {
 
 	const changeTab = (event, newValue) => {
 		setTab(tab);
+	};
+
+	const changeColorPickerDisplayed = () => {
+		setDisplayColorPicker(!displayColorPicker ? true : false);
 	};
 
 	let downloadTheme = {
@@ -71,12 +76,14 @@ export const Store = () => {
 					paperColor={paperColor}
 					expanded={expanded}
 					tab={tab}
+					displayColorPicker={displayColorPicker}
 					changeColor={changeColor}
 					changeSecondaryColor={changeSecondaryColor}
 					changeDefaultColor={changeDefaultColor}
 					changePaperColor={changePaperColor}
 					changeExpanded={changeExpanded}
 					changeTab={changeTab}
+					changeColorPickerDisplayed={changeColorPickerDisplayed}
 					downloadTheme={downloadTheme}
 				/>
 			</ThemeProvider>

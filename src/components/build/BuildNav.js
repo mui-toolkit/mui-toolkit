@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-	Grid,
-	Typography,
-	Avatar,
-	MuiExpansionPanel,
-	MuiExpansionPanelSummary,
-	MuiExpansionPanelDetails
-} from '@material-ui/core/';
-
+import { Grid, Paper, Typography, Avatar } from '@material-ui/core/';
 import { makeStyles, withStyles } from '@material-ui/styles';
+import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
+import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
 const useStyles = makeStyles((theme) => ({
 	bubble: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Palette, SaveTheme, BuildNav } from '../build';
+import { Palette, SaveTheme, BuildNav, ColorPop } from '../build';
 import { PreviewButton, PreviewTypography, PreviewAppBar } from '../preview';
 import Download from '../Download';
 
@@ -52,11 +52,13 @@ export const Build = (props) => {
 		defaultColor,
 		paperColor,
 		expanded,
+		displayColorPicker,
 		changeColor,
 		changeSecondaryColor,
 		changePaperColor,
 		changeDefaultColor,
 		changeExpanded,
+		changeColorPickerDisplayed,
 		downloadTheme
 	} = props;
 
@@ -75,6 +77,7 @@ export const Build = (props) => {
 						<Grid item>
 							<Download downloadTheme={downloadTheme} />
 							<SaveTheme downloadTheme={downloadTheme} />
+
 							<Palette
 								color={color}
 								secondaryColor={secondaryColor}
@@ -84,6 +87,8 @@ export const Build = (props) => {
 								changeSecondaryColor={changeSecondaryColor}
 								changeDefaultColor={changeDefaultColor}
 								changePaperColor={changePaperColor}
+								displayColorPicker={displayColorPicker}
+								changeColorPickerDisplayed={changeColorPickerDisplayed}
 							/>
 						</Grid>
 					</Paper>
