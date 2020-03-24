@@ -1,14 +1,10 @@
 import React from 'react';
-import { Palette, SaveTheme, BuildNav } from '../build';
+import { Palette, SaveTheme, BuildNav, ColorPop } from '../build';
 import { PreviewButton, PreviewTypography, PreviewAppBar } from '../preview';
 import Download from '../Download';
 
-import { Grid, Paper, Typography, Avatar } from '@material-ui/core/';
+import { Grid, Paper, Typography, Avatar, Tabs, Tab, Box } from '@material-ui/core/';
 import { makeStyles, withStyles } from '@material-ui/styles';
-
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -56,12 +52,20 @@ export const Build = (props) => {
 		defaultColor,
 		paperColor,
 		expanded,
+		displayColorPicker,
 		changeColor,
 		changeSecondaryColor,
 		changePaperColor,
 		changeDefaultColor,
 		changeExpanded,
-		downloadTheme
+		changeColorPickerDisplayed,
+		downloadTheme,
+		displaySecondaryColorPicker,
+		changeSecondaryColorPickerDisplayed,
+		displayDefaultColorPicker,
+		changeDefaultColorPickerDisplayed,
+		displayPaperColorPicker,
+		changePaperColorPickerDisplayed
 	} = props;
 
 	const handleChange = (event, newValue) => {
@@ -79,6 +83,7 @@ export const Build = (props) => {
 						<Grid item>
 							<Download downloadTheme={downloadTheme} />
 							<SaveTheme downloadTheme={downloadTheme} />
+
 							<Palette
 								color={color}
 								secondaryColor={secondaryColor}
@@ -88,6 +93,14 @@ export const Build = (props) => {
 								changeSecondaryColor={changeSecondaryColor}
 								changeDefaultColor={changeDefaultColor}
 								changePaperColor={changePaperColor}
+								displayColorPicker={displayColorPicker}
+								changeColorPickerDisplayed={changeColorPickerDisplayed}
+								displaySecondaryColorPicker={displaySecondaryColorPicker}
+								changeSecondaryColorPickerDisplayed={changeSecondaryColorPickerDisplayed}
+								displayDefaultColorPicker={displayDefaultColorPicker}
+								changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
+								displayPaperColorPicker={displayPaperColorPicker}
+								changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
 							/>
 						</Grid>
 					</Paper>

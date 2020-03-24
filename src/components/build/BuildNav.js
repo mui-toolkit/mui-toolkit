@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Paper, Typography, Avatar } from '@material-ui/core/';
+import { Palette } from './index';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -85,6 +86,7 @@ export function BuildNav(props) {
 									}}
 									className={classes.bubble}
 								/>
+
 								<Typography>Primary Color</Typography>
 							</Grid>
 							<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
