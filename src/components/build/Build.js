@@ -1,5 +1,5 @@
 import React from 'react';
-import { Palette, SaveTheme, BuildNav } from '../build';
+import { Palette, SaveTheme, BuildNav, ColorPop } from '../build';
 import { PreviewAppBar, PreviewTabs } from '../preview';
 import Download from '../Download';
 
@@ -34,12 +34,20 @@ export const Build = props => {
     defaultColor,
     paperColor,
     expanded,
+    displayColorPicker,
     changeColor,
     changeSecondaryColor,
     changePaperColor,
     changeDefaultColor,
     changeExpanded,
+    changeColorPickerDisplayed,
     downloadTheme,
+    displaySecondaryColorPicker,
+    changeSecondaryColorPickerDisplayed,
+    displayDefaultColorPicker,
+    changeDefaultColorPickerDisplayed,
+    displayPaperColorPicker,
+    changePaperColorPickerDisplayed,
     tab,
     changeTab,
   } = props;
@@ -56,6 +64,7 @@ export const Build = props => {
             <Grid item>
               <Download downloadTheme={downloadTheme} />
               <SaveTheme downloadTheme={downloadTheme} />
+
               <Palette
                 color={color}
                 secondaryColor={secondaryColor}
@@ -65,6 +74,20 @@ export const Build = props => {
                 changeSecondaryColor={changeSecondaryColor}
                 changeDefaultColor={changeDefaultColor}
                 changePaperColor={changePaperColor}
+                displayColorPicker={displayColorPicker}
+                changeColorPickerDisplayed={changeColorPickerDisplayed}
+                displaySecondaryColorPicker={displaySecondaryColorPicker}
+                changeSecondaryColorPickerDisplayed={
+                  changeSecondaryColorPickerDisplayed
+                }
+                displayDefaultColorPicker={displayDefaultColorPicker}
+                changeDefaultColorPickerDisplayed={
+                  changeDefaultColorPickerDisplayed
+                }
+                displayPaperColorPicker={displayPaperColorPicker}
+                changePaperColorPickerDisplayed={
+                  changePaperColorPickerDisplayed
+                }
               />
             </Grid>
           </Paper>

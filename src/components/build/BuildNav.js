@@ -1,15 +1,10 @@
 import React from 'react';
 import { Grid, Paper, Typography, Avatar } from '@material-ui/core/';
+import { Palette } from './index';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-
-import Popover from '@material-ui/core/Popover';
-import Button from '@material-ui/core/Button';
-
-import { SketchPicker } from 'react-color';
-
 const useStyles = makeStyles(theme => ({
   bubble: {
     borderColor: '#c2c2c2',
@@ -20,7 +15,6 @@ const useStyles = makeStyles(theme => ({
     background: '#fff',
   },
 }));
-
 const ExpansionPanel = withStyles({
   root: {
     border: '1px solid rgba(0, 0, 0, .125)',
@@ -37,7 +31,6 @@ const ExpansionPanel = withStyles({
   },
   expanded: {},
 })(MuiExpansionPanel);
-
 const ExpansionPanelSummary = withStyles({
   root: {
     backgroundColor: 'rgba(0, 0, 0, .03)',
@@ -55,32 +48,14 @@ const ExpansionPanelSummary = withStyles({
   },
   expanded: {},
 })(MuiExpansionPanelSummary);
-
 const ExpansionPanelDetails = withStyles(theme => ({
   root: {
     padding: theme.spacing(2),
   },
 }))(MuiExpansionPanelDetails);
-
 export function BuildNav(props) {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorEl2, setAnchorEl2] = React.useState(null);
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    setAnchorEl2(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
   const { expanded, changeExpanded } = props;
-
   return (
     <React.Fragment>
       <Grid Item>
@@ -104,17 +79,15 @@ export function BuildNav(props) {
                 alignItems='center'
                 style={{ marginBottom: '1em' }}
               >
-                <Button onClick={handleClick}>
-                  <Avatar
-                    style={{
-                      color: '#fff',
-                      background: '#fff',
-                      marginRight: '10px',
-                    }}
-                    className={classes.bubble}
-                  />
-                  <Typography>Primary Color</Typography>
-                </Button>
+                <Avatar
+                  style={{
+                    color: '#fff',
+                    background: '#fff',
+                    marginRight: '10px',
+                  }}
+                  className={classes.bubble}
+                />
+                <Typography>Primary Color</Typography>
               </Grid>
               <Grid
                 container
@@ -122,17 +95,15 @@ export function BuildNav(props) {
                 alignItems='center'
                 style={{ marginBottom: '1em' }}
               >
-                <Button onClick={handleClick}>
-                  <Avatar
-                    style={{
-                      color: '#fff',
-                      background: '#fff',
-                      marginRight: '10px',
-                    }}
-                    className={classes.bubble}
-                  />
-                  <Typography>Secondary Color</Typography>
-                </Button>
+                <Avatar
+                  style={{
+                    color: '#fff',
+                    background: '#fff',
+                    marginRight: '10px',
+                  }}
+                  className={classes.bubble}
+                />
+                <Typography>Secondary Color</Typography>
               </Grid>
               <Grid
                 container
@@ -252,44 +223,6 @@ export function BuildNav(props) {
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </Grid>
-
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <Typography className={classes.typography}>
-          <SketchPicker />
-        </Typography>
-      </Popover>
-
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <Typography className={classes.typography}>
-          <SketchPicker />
-        </Typography>
-      </Popover>
     </React.Fragment>
   );
 }
