@@ -11,6 +11,9 @@ const useStyles = makeStyles(theme => ({
     borderStyle: 'solid',
     borderWidth: 1,
   },
+  expansionPanel: {
+    background: '#fff',
+  },
 }));
 
 const ExpansionPanel = withStyles({
