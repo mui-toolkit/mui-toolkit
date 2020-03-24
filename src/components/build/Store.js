@@ -8,14 +8,9 @@ export const Store = () => {
 	const [ secondaryColor, setSecondaryColor ] = useState('');
 	const [ defaultColor, setDefaultColor ] = useState('');
 	const [ paperColor, setPaperColor ] = useState('');
-	const [ tab, setTab ] = React.useState(0);
-
-	//BuildNav
 	const [ expanded, setExpanded ] = React.useState('panel1');
 
-	const changeExpanded = (panel) => (event, newExpanded) => {
-		setExpanded(newExpanded ? panel : false);
-	};
+	const [ tab, setTab ] = React.useState(0);
 
 	const changeColor = (color) => {
 		setColor(color.hex);
@@ -30,6 +25,10 @@ export const Store = () => {
 	};
 	const changePaperColor = (paperColor) => {
 		setPaperColor(paperColor.hex);
+	};
+
+	const changeExpanded = (panel) => (event, newExpanded) => {
+		setExpanded(newExpanded ? panel : false);
 	};
 
 	const changeTab = (event, newValue) => {

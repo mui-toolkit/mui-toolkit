@@ -3,12 +3,8 @@ import { Palette, SaveTheme, BuildNav } from '../build';
 import { PreviewButton, PreviewTypography, PreviewAppBar } from '../preview';
 import Download from '../Download';
 
-import { Grid, Paper, Typography, Avatar } from '@material-ui/core/';
+import { Grid, Paper, Typography, Avatar, Tabs, Tab, Box } from '@material-ui/core/';
 import { makeStyles, withStyles } from '@material-ui/styles';
-
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
