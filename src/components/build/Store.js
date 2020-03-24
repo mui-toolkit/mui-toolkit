@@ -12,6 +12,10 @@ export const Store = () => {
 	const [ displayColorPicker, setDisplayColorPicker ] = useState(false);
 	const [ displaySecondaryColorPicker, setDisplaySecondaryColorPicker ] = useState(false);
 
+	const [ displayDefaultColorPicker, setDisplayDefaultColorPicker ] = useState(false);
+
+	const [ displayPaperColorPicker, setDisplayPaperColorPicker ] = useState(false);
+
 	const [ tab, setTab ] = useState(0);
 
 	const changeColor = (color) => {
@@ -43,6 +47,12 @@ export const Store = () => {
 
 	const changeSecondaryColorPickerDisplayed = () => {
 		setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
+	};
+	const changeDefaultColorPickerDisplayed = () => {
+		setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
+	};
+	const changePaperColorPickerDisplayed = () => {
+		setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
 	};
 
 	let downloadTheme = {
@@ -92,6 +102,10 @@ export const Store = () => {
 					downloadTheme={downloadTheme}
 					displaySecondaryColorPicker={displaySecondaryColorPicker}
 					changeSecondaryColorPickerDisplayed={changeSecondaryColorPickerDisplayed}
+					displayDefaultColorPicker={displayDefaultColorPicker}
+					changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
+					displayPaperColorPicker={displayPaperColorPicker}
+					changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
 				/>
 			</ThemeProvider>
 		</React.Fragment>

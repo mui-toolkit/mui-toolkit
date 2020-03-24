@@ -32,11 +32,21 @@ export const Palette = (props) => {
 				</Grid>
 				<Grid item>
 					<p>Default color is {props.defaultColor}</p>
-					<SketchPicker color={props.defaultColor} onChange={props.changeDefaultColor} />
+					<ColorPop
+						color={props.defaultColor}
+						changeColor={props.changeDefaultColor}
+						displayColorPicker={props.displayDefaultColorPicker}
+						changeColorPickerDisplayed={props.changeDefaultColorPickerDisplayed}
+					/>
 				</Grid>
 				<Grid item>
 					<p>Paper color is {props.paperColor}</p>
-					<SketchPicker color={props.paperColor} onChange={props.changePaperColor} />
+					<ColorPop
+						color={props.paperColor}
+						changeColor={props.changePaperColor}
+						displayColorPicker={props.displayPaperColorPicker}
+						changeColorPickerDisplayed={props.changePaperColorPickerDisplayed}
+					/>
 				</Grid>
 			</Grid>
 		</React.Fragment>

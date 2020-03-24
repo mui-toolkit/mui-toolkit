@@ -61,7 +61,11 @@ export const Build = (props) => {
 		changeColorPickerDisplayed,
 		downloadTheme,
 		displaySecondaryColorPicker,
-		changeSecondaryColorPickerDisplayed
+		changeSecondaryColorPickerDisplayed,
+		displayDefaultColorPicker,
+		changeDefaultColorPickerDisplayed,
+		displayPaperColorPicker,
+		changePaperColorPickerDisplayed
 	} = props;
 
 	const handleChange = (event, newValue) => {
@@ -93,6 +97,10 @@ export const Build = (props) => {
 								changeColorPickerDisplayed={changeColorPickerDisplayed}
 								displaySecondaryColorPicker={displaySecondaryColorPicker}
 								changeSecondaryColorPickerDisplayed={changeSecondaryColorPickerDisplayed}
+								displayDefaultColorPicker={displayDefaultColorPicker}
+								changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
+								displayPaperColorPicker={displayPaperColorPicker}
+								changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
 							/>
 						</Grid>
 					</Paper>
