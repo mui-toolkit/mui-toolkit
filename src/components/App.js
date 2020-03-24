@@ -31,6 +31,12 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/learn" component={Learn} />
         <Route exact path="/design" component={Store} />
+        {/* <Route exact path="/design/:themeName" component={Store} /> */}
+        <Route
+          render={props => <Store {...props} />}
+          exact
+          path="/design/:savedTheme"
+        />
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={() => <div>logout</div>} />
         <Route exact path="/signup" component={Signup} />

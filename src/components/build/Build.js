@@ -1,22 +1,24 @@
-import React from 'react';
-import { Palette, SaveTheme, BuildNav } from '../build';
-import { PreviewButton, PreviewTypography, PreviewAppBar } from '../preview';
-import Download from '../Download';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Palette, SaveTheme, BuildNav } from "../build";
+import { PreviewButton, PreviewTypography, PreviewAppBar } from "../preview";
+import Download from "../Download";
 
-import { Grid, Paper, Typography, Avatar } from '@material-ui/core/';
-import { makeStyles, withStyles } from '@material-ui/styles';
+import { Grid, Paper, Typography, Avatar } from "@material-ui/core/";
+import { makeStyles, withStyles } from "@material-ui/styles";
 
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Box from "@material-ui/core/Box";
+import { db } from "../../config/firebase";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
     <Typography
-      component='div'
-      role='tabpanel'
+      component="div"
+      role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
@@ -29,26 +31,30 @@ function TabPanel(props) {
 
 const useStyles = makeStyles(theme => ({
   preview: {
-    padding: '2em',
-    textAlign: 'center',
+    padding: "2em",
+    textAlign: "center"
   },
   previewPaper: {
-    marginTop: '5em',
-    textAlign: 'center',
-    background: '#fff',
-    height: '100%',
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff",
+    height: "100%"
   },
   builderPaper: {
-    marginTop: '5em',
-    textAlign: 'center',
-    background: '#fff',
-  },
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff"
+  }
 }));
 
 export const Build = props => {
   const classes = useStyles();
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const { retrievedTheme } = {};
+
+  const { savedTheme } = useParams();
+  console.log("savedTheme Name: ", savedTheme);
 
   const {
     color,
@@ -59,13 +65,51 @@ export const Build = props => {
     changeSecondaryColor,
     changePaperColor,
     changeDefaultColor,
-    downloadTheme,
+    downloadTheme
   } = props;
+
+  // useState will re set state to a saved theme only IF coming from userDashboard
+  const [renderedColor, setColor] = useState(color.hex);
+  const [renderedSecondaryColor, setSecondaryColor] = useState(
+    secondaryColor.hex
+  );
+  const [renderedDefaultColor, setDefaultColor] = useState(defaultColor.hex);
+  const [renderedPaperColor, setPaperColor] = useState(paperColor.hex);
+  const [renderedTheme, setTheme] = useState(downloadTheme);
+
+  useEffect(() => {
+    if (savedTheme) {
+      const response = async () => {
+        await db
+          .collection("CustomizedThemes")
+          .doc(`${savedTheme}`)
+          .get()
+          .then(doc => {
+            console.log("saved Theme doc", doc.data());
+
+            if (doc.data().palette.primary.main)
+              setColor(doc.data().palette.primary.main);
+            if (doc.data().palette.secondary.main)
+              setSecondaryColor(doc.data().palette.secondary.main);
+            if (doc.data().palette.default.main)
+              setDefaultColor(doc.data().palette.default.main);
+            if (doc.data().background.paper)
+              setPaperColor(doc.data().background.paper);
+            if (doc.data()) setTheme(doc.data());
+          })
+          .catch(err => {
+            console.log("Error getting documents", err);
+          });
+      };
+      response();
+    }
+  }, []);
+
+  console.log("renderedTheme", renderedTheme);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  // needs a themeName pop up so user can name their theme and it will be referenced in the table of Saved Themes.  .collection('CT').doc(`${themeName}`.set({})) should create a new collection in CustomizedThemes with doc name themeName and allow the collection to contain any/all fields
 
   return (
     <section className={classes.root}>
@@ -75,13 +119,13 @@ export const Build = props => {
           <Paper className={classes.builderPaper}>
             <BuildNav />
             <Grid item>
-              <Download downloadTheme={downloadTheme} />
-              <SaveTheme downloadTheme={downloadTheme} />
+              <Download downloadTheme={renderedTheme} />
+              <SaveTheme downloadTheme={renderedTheme} />
               <Palette
-                color={color}
-                secondaryColor={secondaryColor}
-                defaultColor={defaultColor}
-                paperColor={paperColor}
+                color={renderedColor}
+                secondaryColor={renderedSecondaryColor}
+                defaultColor={renderedDefaultColor}
+                paperColor={renderedPaperColor}
                 changeColor={changeColor}
                 changeSecondaryColor={changeSecondaryColor}
                 changeDefaultColor={changeDefaultColor}
@@ -98,8 +142,8 @@ export const Build = props => {
             style={{ background: `${defaultColor}` }}
           >
             <PreviewAppBar
-              secondaryColor={secondaryColor}
-              color={color}
+              secondaryColor={renderedSecondaryColor}
+              color={renderedColor}
               className={classes.container}
             />
             <Grid item className={classes.preview}>
@@ -107,14 +151,14 @@ export const Build = props => {
                 <Tabs
                   value={value}
                   onChange={handleChange}
-                  aria-label='simple tabs example'
+                  aria-label="simple tabs example"
                   className={classes.tabContainer}
                   centered
                 >
-                  <Tab label='Item One' />
-                  <Tab label='Buttons' />
-                  <Tab label='Typography' />
-                  <Tab label='Alerts' />
+                  <Tab label="Item One" />
+                  <Tab label="Buttons" />
+                  <Tab label="Typography" />
+                  <Tab label="Alerts" />
                 </Tabs>
                 <TabPanel value={value} index={0}>
                   item one

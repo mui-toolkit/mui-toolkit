@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import PropTypes from "prop-types";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -26,10 +28,10 @@ function createData(
 
 //dummy data
 const rows = [
-  createData("Haskell", 20200307, "red", "blue", "Roboto"),
+  createData("DEMO", 20200307, "red", "blue", "Roboto"),
   createData("America", 20200101, "amarillo", "azul", "Arial"),
   createData("Haskell", 20200307, "red", "blue", "Roboto"),
-  createData("FullStack", 20200307, "red", "silver", "Roboto"),
+  createData("RAINBOW TEST", 20200307, "red", "silver", "Roboto"),
   createData("FullStack", 20200307, "red", "silver", "Roboto"),
   createData("FullStack", 20200307, "pink", "silver", "Roboto"),
   createData("FullStack", 20200307, "pink", "silver", "Roboto"),
@@ -262,7 +264,9 @@ export default function SavedThemes() {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.themeName}
+                      component={Link}
+                      to={`/design/${row.themeName}/`}
                     >
                       <TableCell
                         component="th"

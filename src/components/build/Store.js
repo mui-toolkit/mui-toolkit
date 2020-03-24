@@ -1,70 +1,70 @@
-import React, { useState } from 'react';
-import { Build } from '../build';
-import { createMuiTheme } from '@material-ui/core/';
-import { ThemeProvider } from '@material-ui/styles';
+import React, { useState } from "react";
+import { Build } from "../build";
+import { createMuiTheme } from "@material-ui/core/";
+import { ThemeProvider } from "@material-ui/styles";
 
-export const Store = () => {
-	const [ color, setColor ] = useState('');
-	const [ secondaryColor, setSecondaryColor ] = useState('');
-	const [ defaultColor, setDefaultColor ] = useState('');
-	const [ paperColor, setPaperColor ] = useState('');
+export const Store = props => {
+  const [color, setColor] = useState("");
+  const [secondaryColor, setSecondaryColor] = useState("");
+  const [defaultColor, setDefaultColor] = useState("");
+  const [paperColor, setPaperColor] = useState("");
 
-	const changeColor = (color) => {
-		setColor(color.hex);
-	};
+  const changeColor = color => {
+    setColor(color.hex);
+  };
 
-	const changeSecondaryColor = (secondaryColor) => {
-		setSecondaryColor(secondaryColor.hex);
-	};
+  const changeSecondaryColor = secondaryColor => {
+    setSecondaryColor(secondaryColor.hex);
+  };
 
-	const changeDefaultColor = (defaultColor) => {
-		setDefaultColor(defaultColor.hex);
-	};
-	const changePaperColor = (paperColor) => {
-		setPaperColor(paperColor.hex);
-	};
+  const changeDefaultColor = defaultColor => {
+    setDefaultColor(defaultColor.hex);
+  };
+  const changePaperColor = paperColor => {
+    setPaperColor(paperColor.hex);
+  };
 
-	let downloadTheme = {
-		palette: {
-			primary: { main: `${color}` ? `${color}` : '#3f51b5' },
-			secondary: {
-				main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057'
-			},
-			background: {
-				paper: `${paperColor}`,
-				default: `${defaultColor}`
-			}
-		}
-	};
+  let downloadTheme = {
+    palette: {
+      primary: { main: `${color}` ? `${color}` : "#3f51b5" },
+      secondary: {
+        main: `${secondaryColor}` ? `${secondaryColor}` : "#f50057"
+      },
+      background: {
+        paper: `${paperColor}`,
+        default: `${defaultColor}`
+      }
+    }
+  };
 
-	const customTheme = createMuiTheme({
-		palette: {
-			primary: { main: `${color}` ? `${color}` : '#3f51b5' },
-			secondary: {
-				main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057'
-			},
-			background: {
-				paper: `${paperColor}`,
-				default: `${defaultColor}`
-			}
-		}
-	});
+  const customTheme = createMuiTheme({
+    palette: {
+      primary: { main: `${color}` ? `${color}` : "#3f51b5" },
+      secondary: {
+        main: `${secondaryColor}` ? `${secondaryColor}` : "#f50057"
+      },
+      background: {
+        paper: `${paperColor}`,
+        default: `${defaultColor}`
+      }
+    }
+  });
 
-	return (
-		<React.Fragment>
-			<ThemeProvider theme={customTheme}>
-				<Build
-					color={color}
-					secondaryColor={secondaryColor}
-					defaultColor={defaultColor}
-					paperColor={paperColor}
-					changeColor={changeColor}
-					changeSecondaryColor={changeSecondaryColor}
-					changeDefaultColor={changeDefaultColor}
-					changePaperColor={changePaperColor}
-					downloadTheme={downloadTheme}
-				/>
-			</ThemeProvider>
-		</React.Fragment>
-	);
+  return (
+    <React.Fragment>
+      <ThemeProvider theme={customTheme}>
+        <Build
+          color={color}
+          secondaryColor={secondaryColor}
+          defaultColor={defaultColor}
+          paperColor={paperColor}
+          changeColor={changeColor}
+          changeSecondaryColor={changeSecondaryColor}
+          changeDefaultColor={changeDefaultColor}
+          changePaperColor={changePaperColor}
+          downloadTheme={downloadTheme}
+        />
+      </ThemeProvider>
+    </React.Fragment>
+  );
 };
