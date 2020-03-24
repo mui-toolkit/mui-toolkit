@@ -14,7 +14,7 @@ import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import HomeIcon from '@material-ui/icons/Home';
+import HomeIcon from "@material-ui/icons/Home";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import FaceIcon from "@material-ui/icons/Face";
 import PaletteIcon from "@material-ui/icons/Palette";
@@ -226,7 +226,7 @@ export default function UserDashboard() {
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {/* <PreviewComponent /> */}
-                PREVIEW PLACEHOLDER
+                PREVIEW PLACEHOLDER (MODAL? GROW, ZOOM, POPOVER transitions??)
               </Paper>
             </Grid>
           </Grid>

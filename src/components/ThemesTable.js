@@ -221,6 +221,16 @@ export default function SavedThemes() {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  // if (!rows.length) {
+  //   console.log('empty')
+  //   return (
+  //     <div>
+  //       <h2>No Projects Available</h2>
+  // <Link to="/design">Build your first professional Material UI Project</Link>;
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
