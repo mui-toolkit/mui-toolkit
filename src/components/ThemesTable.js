@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import PropTypes from "prop-types";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -16,21 +18,21 @@ import Switch from "@material-ui/core/Switch";
 
 function createData(
   themeName,
-  date,
+  createdAt,
   primaryPalette,
   secondaryPalette,
   typography
 ) {
-  return { themeName, date, primaryPalette, secondaryPalette, typography };
+  return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
 }
 
-//dummy data // would it be hard to insert a thumbnail?
+//dummy data
 const rows = [
-  createData("Haskell", 20200307, "red", "blue", "Roboto"),
+  createData("DEMO", 20200307, "red", "blue", "Roboto"),
   createData("America", 20200101, "amarillo", "azul", "Arial"),
   createData("Haskell", 20200307, "red", "blue", "Roboto"),
-  createData("FullStack", 20200307, "red", "silver", "Roboto"),
-  createData("FullStack", 20200307, "red", "silver", "Roboto"),
+  createData("RAINBOW BRIGHT", 20200307, "red", "silver", "Roboto"),
+  createData("green", 20200307, "red", "silver", "Roboto"),
   createData("FullStack", 20200307, "pink", "silver", "Roboto"),
   createData("FullStack", 20200307, "pink", "silver", "Roboto"),
   createData("FullStack", 20200401, "pink", "silver", "Roboto"),
@@ -92,7 +94,7 @@ const headCells = [
     minWidth: 170
   },
   {
-    id: "date",
+    id: "createdAt",
     columnAlignment: false,
     disablePadding: true,
     label: "Date saved",
@@ -191,7 +193,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SavedThemes() {
+export default function ThemesTable() {
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
@@ -220,6 +222,16 @@ export default function SavedThemes() {
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
+  // if (!rows.length) {
+  //   console.log('empty')
+  //   return (
+  //     <div>
+  //       <h2>No Projects Available</h2>
+  // <Link to="/design">Build your first professional Material UI Project</Link>;
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className={classes.root}>
@@ -252,7 +264,10 @@ export default function SavedThemes() {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.themeName}
+                      component={Link}
+                      to={`/design/${row.themeName}/`}
+                      style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
                         component="th"
@@ -262,7 +277,7 @@ export default function SavedThemes() {
                       >
                         {row.themeName}
                       </TableCell>
-                      <TableCell align="right">{row.date}</TableCell>
+                      <TableCell align="right">{row.createdAt}</TableCell>
                       <TableCell align="right">{row.primaryPalette}</TableCell>
                       <TableCell align="right">
                         {row.secondaryPalette}

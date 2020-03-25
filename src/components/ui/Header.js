@@ -1,30 +1,34 @@
+
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import firebase from 'firebase';
-import 'firebase/auth';
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/styles";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import firebase from "firebase";
+import "firebase/auth";
+
 
 const useStyles = makeStyles(theme => ({
   // toolBarMargin: {
   //   ...theme.mixins.toolbar,
   // },
   tabContainer: {
-    marginLeft: 'auto'
+    marginLeft: "auto"
   },
   tab: {
-    textTransform: 'none',
+    textTransform: "none",
     fontWeight: 400,
-    fontSize: '1rem',
+    fontSize: "1rem",
     minWidth: 10,
 
-    marginLeft: '25px',
-    color: '#000'
+
+    marginLeft: "25px",
+    color: "#000"
+
   }
 }));
 const defaultUser = { loggedIn: false, email: '' };
@@ -114,7 +118,9 @@ export default function Header(props) {
   }
   return (
     <React.Fragment>
-      <AppBar position="fixed" style={{ background: '#fff' }}>
+
+      <AppBar position="fixed" style={{ background: "#fff" }}>
+
         <Toolbar>
           <Button
             component={Link}
@@ -148,7 +154,12 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              props={props}
+              to="/userdashboard"
+              label="User Dashboard"
+            />
+            <Tab
+              className={classes.tab}
+              component={Link}
               to="/logout"
               label="Logout"
               onClick={handleClick}

@@ -1,111 +1,147 @@
-import React from 'react';
-import { Palette, SaveTheme } from '../build';
-import { PreviewButton, PreviewTypography, PreviewAppBar } from '../preview';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Palette, SaveTheme, BuildNav, ColorPop } from '../build';
+import { PreviewAppBar, PreviewTabs } from '../preview';
 import Download from '../Download';
 
 import { Grid, Paper } from '@material-ui/core/';
+
 import { makeStyles } from '@material-ui/styles';
+import { db } from '../../config/firebase';
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		// display: 'flex',
-		// flex: 3,
-		// flexDirection: 'column',
-	},
-	// buttonRoot: {
-	//   padding: theme.spacing.unit,
-	// },
-	// selector: {
-	//   // alignSelf: 'center',
-	//   // margin: theme.spacing.unit,
-	// },
-	container: {
-		// align: 'center',
-		flex: 1,
-		overflow: 'auto',
-		width: '50%'
-		// background: '#000',
-	},
-	builderPaper: {
-		padding: '1em',
-		marginTop: '5em',
-		textAlign: 'center',
-		background: '#fff'
-		// color: theme.palette.text.secondary,
-	},
-	previewPaper: {
-		padding: '5em',
-		marginTop: '2em',
-		textAlign: 'center',
-		background: '#fff'
-
-		// color: theme.palette.text.secondary,
-		// height: '100vh',
-		// background: '#000',
-	}
+const useStyles = makeStyles(theme => ({
+  preview: {
+    padding: '2em',
+    textAlign: 'center',
+  },
+  previewPaper: {
+    marginTop: '5em',
+    textAlign: 'center',
+    background: '#fff',
+    height: '100%',
+  },
+  builderPaper: {
+    marginTop: '5em',
+    textAlign: 'center',
+    background: '#fff',
+  },
 }));
 
-export const Build = (props) => {
-	const classes = useStyles();
+export const Build = props => {
+  const classes = useStyles();
 
-	const {
-		color,
-		secondaryColor,
-		defaultColor,
-		paperColor,
-		changeColor,
-		changeSecondaryColor,
-		changePaperColor,
-		changeDefaultColor,
-		downloadTheme
-	} = props;
+  const { savedTheme } = useParams();
+  console.log('savedTheme Name: ', savedTheme);
 
-	// needs a themeName pop up so user can name their theme and it will be referenced in the table of Saved Themes.  .collection('CT').doc(`${themeName}`.set({})) should create a new collection in CustomizedThemes with doc name themeName and allow the collection to contain any/all fields
+  const {
+    color,
+    secondaryColor,
+    defaultColor,
+    paperColor,
+    expanded,
+    displayColorPicker,
+    changeColor,
+    changeSecondaryColor,
+    changePaperColor,
+    changeDefaultColor,
+    changeExpanded,
+    changeColorPickerDisplayed,
+    displaySecondaryColorPicker,
+    changeSecondaryColorPickerDisplayed,
+    displayDefaultColorPicker,
+    changeDefaultColorPickerDisplayed,
+    displayPaperColorPicker,
+    changePaperColorPickerDisplayed,
+    tab,
+    changeTab,
+    downloadTheme,
+    setColor,
+    setSecondaryColor,
+    setDefaultColor,
+    setPaperColor,
+  } = props;
 
-	return (
-		<section className={classes.root}>
-			<Grid container>
-				<Grid item className={classes.selector}>
-					<Paper className={classes.builderPaper}>
-						<Palette
-							color={color}
-							secondaryColor={secondaryColor}
-							defaultColor={defaultColor}
-							paperColor={paperColor}
-							changeColor={changeColor}
-							changeSecondaryColor={changeSecondaryColor}
-							changeDefaultColor={changeDefaultColor}
-							changePaperColor={changePaperColor}
-						/>
-						{/* Theme Builder End */}
-					</Paper>
-				</Grid>
-				<Grid item className={classes.container}>
-					<Paper className={classes.previewPaper} style={{ background: `${defaultColor}` }}>
-						{/* Preview Start */}
+  useEffect(() => {
+    if (savedTheme) {
+      const response = async () => {
+        await db
+          .collection('CustomizedThemes')
+          .doc(`${savedTheme}`)
+          .get()
+          .then(doc => {
+            console.log('saved Theme doc', doc.data());
+            if (doc.data().palette.primary.main)
+              setColor(doc.data().palette.primary.main);
+            if (doc.data().palette.secondary.main)
+              setSecondaryColor(doc.data().palette.secondary.main);
+            if (doc.data().palette.background.default)
+              setDefaultColor(doc.data().palette.background.default);
+            if (doc.data().palette.background.paper)
+              setPaperColor(doc.data().palette.background.paper);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      };
+      response();
+    }
+  }, []);
 
-						<Grid item>
-							<PreviewAppBar
-								secondaryColor={secondaryColor}
-								color={color}
-								className={classes.container}
-							/>
-							<Grid container spacing={1}>
-								<Grid item xs={12}>
-									<PreviewButton />
-								</Grid>
-								<Grid item xs={12}>
-									<PreviewTypography />
-								</Grid>
-							</Grid>
-						</Grid>
+  // needs a themeName pop up so user can name their theme and it will be referenced in the table of Saved Themes.  .collection('CT').doc(`${themeName}`.set({})) should create a new collection in CustomizedThemes with doc name themeName and allow the collection to contain any/all fields
 
-						<Download downloadTheme={downloadTheme} />
-						{/* Preview End */}
-						<SaveTheme downloadTheme={downloadTheme} />
-					</Paper>
-				</Grid>
-			</Grid>
-		</section>
-	);
+  return (
+    <section className={classes.root}>
+      <Grid container spacing={1}>
+        {/* BUILD START */}
+        <Grid item xs={3} className={classes.selector}>
+          <Paper className={classes.builderPaper}>
+            <BuildNav
+              expanded={expanded}
+              changeExpanded={changeExpanded}
+              color={color}
+              secondaryColor={secondaryColor}
+              defaultColor={defaultColor}
+              paperColor={paperColor}
+              changeColor={changeColor}
+              changeSecondaryColor={changeSecondaryColor}
+              changeDefaultColor={changeDefaultColor}
+              changePaperColor={changePaperColor}
+              displayColorPicker={displayColorPicker}
+              changeColorPickerDisplayed={changeColorPickerDisplayed}
+              displaySecondaryColorPicker={displaySecondaryColorPicker}
+              changeSecondaryColorPickerDisplayed={
+                changeSecondaryColorPickerDisplayed
+              }
+              displayDefaultColorPicker={displayDefaultColorPicker}
+              changeDefaultColorPickerDisplayed={
+                changeDefaultColorPickerDisplayed
+              }
+              displayPaperColorPicker={displayPaperColorPicker}
+              changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
+            />
+            <Grid item>
+              <Download downloadTheme={downloadTheme} />
+              <SaveTheme downloadTheme={downloadTheme} />
+            </Grid>
+          </Paper>
+        </Grid>
+        {/* BUILD END */}
+        {/* Preview Start */}
+        <Grid item xs={9} className={classes.preview}>
+          <Paper
+            className={classes.previewPaper}
+            style={{ background: `${defaultColor}` }}
+          >
+            <PreviewAppBar
+              secondaryColor={secondaryColor}
+              color={color}
+              className={classes.container}
+            />
+            <PreviewTabs tab={tab} changeTab={changeTab} />
+          </Paper>
+        </Grid>
+        {/* Preview End */}
+      </Grid>
+    </section>
+  );
 };

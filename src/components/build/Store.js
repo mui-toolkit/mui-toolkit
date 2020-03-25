@@ -4,67 +4,127 @@ import { createMuiTheme } from '@material-ui/core/';
 import { ThemeProvider } from '@material-ui/styles';
 
 export const Store = () => {
-	const [ color, setColor ] = useState('');
-	const [ secondaryColor, setSecondaryColor ] = useState('');
-	const [ defaultColor, setDefaultColor ] = useState('');
-	const [ paperColor, setPaperColor ] = useState('');
+  //General
+  const [color, setColor] = useState('#3f51b5');
+  const [secondaryColor, setSecondaryColor] = useState('#f50057');
+  const [defaultColor, setDefaultColor] = useState('#fff');
+  const [paperColor, setPaperColor] = useState('#fff');
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
+  const [
+    displaySecondaryColorPicker,
+    setDisplaySecondaryColorPicker,
+  ] = useState(false);
+  const [displayDefaultColorPicker, setDisplayDefaultColorPicker] = useState(
+    false,
+  );
+  const [displayPaperColorPicker, setDisplayPaperColorPicker] = useState(false);
 
-	const changeColor = (color) => {
-		setColor(color.hex);
-	};
+  //Material-UI states
+  const [expanded, setExpanded] = useState('panel1');
+  const [tab, setTab] = useState(0);
 
-	const changeSecondaryColor = (secondaryColor) => {
-		setSecondaryColor(secondaryColor.hex);
-	};
+  //General Handlers
+  const changeColor = color => {
+    setColor(color.hex);
+  };
 
-	const changeDefaultColor = (defaultColor) => {
-		setDefaultColor(defaultColor.hex);
-	};
-	const changePaperColor = (paperColor) => {
-		setPaperColor(paperColor.hex);
-	};
+  const changeSecondaryColor = secondaryColor => {
+    setSecondaryColor(secondaryColor.hex);
+  };
 
-	let downloadTheme = {
-		palette: {
-			primary: { main: `${color}` ? `${color}` : '#3f51b5' },
-			secondary: {
-				main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057'
-			},
-			background: {
-				paper: `${paperColor}`,
-				default: `${defaultColor}`
-			}
-		}
-	};
+  const changeDefaultColor = defaultColor => {
+    setDefaultColor(defaultColor.hex);
+  };
 
-	const customTheme = createMuiTheme({
-		palette: {
-			primary: { main: `${color}` ? `${color}` : '#3f51b5' },
-			secondary: {
-				main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057'
-			},
-			background: {
-				paper: `${paperColor}`,
-				default: `${defaultColor}`
-			}
-		}
-	});
+  const changePaperColor = paperColor => {
+    setPaperColor(paperColor.hex);
+  };
 
-	return (
-		<React.Fragment>
-			<ThemeProvider theme={customTheme}>
-				<Build
-					color={color}
-					secondaryColor={secondaryColor}
-					defaultColor={defaultColor}
-					paperColor={paperColor}
-					changeColor={changeColor}
-					changeSecondaryColor={changeSecondaryColor}
-					changeDefaultColor={changeDefaultColor}
-					changePaperColor={changePaperColor}
-					downloadTheme={downloadTheme}
-				/>
-			</ThemeProvider>
-		</React.Fragment>
-	);
+  const changeColorPickerDisplayed = () => {
+    setDisplayColorPicker(!displayColorPicker ? true : false);
+  };
+
+  const changeSecondaryColorPickerDisplayed = () => {
+    setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
+  };
+
+  const changeDefaultColorPickerDisplayed = () => {
+    setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
+  };
+
+  const changePaperColorPickerDisplayed = () => {
+    setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
+  };
+
+  //Material-Ui handlers
+  const changeExpanded = panel => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
+  const changeTab = (event, newTab) => {
+    setTab(newTab);
+  };
+
+  let downloadTheme = {
+    palette: {
+      primary: { main: `${color}` ? `${color}` : '#3f51b5' },
+      secondary: {
+        main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057',
+      },
+      background: {
+        paper: `${paperColor}`,
+        default: `${defaultColor}`,
+      },
+    },
+  };
+
+  const customTheme = createMuiTheme({
+    palette: {
+      primary: { main: `${color}` ? `${color}` : '#3f51b5' },
+      secondary: {
+        main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057',
+      },
+      background: {
+        paper: `${paperColor}`,
+        default: `${defaultColor}`,
+      },
+    },
+  });
+
+  return (
+    <React.Fragment>
+      <ThemeProvider theme={customTheme}>
+        <Build
+          color={color}
+          setColor={setColor}
+          secondaryColor={secondaryColor}
+          setSecondaryColor={setSecondaryColor}
+          defaultColor={defaultColor}
+          setDefaultColor={setDefaultColor}
+          paperColor={paperColor}
+          setPaperColor={setPaperColor}
+          expanded={expanded}
+          tab={tab}
+          displayColorPicker={displayColorPicker}
+          changeColor={changeColor}
+          changeSecondaryColor={changeSecondaryColor}
+          changeDefaultColor={changeDefaultColor}
+          changePaperColor={changePaperColor}
+          changeExpanded={changeExpanded}
+          changeTab={changeTab}
+          changeColorPickerDisplayed={changeColorPickerDisplayed}
+          downloadTheme={downloadTheme}
+          displaySecondaryColorPicker={displaySecondaryColorPicker}
+          changeSecondaryColorPickerDisplayed={
+            changeSecondaryColorPickerDisplayed
+          }
+          displayDefaultColorPicker={displayDefaultColorPicker}
+          changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
+          displayPaperColorPicker={displayPaperColorPicker}
+          changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
+          downloadTheme={downloadTheme}
+        />
+      </ThemeProvider>
+    </React.Fragment>
+  );
 };
