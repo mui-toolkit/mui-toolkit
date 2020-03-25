@@ -4,7 +4,7 @@
 //  * having to figure out which file they belong to!
 //  */
 export { Build } from './Build';
-export { Palette } from './Palette';
+export { General } from './General';
 export { Store } from './Store';
 export { SaveTheme } from './SaveTheme';
 export { BuildNav } from './BuildNav';
