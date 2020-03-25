@@ -14,6 +14,19 @@ export const Store = () => {
 	const [ displayDefaultColorPicker, setDisplayDefaultColorPicker ] = useState(false);
 	const [ displayPaperColorPicker, setDisplayPaperColorPicker ] = useState(false);
 
+	//Buttons
+	const [ buttonRipple, setButtonRipple ] = useState(false);
+	const [ buttonElevation, setButtonElevation ] = useState(false);
+	const [ buttonHoverColor, setButtonHoverColor ] = useState('');
+	const [ buttonHoverOpacity, setButtonHoverOpacity ] = useState('');
+	const [ buttonFontWeight, setButtonFontWeight ] = useState('');
+	const [ buttonFontSize, setButtonFontSize ] = useState('');
+	//none, capitalize, uppercase, lowercase, initial, inherit
+	const [ buttonTextTransform, setButtonTestTransform ] = useState('');
+	const [ buttonHeight, setButtonHeight ] = useState('');
+	const [ buttonPadding, setButtonPadding ] = useState('');
+	const [ buttonBorderRadius, setButtonBorderRadius ] = useState('');
+
 	//Material-UI states
 	const [ expanded, setExpanded ] = useState('panel1');
 	const [ tab, setTab ] = useState(0);
@@ -116,6 +129,27 @@ export const Store = () => {
 					displayPaperColorPicker={displayPaperColorPicker}
 					changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
 					downloadTheme={downloadTheme}
+					//buttons
+					buttonRipple={buttonRipple}
+					setButtonRipple={setButtonRipple}
+					buttonElevation={buttonElevation}
+					setButtonElevation={setButtonElevation}
+					buttonHoverColor={buttonHoverColor}
+					setButtonHoverColor={setButtonHoverColor}
+					buttonHoverOpacity={buttonHoverOpacity}
+					setButtonHoverOpacity={setButtonHoverOpacity}
+					buttonFontWeight={buttonFontWeight}
+					setButtonFontWeight={setButtonFontWeight}
+					buttonFontSize={buttonFontSize}
+					setButtonFontSize={setButtonFontSize}
+					buttonTextTransform={buttonTextTransform}
+					setButtonTestTransform={setButtonTestTransform}
+					buttonHeight={buttonHeight}
+					setButtonHeight={setButtonHeight}
+					buttonPadding={buttonPadding}
+					setButtonPadding={setButtonPadding}
+					buttonBorderRadius={buttonBorderRadius}
+					setButtonBorderRadius={setButtonBorderRadius}
 				/>
 			</ThemeProvider>
 		</React.Fragment>
