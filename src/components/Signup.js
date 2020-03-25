@@ -36,7 +36,7 @@ export function Signup(props) {
             username: username
           })
           .then(() => {
-            console.log('created new user in db');
+            console.log('created new user in db,props', props);
             props.history.push('/');
           });
       })
@@ -62,7 +62,7 @@ export function Signup(props) {
             justify="center"
             alignItems="center"
           >
-            <Typography variant="h2">Sign Up</Typography>
+            <Typography variant="h2">SSign Up</Typography>
           </Grid>
         </Grid>
         <form onSubmit={handleSubmit}>

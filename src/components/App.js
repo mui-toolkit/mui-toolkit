@@ -14,6 +14,7 @@ import firebase from "firebase";
 import "firebase/auth";
 import { Store } from "./build/";
 
+
 firebase.auth().onAuthStateChanged(user => {
   console.log("user", user);
   if (user) {
@@ -37,7 +38,7 @@ function App() {
           path="/design/:savedTheme"
         />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/logout" component={() => <div>logout</div>} />
+        {/* <Route exact path="/dashboard" component={Dashboard} /> */}
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/auth" component={Auth} />
         <Route exact path="/usersthemes" component={UsersThemes} />
