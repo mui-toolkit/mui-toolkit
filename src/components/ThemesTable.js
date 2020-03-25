@@ -267,6 +267,7 @@ export default function ThemesTable() {
                       key={row.themeName}
                       component={Link}
                       to={`/design/${row.themeName}/`}
+                      style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
                         component="th"
