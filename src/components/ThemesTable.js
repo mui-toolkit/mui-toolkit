@@ -193,7 +193,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SavedThemes() {
+export default function ThemesTable() {
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
@@ -267,6 +267,7 @@ export default function SavedThemes() {
                       key={row.themeName}
                       component={Link}
                       to={`/design/${row.themeName}/`}
+                      style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
                         component="th"
