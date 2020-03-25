@@ -151,7 +151,6 @@
 //   );
 // };
 
-
 // let foundUser = null;
 // db.collection("Users")
 //   .doc("eqrjmljO97c2ccaabw9K")
@@ -202,7 +201,6 @@
 // 	const [ primary, setPrimary ] = useState('');
 // 	const [ secondary, setSecondary ] = useState('');
 
-
 // 	const foundUser = db
 // 		.collection('Users')
 // 		.doc('eqrjmljO97c2ccaabw9K')
@@ -215,9 +213,7 @@
 // 		});
 // 	console.log('Test -> users', foundUser);
 
-
 // 	// console.log('Test -> palette', palette);
-
 
 // 	// const useStyles = makeStyles({
 // 	//   table: {
@@ -227,7 +223,6 @@
 // 	// const classes = useStyles();
 
 // 	///
-
 
 // 	const handleSubmit = (e) => {
 // 		e.preventDefault();
@@ -279,7 +274,7 @@
 // 	);
 
 // }
-/// TESTING CONNECTION TO CUSTOMIZEDTHEMES and USERS collections
+// / TESTING CONNECTION TO CUSTOMIZEDTHEMES and USERS collections
 // db.collection("CustomizedThemes")
 //   .get()
 //   .then(snapshot => {
@@ -307,7 +302,7 @@
 //     console.log('Error getting documents', err);
 //   });
 
-///
+// /
 
 //   const handleSubmit = e => {
 //     e.preventDefault();

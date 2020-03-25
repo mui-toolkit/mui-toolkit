@@ -31,12 +31,13 @@ export const SaveTheme = props => {
 
   const sendPalette = async themeName => {
     console.log(downloadTheme);
+    downloadTheme.createdAt = new Date();
     let newTheme = await db
       .collection("CustomizedThemes")
       .doc(`${themeName}`)
-      .set({ downloadTheme, createdAt: new Date() })
+      .set({ ...downloadTheme })
       .then(ref => {
-        console.log("Added Theme ", `${ref.themeName}`);
+        console.log("Added Theme ", `${ref.id}`);
       })
       .catch(function(error) {
         console.log("Error creating a new theme: ", error);
