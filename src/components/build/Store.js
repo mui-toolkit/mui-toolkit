@@ -17,31 +17,15 @@ export const Store = () => {
 	//Buttons
 	const [ buttonRipple, setButtonRipple ] = useState(true);
 	const [ buttonElevation, setButtonElevation ] = useState(true);
-	//switch
-
 	const [ buttonHoverColor, setButtonHoverColor ] = useState('#000000');
-	//number or color
-
 	const [ buttonHoverOpacity, setButtonHoverOpacity ] = useState(0.04);
-	//slider
-
 	const [ buttonFontWeight, setButtonFontWeight ] = useState(500);
-	//slider
-
 	const [ buttonFontSize, setButtonFontSize ] = useState(0.875);
-
-	//none, capitalize, uppercase, lowercase, initial, inherit
 	const [ buttonTextTransform, setButtonTextTransform ] = useState('none');
 	const [ open, setOpen ] = useState(false);
-	//text input
-
 	const [ buttonHeight, setButtonHeight ] = useState(46);
-	//text input
 	const [ buttonPadding, setButtonPadding ] = useState(10);
-	//text input
 	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(5);
-
-	//Material-UI states
 	const [ expanded, setExpanded ] = useState('panel1');
 	const [ tab, setTab ] = useState(0);
 
@@ -196,8 +180,6 @@ export const Store = () => {
 			}
 		}
 	});
-
-	console.log('CUSTOMTHEME', customTheme);
 
 	return (
 		<React.Fragment>
