@@ -1,6 +1,16 @@
 import React from 'react';
 import { ColorPop } from './index';
-import { Grid, Typography, Switch, Slider, Select } from '@material-ui/core/';
+import {
+	Grid,
+	Typography,
+	Switch,
+	Slider,
+	Select,
+	Button,
+	FormControl,
+	InputLabel,
+	MenuItem
+} from '@material-ui/core/';
 
 export const Buttons = (props) => {
 	const {
@@ -18,6 +28,8 @@ export const Buttons = (props) => {
 		changeButtonFontSize,
 		buttonTextTransform,
 		changeButtonTextTransform,
+		open,
+		setOpen,
 		buttonHeight,
 		changeButtonHeight,
 		buttonPadding,
@@ -25,18 +37,31 @@ export const Buttons = (props) => {
 		buttonBorderRadius,
 		changeButtonBorderRadius
 	} = props;
-	console.log('PROPS', props);
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
+	const handleChange = (e) => {
+		changeButtonTextTransform(e.target.value);
+	};
 	return (
 		<React.Fragment>
 			<Grid container direction="column" justify="flex">
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
-					Button Ripple {<Switch checked={!buttonRipple} onChange={changeButtonRipple} />}
+					{<Switch checked={!buttonRipple} onChange={changeButtonRipple} />}
+					<Typography style={{ marginLeft: '15px' }}>Button Ripple</Typography>
 				</Grid>
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
-					Button Elevation {<Switch checked={!buttonElevation} onChange={changeButtonElevation} />}
+					{<Switch checked={!buttonElevation} onChange={changeButtonElevation} />}
+					<Typography style={{ marginLeft: '15px' }}>Button Elevation</Typography>
 				</Grid>
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
-					Button Hover Opacity
+					<Typography style={{ marginLeft: '15px' }}>Button Hover Opacity</Typography>
 					{
 						<Slider
 							defaultValue={buttonHoverOpacity}
@@ -49,7 +74,7 @@ export const Buttons = (props) => {
 					}
 				</Grid>
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
-					Button Font Weight
+					<Typography style={{ marginLeft: '15px' }}>Button Font Weight</Typography>
 					{
 						<Slider
 							defaultValue={buttonFontWeight}
@@ -62,7 +87,8 @@ export const Buttons = (props) => {
 					}
 				</Grid>
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
-					Button Font Size
+					<Typography style={{ marginLeft: '15px' }}>Button Font Size</Typography>
+
 					{
 						<Slider
 							defaultValue={buttonFontSize}
@@ -75,15 +101,40 @@ export const Buttons = (props) => {
 					}
 				</Grid>
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
-					Button Text Transform
+					<Typography style={{ marginLeft: '15px' }}>Button Text Transform</Typography>
+					<Button onClick={handleOpen} />
+					<Grid container direction="column">
+						<FormControl>
+							<Select
+								labelId="demo-controlled-open-select-label"
+								id="demo-controlled-open-select"
+								open={open}
+								onClose={handleClose}
+								onOpen={handleOpen}
+								value={buttonTextTransform}
+								onChange={handleChange}
+							>
+								<MenuItem value={'none'}>None</MenuItem>
+								<MenuItem value={'capitalize'}>Capitalize</MenuItem>
+								<MenuItem value={'uppercase'}>Uppercase</MenuItem>
+								<MenuItem value={'lowercase'}>Lowercase</MenuItem>
+								<MenuItem value={'initial'}>Initial</MenuItem>
+								<MenuItem value={'inherit'}>Inherit</MenuItem>
+							</Select>
+						</FormControl>
+					</Grid>
+				</Grid>
+				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
+					<Typography style={{ marginLeft: '15px' }}>Button Height </Typography>
+
 					{
 						<Slider
-							defaultValue={buttonFontSize}
-							step={0.1}
-							min={0.1}
-							max={2}
+							defaultValue={buttonHeight}
+							step={1}
+							min={20}
+							max={100}
 							valueLabelDisplay="auto"
-							getAriaValueText={changeButtonFontSize}
+							getAriaValueText={changeButtonHeight}
 						/>
 					}
 				</Grid>

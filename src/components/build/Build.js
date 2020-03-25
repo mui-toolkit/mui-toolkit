@@ -74,6 +74,8 @@ export const Build = (props) => {
 		changeButtonFontSize,
 		buttonTextTransform,
 		changeButtonTextTransform,
+		open,
+		setOpen,
 		buttonHeight,
 		changeButtonHeight,
 		buttonPadding,
@@ -148,6 +150,8 @@ export const Build = (props) => {
 							changeButtonFontSize={changeButtonFontSize}
 							buttonTextTransform={buttonTextTransform}
 							changeButtonTextTransform={changeButtonTextTransform}
+							open={open}
+							setOpen={setOpen}
 							buttonHeight={buttonHeight}
 							changeButtonHeight={changeButtonHeight}
 							buttonPadding={buttonPadding}

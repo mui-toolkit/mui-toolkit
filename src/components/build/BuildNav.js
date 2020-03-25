@@ -119,6 +119,8 @@ export function BuildNav(props) {
 							changeButtonFontSize={props.changeButtonFontSize}
 							buttonTextTransform={props.buttonTextTransform}
 							changeButtonTextTransform={props.changeButtonTextTransform}
+							open={props.open}
+							setOpen={props.setOpen}
 							buttonHeight={props.buttonHeight}
 							changeButtonHeight={props.changeButtonHeight}
 							buttonPadding={props.buttonPadding}

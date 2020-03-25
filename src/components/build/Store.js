@@ -32,12 +32,14 @@ export const Store = () => {
 
 	//none, capitalize, uppercase, lowercase, initial, inherit
 	const [ buttonTextTransform, setButtonTextTransform ] = useState('none');
+	const [ open, setOpen ] = useState(false);
 	//text input
-	const [ buttonHeight, setButtonHeight ] = useState(48);
+
+	const [ buttonHeight, setButtonHeight ] = useState(46);
 	//text input
-	const [ buttonPadding, setButtonPadding ] = useState('0 30px');
+	const [ buttonPadding, setButtonPadding ] = useState('0px');
 	//text input
-	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(0);
+	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(1);
 
 	//Material-UI states
 	const [ expanded, setExpanded ] = useState('panel1');
@@ -183,10 +185,19 @@ export const Store = () => {
 			MuiButton: {
 				disableElevation: buttonElevation
 			}
+		},
+		overrides: {
+			MuiButton: {
+				root: {
+					// borderRadius: `${buttonBorderRadius}`,
+					height: buttonHeight
+					// padding: `${buttonPadding}`
+				}
+			}
 		}
 	});
 
-	console.log('CUSTOMTHEME', customTheme.props.MuiButtonBase);
+	console.log('CUSTOMTHEME', customTheme);
 
 	return (
 		<React.Fragment>
@@ -233,6 +244,8 @@ export const Store = () => {
 					changeButtonFontSize={changeButtonFontSize}
 					buttonTextTransform={buttonTextTransform}
 					changeButtonTextTransform={changeButtonTextTransform}
+					open={open}
+					setOpen={setOpen}
 					buttonHeight={buttonHeight}
 					changeButtonHeight={changeButtonHeight}
 					buttonPadding={buttonPadding}
