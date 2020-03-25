@@ -1,10 +1,11 @@
 import React from 'react';
 import { Grid, Paper, Typography, Avatar } from '@material-ui/core/';
-import { Palette } from './index';
+import { General } from './index';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+
 const useStyles = makeStyles(theme => ({
   bubble: {
     borderColor: '#c2c2c2',
@@ -15,6 +16,7 @@ const useStyles = makeStyles(theme => ({
     background: '#fff',
   },
 }));
+
 const ExpansionPanel = withStyles({
   root: {
     border: '1px solid rgba(0, 0, 0, .125)',
@@ -31,6 +33,7 @@ const ExpansionPanel = withStyles({
   },
   expanded: {},
 })(MuiExpansionPanel);
+
 const ExpansionPanelSummary = withStyles({
   root: {
     backgroundColor: 'rgba(0, 0, 0, .03)',
@@ -48,11 +51,13 @@ const ExpansionPanelSummary = withStyles({
   },
   expanded: {},
 })(MuiExpansionPanelSummary);
+
 const ExpansionPanelDetails = withStyles(theme => ({
   root: {
     padding: theme.spacing(2),
   },
 }))(MuiExpansionPanelDetails);
+
 export function BuildNav(props) {
   const classes = useStyles();
   const { expanded, changeExpanded } = props;
@@ -72,88 +77,30 @@ export function BuildNav(props) {
             <Typography>General</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Grid container direction='column' justify='flex-start'>
-              <Grid
-                container
-                direction='row'
-                alignItems='center'
-                style={{ marginBottom: '1em' }}
-              >
-                <Avatar
-                  style={{
-                    color: '#fff',
-                    background: '#fff',
-                    marginRight: '10px',
-                  }}
-                  className={classes.bubble}
-                />
-                <Typography>Primary Color</Typography>
-              </Grid>
-              <Grid
-                container
-                direction='row'
-                alignItems='center'
-                style={{ marginBottom: '1em' }}
-              >
-                <Avatar
-                  style={{
-                    color: '#fff',
-                    background: '#fff',
-                    marginRight: '10px',
-                  }}
-                  className={classes.bubble}
-                />
-                <Typography>Secondary Color</Typography>
-              </Grid>
-              <Grid
-                container
-                direction='row'
-                alignItems='center'
-                style={{ marginBottom: '1em' }}
-              >
-                <Avatar
-                  style={{
-                    color: '#fff',
-                    background: '#fff',
-                    marginRight: '10px',
-                  }}
-                  className={classes.bubble}
-                />
-                <Typography>Default</Typography>
-              </Grid>
-              <Grid
-                container
-                direction='row'
-                alignItems='center'
-                style={{ marginBottom: '1em' }}
-              >
-                <Avatar
-                  style={{
-                    color: '#fff',
-                    background: '#fff',
-                    marginRight: '10px',
-                  }}
-                  className={classes.bubble}
-                />
-                <Typography>Paper</Typography>
-              </Grid>
-              <Grid
-                container
-                direction='row'
-                alignItems='center'
-                style={{ marginBottom: '1em' }}
-              >
-                <Avatar
-                  style={{
-                    color: '#fff',
-                    background: '#fff',
-                    marginRight: '10px',
-                  }}
-                  className={classes.bubble}
-                />
-                <Typography>Drop Shadow</Typography>
-              </Grid>
-            </Grid>
+            <General
+              color={props.color}
+              secondaryColor={props.secondaryColor}
+              defaultColor={props.defaultColor}
+              paperColor={props.paperColor}
+              changeColor={props.changeColor}
+              changeSecondaryColor={props.changeSecondaryColor}
+              changeDefaultColor={props.changeDefaultColor}
+              changePaperColor={props.changePaperColor}
+              displayColorPicker={props.displayColorPicker}
+              changeColorPickerDisplayed={props.changeColorPickerDisplayed}
+              displaySecondaryColorPicker={props.displaySecondaryColorPicker}
+              changeSecondaryColorPickerDisplayed={
+                props.changeSecondaryColorPickerDisplayed
+              }
+              displayDefaultColorPicker={props.displayDefaultColorPicker}
+              changeDefaultColorPickerDisplayed={
+                props.changeDefaultColorPickerDisplayed
+              }
+              displayPaperColorPicker={props.displayPaperColorPicker}
+              changePaperColorPickerDisplayed={
+                props.changePaperColorPickerDisplayed
+              }
+            />
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel

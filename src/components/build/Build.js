@@ -60,35 +60,33 @@ export const Build = props => {
         {/* BUILD START */}
         <Grid item xs={3} className={classes.selector}>
           <Paper className={classes.builderPaper}>
-            <BuildNav expanded={expanded} changeExpanded={changeExpanded} />
+            <BuildNav
+              expanded={expanded}
+              changeExpanded={changeExpanded}
+              color={color}
+              secondaryColor={secondaryColor}
+              defaultColor={defaultColor}
+              paperColor={paperColor}
+              changeColor={changeColor}
+              changeSecondaryColor={changeSecondaryColor}
+              changeDefaultColor={changeDefaultColor}
+              changePaperColor={changePaperColor}
+              displayColorPicker={displayColorPicker}
+              changeColorPickerDisplayed={changeColorPickerDisplayed}
+              displaySecondaryColorPicker={displaySecondaryColorPicker}
+              changeSecondaryColorPickerDisplayed={
+                changeSecondaryColorPickerDisplayed
+              }
+              displayDefaultColorPicker={displayDefaultColorPicker}
+              changeDefaultColorPickerDisplayed={
+                changeDefaultColorPickerDisplayed
+              }
+              displayPaperColorPicker={displayPaperColorPicker}
+              changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
+            />
             <Grid item>
               <Download downloadTheme={downloadTheme} />
               <SaveTheme downloadTheme={downloadTheme} />
-
-              <Palette
-                color={color}
-                secondaryColor={secondaryColor}
-                defaultColor={defaultColor}
-                paperColor={paperColor}
-                changeColor={changeColor}
-                changeSecondaryColor={changeSecondaryColor}
-                changeDefaultColor={changeDefaultColor}
-                changePaperColor={changePaperColor}
-                displayColorPicker={displayColorPicker}
-                changeColorPickerDisplayed={changeColorPickerDisplayed}
-                displaySecondaryColorPicker={displaySecondaryColorPicker}
-                changeSecondaryColorPickerDisplayed={
-                  changeSecondaryColorPickerDisplayed
-                }
-                displayDefaultColorPicker={displayDefaultColorPicker}
-                changeDefaultColorPickerDisplayed={
-                  changeDefaultColorPickerDisplayed
-                }
-                displayPaperColorPicker={displayPaperColorPicker}
-                changePaperColorPickerDisplayed={
-                  changePaperColorPickerDisplayed
-                }
-              />
             </Grid>
           </Paper>
         </Grid>
