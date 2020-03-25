@@ -29,19 +29,12 @@ export const ColorGenerator = (props) => {
 						let randomColorArray = [];
 						palette.forEach((colorArray) => {
 							randomColorArray.push(rgbToHex(colorArray));
-							// let randomColorArray = [ rgbToHex(colorArray) ];
-							// [ ...randomColorArray, rgbToHex(colorArray) ];
-							// console.log(randomColorArray);
-							// console.log(randomColorArray);
 						});
+
 						setColor(randomColorArray[0].toString());
 						setSecondaryColor(randomColorArray[1].toString());
 						setDefaultColor(randomColorArray[2].toString());
 						setPaperColor(randomColorArray[3].toString());
-
-						// changeSecondaryColor(randomColorArray[1]);
-						// changeDefaultColor(randomColorArray[2]);
-						// changePaperColor(randomColorArray[3]);
 					};
 					colorParsing(palette);
 				}
