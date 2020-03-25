@@ -26,6 +26,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import StarIcon from "@material-ui/icons/Star";
 import ThemesTable from "./ThemesTable";
+import UserProfile from "./UserProfile";
 
 const drawerWidth = 240;
 
@@ -112,8 +113,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles();
+
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [open, setOpen] = useState(true);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -188,8 +191,6 @@ export default function Dashboard() {
           </ListItem>
           <ListItem
             button
-            component={Link}
-            to="/userprofile"
             selected={selectedIndex === 1}
             onClick={event => handleListItemClick(event, 1)}
           >
@@ -238,10 +239,14 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* SAVED THEMES TABLE*/}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <ThemesTable />
+                {selectedIndex === 0 && <div>SOME COOL USER DATA COMING</div>}
+                {selectedIndex === 1 && <UserProfile />}
+                {selectedIndex === 2 && <ThemesTable />}
+                {selectedIndex === 3 && (
+                  <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
+                )}
               </Paper>
             </Grid>
             {/* PREVIEW */}
