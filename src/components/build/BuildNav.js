@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Paper, Typography, Avatar } from '@material-ui/core/';
-import { General } from './index';
+import { General, CustomTypography } from './index';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -139,11 +139,15 @@ export function BuildNav(props) {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              <CustomTypography
+                fontStyle={props.fontStyle}
+                setFontStyle={props.setFontStyle}
+                h1={props.h1}
+                changeH1={props.changeH1}
+                h2={props.h2}
+                changeH2={props.changeH2}
+                handleFontColorPicker={props.handleFontColorPicker}
+              />
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Palette, SaveTheme, BuildNav, ColorPop } from '../build';
+import { SaveTheme, BuildNav } from '../build';
 import { PreviewAppBar, PreviewTabs } from '../preview';
 import Download from '../Download';
 
@@ -59,8 +59,16 @@ export const Build = props => {
     setSecondaryColor,
     setDefaultColor,
     setPaperColor,
+    fontStyle,
+    setFontStyle,
+    h1,
+    changeH1,
+    h2,
+    changeH2,
+    handleFontColorPicker,
   } = props;
 
+  // Will render when a user selects to view a saved theme
   useEffect(() => {
     if (savedTheme) {
       const response = async () => {
@@ -92,7 +100,7 @@ export const Build = props => {
   return (
     <section className={classes.root}>
       <Grid container spacing={1}>
-        {/* BUILD START */}
+        {/* BUILD NAV START */}
         <Grid item xs={3} className={classes.selector}>
           <Paper className={classes.builderPaper}>
             <BuildNav
@@ -118,6 +126,14 @@ export const Build = props => {
               }
               displayPaperColorPicker={displayPaperColorPicker}
               changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
+              //Typography
+              fontStyle={fontStyle}
+              setFontStyle={setFontStyle}
+              h1={h1}
+              changeH1={changeH1}
+              h2={h2}
+              changeH2={changeH2}
+              handleFontColorPicker={handleFontColorPicker}
             />
             <Grid item>
               <Download downloadTheme={downloadTheme} />
@@ -125,7 +141,7 @@ export const Build = props => {
             </Grid>
           </Paper>
         </Grid>
-        {/* BUILD END */}
+        {/* BUILD NAV END */}
         {/* Preview Start */}
         <Grid item xs={9} className={classes.preview}>
           <Paper

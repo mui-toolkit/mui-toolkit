@@ -4,8 +4,6 @@ import { ColorPop } from './index';
 import { SketchPicker } from 'react-color';
 
 export const General = props => {
-  console.log('PROPS ====', props);
-
   return (
     <React.Fragment>
       <Grid container direction='column' justify='flex'>
@@ -19,7 +17,9 @@ export const General = props => {
             color={props.color}
             changeColor={props.changeColor}
             displayColorPicker={props.displayColorPicker}
-            changeColorPickerDisplayed={props.changeColorPickerDisplayed}
+            changeColorPickerDisplayed={() =>
+              props.changeColorPickerDisplayed('primary')
+            }
           />
           <Typography style={{ marginLeft: '15px' }}>Primary Color</Typography>
         </Grid>
@@ -34,8 +34,8 @@ export const General = props => {
             color={props.secondaryColor}
             changeColor={props.changeSecondaryColor}
             displayColorPicker={props.displaySecondaryColorPicker}
-            changeColorPickerDisplayed={
-              props.changeSecondaryColorPickerDisplayed
+            changeColorPickerDisplayed={() =>
+              props.changeColorPickerDisplayed('secondary')
             }
           />
           <Typography style={{ marginLeft: '15px' }}>
@@ -52,7 +52,9 @@ export const General = props => {
             color={props.defaultColor}
             changeColor={props.changeDefaultColor}
             displayColorPicker={props.displayDefaultColorPicker}
-            changeColorPickerDisplayed={props.changeDefaultColorPickerDisplayed}
+            changeColorPickerDisplayed={() =>
+              props.changeColorPickerDisplayed('default')
+            }
           />
           <Typography style={{ marginLeft: '15px' }}>Default Color</Typography>
         </Grid>
@@ -66,7 +68,9 @@ export const General = props => {
             color={props.paperColor}
             changeColor={props.changePaperColor}
             displayColorPicker={props.displayPaperColorPicker}
-            changeColorPickerDisplayed={props.changePaperColorPickerDisplayed}
+            changeColorPickerDisplayed={() =>
+              props.changeColorPickerDisplayed('paper')
+            }
           />
           <Typography style={{ marginLeft: '15px' }}>Paper Color</Typography>
         </Grid>

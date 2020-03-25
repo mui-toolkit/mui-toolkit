@@ -9,7 +9,6 @@ export const Store = () => {
   const [secondaryColor, setSecondaryColor] = useState('#f50057');
   const [defaultColor, setDefaultColor] = useState('#fff');
   const [paperColor, setPaperColor] = useState('#fff');
-
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const [
     displaySecondaryColorPicker,
@@ -21,22 +20,28 @@ export const Store = () => {
   const [displayPaperColorPicker, setDisplayPaperColorPicker] = useState(false);
 
   //Typography
-  const [fontFamily, setFontFamily] = useState('Robot');
-  const [fontSize, setFontSize] = useState('14');
-  const [fontWeightReg, setFontWeightReg] = useState('400');
-  const [fontWeightBold, setfontWeightBold] = useState('700');
+  const [fontStyle, setFontStyle] = useState({
+    fontFamily: 'Roboto',
+    fontSize: 14,
+  });
 
   const [h1, setH1] = useState({
     color: '#000',
     fontWeight: 300,
     fontSize: '6rem',
   });
+  const [h2, setH2] = useState({
+    color: '#000',
+    fontWeight: 300,
+    fontSize: '3.75rem',
+  });
+
+  const [fontColorPicker, setFontColorPicker] = useState(false);
 
   //Material-UI states
   const [expanded, setExpanded] = useState('panel1');
   const [tab, setTab] = useState(0);
 
-  //General Handlers
   const changeColor = color => {
     setColor(color.hex);
   };
@@ -53,23 +58,41 @@ export const Store = () => {
     setPaperColor(paperColor.hex);
   };
 
-  const changeColorPickerDisplayed = () => {
-    setDisplayColorPicker(!displayColorPicker ? true : false);
+  const changeColorPickerDisplayed = type => {
+    if (type === 'primary') {
+      setDisplayColorPicker(!displayColorPicker ? true : false);
+    }
+    if (type === 'secondary') {
+      setDisplaySecondaryColorPicker(
+        !displaySecondaryColorPicker ? true : false,
+      );
+    }
+    if (type === 'default') {
+      setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
+    }
+    if (type === 'paper') {
+      setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
+    }
   };
 
-  const changeSecondaryColorPickerDisplayed = () => {
-    setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
-  };
+  // const changeSecondaryColorPickerDisplayed = () => {
+  //   setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
+  // };
 
-  const changeDefaultColorPickerDisplayed = () => {
-    setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
-  };
+  // const changeDefaultColorPickerDisplayed = () => {
+  //   setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
+  // };
 
-  const changePaperColorPickerDisplayed = () => {
-    setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
-  };
+  // const changePaperColorPickerDisplayed = () => {
+  //   setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
+  // };
 
   //Typography
+
+  // const changeFontSize = event => {
+  //   setFontSize(Number(event.target.value));
+  // };
+
   const changeH1 = style => {
     if (style.color) {
       setH1({ ...h1, color: style.color });
@@ -81,6 +104,17 @@ export const Store = () => {
       setH1({ ...h1, fontSize: style.fontSize });
     }
   };
+  const changeH2 = style => {
+    if (style.color) {
+      setH2({ ...h2, color: style.color });
+    }
+    if (style.fontWeight) {
+      setH2({ ...h2, fontWeight: style.fontWeight });
+    }
+    if (style.fontSize) {
+      setH2({ ...h2, fontSize: style.fontSize });
+    }
+  };
 
   //Material-Ui handlers
   const changeExpanded = panel => (event, newExpanded) => {
@@ -89,6 +123,10 @@ export const Store = () => {
 
   const changeTab = (event, newTab) => {
     setTab(newTab);
+  };
+
+  const handleFontColorPicker = () => {
+    setFontColorPicker(!fontColorPicker ? true : false);
   };
 
   let downloadTheme = {
@@ -103,10 +141,15 @@ export const Store = () => {
       },
     },
     typography: {
+      fontFamily: `${fontStyle.fontFamily}`,
+      fontSize: `${fontStyle.fontSize}`,
       h1: {
         color: `${h1.color}`,
         fontWeight: `${h1.fontWeight}`,
-        fontSize: `${h1.fontSize}`,
+      },
+      h2: {
+        color: `${h2.color}`,
+        fontWeight: `${h2.fontWeight}`,
       },
     },
   };
@@ -123,10 +166,15 @@ export const Store = () => {
       },
     },
     typography: {
+      fontFamily: `${fontStyle.fontFamily}`,
+      fontSize: `${fontStyle.fontSize}`,
       h1: {
         color: `${h1.color}`,
         fontWeight: `${h1.fontWeight}`,
-        fontSize: `${h1.fontSize}`,
+      },
+      h2: {
+        color: `${h2.color}`,
+        fontWeight: `${h2.fontWeight}`,
       },
     },
   });
@@ -155,14 +203,22 @@ export const Store = () => {
           changeColorPickerDisplayed={changeColorPickerDisplayed}
           downloadTheme={downloadTheme}
           displaySecondaryColorPicker={displaySecondaryColorPicker}
-          changeSecondaryColorPickerDisplayed={
-            changeSecondaryColorPickerDisplayed
-          }
+          // changeSecondaryColorPickerDisplayed={
+          //   changeSecondaryColorPickerDisplayed
+          // }
           displayDefaultColorPicker={displayDefaultColorPicker}
-          changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
+          // changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
           displayPaperColorPicker={displayPaperColorPicker}
-          changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
+          // changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
           downloadTheme={downloadTheme}
+          //Typography
+          fontStyle={fontStyle}
+          setFontStyle={setFontStyle}
+          h1={h1}
+          changeH1={changeH1}
+          h2={h2}
+          changeH2={changeH2}
+          handleFontColorPicker={handleFontColorPicker}
         />
       </ThemeProvider>
     </React.Fragment>
