@@ -4,20 +4,28 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-// import { GridListTile } from '@material-ui/core';
-// import firebase from 'firebase-app';
 import firebase from 'firebase';
 import 'firebase/auth';
-// import db from "./Home";
 import { db } from '../config/firebase';
+
 const useStyles = makeStyles(theme => ({}));
 
+export function validate(values) {
+  let errors = {};
+  if (!values.email) {
+    errors.email = 'Email address is required';
+  } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+    errors.email = 'Email address is invalid';
+  }
+  return errors;
+}
 export function Signup(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUserName] = useState('');
+  const [errors, setErrors] = useState({});
   const handleSubmit = e => {
     e.preventDefault();
     firebase
@@ -62,7 +70,7 @@ export function Signup(props) {
             justify="center"
             alignItems="center"
           >
-            <Typography variant="h2">SSign Up</Typography>
+            <Typography variant="h2">Sign Up</Typography>
           </Grid>
         </Grid>
         <form onSubmit={handleSubmit}>
@@ -99,6 +107,8 @@ export function Signup(props) {
                 onChange={e => setEmail(e.target.value)}
               />
               <TextField
+                error={password.length > 0 && password.length < 6}
+                helperText={password.length < 6 ? 'Min 6 characters' : ''}
                 type="password"
                 label="Password"
                 id="password"
