@@ -55,6 +55,15 @@ export default function Header(props) {
     //   await unsubscribe();
     // };
   }, []);
+  const handleClick = e => {
+    e.preventDefault();
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log('user signed out props');
+      });
+  };
 
   if (!user.loggedIn) {
     return (
@@ -135,7 +144,12 @@ export default function Header(props) {
               to="/design"
               label="Start"
             />
-
+            <Tab
+              className={classes.tab}
+              component={Link}
+              to="/dashboard"
+              label="Dashboard"
+            />
             {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
@@ -148,14 +162,17 @@ export default function Header(props) {
               component={Link}
               to="/logout"
               label="Logout"
-              onClick={() =>
-                firebase
-                  .auth()
-                  .signOut()
-                  .then(() => {
-                    // console.log('user signed out');
-                  })
-              }
+              onClick={handleClick}
+              // onClick={props =>
+
+              //   firebase
+              //     .auth()
+              //     .signOut()
+              //     .then(props => {
+              //       console.log('user signed out props', props);
+
+              //     })
+              // }
             />
           </Tabs>
         </Toolbar>

@@ -32,6 +32,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
+    // backgroundColor: theme.palette.background.paper
   },
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed
@@ -111,12 +112,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function UserDashboard() {
   const classes = useStyles();
+  const [selectedIndex, setSelectedIndex] = useState(1);
   const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
@@ -171,25 +176,43 @@ export default function UserDashboard() {
         </div>
         <Divider />
         <div>
-          <ListItem button>
+          <ListItem
+            button
+            selected={selectedIndex === 0}
+            onClick={event => handleListItemClick(event, 0)}
+          >
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
-          <ListItem button component={Link} to="/userprofile">
+          <ListItem
+            button
+            component={Link}
+            to="/userprofile"
+            selected={selectedIndex === 1}
+            onClick={event => handleListItemClick(event, 1)}
+          >
             <ListItemIcon>
               <FaceIcon />
             </ListItemIcon>
             <ListItemText primary="User Profile" />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            selected={selectedIndex === 2}
+            onClick={event => handleListItemClick(event, 2)}
+          >
             <ListItemIcon>
               <PaletteIcon />
             </ListItemIcon>
             <ListItemText primary="My Saved Themes" />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            selected={selectedIndex === 3}
+            onClick={event => handleListItemClick(event, 3)}
+          >
             <ListItemIcon>
               <GroupAddIcon />
             </ListItemIcon>
