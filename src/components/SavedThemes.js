@@ -16,12 +16,12 @@ import Switch from "@material-ui/core/Switch";
 
 function createData(
   themeName,
-  date,
+  createdAt,
   primaryPalette,
   secondaryPalette,
   typography
 ) {
-  return { themeName, date, primaryPalette, secondaryPalette, typography };
+  return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
 }
 
 //dummy data // would it be hard to insert a thumbnail?
@@ -92,7 +92,7 @@ const headCells = [
     minWidth: 170
   },
   {
-    id: "date",
+    id: "createdAt",
     columnAlignment: false,
     disablePadding: true,
     label: "Date saved",
@@ -262,7 +262,7 @@ export default function SavedThemes() {
                       >
                         {row.themeName}
                       </TableCell>
-                      <TableCell align="right">{row.date}</TableCell>
+                      <TableCell align="right">{row.createdAt}</TableCell>
                       <TableCell align="right">{row.primaryPalette}</TableCell>
                       <TableCell align="right">
                         {row.secondaryPalette}

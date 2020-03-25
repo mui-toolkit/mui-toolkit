@@ -9,3 +9,4 @@ export { Store } from './Store';
 export { SaveTheme } from './SaveTheme';
 export { BuildNav } from './BuildNav';
 export { ColorPop } from './ColorPop';
+export { Buttons } from './Buttons';
