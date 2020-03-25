@@ -193,7 +193,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SavedThemes() {
+export default function ThemesTable() {
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
