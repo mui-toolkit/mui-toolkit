@@ -7,7 +7,7 @@ export const Store = () => {
 	const [ color, setColor ] = useState('#3f51b5');
 	const [ secondaryColor, setSecondaryColor ] = useState('#f50057');
 	const [ defaultColor, setDefaultColor ] = useState('#fafafa');
-	const [ paperColor, setPaperColor ] = useState('#FFF');
+	const [ paperColor, setPaperColor ] = useState('#fff');
 	const [ expanded, setExpanded ] = React.useState('panel1');
 	const [ displayColorPicker, setDisplayColorPicker ] = useState(false);
 	const [ displaySecondaryColorPicker, setDisplaySecondaryColorPicker ] = useState(false);
