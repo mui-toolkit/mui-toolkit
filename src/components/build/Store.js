@@ -37,9 +37,9 @@ export const Store = () => {
 
 	const [ buttonHeight, setButtonHeight ] = useState(46);
 	//text input
-	const [ buttonPadding, setButtonPadding ] = useState('0px');
+	const [ buttonPadding, setButtonPadding ] = useState(10);
 	//text input
-	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(1);
+	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(5);
 
 	//Material-UI states
 	const [ expanded, setExpanded ] = useState('panel1');
@@ -189,9 +189,9 @@ export const Store = () => {
 		overrides: {
 			MuiButton: {
 				root: {
-					// borderRadius: `${buttonBorderRadius}`,
-					height: buttonHeight
-					// padding: `${buttonPadding}`
+					borderRadius: buttonBorderRadius,
+					height: buttonHeight,
+					padding: `${buttonPadding}px`
 				}
 			}
 		}

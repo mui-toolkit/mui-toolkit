@@ -125,6 +125,20 @@ export const Buttons = (props) => {
 					</Grid>
 				</Grid>
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
+					<Typography style={{ marginLeft: '15px' }}>Button Border Radius </Typography>
+
+					{
+						<Slider
+							defaultValue={buttonBorderRadius}
+							step={1}
+							min={0}
+							max={25}
+							valueLabelDisplay="auto"
+							getAriaValueText={changeButtonBorderRadius}
+						/>
+					}
+				</Grid>
+				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
 					<Typography style={{ marginLeft: '15px' }}>Button Height </Typography>
 
 					{
@@ -135,6 +149,21 @@ export const Buttons = (props) => {
 							max={100}
 							valueLabelDisplay="auto"
 							getAriaValueText={changeButtonHeight}
+						/>
+					}
+				</Grid>
+
+				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
+					<Typography style={{ marginLeft: '15px' }}>Button Padding </Typography>
+
+					{
+						<Slider
+							defaultValue={buttonPadding}
+							step={1}
+							min={0}
+							max={200}
+							valueLabelDisplay="auto"
+							getAriaValueText={changeButtonPadding}
 						/>
 					}
 				</Grid>
