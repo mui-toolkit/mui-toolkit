@@ -9,6 +9,7 @@ export const Store = () => {
   const [secondaryColor, setSecondaryColor] = useState('#f50057');
   const [defaultColor, setDefaultColor] = useState('#fff');
   const [paperColor, setPaperColor] = useState('#fff');
+
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const [
     displaySecondaryColorPicker,
@@ -18,6 +19,18 @@ export const Store = () => {
     false,
   );
   const [displayPaperColorPicker, setDisplayPaperColorPicker] = useState(false);
+
+  //Typography
+  const [fontFamily, setFontFamily] = useState('Robot');
+  const [fontSize, setFontSize] = useState('14');
+  const [fontWeightReg, setFontWeightReg] = useState('400');
+  const [fontWeightBold, setfontWeightBold] = useState('700');
+
+  const [h1, setH1] = useState({
+    color: '#000',
+    fontWeight: 300,
+    fontSize: '6rem',
+  });
 
   //Material-UI states
   const [expanded, setExpanded] = useState('panel1');
@@ -56,6 +69,19 @@ export const Store = () => {
     setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
   };
 
+  //Typography
+  const changeH1 = style => {
+    if (style.color) {
+      setH1({ ...h1, color: style.color });
+    }
+    if (style.fontWeight) {
+      setH1({ ...h1, fontWeight: style.fontWeight });
+    }
+    if (style.fontSize) {
+      setH1({ ...h1, fontSize: style.fontSize });
+    }
+  };
+
   //Material-Ui handlers
   const changeExpanded = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -76,6 +102,13 @@ export const Store = () => {
         default: `${defaultColor}`,
       },
     },
+    typography: {
+      h1: {
+        color: `${h1.color}`,
+        fontWeight: `${h1.fontWeight}`,
+        fontSize: `${h1.fontSize}`,
+      },
+    },
   };
 
   const customTheme = createMuiTheme({
@@ -87,6 +120,13 @@ export const Store = () => {
       background: {
         paper: `${paperColor}`,
         default: `${defaultColor}`,
+      },
+    },
+    typography: {
+      h1: {
+        color: `${h1.color}`,
+        fontWeight: `${h1.fontWeight}`,
+        fontSize: `${h1.fontSize}`,
       },
     },
   });
