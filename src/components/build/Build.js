@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Palette, SaveTheme, BuildNav, ColorPop } from '../build';
 import { PreviewAppBar, PreviewTabs } from '../preview';
 import Download from '../Download';
@@ -6,6 +7,7 @@ import Download from '../Download';
 import { Grid, Paper } from '@material-ui/core/';
 
 import { makeStyles } from '@material-ui/styles';
+import { db } from '../../config/firebase';
 
 const useStyles = makeStyles(theme => ({
   preview: {
@@ -28,6 +30,9 @@ const useStyles = makeStyles(theme => ({
 export const Build = props => {
   const classes = useStyles();
 
+  const { savedTheme } = useParams();
+  console.log('savedTheme Name: ', savedTheme);
+
   const {
     color,
     secondaryColor,
@@ -41,7 +46,6 @@ export const Build = props => {
     changeDefaultColor,
     changeExpanded,
     changeColorPickerDisplayed,
-    downloadTheme,
     displaySecondaryColorPicker,
     changeSecondaryColorPickerDisplayed,
     displayDefaultColorPicker,
@@ -50,7 +54,38 @@ export const Build = props => {
     changePaperColorPickerDisplayed,
     tab,
     changeTab,
+    downloadTheme,
+    setColor,
+    setSecondaryColor,
+    setDefaultColor,
+    setPaperColor,
   } = props;
+
+  useEffect(() => {
+    if (savedTheme) {
+      const response = async () => {
+        await db
+          .collection('CustomizedThemes')
+          .doc(`${savedTheme}`)
+          .get()
+          .then(doc => {
+            console.log('saved Theme doc', doc.data());
+            if (doc.data().palette.primary.main)
+              setColor(doc.data().palette.primary.main);
+            if (doc.data().palette.secondary.main)
+              setSecondaryColor(doc.data().palette.secondary.main);
+            if (doc.data().palette.background.default)
+              setDefaultColor(doc.data().palette.background.default);
+            if (doc.data().palette.background.paper)
+              setPaperColor(doc.data().palette.background.paper);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      };
+      response();
+    }
+  }, []);
 
   // needs a themeName pop up so user can name their theme and it will be referenced in the table of Saved Themes.  .collection('CT').doc(`${themeName}`.set({})) should create a new collection in CustomizedThemes with doc name themeName and allow the collection to contain any/all fields
 

@@ -76,6 +76,15 @@ export default function Checkout() {
               <Grid item xs={12}>
                 <TextField
                   required
+                  id="username"
+                  name="username"
+                  label="Username"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
                   id="email"
                   name="email"
                   label="Email address"

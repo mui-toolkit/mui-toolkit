@@ -96,9 +96,13 @@ export const Store = () => {
       <ThemeProvider theme={customTheme}>
         <Build
           color={color}
+          setColor={setColor}
           secondaryColor={secondaryColor}
+          setSecondaryColor={setSecondaryColor}
           defaultColor={defaultColor}
+          setDefaultColor={setDefaultColor}
           paperColor={paperColor}
+          setPaperColor={setPaperColor}
           expanded={expanded}
           tab={tab}
           displayColorPicker={displayColorPicker}
@@ -118,6 +122,7 @@ export const Store = () => {
           changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
           displayPaperColorPicker={displayPaperColorPicker}
           changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
+          downloadTheme={downloadTheme}
         />
       </ThemeProvider>
     </React.Fragment>
