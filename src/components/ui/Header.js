@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -10,7 +9,6 @@ import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import firebase from "firebase";
 import "firebase/auth";
-
 
 const useStyles = makeStyles(theme => ({
   // toolBarMargin: {
@@ -25,13 +23,11 @@ const useStyles = makeStyles(theme => ({
     fontSize: "1rem",
     minWidth: 10,
 
-
     marginLeft: "25px",
     color: "#000"
-
   }
 }));
-const defaultUser = { loggedIn: false, email: '' };
+const defaultUser = { loggedIn: false, email: "" };
 const UserContext = React.createContext({});
 const UserProvider = UserContext.Provider;
 const UserConsumer = UserContext.Consumer;
@@ -47,7 +43,7 @@ function onAuthStateChange(callback) {
 export default function Header(props) {
   const classes = useStyles();
   const [user, setUser] = useState({ loggedIn: false });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   useEffect(() => {
     // do equivalent of unsubscribe
     const unsubscribe = onAuthStateChange(setUser);
@@ -61,14 +57,14 @@ export default function Header(props) {
       .auth()
       .signOut()
       .then(() => {
-        console.log('user signed out props');
+        console.log("user signed out props");
       });
   };
 
   if (!user.loggedIn) {
     return (
       <React.Fragment>
-        <AppBar position="fixed" style={{ background: '#fff' }}>
+        <AppBar position="fixed" style={{ background: "#fff" }}>
           <Toolbar>
             <Button
               component={Link}
@@ -118,9 +114,7 @@ export default function Header(props) {
   }
   return (
     <React.Fragment>
-
       <AppBar position="fixed" style={{ background: "#fff" }}>
-
         <Toolbar>
           <Button
             component={Link}
@@ -151,12 +145,7 @@ export default function Header(props) {
               label="Dashboard"
             />
             {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
-            <Tab
-              className={classes.tab}
-              component={Link}
-              to="/userdashboard"
-              label="User Dashboard"
-            />
+
             <Tab
               className={classes.tab}
               component={Link}

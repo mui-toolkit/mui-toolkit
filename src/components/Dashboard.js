@@ -110,7 +110,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function UserDashboard() {
+export default function Dashboard() {
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [open, setOpen] = useState(true);
