@@ -4,25 +4,26 @@ import { createMuiTheme } from '@material-ui/core/';
 import { ThemeProvider } from '@material-ui/styles';
 
 export const Store = () => {
+  //General
   const [color, setColor] = useState('#3f51b5');
-  const [secondaryColor, setSecondaryColor] = useState('');
-  const [defaultColor, setDefaultColor] = useState('');
-  const [paperColor, setPaperColor] = useState('');
-  const [expanded, setExpanded] = React.useState('panel1');
+  const [secondaryColor, setSecondaryColor] = useState('#f50057');
+  const [defaultColor, setDefaultColor] = useState('#fff');
+  const [paperColor, setPaperColor] = useState('#fff');
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const [
     displaySecondaryColorPicker,
     setDisplaySecondaryColorPicker,
   ] = useState(false);
-
   const [displayDefaultColorPicker, setDisplayDefaultColorPicker] = useState(
     false,
   );
-
   const [displayPaperColorPicker, setDisplayPaperColorPicker] = useState(false);
 
+  //Material-UI states
+  const [expanded, setExpanded] = useState('panel1');
   const [tab, setTab] = useState(0);
 
+  //General Handlers
   const changeColor = color => {
     setColor(color.hex);
   };
@@ -34,16 +35,9 @@ export const Store = () => {
   const changeDefaultColor = defaultColor => {
     setDefaultColor(defaultColor.hex);
   };
+
   const changePaperColor = paperColor => {
     setPaperColor(paperColor.hex);
-  };
-
-  const changeExpanded = panel => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
-
-  const changeTab = (event, newTab) => {
-    setTab(newTab);
   };
 
   const changeColorPickerDisplayed = () => {
@@ -53,11 +47,22 @@ export const Store = () => {
   const changeSecondaryColorPickerDisplayed = () => {
     setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
   };
+
   const changeDefaultColorPickerDisplayed = () => {
     setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
   };
+
   const changePaperColorPickerDisplayed = () => {
     setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
+  };
+
+  //Material-Ui handlers
+  const changeExpanded = panel => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
+  const changeTab = (event, newTab) => {
+    setTab(newTab);
   };
 
   let downloadTheme = {
