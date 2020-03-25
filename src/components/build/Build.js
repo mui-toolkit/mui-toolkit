@@ -51,31 +51,26 @@ export const Build = props => {
   const classes = useStyles();
 
   const [value, setValue] = useState(0);
-  const { retrievedTheme } = {};
 
+  // from userDashboard
   const { savedTheme } = useParams();
   console.log("savedTheme Name: ", savedTheme);
 
   const {
     color,
+    setColor,
     secondaryColor,
+    setSecondaryColor,
     defaultColor,
+    setDefaultColor,
     paperColor,
+    setPaperColor,
     changeColor,
     changeSecondaryColor,
     changePaperColor,
     changeDefaultColor,
     downloadTheme
   } = props;
-
-  // useState will re set state to a saved theme only IF coming from userDashboard
-  const [renderedColor, setColor] = useState(color.hex);
-  const [renderedSecondaryColor, setSecondaryColor] = useState(
-    secondaryColor.hex
-  );
-  const [renderedDefaultColor, setDefaultColor] = useState(defaultColor.hex);
-  const [renderedPaperColor, setPaperColor] = useState(paperColor.hex);
-  const [renderedTheme, setTheme] = useState(downloadTheme);
 
   useEffect(() => {
     if (savedTheme) {
@@ -86,16 +81,14 @@ export const Build = props => {
           .get()
           .then(doc => {
             console.log("saved Theme doc", doc.data());
-
             if (doc.data().palette.primary.main)
               setColor(doc.data().palette.primary.main);
             if (doc.data().palette.secondary.main)
               setSecondaryColor(doc.data().palette.secondary.main);
-            if (doc.data().palette.default.main)
-              setDefaultColor(doc.data().palette.default.main);
-            if (doc.data().background.paper)
-              setPaperColor(doc.data().background.paper);
-            if (doc.data()) setTheme(doc.data());
+            if (doc.data().palette.background.default)
+              setDefaultColor(doc.data().palette.background.default);
+            if (doc.data().palette.background.paper)
+              setPaperColor(doc.data().palette.background.paper);
           })
           .catch(err => {
             console.log("Error getting documents", err);
@@ -104,8 +97,6 @@ export const Build = props => {
       response();
     }
   }, []);
-
-  console.log("renderedTheme", renderedTheme);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -119,13 +110,13 @@ export const Build = props => {
           <Paper className={classes.builderPaper}>
             <BuildNav />
             <Grid item>
-              <Download downloadTheme={renderedTheme} />
-              <SaveTheme downloadTheme={renderedTheme} />
+              <Download downloadTheme={downloadTheme} />
+              <SaveTheme downloadTheme={downloadTheme} />
               <Palette
-                color={renderedColor}
-                secondaryColor={renderedSecondaryColor}
-                defaultColor={renderedDefaultColor}
-                paperColor={renderedPaperColor}
+                color={color}
+                secondaryColor={secondaryColor}
+                defaultColor={defaultColor}
+                paperColor={paperColor}
                 changeColor={changeColor}
                 changeSecondaryColor={changeSecondaryColor}
                 changeDefaultColor={changeDefaultColor}
@@ -142,8 +133,8 @@ export const Build = props => {
             style={{ background: `${defaultColor}` }}
           >
             <PreviewAppBar
-              secondaryColor={renderedSecondaryColor}
-              color={renderedColor}
+              secondaryColor={secondaryColor}
+              color={color}
               className={classes.container}
             />
             <Grid item className={classes.preview}>

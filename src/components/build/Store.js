@@ -54,10 +54,14 @@ export const Store = props => {
     <React.Fragment>
       <ThemeProvider theme={customTheme}>
         <Build
-          color={color}
-          secondaryColor={secondaryColor}
-          defaultColor={defaultColor}
-          paperColor={paperColor}
+					color={color}
+					setColor={setColor}
+					secondaryColor={secondaryColor}
+					setSecondaryColor={setSecondaryColor}
+					defaultColor={defaultColor}
+					setDefaultColor={setDefaultColor}
+					paperColor={paperColor}
+					setPaperColor={setPaperColor}
           changeColor={changeColor}
           changeSecondaryColor={changeSecondaryColor}
           changeDefaultColor={changeDefaultColor}
