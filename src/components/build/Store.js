@@ -22,7 +22,7 @@ export const Store = () => {
 	const [ buttonFontWeight, setButtonFontWeight ] = useState(500);
 	const [ buttonFontSize, setButtonFontSize ] = useState('0.875');
 	//none, capitalize, uppercase, lowercase, initial, inherit
-	const [ buttonTextTransform, setButtonTestTransform ] = useState('none');
+	const [ buttonTextTransform, setButtonTextTransform ] = useState('none');
 	const [ buttonHeight, setButtonHeight ] = useState(48);
 	const [ buttonPadding, setButtonPadding ] = useState('0 30px');
 	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(0);
@@ -74,7 +74,7 @@ export const Store = () => {
 		setButtonFontWeight(buttonFontWeight);
 	};
 	const changeButtonFontSize = (buttonFontSize) => {
-		setButtonFontSize(buttonFontWeight);
+		setButtonFontSize(buttonFontSize);
 	};
 	const changeButtonTextTransform = (buttonTextTransform) => {
 		setButtonTextTransform(buttonTextTransform);
@@ -187,25 +187,25 @@ export const Store = () => {
 					downloadTheme={downloadTheme}
 					//buttons
 					buttonRipple={buttonRipple}
-					setButtonRipple={setButtonRipple}
+					changeButtonRipple={changeButtonRipple}
 					buttonElevation={buttonElevation}
-					setButtonElevation={setButtonElevation}
+					changeButtonElevation={changeButtonElevation}
 					buttonHoverColor={buttonHoverColor}
-					setButtonHoverColor={setButtonHoverColor}
+					changeButtonHoverColor={changeButtonHoverColor}
 					buttonHoverOpacity={buttonHoverOpacity}
-					setButtonHoverOpacity={setButtonHoverOpacity}
+					changeButtonHoverOpacity={changeButtonHoverOpacity}
 					buttonFontWeight={buttonFontWeight}
-					setButtonFontWeight={setButtonFontWeight}
+					changeButtonFontWeight={changeButtonFontWeight}
 					buttonFontSize={buttonFontSize}
-					setButtonFontSize={setButtonFontSize}
+					changeButtonFontSize={changeButtonFontSize}
 					buttonTextTransform={buttonTextTransform}
-					setButtonTestTransform={setButtonTestTransform}
+					changeButtonTextTransform={changeButtonTextTransform}
 					buttonHeight={buttonHeight}
-					setButtonHeight={setButtonHeight}
+					changeButtonHeight={changeButtonHeight}
 					buttonPadding={buttonPadding}
-					setButtonPadding={setButtonPadding}
+					changeButtonPadding={changeButtonPadding}
 					buttonBorderRadius={buttonBorderRadius}
-					setButtonBorderRadius={setButtonBorderRadius}
+					changeButtonBorderRadius={changeButtonBorderRadius}
 				/>
 			</ThemeProvider>
 		</React.Fragment>
