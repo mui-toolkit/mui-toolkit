@@ -15,16 +15,28 @@ export const Store = () => {
 	const [ displayPaperColorPicker, setDisplayPaperColorPicker ] = useState(false);
 
 	//Buttons
-	const [ buttonRipple, setButtonRipple ] = useState(false);
-	const [ buttonElevation, setButtonElevation ] = useState(false);
+	const [ buttonRipple, setButtonRipple ] = useState(true);
+	const [ buttonElevation, setButtonElevation ] = useState(true);
+	//switch
+
 	const [ buttonHoverColor, setButtonHoverColor ] = useState('#000000');
+	//number or color
+
 	const [ buttonHoverOpacity, setButtonHoverOpacity ] = useState(0.04);
+	//slider
+
 	const [ buttonFontWeight, setButtonFontWeight ] = useState(500);
-	const [ buttonFontSize, setButtonFontSize ] = useState('0.875');
+	//slider
+
+	const [ buttonFontSize, setButtonFontSize ] = useState(0.875);
+
 	//none, capitalize, uppercase, lowercase, initial, inherit
 	const [ buttonTextTransform, setButtonTextTransform ] = useState('none');
+	//text input
 	const [ buttonHeight, setButtonHeight ] = useState(48);
+	//text input
 	const [ buttonPadding, setButtonPadding ] = useState('0 30px');
+	//text input
 	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(0);
 
 	//Material-UI states
@@ -151,9 +163,30 @@ export const Store = () => {
 			background: {
 				paper: `${paperColor}`,
 				default: `${defaultColor}`
+			},
+			action: {
+				hover: `${buttonHoverColor}`,
+				hoverOpacity: `${buttonHoverOpacity}`
+			}
+		},
+		typography: {
+			button: {
+				fontWeight: buttonFontWeight,
+				fontSize: `${buttonFontSize}rem`,
+				textTransform: `${buttonTextTransform}`
+			}
+		},
+		props: {
+			MuiButtonBase: {
+				disableRipple: buttonRipple
+			},
+			MuiButton: {
+				disableElevation: buttonElevation
 			}
 		}
 	});
+
+	console.log('CUSTOMTHEME', customTheme.props.MuiButtonBase);
 
 	return (
 		<React.Fragment>
