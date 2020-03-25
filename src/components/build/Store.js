@@ -29,6 +29,8 @@ export const Store = () => {
 	const [ expanded, setExpanded ] = useState('panel1');
 	const [ tab, setTab ] = useState(0);
 
+	//Alerts
+
 	//General Handlers
 	const changeColor = (color) => {
 		setColor(color.hex);

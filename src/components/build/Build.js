@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Palette, SaveTheme, BuildNav, ColorPop } from '../build';
 import { PreviewAppBar, PreviewTabs } from '../preview';
 import Download from '../Download';
+import ColorGenerator from '../ColorGenerator';
 
 import { Grid, Paper } from '@material-ui/core/';
 
@@ -113,8 +114,15 @@ export const Build = (props) => {
 		<section className={classes.root}>
 			<Grid container spacing={1}>
 				{/* BUILD START */}
+
 				<Grid item xs={3} className={classes.selector}>
 					<Paper className={classes.builderPaper}>
+						<ColorGenerator
+							setColor={setColor}
+							setSecondaryColor={setSecondaryColor}
+							setDefaultColor={setDefaultColor}
+							setPaperColor={setPaperColor}
+						/>
 						<BuildNav
 							//general
 							expanded={expanded}
