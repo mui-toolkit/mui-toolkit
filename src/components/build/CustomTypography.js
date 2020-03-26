@@ -8,6 +8,7 @@ import {
   TextField,
   Grid,
   Link,
+  Paper,
 } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { makeStyles } from '@material-ui/styles';
@@ -47,13 +48,48 @@ export const CustomTypography = props => {
                 })
               }
             >
-              <MenuItem value={'Roboto'}>Roboto</MenuItem>
-              <MenuItem value={'"Helvetica Neue"'}>Helvetica</MenuItem>
-              <MenuItem value={'sans-serif'}>San-Serif</MenuItem>
-              <MenuItem value={'"Segoe UI"'}>Segoe Ui</MenuItem>
-              <MenuItem value={'Arial'}>Arial</MenuItem>
-              <MenuItem value={'-apple-system'}>Apple System</MenuItem>
-              <MenuItem value={'BlinkMacSystemFont'}>Mac Stystem</MenuItem>
+              <MenuItem
+                style={{ color: '#000', backgroundColor: '#fff' }}
+                value={'Roboto'}
+              >
+                Roboto
+              </MenuItem>
+              <MenuItem
+                style={{ color: '#000', backgroundColor: '#fff' }}
+                value={'"Helvetica Neue"'}
+              >
+                Helvetica
+              </MenuItem>
+              <MenuItem
+                style={{ color: '#000', backgroundColor: '#fff' }}
+                value={'sans-serif'}
+              >
+                San-Serif
+              </MenuItem>
+              <MenuItem
+                style={{ color: '#000', backgroundColor: '#fff' }}
+                value={'"Segoe UI"'}
+              >
+                Segoe Ui
+              </MenuItem>
+              <MenuItem
+                style={{ color: '#000', backgroundColor: '#fff' }}
+                value={'Arial'}
+              >
+                Arial
+              </MenuItem>
+              <MenuItem
+                style={{ color: '#000', backgroundColor: '#fff' }}
+                value={'-apple-system'}
+              >
+                Apple System
+              </MenuItem>
+              <MenuItem
+                style={{ color: '#000', backgroundColor: '#fff' }}
+                value={'BlinkMacSystemFont'}
+              >
+                Mac Stystem
+              </MenuItem>
             </Select>
           </Grid>
         </Grid>
