@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -8,6 +7,12 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { db } from "../config/firebase";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -30,18 +35,21 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(3)
     }
   },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end"
-  },
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1)
+  },
+  root: {
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2)
+    }
   }
 }));
 
-function UserProfile(props) {
-  const { uid, user } = props;
+export default function UserProfile({ uid, user }) {
   console.log("UserProfile -> user", user, uid);
   const [firstName, setFirstName] = useState(`${user.firstName}`);
   const [lastName, setLastName] = useState(`${user.lastName}`);
@@ -50,7 +58,17 @@ function UserProfile(props) {
   const [password, setPassword] = useState(`${user.password}`);
 
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = async (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   const handleUpdate = async () => {
+    setOpen(true);
     await db
       .collection("Users")
       .doc(`${uid}`)
@@ -63,9 +81,7 @@ function UserProfile(props) {
       })
       .then(() => {
         console.log("updated user in db,props");
-        props.history.push("/");
       });
-    alert("Profile Updated");
   };
 
   return (
@@ -153,7 +169,7 @@ function UserProfile(props) {
               <Grid item xs={12}></Grid>
             </Grid>
             <React.Fragment>
-              <div className={classes.buttons}>
+              <div className={classes.root}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -162,6 +178,15 @@ function UserProfile(props) {
                 >
                   Update Profile
                 </Button>
+                <Snackbar
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="success">
+                    Profile Updated!
+                  </Alert>
+                </Snackbar>
               </div>
             </React.Fragment>
           </React.Fragment>
@@ -170,5 +195,3 @@ function UserProfile(props) {
     </React.Fragment>
   );
 }
-
-export default withRouter(UserProfile);

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { db } from '../../config/firebase';
-import { Alert, AlertTitle } from '@material-ui/lab/';
+import React, { useState } from "react";
+import { db } from "../../config/firebase";
+import { Alert, AlertTitle } from "@material-ui/lab/";
 import {
   Button,
   TextField,
@@ -47,43 +47,51 @@ export const SaveTheme = props => {
   const handleSave = e => {
     setOpen(false);
     sendPalette(themeName);
-    alert('New Customized Theme Saved');
+    alert("New Customized Theme Saved");
   };
 
   const sendPalette = async themeName => {
     console.log(downloadTheme);
     downloadTheme.createdAt = new Date();
+    downloadTheme.themeName = themeName;
     let newTheme = await db
-      .collection('CustomizedThemes')
+      .collection("CustomizedThemes")
       .doc(`${themeName}`)
       .set({ ...downloadTheme })
       .then(ref => {
-        console.log('Added Theme ', `${ref.id}`);
+        console.log("Added Theme ", `${ref.id}`);
       })
       .catch(function(error) {
-        console.log('Error creating a new theme: ', error);
+        console.log("Error creating a new theme: ", error);
       });
-    console.log('Test -> newTheme', newTheme);
+    console.log("Test -> newTheme", newTheme);
+    // await db
+    //   .collection("Users")
+    //   .doc(`${user.uid}`)
+    //   .update({ themes: [...themes, downloadTheme] })
+    //   .then(() => {
+    //     console.log("updated user with reference to theme");
+    //   });
   };
   return (
     <div>
       <Button
-        variant='outlined'
+        variant="outlined"
         onClick={handleClickOpen}
         style={{
-          fontFamily: 'Roboto',
+          fontFamily: "Roboto",
           fontSize: 14,
-          marginBottom: '2em',
-          color: '#f50057',
+          marginBottom: "2em",
+          color: "#f50057"
         }}
         className={classes.button}
       >
-        Save <SaveIcon style={{ marginLeft: '5px' }} />
+        Save <SaveIcon style={{ marginLeft: "5px" }} />
       </Button>
       <Dialog
         open={open}
         onClose={handleCancel}
-        aria-labelledby='form-dialog-title'
+        aria-labelledby="form-dialog-title"
       >
         <Paper style={{ backgroundColor: '#fff' }}>
           <Typography

@@ -5,7 +5,6 @@ import Home from "./Home";
 import Learn from "./Learn";
 import Login from "./Login";
 import Signup from "./Signup";
-import UsersThemes from "./UsersThemes";
 import ThemesTable from "./ThemesTable";
 import Dashboard from "./Dashboard";
 import UserProfile from "./UserProfile";
@@ -26,9 +25,6 @@ const defaultUser = {
   loggedIn: false,
   email: "",
   uid: ""
-  // firstName: "",
-  // lastName: "",
-  // username: ""
 };
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -37,9 +33,6 @@ function onAuthStateChange(callback) {
         loggedIn: true,
         email: user.email,
         uid: user.uid
-        // firstName: user.firstName,
-        // lastName: user.lastName,
-        // username: user.username
       });
     } else {
       callback({ loggedIn: false });
@@ -83,7 +76,6 @@ function App() {
               path="/dashboard"
               component={() => <Dashboard user={user} />}
             />
-            <Route exact path="/usersthemes" component={UsersThemes} />
             <Route exact path="/themestable" component={ThemesTable} />
             <Route exact path="/userprofile" component={UserProfile} />
           </Switch>
