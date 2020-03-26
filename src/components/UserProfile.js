@@ -60,9 +60,12 @@ function UserProfile(props) {
         username,
         email,
         password
+      })
+      .then(() => {
+        console.log("updated user in db,props");
+        props.history.push("/");
       });
     alert("Profile Updated");
-    props.history.push("/");
   };
 
   return (
@@ -154,7 +157,7 @@ function UserProfile(props) {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={handleUpdate} // firebase update user
+                  onClick={handleUpdate}
                   className={classes.button}
                 >
                   Update Profile
