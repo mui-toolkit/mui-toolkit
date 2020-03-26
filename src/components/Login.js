@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     height: 46,
     padding: 10,
   },
-  title: { backgroundColor: '#3d4576', color: '#ffffff' },
+  title: { backgroundColor: '#3d4576' },
   tab: {
     textTransform: 'none',
     fontWeight: 400,
@@ -83,7 +83,7 @@ export function Login(props) {
         }
         console.log('error in login', error);
         // alert(error.message);
-        alert('Invalid username or password');
+        // alert('Invalid username or password');
       });
   };
 
@@ -117,54 +117,55 @@ export function Login(props) {
       <Dialog
         open={open}
         onClose={handleCancel}
-        aria-labelledby="form-dialog-title"
+        aria-labelledby='form-dialog-title'
       >
         <Paper style={{ backgroundColor: '#fff' }}>
-        <Typography
+          <Typography
             id='form-dialog-title'
             align='center'
             style={{
-              color: '#000',
+              color: '#fff',
               fontSize: 20,
               fontFamily: 'Roboto',
               lineHeight: 3,
             }}
+            className={classes.title}
           >
             LOG IN
           </Typography>
-        <DialogContent>
-          <TextField
-            required
-            label="Email"
-            id="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            error={!isEmpty(validate(email)) && email.length > 0}
-            helperText={
-              validate(email) && email.length > 0
-                ? 'Please enter a valid email'
-                : ''
-            }
-            helperText={
-              !isEmpty(validate(email)) && email.length > 0
-                ? validate(email)
-                : ''
-            }
-          />
-        </DialogContent>
-        <DialogContent>
-          <TextField
-            required
-            type="password"
-            label="Password"
-            id="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
+          <DialogContent>
+            <TextField
+              required
+              label='Email'
+              id='email'
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              error={!isEmpty(validate(email)) && email.length > 0}
+              helperText={
+                validate(email) && email.length > 0
+                  ? 'Please enter a valid email'
+                  : ''
+              }
+              helperText={
+                !isEmpty(validate(email)) && email.length > 0
+                  ? validate(email)
+                  : ''
+              }
+            />
+          </DialogContent>
+          <DialogContent>
+            <TextField
+              required
+              type='password'
+              label='Password'
+              id='password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button
               onClick={handleSubmit}
               style={{
                 fontFamily: 'Roboto',
@@ -176,7 +177,7 @@ export function Login(props) {
             >
               Login
             </Button>
-          <Button
+            <Button
               onClick={handleCancel}
               style={{
                 fontFamily: 'Roboto',
@@ -188,27 +189,27 @@ export function Login(props) {
             >
               Cancel
             </Button>
-        </DialogActions>
-      </Paper>
+          </DialogActions>
+        </Paper>
       </Dialog>
       <Snackbar
         anchorOrigin={{
           vertical: 'center',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         open={openSnack}
         autoHideDuration={4000}
         onClose={handleClose}
-        message="Invalid Username or Password."
+        message='Invalid Username or Password.'
         action={
           <React.Fragment>
             <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
+              size='small'
+              aria-label='close'
+              color='inherit'
               onClick={handleClose}
             >
-              <CloseIcon fontSize="small" />
+              <CloseIcon fontSize='small' />
             </IconButton>
           </React.Fragment>
         }
