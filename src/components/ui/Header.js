@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -33,8 +33,8 @@ const useStyles = makeStyles(theme => ({
     minWidth: 10,
     marginLeft: '25px',
     color: '#000',
-    fontFamily: 'Roboto',
-  },
+    fontFamily: 'Roboto'
+  }
 }));
 const UserContext = React.createContext({});
 const UserProvider = UserContext.Provider;
@@ -63,7 +63,7 @@ export default function Header(props) {
           <Toolbar>
             <Button
               component={Link}
-              to='/'
+              to="/"
               disableRipple
               style={{
                 fontFamily: 'Roboto',
@@ -79,33 +79,26 @@ export default function Header(props) {
               <Tab
                 className={classes.tab}
                 component={Link}
-                to='/'
-                label='Home'
-              />
-              <Tab
-                className={classes.tab}
-                component={Link}
-                to='/learn'
-                label='Learn'
-              />
-              <Tab
-                className={classes.tab}
-                component={Link}
-                to='/design'
-                label='Start'
-              />
-              {/* <Tab
-                className={classes.tab}
-                // component={Link}
-                component={Login}
                 to="/"
-                label="Login"
-              /> */}
+                label="Home"
+              />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to='/signup'
-                label='Signup'
+                to="/learn"
+                label="Learn"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/design"
+                label="Start"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/signup"
+                label="Signup"
               />
             </Tabs>
             <Login />
@@ -121,7 +114,7 @@ export default function Header(props) {
         <Toolbar>
           <Button
             component={Link}
-            to='/'
+            to="/"
             disableRipple
             style={{
               fontFamily: 'Roboto',
@@ -134,25 +127,25 @@ export default function Header(props) {
             mymui.
           </Button>
           <Tabs className={classes.tabContainer}>
-            <Tab className={classes.tab} component={Link} to='/' label='Home' />
+            <Tab className={classes.tab} component={Link} to="/" label="Home" />
             <Tab
               className={classes.tab}
               component={Link}
-              to='/learn'
-              label='Learn'
+              to="/learn"
+              label="Learn"
             />
             <Tab
               className={classes.tab}
               component={Link}
-              to='/design'
-              label='Start'
+              to="/design"
+              label="Start"
             />
             {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
               component={Link}
-              to='/dashboard'
-              label='User Dashboard'
+              to="/dashboard"
+              label="User Dashboard"
             />
             <Tab
               className={classes.tab}
