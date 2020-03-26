@@ -15,9 +15,13 @@ import {
 } from '@material-ui/core/';
 import CloseIcon from '@material-ui/icons/Close';
 
-const useStyles = makeStyles(theme => ({ button: { marginRight: '20px' } }));
+const useStyles = makeStyles(theme => ({
+  button: { marginRight: '20px' },
+  title: { backgroundColor: '#3d4576', color: '#ffffff' }
+}));
 
 export function Login(props) {
+  const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [openSnack, setOpenSnack] = useState(false);
@@ -93,9 +97,12 @@ export function Login(props) {
         aria-labelledby="form-dialog-title"
       >
         {' '}
-        <DialogTitle id="form-dialog-title">LOG IN</DialogTitle>
+        <DialogTitle id="form-dialog-title" className={classes.title}>
+          LOG IN
+        </DialogTitle>
         <DialogContent>
           <TextField
+            required
             label="Email"
             id="email"
             value={email}
@@ -116,6 +123,7 @@ export function Login(props) {
         </DialogContent>
         <DialogContent>
           <TextField
+            required
             type="password"
             label="Password"
             id="password"
