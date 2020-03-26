@@ -33,7 +33,7 @@ export const ColorPop = props => {
       },
       popover: {
         position: 'absolute',
-        zIndex: '2',
+        zIndex: 1300,
       },
       cover: {
         position: 'fixed',
