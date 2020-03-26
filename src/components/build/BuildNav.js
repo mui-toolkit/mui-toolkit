@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core/';
-import { General, CustomTypography, Buttons } from './index';
+import { General, CustomTypography, Buttons, Alerts } from './index';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -52,79 +52,59 @@ const ExpansionPanelSummary = withStyles({
 	expanded: {}
 })(MuiExpansionPanelSummary);
 
-const ExpansionPanelDetails = withStyles(theme => ({
-  // root: {
-  //   padding: theme.spacing(2),
-  // },
+const ExpansionPanelDetails = withStyles((theme) => ({
+	// root: {
+	//   padding: theme.spacing(2),
+	// },
 }))(MuiExpansionPanelDetails);
 
 export function BuildNav(props) {
-  const classes = useStyles();
-  const { expanded, changeExpanded } = props;
-  return (
-    <React.Fragment>
-      <Grid Item>
-        <ExpansionPanel
-          square
-          expanded={expanded === 'panel1'}
-          onChange={changeExpanded('panel1')}
-          className={classes.expansionPanel}
-        >
-          <ExpansionPanelSummary
-            aria-controls='panel1d-content'
-            id='panel1d-header'
-          >
-            <Typography
-              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
-            >
-              General
-            </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <General
-              color={props.color}
-              secondaryColor={props.secondaryColor}
-              defaultColor={props.defaultColor}
-              paperColor={props.paperColor}
-              changeColor={props.changeColor}
-              changeSecondaryColor={props.changeSecondaryColor}
-              changeDefaultColor={props.changeDefaultColor}
-              changePaperColor={props.changePaperColor}
-              displayColorPicker={props.displayColorPicker}
-              changeColorPickerDisplayed={props.changeColorPickerDisplayed}
-              displaySecondaryColorPicker={props.displaySecondaryColorPicker}
-              changeSecondaryColorPickerDisplayed={
-                props.changeSecondaryColorPickerDisplayed
-              }
-              displayDefaultColorPicker={props.displayDefaultColorPicker}
-              changeDefaultColorPickerDisplayed={
-                props.changeDefaultColorPickerDisplayed
-              }
-              displayPaperColorPicker={props.displayPaperColorPicker}
-              changePaperColorPickerDisplayed={
-                props.changePaperColorPickerDisplayed
-              }
-            />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel
-          square
-          expanded={expanded === 'panel2'}
-          onChange={changeExpanded('panel2')}
-          className={classes.expansionPanel}
-        >
-          <ExpansionPanelSummary
-            aria-controls='panel2d-content'
-            id='panel2d-header'
-          >
-            <Typography
-              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
-            >
-              Buttons
-            </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Buttons
+	const classes = useStyles();
+	const { expanded, changeExpanded } = props;
+	return (
+		<React.Fragment>
+			<Grid Item>
+				<ExpansionPanel
+					square
+					expanded={expanded === 'panel1'}
+					onChange={changeExpanded('panel1')}
+					className={classes.expansionPanel}
+				>
+					<ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
+						<Typography style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}>General</Typography>
+					</ExpansionPanelSummary>
+					<ExpansionPanelDetails>
+						<General
+							color={props.color}
+							secondaryColor={props.secondaryColor}
+							defaultColor={props.defaultColor}
+							paperColor={props.paperColor}
+							changeColor={props.changeColor}
+							changeSecondaryColor={props.changeSecondaryColor}
+							changeDefaultColor={props.changeDefaultColor}
+							changePaperColor={props.changePaperColor}
+							displayColorPicker={props.displayColorPicker}
+							changeColorPickerDisplayed={props.changeColorPickerDisplayed}
+							displaySecondaryColorPicker={props.displaySecondaryColorPicker}
+							changeSecondaryColorPickerDisplayed={props.changeSecondaryColorPickerDisplayed}
+							displayDefaultColorPicker={props.displayDefaultColorPicker}
+							changeDefaultColorPickerDisplayed={props.changeDefaultColorPickerDisplayed}
+							displayPaperColorPicker={props.displayPaperColorPicker}
+							changePaperColorPickerDisplayed={props.changePaperColorPickerDisplayed}
+						/>
+					</ExpansionPanelDetails>
+				</ExpansionPanel>
+				<ExpansionPanel
+					square
+					expanded={expanded === 'panel2'}
+					onChange={changeExpanded('panel2')}
+					className={classes.expansionPanel}
+				>
+					<ExpansionPanelSummary aria-controls="panel2d-content" id="panel2d-header">
+						<Typography style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}>Buttons</Typography>
+					</ExpansionPanelSummary>
+					<ExpansionPanelDetails>
+						<Buttons
 							buttonRipple={props.buttonRipple}
 							changeButtonRipple={props.changeButtonRipple}
 							buttonElevation={props.buttonElevation}
@@ -148,73 +128,67 @@ export function BuildNav(props) {
 							buttonBorderRadius={props.buttonBorderRadius}
 							changeButtonBorderRadius={props.changeButtonBorderRadius}
 						/>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel
-          square
-          expanded={expanded === 'panel3'}
-          onChange={changeExpanded('panel3')}
-          className={classes.expansionPanel}
-        >
-          <ExpansionPanelSummary
-            aria-controls='panel3d-content'
-            id='panel3d-header'
-          >
-            <Typography
-              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
-            >
-              Typography
-            </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography>
-              <CustomTypography
-                color={props.color}
-                changeColor={props.changeColor}
-                displayColorPicker={props.displayColorPicker}
-                changeColorPickerDisplayed={props.changeColorPickerDisplayed}
-                fontStyle={props.fontStyle}
-                setFontStyle={props.setFontStyle}
-                primaryTextColor={props.primaryTextColor}
-                secondaryTextColor={props.secondaryTextColor}
-                primaryTextColorPicker={props.primaryTextColorPicker}
-                secondaryTextColorPicker={props.secondaryTextColorPicker}
-                changePrimaryTextColor={props.changePrimaryTextColor}
-                changeSecondaryTextColor={props.changeSecondaryTextColor}
-                setTab={props.setTab}
-              />
-            </Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel
-          square
-          expanded={expanded === 'panel4'}
-          onChange={changeExpanded('panel4')}
-          className={classes.expansionPanel}
-        >
-          <ExpansionPanelSummary
-            aria-controls='panel4d-content'
-            id='panel4d-header'
-          >
-            <Typography
-              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
-            >
-              Alerts
-            </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography
-              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </Grid>
-    </React.Fragment>
-  );
+					</ExpansionPanelDetails>
+				</ExpansionPanel>
+				<ExpansionPanel
+					square
+					expanded={expanded === 'panel3'}
+					onChange={changeExpanded('panel3')}
+					className={classes.expansionPanel}
+				>
+					<ExpansionPanelSummary aria-controls="panel3d-content" id="panel3d-header">
+						<Typography style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}>
+							Typography
+						</Typography>
+					</ExpansionPanelSummary>
+					<ExpansionPanelDetails>
+						<Typography>
+							<CustomTypography
+								color={props.color}
+								changeColor={props.changeColor}
+								displayColorPicker={props.displayColorPicker}
+								changeColorPickerDisplayed={props.changeColorPickerDisplayed}
+								fontStyle={props.fontStyle}
+								setFontStyle={props.setFontStyle}
+								primaryTextColor={props.primaryTextColor}
+								secondaryTextColor={props.secondaryTextColor}
+								primaryTextColorPicker={props.primaryTextColorPicker}
+								secondaryTextColorPicker={props.secondaryTextColorPicker}
+								changePrimaryTextColor={props.changePrimaryTextColor}
+								changeSecondaryTextColor={props.changeSecondaryTextColor}
+								setTab={props.setTab}
+							/>
+						</Typography>
+					</ExpansionPanelDetails>
+				</ExpansionPanel>
+				<ExpansionPanel
+					square
+					expanded={expanded === 'panel4'}
+					onChange={changeExpanded('panel4')}
+					className={classes.expansionPanel}
+				>
+					<ExpansionPanelSummary aria-controls="panel4d-content" id="panel4d-header">
+						<Typography style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}>Alerts</Typography>
+					</ExpansionPanelSummary>
+					<ExpansionPanelDetails>
+						<Alerts
+							errorColor={props.errorColor}
+							warningColor={props.warningColor}
+							infoColor={props.infoColor}
+							successColor={props.successColor}
+							errorColorPicker={props.errorColorPicker}
+							warningColorPicker={props.warningColorPicker}
+							infoColorPicker={props.infoColorPicker}
+							successColorPicker={props.successColorPicker}
+							changeErrorColor={props.changeErrorColor}
+							changeWarningColor={props.changeWarningColor}
+							changeInfoColor={props.changeInfoColor}
+							changeSuccessColor={props.changeSuccessColor}
+							changeColorPickerDisplayed={props.changeColorPickerDisplayed}
+						/>
+					</ExpansionPanelDetails>
+				</ExpansionPanel>
+			</Grid>
+		</React.Fragment>
+	);
 }
