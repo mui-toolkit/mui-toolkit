@@ -25,9 +25,6 @@ const defaultUser = {
   loggedIn: false,
   email: "",
   uid: ""
-  // firstName: "",
-  // lastName: "",
-  // username: ""
 };
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -36,9 +33,6 @@ function onAuthStateChange(callback) {
         loggedIn: true,
         email: user.email,
         uid: user.uid
-        // firstName: user.firstName,
-        // lastName: user.lastName,
-        // username: user.username
       });
     } else {
       callback({ loggedIn: false });

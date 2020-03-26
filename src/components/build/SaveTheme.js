@@ -13,6 +13,7 @@ import {
 import SaveIcon from "@material-ui/icons/Save";
 
 export const SaveTheme = props => {
+console.log("props", props)
   const { downloadTheme } = props;
 
   const [open, setOpen] = useState(false);
@@ -46,6 +47,13 @@ export const SaveTheme = props => {
         console.log("Error creating a new theme: ", error);
       });
     console.log("Test -> newTheme", newTheme);
+    // await db
+    //   .collection("Users")
+    //   .doc(`${user.uid}`)
+    //   .update({ themes: [...themes, downloadTheme] })
+    //   .then(() => {
+    //     console.log("updated user with reference to theme");
+    //   });
   };
   return (
     <div>
