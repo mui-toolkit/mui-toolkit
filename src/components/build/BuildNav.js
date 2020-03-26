@@ -53,9 +53,9 @@ const ExpansionPanelSummary = withStyles({
 })(MuiExpansionPanelSummary);
 
 const ExpansionPanelDetails = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(2),
-  },
+  // root: {
+  //   padding: theme.spacing(2),
+  // },
 }))(MuiExpansionPanelDetails);
 
 export function BuildNav(props) {
@@ -74,7 +74,11 @@ export function BuildNav(props) {
             aria-controls='panel1d-content'
             id='panel1d-header'
           >
-            <Typography>General</Typography>
+            <Typography
+              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
+            >
+              General
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <General
@@ -113,7 +117,11 @@ export function BuildNav(props) {
             aria-controls='panel2d-content'
             id='panel2d-header'
           >
-            <Typography>Buttons</Typography>
+            <Typography
+              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
+            >
+              Buttons
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>
@@ -135,18 +143,28 @@ export function BuildNav(props) {
             aria-controls='panel3d-content'
             id='panel3d-header'
           >
-            <Typography>Typography</Typography>
+            <Typography
+              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
+            >
+              Typography
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>
               <CustomTypography
+                color={props.color}
+                changeColor={props.changeColor}
+                displayColorPicker={props.displayColorPicker}
+                changeColorPickerDisplayed={props.changeColorPickerDisplayed}
                 fontStyle={props.fontStyle}
                 setFontStyle={props.setFontStyle}
-                h1={props.h1}
-                changeH1={props.changeH1}
-                h2={props.h2}
-                changeH2={props.changeH2}
-                handleFontColorPicker={props.handleFontColorPicker}
+                primaryTextColor={props.primaryTextColor}
+                secondaryTextColor={props.secondaryTextColor}
+                primaryTextColorPicker={props.primaryTextColorPicker}
+                secondaryTextColorPicker={props.secondaryTextColorPicker}
+                changePrimaryTextColor={props.changePrimaryTextColor}
+                changeSecondaryTextColor={props.changeSecondaryTextColor}
+                setTab={props.setTab}
               />
             </Typography>
           </ExpansionPanelDetails>
@@ -161,10 +179,16 @@ export function BuildNav(props) {
             aria-controls='panel4d-content'
             id='panel4d-header'
           >
-            <Typography>Alerts</Typography>
+            <Typography
+              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
+            >
+              Alerts
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
+            <Typography
+              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
+            >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
               eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.

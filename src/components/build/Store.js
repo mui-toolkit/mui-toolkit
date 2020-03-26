@@ -24,19 +24,12 @@ export const Store = () => {
     fontFamily: 'Roboto',
     fontSize: 14,
   });
-
-  const [h1, setH1] = useState({
-    color: '#000',
-    fontWeight: 300,
-    fontSize: '6rem',
-  });
-  const [h2, setH2] = useState({
-    color: '#000',
-    fontWeight: 300,
-    fontSize: '3.75rem',
-  });
-
-  const [fontColorPicker, setFontColorPicker] = useState(false);
+  const [primaryTextColor, setPrimaryTextColor] = useState('#000');
+  const [secondaryTextColor, setSecondaryTextColor] = useState('#000');
+  const [primaryTextColorPicker, setPrimaryTextColorPicker] = useState(false);
+  const [secondaryTextColorPicker, setSecondaryTextColorPicker] = useState(
+    false,
+  );
 
   //Material-UI states
   const [expanded, setExpanded] = useState('panel1');
@@ -58,6 +51,14 @@ export const Store = () => {
     setPaperColor(paperColor.hex);
   };
 
+  const changePrimaryTextColor = textColor => {
+    setPrimaryTextColor(textColor.hex);
+  };
+
+  const changeSecondaryTextColor = textColor => {
+    setSecondaryTextColor(textColor.hex);
+  };
+
   const changeColorPickerDisplayed = type => {
     if (type === 'primary') {
       setDisplayColorPicker(!displayColorPicker ? true : false);
@@ -73,46 +74,11 @@ export const Store = () => {
     if (type === 'paper') {
       setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
     }
-  };
-
-  // const changeSecondaryColorPickerDisplayed = () => {
-  //   setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
-  // };
-
-  // const changeDefaultColorPickerDisplayed = () => {
-  //   setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
-  // };
-
-  // const changePaperColorPickerDisplayed = () => {
-  //   setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
-  // };
-
-  //Typography
-
-  // const changeFontSize = event => {
-  //   setFontSize(Number(event.target.value));
-  // };
-
-  const changeH1 = style => {
-    if (style.color) {
-      setH1({ ...h1, color: style.color });
+    if (type === 'primaryText') {
+      setPrimaryTextColorPicker(!primaryTextColorPicker ? true : false);
     }
-    if (style.fontWeight) {
-      setH1({ ...h1, fontWeight: style.fontWeight });
-    }
-    if (style.fontSize) {
-      setH1({ ...h1, fontSize: style.fontSize });
-    }
-  };
-  const changeH2 = style => {
-    if (style.color) {
-      setH2({ ...h2, color: style.color });
-    }
-    if (style.fontWeight) {
-      setH2({ ...h2, fontWeight: style.fontWeight });
-    }
-    if (style.fontSize) {
-      setH2({ ...h2, fontSize: style.fontSize });
+    if (type === 'secondaryText') {
+      setSecondaryTextColorPicker(!secondaryTextColorPicker ? true : false);
     }
   };
 
@@ -125,15 +91,15 @@ export const Store = () => {
     setTab(newTab);
   };
 
-  const handleFontColorPicker = () => {
-    setFontColorPicker(!fontColorPicker ? true : false);
-  };
-
   let downloadTheme = {
     palette: {
       primary: { main: `${color}` ? `${color}` : '#3f51b5' },
       secondary: {
         main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057',
+      },
+      text: {
+        primary: `${primaryTextColor}`,
+        secondary: `${secondaryTextColor}`,
       },
       background: {
         paper: `${paperColor}`,
@@ -143,14 +109,6 @@ export const Store = () => {
     typography: {
       fontFamily: `${fontStyle.fontFamily}`,
       fontSize: `${fontStyle.fontSize}`,
-      h1: {
-        color: `${h1.color}`,
-        fontWeight: `${h1.fontWeight}`,
-      },
-      h2: {
-        color: `${h2.color}`,
-        fontWeight: `${h2.fontWeight}`,
-      },
     },
   };
 
@@ -160,6 +118,10 @@ export const Store = () => {
       secondary: {
         main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057',
       },
+      text: {
+        primary: `${primaryTextColor}`,
+        secondary: `${secondaryTextColor}`,
+      },
       background: {
         paper: `${paperColor}`,
         default: `${defaultColor}`,
@@ -168,59 +130,47 @@ export const Store = () => {
     typography: {
       fontFamily: `${fontStyle.fontFamily}`,
       fontSize: `${fontStyle.fontSize}`,
-      h1: {
-        color: `${h1.color}`,
-        fontWeight: `${h1.fontWeight}`,
-      },
-      h2: {
-        color: `${h2.color}`,
-        fontWeight: `${h2.fontWeight}`,
-      },
     },
   });
 
   return (
     <React.Fragment>
-      <ThemeProvider theme={customTheme}>
-        <Build
-          color={color}
-          setColor={setColor}
-          secondaryColor={secondaryColor}
-          setSecondaryColor={setSecondaryColor}
-          defaultColor={defaultColor}
-          setDefaultColor={setDefaultColor}
-          paperColor={paperColor}
-          setPaperColor={setPaperColor}
-          expanded={expanded}
-          tab={tab}
-          displayColorPicker={displayColorPicker}
-          changeColor={changeColor}
-          changeSecondaryColor={changeSecondaryColor}
-          changeDefaultColor={changeDefaultColor}
-          changePaperColor={changePaperColor}
-          changeExpanded={changeExpanded}
-          changeTab={changeTab}
-          changeColorPickerDisplayed={changeColorPickerDisplayed}
-          downloadTheme={downloadTheme}
-          displaySecondaryColorPicker={displaySecondaryColorPicker}
-          // changeSecondaryColorPickerDisplayed={
-          //   changeSecondaryColorPickerDisplayed
-          // }
-          displayDefaultColorPicker={displayDefaultColorPicker}
-          // changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
-          displayPaperColorPicker={displayPaperColorPicker}
-          // changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
-          downloadTheme={downloadTheme}
-          //Typography
-          fontStyle={fontStyle}
-          setFontStyle={setFontStyle}
-          h1={h1}
-          changeH1={changeH1}
-          h2={h2}
-          changeH2={changeH2}
-          handleFontColorPicker={handleFontColorPicker}
-        />
-      </ThemeProvider>
+      <Build
+        color={color}
+        setColor={setColor}
+        secondaryColor={secondaryColor}
+        setSecondaryColor={setSecondaryColor}
+        defaultColor={defaultColor}
+        setDefaultColor={setDefaultColor}
+        paperColor={paperColor}
+        setPaperColor={setPaperColor}
+        expanded={expanded}
+        tab={tab}
+        setTab={setTab}
+        displayColorPicker={displayColorPicker}
+        changeColor={changeColor}
+        changeSecondaryColor={changeSecondaryColor}
+        changeDefaultColor={changeDefaultColor}
+        changePaperColor={changePaperColor}
+        changeExpanded={changeExpanded}
+        changeTab={changeTab}
+        changeColorPickerDisplayed={changeColorPickerDisplayed}
+        downloadTheme={downloadTheme}
+        displaySecondaryColorPicker={displaySecondaryColorPicker}
+        displayDefaultColorPicker={displayDefaultColorPicker}
+        displayPaperColorPicker={displayPaperColorPicker}
+        downloadTheme={downloadTheme}
+        //Typography
+        fontStyle={fontStyle}
+        setFontStyle={setFontStyle}
+        primaryTextColor={primaryTextColor}
+        secondaryTextColor={secondaryTextColor}
+        primaryTextColorPicker={primaryTextColorPicker}
+        secondaryTextColorPicker={secondaryTextColorPicker}
+        changePrimaryTextColor={changePrimaryTextColor}
+        changeSecondaryTextColor={changeSecondaryTextColor}
+        customTheme={customTheme}
+      />
     </React.Fragment>
   );
 };

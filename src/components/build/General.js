@@ -21,7 +21,16 @@ export const General = props => {
               props.changeColorPickerDisplayed('primary')
             }
           />
-          <Typography style={{ marginLeft: '15px' }}>Primary Color</Typography>
+          <Typography
+            style={{
+              marginLeft: '15px',
+              color: '#000',
+              fontSize: 16,
+              fontFamily: 'Roboto',
+            }}
+          >
+            Primary Color
+          </Typography>
         </Grid>
 
         <Grid
@@ -38,7 +47,14 @@ export const General = props => {
               props.changeColorPickerDisplayed('secondary')
             }
           />
-          <Typography style={{ marginLeft: '15px' }}>
+          <Typography
+            style={{
+              marginLeft: '15px',
+              color: '#000',
+              fontSize: 16,
+              fontFamily: 'Roboto',
+            }}
+          >
             Secondary Color
           </Typography>
         </Grid>
@@ -56,7 +72,16 @@ export const General = props => {
               props.changeColorPickerDisplayed('default')
             }
           />
-          <Typography style={{ marginLeft: '15px' }}>Default Color</Typography>
+          <Typography
+            style={{
+              marginLeft: '15px',
+              color: '#000',
+              fontSize: 16,
+              fontFamily: 'Roboto',
+            }}
+          >
+            Default Color
+          </Typography>
         </Grid>
         <Grid
           container
@@ -72,7 +97,16 @@ export const General = props => {
               props.changeColorPickerDisplayed('paper')
             }
           />
-          <Typography style={{ marginLeft: '15px' }}>Paper Color</Typography>
+          <Typography
+            style={{
+              marginLeft: '15px',
+              color: '#000',
+              fontSize: 16,
+              fontFamily: 'Roboto',
+            }}
+          >
+            Paper Color
+          </Typography>
         </Grid>
       </Grid>
     </React.Fragment>

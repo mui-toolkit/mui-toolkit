@@ -8,6 +8,7 @@ import { Grid, Paper } from '@material-ui/core/';
 
 import { makeStyles } from '@material-ui/styles';
 import { db } from '../../config/firebase';
+import { ThemeProvider } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   preview: {
@@ -53,6 +54,7 @@ export const Build = props => {
     displayPaperColorPicker,
     changePaperColorPickerDisplayed,
     tab,
+    setTab,
     changeTab,
     downloadTheme,
     setColor,
@@ -61,11 +63,13 @@ export const Build = props => {
     setPaperColor,
     fontStyle,
     setFontStyle,
-    h1,
-    changeH1,
-    h2,
-    changeH2,
-    handleFontColorPicker,
+    primaryTextColor,
+    secondaryTextColor,
+    primaryTextColorPicker,
+    secondaryTextColorPicker,
+    changePrimaryTextColor,
+    changeSecondaryTextColor,
+    customTheme,
   } = props;
 
   // Will render when a user selects to view a saved theme
@@ -101,7 +105,7 @@ export const Build = props => {
     <section className={classes.root}>
       <Grid container spacing={1}>
         {/* BUILD NAV START */}
-        <Grid item xs={3} className={classes.selector}>
+        <Grid item xs={3}>
           <Paper className={classes.builderPaper}>
             <BuildNav
               expanded={expanded}
@@ -129,11 +133,13 @@ export const Build = props => {
               //Typography
               fontStyle={fontStyle}
               setFontStyle={setFontStyle}
-              h1={h1}
-              changeH1={changeH1}
-              h2={h2}
-              changeH2={changeH2}
-              handleFontColorPicker={handleFontColorPicker}
+              primaryTextColor={primaryTextColor}
+              secondaryTextColor={secondaryTextColor}
+              primaryTextColorPicker={primaryTextColorPicker}
+              secondaryTextColorPicker={secondaryTextColorPicker}
+              changePrimaryTextColor={changePrimaryTextColor}
+              changeSecondaryTextColor={changeSecondaryTextColor}
+              setTab={setTab}
             />
             <Grid item>
               <Download downloadTheme={downloadTheme} />
@@ -148,12 +154,14 @@ export const Build = props => {
             className={classes.previewPaper}
             style={{ background: `${defaultColor}` }}
           >
-            <PreviewAppBar
-              secondaryColor={secondaryColor}
-              color={color}
-              className={classes.container}
-            />
-            <PreviewTabs tab={tab} changeTab={changeTab} />
+            <ThemeProvider theme={customTheme}>
+              <PreviewAppBar
+                secondaryColor={secondaryColor}
+                color={color}
+                className={classes.container}
+              />
+              <PreviewTabs tab={tab} changeTab={changeTab} />
+            </ThemeProvider>
           </Paper>
         </Grid>
         {/* Preview End */}

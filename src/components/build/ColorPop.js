@@ -11,8 +11,6 @@ export const ColorPop = props => {
     changeColor,
     displayColorPicker,
     changeColorPickerDisplayed,
-    handleColorChange,
-    type,
   } = props;
 
   console.log('INSIDE COLOR POP', color);

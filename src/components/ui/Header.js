@@ -1,35 +1,31 @@
-
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import firebase from "firebase";
-import "firebase/auth";
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import firebase from 'firebase';
+import 'firebase/auth';
 
 const useStyles = makeStyles(theme => ({
   // toolBarMargin: {
   //   ...theme.mixins.toolbar,
   // },
   tabContainer: {
-    marginLeft: "auto"
+    marginLeft: 'auto',
   },
   tab: {
-    textTransform: "none",
+    textTransform: 'none',
     fontWeight: 400,
-    fontSize: "1rem",
+    fontSize: '1rem',
     minWidth: 10,
 
-
-    marginLeft: "25px",
-    color: "#000"
-
-  }
+    marginLeft: '25px',
+    color: '#000',
+  },
 }));
 const defaultUser = { loggedIn: false, email: '' };
 const UserContext = React.createContext({});
@@ -59,11 +55,11 @@ export default function Header(props) {
   if (!user.loggedIn) {
     return (
       <React.Fragment>
-        <AppBar position="fixed" style={{ background: '#fff' }}>
+        <AppBar position='fixed' style={{ background: '#fff' }}>
           <Toolbar>
             <Button
               component={Link}
-              to="/"
+              to='/'
               disableRipple
               // className={classes.logoContainer}
             >
@@ -73,32 +69,32 @@ export default function Header(props) {
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/"
-                label="Home"
+                to='/'
+                label='Home'
               />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/learn"
-                label="Learn"
+                to='/learn'
+                label='Learn'
               />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/design"
-                label="Start"
+                to='/design'
+                label='Start'
               />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/login"
-                label="Login"
+                to='/login'
+                label='Login'
               />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/signup"
-                label="Signup"
+                to='/signup'
+                label='Signup'
               />
             </Tabs>
           </Toolbar>
@@ -109,45 +105,43 @@ export default function Header(props) {
   }
   return (
     <React.Fragment>
-
-      <AppBar position="fixed" style={{ background: "#fff" }}>
-
+      <AppBar position='fixed' style={{ background: '#fff' }}>
         <Toolbar>
           <Button
             component={Link}
-            to="/"
+            to='/'
             disableRipple
             // className={classes.logoContainer}
           >
             MUI Theme Builder
           </Button>
           <Tabs className={classes.tabContainer}>
-            <Tab className={classes.tab} component={Link} to="/" label="Home" />
+            <Tab className={classes.tab} component={Link} to='/' label='Home' />
             <Tab
               className={classes.tab}
               component={Link}
-              to="/learn"
-              label="Learn"
+              to='/learn'
+              label='Learn'
             />
             <Tab
               className={classes.tab}
               component={Link}
-              to="/design"
-              label="Start"
+              to='/design'
+              label='Start'
             />
 
             {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
               component={Link}
-              to="/userdashboard"
-              label="User Dashboard"
+              to='/userdashboard'
+              label='User Dashboard'
             />
             <Tab
               className={classes.tab}
               component={Link}
-              to="/logout"
-              label="Logout"
+              to='/logout'
+              label='Logout'
               onClick={() =>
                 firebase
                   .auth()

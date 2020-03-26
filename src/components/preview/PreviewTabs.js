@@ -21,7 +21,7 @@ function TabPanel(props) {
 }
 
 export function PreviewTabs(props) {
-  const { tab, changeTab } = props;
+  const { tab, changeTab, fontStyle } = props;
   return (
     <React.Fragment>
       <div>

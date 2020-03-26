@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import { Typography, Paper, Grid } from '@material-ui/core';
 
 export const PreviewTypography = () => {
   const useStyles = makeStyles(theme => ({
@@ -14,24 +13,54 @@ export const PreviewTypography = () => {
   return (
     <React.Fragment>
       <Paper className={classes.paper}>
-        <Typography variant='h4'>TYPOGRAPHY</Typography>
-        <Typography variant='h1' component='h2' gutterBottom>
-          h1. Heading
+        <Typography variant='h4' gutterBottom>
+          TYPOGRAPHY
         </Typography>
-        <Typography variant='h2' gutterBottom>
+        <Grid container>
+          <Grid item xs={6} align='right'>
+            <Typography variant='subtitle1' style={{ marginRight: '1em' }}>
+              | Primary Text Color |
+            </Typography>
+          </Grid>
+          <Grid item xs={6} align='left'>
+            <Typography
+              variant='subtitle1'
+              color='textSecondary'
+              style={{ marginLeft: '1em' }}
+            >
+              | Secondary Text Color |
+            </Typography>
+          </Grid>
+        </Grid>
+        <Typography variant='h1'>h1. Heading</Typography>
+        <Typography variant='subtitle1' gutterBottom>
+          (h1 in PRIMARY text color)
+        </Typography>
+        <Typography variant='h2' color='textSecondary'>
           h2. Heading
         </Typography>
-        <Typography variant='h3' gutterBottom>
-          h3. Heading
+        <Typography variant='subtitle1' color='textSecondary'>
+          (h2 in SECONDARY text color)
         </Typography>
-        <Typography variant='h4' gutterBottom>
+        <Typography variant='h3'>h3. Heading</Typography>
+        <Typography variant='subtitle1' gutterBottom>
+          (h3 in Primary text color)
+        </Typography>
+        <Typography variant='h4' color='textSecondary'>
           h4. Heading
         </Typography>
-        <Typography variant='h5' gutterBottom>
-          h5. Heading
+        <Typography variant='subtitle1' color='textSecondary' gutterBottom>
+          (h4 in SECONDARY text color)
         </Typography>
-        <Typography variant='h6' gutterBottom>
+        <Typography variant='h5'>h5. Heading</Typography>
+        <Typography variant='subtitle1' gutterBottom>
+          (h5 in PRIMARY text color)
+        </Typography>
+        <Typography variant='h6' color='textSecondary'>
           h6. Heading
+        </Typography>
+        <Typography variant='subtitle1' color='textSecondary' gutterBottom>
+          (h6 in SECONDARY text color)
         </Typography>
         <Typography variant='subtitle1' gutterBottom>
           subtitle1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
