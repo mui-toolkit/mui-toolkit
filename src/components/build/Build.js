@@ -106,7 +106,10 @@ export const Build = (props) => {
 		changeErrorColor,
 		changeWarningColor,
 		changeInfoColor,
-		changeSuccessColor
+		changeSuccessColor,
+		//Shadow
+		shadow,
+		changeShadow
 	} = props;
 
 	// Will render when a user selects to view a saved theme
@@ -189,6 +192,9 @@ export const Build = (props) => {
 							changeButtonPadding={changeButtonPadding}
 							buttonBorderRadius={buttonBorderRadius}
 							changeButtonBorderRadius={changeButtonBorderRadius}
+							//Shadow
+							shadow={shadow}
+							changeShadow={changeShadow}
 							//Typography
 							fontStyle={fontStyle}
 							setFontStyle={setFontStyle}

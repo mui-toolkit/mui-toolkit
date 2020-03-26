@@ -17,8 +17,6 @@ export const Buttons = (props) => {
 		changeButtonRipple,
 		buttonElevation,
 		changeButtonElevation,
-		buttonHoverColor,
-		changeButtonHoverColor,
 		buttonHoverOpacity,
 		changeButtonHoverOpacity,
 		buttonFontWeight,
@@ -34,7 +32,9 @@ export const Buttons = (props) => {
 		buttonPadding,
 		changeButtonPadding,
 		buttonBorderRadius,
-		changeButtonBorderRadius
+		changeButtonBorderRadius,
+		shadow,
+		changeShadow
 	} = props;
 
 	const handleClose = () => {
@@ -51,6 +51,11 @@ export const Buttons = (props) => {
 	return (
 		<React.Fragment>
 			<Grid container direction="column" justify="flex">
+				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
+					{<Switch checked={!shadow} onChange={changeShadow} />}
+					<Typography style={{ marginLeft: '15px' }}>Shadows</Typography>
+				</Grid>
+
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
 					{<Switch checked={!buttonRipple} onChange={changeButtonRipple} />}
 					<Typography style={{ marginLeft: '15px' }}>Button Ripple</Typography>

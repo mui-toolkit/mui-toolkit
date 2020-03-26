@@ -127,6 +127,8 @@ export function BuildNav(props) {
 							changeButtonPadding={props.changeButtonPadding}
 							buttonBorderRadius={props.buttonBorderRadius}
 							changeButtonBorderRadius={props.changeButtonBorderRadius}
+							shadow={props.shadow}
+							changeShadow={props.changeShadow}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
