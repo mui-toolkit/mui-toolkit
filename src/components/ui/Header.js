@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,6 +12,7 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import Login from '../Login';
 
+
 const useStyles = makeStyles(theme => ({
   // toolBarMargin: {
   //   ...theme.mixins.toolbar,
@@ -23,49 +25,35 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 400,
     fontSize: '1rem',
     minWidth: 10,
-
     marginLeft: '25px',
     color: '#000'
+
   }
 }));
-const defaultUser = { loggedIn: false, email: '' };
 const UserContext = React.createContext({});
 const UserProvider = UserContext.Provider;
 const UserConsumer = UserContext.Consumer;
-function onAuthStateChange(callback) {
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      callback({ loggedIn: true, email: user.email });
-    } else {
-      callback({ loggedIn: false });
-    }
-  });
-}
+
 export default function Header(props) {
   const classes = useStyles();
-  const [user, setUser] = useState({ loggedIn: false });
-  const [error, setError] = useState('');
-  useEffect(() => {
-    // do equivalent of unsubscribe
-    const unsubscribe = onAuthStateChange(setUser);
-    // return async () => {
-    //   await unsubscribe();
-    // };
-  }, []);
+
+  console.log("Header -> user", props.user);
+  const [error, setError] = useState("");
+
   const handleClick = e => {
     e.preventDefault();
     firebase
       .auth()
       .signOut()
       .then(() => {
-        console.log('user signed out props');
+        console.log("user signed out props");
       });
   };
 
-  if (!user.loggedIn) {
+  if (!props.user.loggedIn) {
     return (
       <React.Fragment>
-        <AppBar position="fixed" style={{ background: '#fff' }}>
+        <AppBar position="fixed" style={{ background: "#fff" }}>
           <Toolbar>
             <Button
               component={Link}
@@ -142,12 +130,7 @@ export default function Header(props) {
               label="Start"
             />
             {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
-            <Tab
-              className={classes.tab}
-              component={Link}
-              to="/userdashboard"
-              label="User Dashboard"
-            />
+
             <Tab
               className={classes.tab}
               component={Link}

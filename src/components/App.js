@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/ui/Header";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./Home";
@@ -7,13 +7,12 @@ import Login from "./Login";
 import Signup from "./Signup";
 import UsersThemes from "./UsersThemes";
 import ThemesTable from "./ThemesTable";
-import UserDashboard from "./UserDashboard";
+import Dashboard from "./Dashboard";
 import UserProfile from "./UserProfile";
 import { Auth } from "./auth";
 import firebase from "firebase";
 import "firebase/auth";
 import { Store } from "./build/";
-
 
 firebase.auth().onAuthStateChanged(user => {
   console.log("user", user);
@@ -23,11 +22,46 @@ firebase.auth().onAuthStateChanged(user => {
     console.log("user logged out");
   }
 });
+const defaultUser = {
+  loggedIn: false,
+  email: "",
+  uid: ""
+  // firstName: "",
+  // lastName: "",
+  // username: ""
+};
+function onAuthStateChange(callback) {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      callback({
+        loggedIn: true,
+        email: user.email,
+        uid: user.uid
+        // firstName: user.firstName,
+        // lastName: user.lastName,
+        // username: user.username
+      });
+    } else {
+      callback({ loggedIn: false });
+    }
+  });
+}
 
 function App() {
+  const [user, setUser] = useState({ loggedIn: true });
+  useEffect(() => {
+    // do equivalent of unsubscribe
+    const unsubscribe = onAuthStateChange(setUser);
+    // return async () => {
+    //   await unsubscribe();
+    // };
+  }, []);
+
+  console.log("App -> user", user);
+
   return (
     <BrowserRouter>
-      <Header />
+      <Header user={user} />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/learn" component={Learn} />
@@ -38,13 +72,22 @@ function App() {
           path="/design/:savedTheme"
         />
         <Route exact path="/login" component={Login} />
-        {/* <Route exact path="/dashboard" component={Dashboard} /> */}
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/auth" component={Auth} />
-        <Route exact path="/usersthemes" component={UsersThemes} />
-        <Route exact path="/themestable" component={ThemesTable} />
-        <Route exact path="/userdashboard" component={UserDashboard} />
-        <Route exact path="/userprofile" component={UserProfile} />
+
+        {user.loggedIn && (
+          <Switch>
+            {/* Routes placed here are only available after logging in */}
+            <Route
+              exact
+              path="/dashboard"
+              component={() => <Dashboard user={user} />}
+            />
+            <Route exact path="/usersthemes" component={UsersThemes} />
+            <Route exact path="/themestable" component={ThemesTable} />
+            <Route exact path="/userprofile" component={UserProfile} />
+          </Switch>
+        )}
       </Switch>
     </BrowserRouter>
   );

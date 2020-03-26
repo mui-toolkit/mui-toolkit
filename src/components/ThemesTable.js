@@ -15,6 +15,8 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 function createData(
   themeName,
@@ -283,6 +285,9 @@ export default function ThemesTable() {
                         {row.secondaryPalette}
                       </TableCell>
                       <TableCell align="right">{row.typography}</TableCell>
+                      <IconButton aria-label="delete">
+                        <DeleteIcon />
+                      </IconButton>
                     </TableRow>
                   );
                 })}

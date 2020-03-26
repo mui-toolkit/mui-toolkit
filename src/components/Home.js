@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import firebase from 'firebase';
-import 'firebase/auth';
-import { unaryExpression } from '@babel/types';
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import firebase from "firebase";
+import "firebase/auth";
+import { unaryExpression } from "@babel/types";
 
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -17,7 +17,7 @@ function onAuthStateChange(callback) {
 
 export default function Home() {
   const [user, setUser] = useState({ loggedIn: false });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
     // return async () => {
@@ -29,7 +29,7 @@ export default function Home() {
     return (
       <div>
         <div>
-          <Grid container direction="row" style={{ marginTop: '10em' }}>
+          <Grid container direction="row" style={{ marginTop: "10em" }}>
             <Grid
               item
               container
@@ -37,7 +37,7 @@ export default function Home() {
               justify="center"
               alignItems="center"
             >
-              {' '}
+              {" "}
               <Typography variant="h4">Welcome, guest </Typography>
             </Grid>
           </Grid>
@@ -47,7 +47,7 @@ export default function Home() {
   }
   return (
     <div>
-      <Grid container direction="row" style={{ marginTop: '10em' }}>
+      <Grid container direction="row" style={{ marginTop: "10em" }}>
         <Grid
           item
           container
@@ -55,7 +55,7 @@ export default function Home() {
           justify="center"
           alignItems="center"
         >
-          {' '}
+          {" "}
           <Typography variant="h5">Welcome, {user.email} </Typography>
         </Grid>
       </Grid>

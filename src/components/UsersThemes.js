@@ -14,13 +14,13 @@ export const UsersThemes = () => {
         .doc("eqrjmljO97c2ccaabw9K")
         .get()
         .then(doc => {
-          console.log(doc.data());
+          console.log(doc.data().theme);
 
           let foundUser = doc.data();
           Promise.all(
             foundUser.themes.map(theme => {
               db.collection("CustomizedThemes")
-                .doc(`${theme.Id}`)
+                .doc(`${theme.id}`)
                 .get()
                 .then(theme => {
                   console.log("themes", theme.data());
