@@ -44,6 +44,33 @@ export const Alerts = (props) => {
 					/>
 					<Typography className={classes.typography}>Error Color</Typography>
 				</Grid>
+				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
+					<ColorPop
+						color={warningColor}
+						changeColor={changeWarningColor}
+						displayColorPicker={warningColorPicker}
+						changeColorPickerDisplayed={() => changeColorPickerDisplayed('warning')}
+					/>
+					<Typography className={classes.typography}>Warning Color</Typography>
+				</Grid>
+				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
+					<ColorPop
+						color={infoColor}
+						changeColor={changeInfoColor}
+						displayColorPicker={infoColorPicker}
+						changeColorPickerDisplayed={() => changeColorPickerDisplayed('info')}
+					/>
+					<Typography className={classes.typography}>Info Color</Typography>
+				</Grid>
+				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
+					<ColorPop
+						color={successColor}
+						changeColor={changeSuccessColor}
+						displayColorPicker={successColorPicker}
+						changeColorPickerDisplayed={() => changeColorPickerDisplayed('error')}
+					/>
+					<Typography className={classes.typography}>successColor Color</Typography>
+				</Grid>
 			</Grid>
 		</React.Fragment>
 	);
