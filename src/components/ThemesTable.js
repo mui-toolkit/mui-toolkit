@@ -29,37 +29,37 @@ function createData(
 }
 
 //dummy data
-const rows = [
-  createData("DEMO", 20200307, "red", "blue", "Roboto"),
-  createData("America", 20200101, "amarillo", "azul", "Arial"),
-  createData("Haskell", 20200307, "red", "blue", "Roboto"),
-  createData("RAINBOW BRIGHT", 20200307, "red", "silver", "Roboto"),
-  createData("green", 20200307, "red", "silver", "Roboto"),
-  createData("FullStack", 20200307, "pink", "silver", "Roboto"),
-  createData("FullStack", 20200307, "pink", "silver", "Roboto"),
-  createData("FullStack", 20200401, "pink", "silver", "Roboto"),
-  createData("FullStack", 20200401, "pink", "blue", "Roboto"),
-  createData("FullStack", 20200401, "pink", "blue", "Roboto"),
-  createData("Oasis", 20200401, "red", "blue", "Roboto"),
-  createData("Oasis", 20200401, "red", "blue", "Roboto"),
-  createData("Oasis", 20200401, "green", "blue", "Roboto"),
-  createData("Oasis", 20200401, "green", "gold", "Roboto"),
-  createData("Oasis", 20200307, "green", "gold", "Roboto"),
-  createData("Java", 20200307, "green", "gold", "Roboto"),
-  createData("Java", 20200307, "green", "gold", "Roboto"),
-  createData("Java", 20200307, "green", "gold", "Roboto"),
-  createData("Java", 20200307, "red", "gold", "Roboto"),
-  createData("Java", 20200401, "red", "blue", "Roboto"),
-  createData("Haskell", 20200401, "red", "blue", "Roboto"),
-  createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
-  createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
-  createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
-  createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
-  createData("Python", 20200401, "yellow", "blue", "Roboto"),
-  createData("Python", 20200307, "yellow", "blue", "Roboto"),
-  createData("Python", 20200307, "red", "blue", "Roboto"),
-  createData("Python", 20200307, "red", "blue", "Roboto")
-];
+// const rows = [
+//   createData("DEMO", 20200307, "red", "blue", "Roboto"),
+//   createData("America", 20200101, "amarillo", "azul", "Arial"),
+//   createData("Haskell", 20200307, "red", "blue", "Roboto"),
+//   createData("RAINBOW BRIGHT", 20200307, "red", "silver", "Roboto"),
+//   createData("green", 20200307, "red", "silver", "Roboto"),
+//   createData("FullStack", 20200307, "pink", "silver", "Roboto"),
+//   createData("FullStack", 20200307, "pink", "silver", "Roboto"),
+//   createData("FullStack", 20200401, "pink", "silver", "Roboto"),
+//   createData("FullStack", 20200401, "pink", "blue", "Roboto"),
+//   createData("FullStack", 20200401, "pink", "blue", "Roboto"),
+//   createData("Oasis", 20200401, "red", "blue", "Roboto"),
+//   createData("Oasis", 20200401, "red", "blue", "Roboto"),
+//   createData("Oasis", 20200401, "green", "blue", "Roboto"),
+//   createData("Oasis", 20200401, "green", "gold", "Roboto"),
+//   createData("Oasis", 20200307, "green", "gold", "Roboto"),
+//   createData("Java", 20200307, "green", "gold", "Roboto"),
+//   createData("Java", 20200307, "green", "gold", "Roboto"),
+//   createData("Java", 20200307, "green", "gold", "Roboto"),
+//   createData("Java", 20200307, "red", "gold", "Roboto"),
+//   createData("Java", 20200401, "red", "blue", "Roboto"),
+//   createData("Haskell", 20200401, "red", "blue", "Roboto"),
+//   createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
+//   createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
+//   createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
+//   createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
+//   createData("Python", 20200401, "yellow", "blue", "Roboto"),
+//   createData("Python", 20200307, "yellow", "blue", "Roboto"),
+//   createData("Python", 20200307, "red", "blue", "Roboto"),
+//   createData("Python", 20200307, "red", "blue", "Roboto")
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -195,10 +195,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemesTable() {
+export default function ThemesTable({ themes }) {
+  console.log("ThemesTable -> themes", themes);
+  const rows = themes.map(themeObject => ({
+    themeName: themeObject.themeName,
+    createdAt: JSON.stringify(
+      new Date(themeObject.createdAt.seconds * 1000)
+    ).slice(1, 11),
+    primaryPalette: themeObject.palette.primary.main,
+    secondaryPalette: themeObject.palette.secondary.main,
+    typography: "Roboto"
+  })); // Roboto will be dynamic typography...
+
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("calories");
+  const [orderBy, setOrderBy] = useState("");
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -225,17 +236,15 @@ export default function ThemesTable() {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  // if (!rows.length) {
-  //   console.log('empty')
-  //   return (
-  //     <div>
-  //       <h2>No Projects Available</h2>
-  // <Link to="/design">Build your first professional Material UI Project</Link>;
-  //     </div>
-  //   );
-  // }
-
-  return (
+  return !themes.length ? (
+    <div>
+      <h2>No Projects Available</h2>
+      <Link to="/design">
+        <h2>Build your first professional Material UI Project!</h2>
+      </Link>
+      ;
+    </div>
+  ) : (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography className={classes.title} variant="h6" id="tableTitle">

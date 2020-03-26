@@ -60,11 +60,19 @@ export default function UserProfile({ uid, user }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const handleClose = (event, reason) => {
+  const handleClose = async (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
+    // await db
+    //   .collection("Users")
+    //   .doc(`${uid}`)
+    //   .get()
+    //   .then(doc => {
+    //     console.log(doc.data());
+    //     setFirstName(doc.data().firstName);
+    //   });
   };
 
   const handleUpdate = async () => {

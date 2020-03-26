@@ -288,7 +288,7 @@ export default function Dashboard({ user }) {
                 {selectedIndex === 1 && (
                   <UserProfile user={foundUser} uid={user.uid} />
                 )}
-                {selectedIndex === 2 && <ThemesTable />}
+                {selectedIndex === 2 && <ThemesTable themes={themes} />}
                 {selectedIndex === 3 && (
                   <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
                 )}
