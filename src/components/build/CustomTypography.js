@@ -1,27 +1,28 @@
 import React from 'react';
+import { ColorPop } from './index';
 import { SketchPicker } from 'react-color';
 import {
   Typography,
-  InputLabel,
   MenuItem,
-  FormHelperText,
-  FormControl,
   Select,
   TextField,
   Grid,
-  Button,
   Link,
 } from '@material-ui/core';
-import { ColorPop } from './index';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles(theme => ({
+  typography: {
+    color: '#000',
+    fontSize: 16,
+    fontFamily: 'Roboto',
+    lineHeight: 3,
+  },
+}));
 
 export const CustomTypography = props => {
-  // const [age, setAge] = React.useState('');
-
-  // const handleChange = event => {
-  //   setAge(event.target.value);
-  // };
-
+  const classes = useStyles();
   return (
     <React.Fragment>
       <Grid container direction='column' justify='flex'>
@@ -32,16 +33,7 @@ export const CustomTypography = props => {
           alignItems='center'
         >
           <Grid item xs={6} align='left'>
-            <Typography
-              style={{
-                color: '#000',
-                fontSize: 16,
-                fontFamily: 'Roboto',
-                lineHeight: 3,
-              }}
-            >
-              Font Family
-            </Typography>
+            <Typography className={classes.typography}>Font Family</Typography>
           </Grid>
           <Grid item xs={6}>
             <Select
@@ -67,14 +59,7 @@ export const CustomTypography = props => {
         </Grid>
         <Grid container direction='row' alignItems='center'>
           <Grid item xs={6} align='left'>
-            <Typography
-              style={{
-                color: '#000',
-                fontSize: 16,
-                fontFamily: 'Roboto',
-                lineHeight: 3,
-              }}
-            >
+            <Typography className={classes.typography}>
               Font Size (1-39)
             </Typography>
           </Grid>
@@ -145,13 +130,7 @@ export const CustomTypography = props => {
         <Link onClick={() => props.setTab(2)}>
           <Typography
             variant='outlined'
-            style={{
-              marginLeft: '15px',
-              color: '#000',
-              fontSize: 16,
-              fontFamily: 'Roboto',
-              lineHeight: 3,
-            }}
+            className={classes.typography}
             onClick={() => console.log('ON CLICK!')}
           >
             Preview <VisibilityIcon />

@@ -35,6 +35,7 @@ export const Store = () => {
   const [expanded, setExpanded] = useState('panel1');
   const [tab, setTab] = useState(0);
 
+  //On Change Handlers
   const changeColor = color => {
     setColor(color.hex);
   };
@@ -136,6 +137,7 @@ export const Store = () => {
   return (
     <React.Fragment>
       <Build
+        //General
         color={color}
         setColor={setColor}
         secondaryColor={secondaryColor}

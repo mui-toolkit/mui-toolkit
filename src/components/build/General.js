@@ -1,9 +1,19 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core/';
 import { ColorPop } from './index';
-import { SketchPicker } from 'react-color';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles(theme => ({
+  typography: {
+    marginLeft: '15px',
+    color: '#000',
+    fontSize: 16,
+    fontFamily: 'Roboto',
+  },
+}));
 
 export const General = props => {
+  const classes = useStyles();
   return (
     <React.Fragment>
       <Grid container direction='column' justify='flex'>
@@ -21,16 +31,7 @@ export const General = props => {
               props.changeColorPickerDisplayed('primary')
             }
           />
-          <Typography
-            style={{
-              marginLeft: '15px',
-              color: '#000',
-              fontSize: 16,
-              fontFamily: 'Roboto',
-            }}
-          >
-            Primary Color
-          </Typography>
+          <Typography className={classes.typography}>Primary Color</Typography>
         </Grid>
 
         <Grid
@@ -47,14 +48,7 @@ export const General = props => {
               props.changeColorPickerDisplayed('secondary')
             }
           />
-          <Typography
-            style={{
-              marginLeft: '15px',
-              color: '#000',
-              fontSize: 16,
-              fontFamily: 'Roboto',
-            }}
-          >
+          <Typography className={classes.typography}>
             Secondary Color
           </Typography>
         </Grid>
@@ -72,16 +66,7 @@ export const General = props => {
               props.changeColorPickerDisplayed('default')
             }
           />
-          <Typography
-            style={{
-              marginLeft: '15px',
-              color: '#000',
-              fontSize: 16,
-              fontFamily: 'Roboto',
-            }}
-          >
-            Default Color
-          </Typography>
+          <Typography className={classes.typography}>Default Color</Typography>
         </Grid>
         <Grid
           container
@@ -97,16 +82,7 @@ export const General = props => {
               props.changeColorPickerDisplayed('paper')
             }
           />
-          <Typography
-            style={{
-              marginLeft: '15px',
-              color: '#000',
-              fontSize: 16,
-              fontFamily: 'Roboto',
-            }}
-          >
-            Paper Color
-          </Typography>
+          <Typography className={classes.typography}>Paper Color</Typography>
         </Grid>
       </Grid>
     </React.Fragment>
