@@ -11,13 +11,35 @@ import {
   DialogTitle,
   Button,
   Snackbar,
-  IconButton
+  IconButton,
+  Typography,
+  Paper,
 } from '@material-ui/core/';
+import Tab from '@material-ui/core/Tab';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
-  button: { marginRight: '20px' },
-  title: { backgroundColor: '#3d4576', color: '#ffffff' }
+  button: {
+    marginRight: '20px',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+    fontWeight: 400,
+    textTransform: 'none',
+    borderRadius: 5,
+    height: 46,
+    padding: 10,
+  },
+  title: { backgroundColor: '#3d4576', color: '#ffffff' },
+  tab: {
+    textTransform: 'none',
+    fontWeight: 400,
+    fontSize: '1rem',
+    minWidth: 10,
+    marginLeft: '25px',
+    color: '#000',
+    fontFamily: 'Roboto',
+  },
 }));
 
 export function Login(props) {
@@ -83,23 +105,33 @@ export function Login(props) {
 
   return (
     <div>
-      <Button
-        label="Login"
+      <Tab
+        label='Login'
+        className={classes.tab}
         // variant="outlined"
         // color="primary"
         onClick={handleClickOpen}
       >
         Login
-      </Button>
+      </Tab>
       <Dialog
         open={open}
         onClose={handleCancel}
         aria-labelledby="form-dialog-title"
       >
-        {' '}
-        <DialogTitle id="form-dialog-title" className={classes.title}>
-          LOG IN
-        </DialogTitle>
+        <Paper style={{ backgroundColor: '#fff' }}>
+        <Typography
+            id='form-dialog-title'
+            align='center'
+            style={{
+              color: '#000',
+              fontSize: 20,
+              fontFamily: 'Roboto',
+              lineHeight: 3,
+            }}
+          >
+            LOG IN
+          </Typography>
         <DialogContent>
           <TextField
             required
@@ -133,20 +165,31 @@ export function Login(props) {
         </DialogContent>
         <DialogActions>
           <Button
-            style={{ marginRight: '20px' }}
-            onClick={handleSubmit}
-            color="primary"
-          >
-            Login
-          </Button>
+              onClick={handleSubmit}
+              style={{
+                fontFamily: 'Roboto',
+                fontSize: 14,
+                marginRight: '20px',
+                color: '#3F51B5',
+              }}
+              className={classes.button}
+            >
+              Login
+            </Button>
           <Button
-            style={{ marginRight: '20px' }}
-            onClick={handleCancel}
-            color="primary"
-          >
-            Cancel
-          </Button>
+              onClick={handleCancel}
+              style={{
+                fontFamily: 'Roboto',
+                fontSize: 14,
+                marginRight: '20px',
+                color: '#f50057',
+              }}
+              className={classes.button}
+            >
+              Cancel
+            </Button>
         </DialogActions>
+      </Paper>
       </Dialog>
       <Snackbar
         anchorOrigin={{
