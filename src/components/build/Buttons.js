@@ -33,11 +33,7 @@ export const Buttons = (props) => {
 		buttonPadding,
 		changeButtonPadding,
 		buttonBorderRadius,
-		changeButtonBorderRadius,
-		changeShadow,
-		setShadow,
-		shadowTrue,
-		shadowFalse
+		changeButtonBorderRadius
 	} = props;
 
 	const handleClose = () => {
@@ -52,18 +48,6 @@ export const Buttons = (props) => {
 		changeButtonTextTransform(e.target.value);
 	};
 
-	const [ checked, setChecked ] = useState(true);
-
-	const handleAnotherChange = (event) => {
-		setChecked(!event.target.checked);
-		if (checked) {
-			setShadow(shadowTrue);
-		} else if (!checked) {
-			setShadow(shadowFalse);
-		}
-	};
-
-	console.log('change shadow func', changeShadow);
 	return (
 		<React.Fragment>
 			<Grid container direction="column" justify="flex">
