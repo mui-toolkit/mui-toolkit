@@ -14,7 +14,7 @@ export const Store = () => {
 	const [ displayDefaultColorPicker, setDisplayDefaultColorPicker ] = useState(false);
 	const [ displayPaperColorPicker, setDisplayPaperColorPicker ] = useState(false);
 
-  	//Buttons
+	//Buttons
 	const [ buttonRipple, setButtonRipple ] = useState(true);
 	const [ buttonElevation, setButtonElevation ] = useState(true);
 	const [ buttonHoverColor, setButtonHoverColor ] = useState('#000000');
@@ -26,32 +26,24 @@ export const Store = () => {
 	const [ buttonHeight, setButtonHeight ] = useState(46);
 	const [ buttonPadding, setButtonPadding ] = useState(10);
 	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(5);
+
+	//Typography
+	const [ fontStyle, setFontStyle ] = useState({
+		fontFamily: 'Roboto',
+		fontSize: 14
+	});
+	const [ primaryTextColor, setPrimaryTextColor ] = useState('#000');
+	const [ secondaryTextColor, setSecondaryTextColor ] = useState('#000');
+	const [ primaryTextColorPicker, setPrimaryTextColorPicker ] = useState(false);
+	const [ secondaryTextColorPicker, setSecondaryTextColorPicker ] = useState(false);
+
+	//Material-UI states
 	const [ expanded, setExpanded ] = useState('panel1');
 	const [ tab, setTab ] = useState(0);
 
-  //Typography
-  const [fontStyle, setFontStyle] = useState({
-    fontFamily: 'Roboto',
-    fontSize: 14,
-  });
-  const [primaryTextColor, setPrimaryTextColor] = useState('#000');
-  const [secondaryTextColor, setSecondaryTextColor] = useState('#000');
-  const [primaryTextColorPicker, setPrimaryTextColorPicker] = useState(false);
-  const [secondaryTextColorPicker, setSecondaryTextColorPicker] = useState(
-    false,
-  );
-  
-  //Material-UI states
-  const [expanded, setExpanded] = useState('panel1');
-  const [tab, setTab] = useState(0);
-
-  //On Change Handlers
-  const changeColor = color => {
-    setColor(color.hex);
-  };
+	//On Change Handlers
 
 	//Alerts
-
 
 	//General Handlers
 	const changeColor = (color) => {
@@ -66,18 +58,18 @@ export const Store = () => {
 	const changePaperColor = (paperColor) => {
 		setPaperColor(paperColor.hex);
 	};
-	const changeColorPickerDisplayed = () => {
-		setDisplayColorPicker(!displayColorPicker ? true : false);
-	};
-	const changeSecondaryColorPickerDisplayed = () => {
-		setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
-	};
-	const changeDefaultColorPickerDisplayed = () => {
-		setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
-	};
-	const changePaperColorPickerDisplayed = () => {
-		setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
-	};
+	// const changeColorPickerDisplayed = () => {
+	// 	setDisplayColorPicker(!displayColorPicker ? true : false);
+	// };
+	// const changeSecondaryColorPickerDisplayed = () => {
+	// 	setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
+	// };
+	// const changeDefaultColorPickerDisplayed = () => {
+	// 	setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
+	// };
+	// const changePaperColorPickerDisplayed = () => {
+	// 	setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
+	// };
 
 	//Buttons handlers
 	const changeButtonRipple = () => {
@@ -116,194 +108,187 @@ export const Store = () => {
 		setExpanded(newExpanded ? panel : false);
 	};
 
-  const changePrimaryTextColor = textColor => {
-    setPrimaryTextColor(textColor.hex);
-  };
+	const changePrimaryTextColor = (textColor) => {
+		setPrimaryTextColor(textColor.hex);
+	};
 
-  const changeSecondaryTextColor = textColor => {
-    setSecondaryTextColor(textColor.hex);
-  };
+	const changeSecondaryTextColor = (textColor) => {
+		setSecondaryTextColor(textColor.hex);
+	};
 
-  const changeColorPickerDisplayed = type => {
-    if (type === 'primary') {
-      setDisplayColorPicker(!displayColorPicker ? true : false);
-    }
-    if (type === 'secondary') {
-      setDisplaySecondaryColorPicker(
-        !displaySecondaryColorPicker ? true : false,
-      );
-    }
-    if (type === 'default') {
-      setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
-    }
-    if (type === 'paper') {
-      setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
-    }
-    if (type === 'primaryText') {
-      setPrimaryTextColorPicker(!primaryTextColorPicker ? true : false);
-    }
-    if (type === 'secondaryText') {
-      setSecondaryTextColorPicker(!secondaryTextColorPicker ? true : false);
-    }
-  };
+	const changeColorPickerDisplayed = (type) => {
+		if (type === 'primary') {
+			setDisplayColorPicker(!displayColorPicker ? true : false);
+		}
+		if (type === 'secondary') {
+			setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
+		}
+		if (type === 'default') {
+			setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
+		}
+		if (type === 'paper') {
+			setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
+		}
+		if (type === 'primaryText') {
+			setPrimaryTextColorPicker(!primaryTextColorPicker ? true : false);
+		}
+		if (type === 'secondaryText') {
+			setSecondaryTextColorPicker(!secondaryTextColorPicker ? true : false);
+		}
+	};
 
-  //Material-Ui handlers
-  const changeExpanded = panel => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
+	const changeTab = (event, newTab) => {
+		setTab(newTab);
+	};
 
-  const changeTab = (event, newTab) => {
-    setTab(newTab);
-  };
-
-  let downloadTheme = {
-    palette: {
-      primary: { main: `${color}`},
-      secondary: {
-        main: `${secondaryColor}`
-      },
-      text: {
-        primary: `${primaryTextColor}`,
-        secondary: `${secondaryTextColor}`,
-      },
-      background: {
-        paper: `${paperColor}`,
-        default: `${defaultColor}`,
-      },
-    },
-    typography: {
-      fontFamily: `${fontStyle.fontFamily}`,
-      fontSize: `${fontStyle.fontSize}`,
-      button: {
+	let downloadTheme = {
+		palette: {
+			primary: { main: `${color}` },
+			secondary: {
+				main: `${secondaryColor}`
+			},
+			text: {
+				primary: `${primaryTextColor}`,
+				secondary: `${secondaryTextColor}`
+			},
+			background: {
+				paper: `${paperColor}`,
+				default: `${defaultColor}`
+			}
+		},
+		typography: {
+			fontFamily: `${fontStyle.fontFamily}`,
+			fontSize: `${fontStyle.fontSize}`,
+			button: {
 				fontWeight: `${buttonFontWeight}`,
 				fontSize: `${buttonFontSize}`,
 				textTransform: `${buttonTextTransform}`
-			},
-    },
-    props: {
+			}
+		},
+		props: {
 			MuiButtonBase: {
 				disableRipple: `${buttonRipple}`
 			},
 			MuiButton: {
 				disableElevation: `${buttonElevation}`
-			},
+			}
 		},
-    overrides: {
+		overrides: {
 			MuiButton: {
 				root: {
 					borderRadius: `${buttonBorderRadius}`,
 					height: `${buttonHeight}`,
 					padding: `${buttonPadding}`
-				},
-			},
-		},
-  };
+				}
+			}
+		}
+	};
 
-  const customTheme = createMuiTheme({
-   palette: {
-      primary: { main: `${color}`},
-      secondary: {
-        main: `${secondaryColor}`
-      },
-      text: {
-        primary: `${primaryTextColor}`,
-        secondary: `${secondaryTextColor}`,
-      },
-      background: {
-        paper: `${paperColor}`,
-        default: `${defaultColor}`,
-      },
-    },
-    typography: {
-      fontFamily: `${fontStyle.fontFamily}`,
-      fontSize: `${fontStyle.fontSize}`,
-      button: {
+	const customTheme = createMuiTheme({
+		palette: {
+			primary: { main: `${color}` },
+			secondary: {
+				main: `${secondaryColor}`
+			},
+			text: {
+				primary: `${primaryTextColor}`,
+				secondary: `${secondaryTextColor}`
+			},
+			background: {
+				paper: `${paperColor}`,
+				default: `${defaultColor}`
+			}
+		},
+		typography: {
+			fontFamily: `${fontStyle.fontFamily}`,
+			fontSize: `${fontStyle.fontSize}`,
+			button: {
 				fontWeight: `${buttonFontWeight}`,
 				fontSize: `${buttonFontSize}`,
 				textTransform: `${buttonTextTransform}`
-			},
-    },
-    props: {
+			}
+		},
+		props: {
 			MuiButtonBase: {
 				disableRipple: `${buttonRipple}`
 			},
 			MuiButton: {
 				disableElevation: `${buttonElevation}`
-			},
+			}
 		},
-    overrides: {
+		overrides: {
 			MuiButton: {
 				root: {
 					borderRadius: `${buttonBorderRadius}`,
 					height: `${buttonHeight}`,
 					padding: `${buttonPadding}`
-				},
-			},
-		},
-  });
+				}
+			}
+		}
+	});
 
-  return (
-    <React.Fragment>
-      <Build
-        //General
-        color={color}
-        setColor={setColor}
-        secondaryColor={secondaryColor}
-        setSecondaryColor={setSecondaryColor}
-        defaultColor={defaultColor}
-        setDefaultColor={setDefaultColor}
-        paperColor={paperColor}
-        setPaperColor={setPaperColor}
-        expanded={expanded}
-        tab={tab}
-        setTab={setTab}
-        displayColorPicker={displayColorPicker}
-        changeColor={changeColor}
-        changeSecondaryColor={changeSecondaryColor}
-        changeDefaultColor={changeDefaultColor}
-        changePaperColor={changePaperColor}
-        changeExpanded={changeExpanded}
-        changeTab={changeTab}
-        changeColorPickerDisplayed={changeColorPickerDisplayed}
-        downloadTheme={downloadTheme}
-        displaySecondaryColorPicker={displaySecondaryColorPicker}
-        displayDefaultColorPicker={displayDefaultColorPicker}
-        displayPaperColorPicker={displayPaperColorPicker}
-        downloadTheme={downloadTheme}
-        //buttons
-					buttonRipple={buttonRipple}
-					changeButtonRipple={changeButtonRipple}
-					buttonElevation={buttonElevation}
-					changeButtonElevation={changeButtonElevation}
-					buttonHoverColor={buttonHoverColor}
-					changeButtonHoverColor={changeButtonHoverColor}
-					buttonHoverOpacity={buttonHoverOpacity}
-					changeButtonHoverOpacity={changeButtonHoverOpacity}
-					buttonFontWeight={buttonFontWeight}
-					changeButtonFontWeight={changeButtonFontWeight}
-					buttonFontSize={buttonFontSize}
-					changeButtonFontSize={changeButtonFontSize}
-					buttonTextTransform={buttonTextTransform}
-					changeButtonTextTransform={changeButtonTextTransform}
-					open={open}
-					setOpen={setOpen}
-					buttonHeight={buttonHeight}
-					changeButtonHeight={changeButtonHeight}
-					buttonPadding={buttonPadding}
-					changeButtonPadding={changeButtonPadding}
-					buttonBorderRadius={buttonBorderRadius}
-					changeButtonBorderRadius={changeButtonBorderRadius}
-        //Typography
-        fontStyle={fontStyle}
-        setFontStyle={setFontStyle}
-        primaryTextColor={primaryTextColor}
-        secondaryTextColor={secondaryTextColor}
-        primaryTextColorPicker={primaryTextColorPicker}
-        secondaryTextColorPicker={secondaryTextColorPicker}
-        changePrimaryTextColor={changePrimaryTextColor}
-        changeSecondaryTextColor={changeSecondaryTextColor}
-        customTheme={customTheme}
-      />
-    </React.Fragment>
-  );
+	return (
+		<React.Fragment>
+			<Build
+				//General
+				color={color}
+				setColor={setColor}
+				secondaryColor={secondaryColor}
+				setSecondaryColor={setSecondaryColor}
+				defaultColor={defaultColor}
+				setDefaultColor={setDefaultColor}
+				paperColor={paperColor}
+				setPaperColor={setPaperColor}
+				expanded={expanded}
+				tab={tab}
+				setTab={setTab}
+				displayColorPicker={displayColorPicker}
+				changeColor={changeColor}
+				changeSecondaryColor={changeSecondaryColor}
+				changeDefaultColor={changeDefaultColor}
+				changePaperColor={changePaperColor}
+				changeExpanded={changeExpanded}
+				changeTab={changeTab}
+				changeColorPickerDisplayed={changeColorPickerDisplayed}
+				downloadTheme={downloadTheme}
+				displaySecondaryColorPicker={displaySecondaryColorPicker}
+				displayDefaultColorPicker={displayDefaultColorPicker}
+				displayPaperColorPicker={displayPaperColorPicker}
+				downloadTheme={downloadTheme}
+				//buttons
+				buttonRipple={buttonRipple}
+				changeButtonRipple={changeButtonRipple}
+				buttonElevation={buttonElevation}
+				changeButtonElevation={changeButtonElevation}
+				buttonHoverColor={buttonHoverColor}
+				changeButtonHoverColor={changeButtonHoverColor}
+				buttonHoverOpacity={buttonHoverOpacity}
+				changeButtonHoverOpacity={changeButtonHoverOpacity}
+				buttonFontWeight={buttonFontWeight}
+				changeButtonFontWeight={changeButtonFontWeight}
+				buttonFontSize={buttonFontSize}
+				changeButtonFontSize={changeButtonFontSize}
+				buttonTextTransform={buttonTextTransform}
+				changeButtonTextTransform={changeButtonTextTransform}
+				open={open}
+				setOpen={setOpen}
+				buttonHeight={buttonHeight}
+				changeButtonHeight={changeButtonHeight}
+				buttonPadding={buttonPadding}
+				changeButtonPadding={changeButtonPadding}
+				buttonBorderRadius={buttonBorderRadius}
+				changeButtonBorderRadius={changeButtonBorderRadius}
+				//Typography
+				fontStyle={fontStyle}
+				setFontStyle={setFontStyle}
+				primaryTextColor={primaryTextColor}
+				secondaryTextColor={secondaryTextColor}
+				primaryTextColorPicker={primaryTextColorPicker}
+				secondaryTextColorPicker={secondaryTextColorPicker}
+				changePrimaryTextColor={changePrimaryTextColor}
+				changeSecondaryTextColor={changeSecondaryTextColor}
+				customTheme={customTheme}
+			/>
+		</React.Fragment>
+	);
 };
