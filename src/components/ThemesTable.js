@@ -204,8 +204,8 @@ export default function ThemesTable({ themes }) {
     ).slice(1, 11),
     primaryPalette: themeObject.palette.primary.main,
     secondaryPalette: themeObject.palette.secondary.main,
-    typography: "Roboto"
-  })); // Roboto will be dynamic typography...
+    typography: themeObject.typography.fontFamily
+  }));
 
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
