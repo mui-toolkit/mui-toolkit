@@ -1,55 +1,55 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core/';
-import { General, CustomTypography } from './index';
+import { General, CustomTypography, Buttons } from './index';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
-const useStyles = makeStyles(theme => ({
-  bubble: {
-    borderColor: '#c2c2c2',
-    borderStyle: 'solid',
-    borderWidth: 1,
-  },
-  expansionPanel: {
-    background: '#fff',
-  },
+const useStyles = makeStyles((theme) => ({
+	bubble: {
+		borderColor: '#c2c2c2',
+		borderStyle: 'solid',
+		borderWidth: 1
+	},
+	expansionPanel: {
+		background: '#fff'
+	}
 }));
 
 const ExpansionPanel = withStyles({
-  root: {
-    border: '1px solid rgba(0, 0, 0, .125)',
-    boxShadow: 'none',
-    '&:not(:last-child)': {
-      borderBottom: 0,
-    },
-    '&:before': {
-      display: 'none',
-    },
-    '&$expanded': {
-      margin: 'auto',
-    },
-  },
-  expanded: {},
+	root: {
+		border: '1px solid rgba(0, 0, 0, .125)',
+		boxShadow: 'none',
+		'&:not(:last-child)': {
+			borderBottom: 0
+		},
+		'&:before': {
+			display: 'none'
+		},
+		'&$expanded': {
+			margin: 'auto'
+		}
+	},
+	expanded: {}
 })(MuiExpansionPanel);
 
 const ExpansionPanelSummary = withStyles({
-  root: {
-    backgroundColor: 'rgba(0, 0, 0, .03)',
-    borderBottom: '1px solid rgba(0, 0, 0, .125)',
-    marginBottom: -1,
-    minHeight: 56,
-    '&$expanded': {
-      minHeight: 56,
-    },
-  },
-  content: {
-    '&$expanded': {
-      margin: '12px 0',
-    },
-  },
-  expanded: {},
+	root: {
+		backgroundColor: 'rgba(0, 0, 0, .03)',
+		borderBottom: '1px solid rgba(0, 0, 0, .125)',
+		marginBottom: -1,
+		minHeight: 56,
+		'&$expanded': {
+			minHeight: 56
+		}
+	},
+	content: {
+		'&$expanded': {
+			margin: '12px 0'
+		}
+	},
+	expanded: {}
 })(MuiExpansionPanelSummary);
 
 const ExpansionPanelDetails = withStyles(theme => ({
@@ -124,13 +124,30 @@ export function BuildNav(props) {
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <Buttons
+							buttonRipple={props.buttonRipple}
+							changeButtonRipple={props.changeButtonRipple}
+							buttonElevation={props.buttonElevation}
+							changeButtonElevation={props.changeButtonElevation}
+							buttonHoverColor={props.buttonHoverColor}
+							changeButtonHoverColor={props.changeButtonHoverColor}
+							buttonHoverOpacity={props.buttonHoverOpacity}
+							changeButtonHoverOpacity={props.changeButtonHoverOpacity}
+							buttonFontWeight={props.buttonFontWeight}
+							changeButtonFontWeight={props.changeButtonFontWeight}
+							buttonFontSize={props.buttonFontSize}
+							changeButtonFontSize={props.changeButtonFontSize}
+							buttonTextTransform={props.buttonTextTransform}
+							changeButtonTextTransform={props.changeButtonTextTransform}
+							open={props.open}
+							setOpen={props.setOpen}
+							buttonHeight={props.buttonHeight}
+							changeButtonHeight={props.changeButtonHeight}
+							buttonPadding={props.buttonPadding}
+							changeButtonPadding={props.changeButtonPadding}
+							buttonBorderRadius={props.buttonBorderRadius}
+							changeButtonBorderRadius={props.changeButtonBorderRadius}
+						/>
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel

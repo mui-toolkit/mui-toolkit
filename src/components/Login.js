@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import firebase from 'firebase';
 import 'firebase/auth';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from '@material-ui/core/';
+import useForm from './useForm';
+import validate from './LoginFormValidationRules';
 
-const useStyles = makeStyles(theme => ({}));
+const useStyles = makeStyles(theme => ({ button: { marginRight: '20px' } }));
 
 export function Login(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [open, setOpen] = useState(false);
+  const classes = useStyles();
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleCancel = e => {
+    setOpen(false);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -24,59 +40,67 @@ export function Login(props) {
       .catch(function(error) {
         console.log('error in login', error.code);
       });
-    props.history.push('/');
+    // props.history.push('/');
   };
 
   return (
-    <Grid container direction="row" style={{ marginTop: '5em' }}>
-      <Grid
-        item
-        container
-        direction="column"
-        justify="center"
-        alignItems="center"
+    <div>
+      <Button
+        label="Login"
+        // variant="outlined"
+        // color="primary"
+        onClick={handleClickOpen}
       >
-        <Grid item container direction="column">
-          <Grid
-            item
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
+        Login
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleCancel}
+        aria-labelledby="form-dialog-title"
+      >
+        {' '}
+        <DialogTitle id="form-dialog-title">LOG IN</DialogTitle>
+        {/* <DialogContentText>
+          Name your saved theme something quirky
+        </DialogContentText> */}
+        {/* <DialogTitle id="form-dialog-title">Email</DialogTitle> */}
+        <DialogContent>
+          <TextField
+            label="Email"
+            id="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
+        </DialogContent>
+        {/* <DialogTitle id="form-dialog-title">Password</DialogTitle> */}
+        <DialogContent>
+          <TextField
+            type="password"
+            label="Password"
+            id="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            style={{ marginRight: '20px' }}
+            onClick={handleSubmit}
+            color="primary"
           >
-            <Typography variant="h2">Log In</Typography>
-          </Grid>
-        </Grid>
-        <form onSubmit={handleSubmit}>
-          <Grid
-            item
-            container
-            style={{ maxWidth: '20em' }}
-            justify="center"
-            alignItems="center"
+            Login
+          </Button>
+          <Button
+            style={{ marginRight: '20px' }}
+            onClick={handleCancel}
+            color="primary"
           >
-            <Grid item container justify="center">
-              <TextField
-                label="Email"
-                id="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
-              <TextField
-                type="password"
-                label="Password"
-                id="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
-            </Grid>
-            <Button>
-              <input type="submit" value="Log In" />
-            </Button>
-          </Grid>
-        </form>
-      </Grid>
-    </Grid>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }
 

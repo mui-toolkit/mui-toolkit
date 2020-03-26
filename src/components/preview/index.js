@@ -8,3 +8,4 @@ export { PreviewButton } from './PreviewButton';
 export { PreviewTypography } from './PreviewTypography';
 export { PreviewTabs } from './PreviewTabs';
 export { PreviewGeneral } from './PreviewGeneral';
+export { PreviewAlert } from './PreviewAlert';

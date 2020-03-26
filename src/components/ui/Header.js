@@ -9,13 +9,14 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
 import 'firebase/auth';
+import Login from '../Login';
 
 const useStyles = makeStyles(theme => ({
   // toolBarMargin: {
   //   ...theme.mixins.toolbar,
   // },
   tabContainer: {
-    marginLeft: 'auto',
+    marginLeft: 'auto'
   },
   tab: {
     textTransform: 'none',
@@ -27,35 +28,30 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'Roboto',
   },
 }));
-const defaultUser = { loggedIn: false, email: '' };
 const UserContext = React.createContext({});
 const UserProvider = UserContext.Provider;
 const UserConsumer = UserContext.Consumer;
-function onAuthStateChange(callback) {
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      callback({ loggedIn: true, email: user.email });
-    } else {
-      callback({ loggedIn: false });
-    }
-  });
-}
+
 export default function Header(props) {
   const classes = useStyles();
-  const [user, setUser] = useState({ loggedIn: false });
-  const [error, setError] = useState('');
-  useEffect(() => {
-    // do equivalent of unsubscribe
-    const unsubscribe = onAuthStateChange(setUser);
-    // return async () => {
-    //   await unsubscribe();
-    // };
-  }, []);
 
-  if (!user.loggedIn) {
+  console.log("Header -> user", props.user);
+  const [error, setError] = useState("");
+
+  const handleClick = e => {
+    e.preventDefault();
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log("user signed out props");
+      });
+  };
+
+  if (!props.user.loggedIn) {
     return (
       <React.Fragment>
-        <AppBar position='fixed' style={{ background: '#fff' }}>
+        <AppBar position="fixed" style={{ background: "#fff" }}>
           <Toolbar>
             <Button
               component={Link}
@@ -88,12 +84,13 @@ export default function Header(props) {
                 to='/design'
                 label='Start'
               />
-              <Tab
+              {/* <Tab
                 className={classes.tab}
-                component={Link}
-                to='/login'
-                label='Login'
-              />
+                // component={Link}
+                component={Login}
+                to="/"
+                label="Login"
+              /> */}
               <Tab
                 className={classes.tab}
                 component={Link}
@@ -101,6 +98,7 @@ export default function Header(props) {
                 label='Signup'
               />
             </Tabs>
+            <Login />
           </Toolbar>
         </AppBar>
         <div className={classes.toolBarMargin} />
@@ -109,7 +107,7 @@ export default function Header(props) {
   }
   return (
     <React.Fragment>
-      <AppBar position='fixed' style={{ background: '#fff' }}>
+      <AppBar position="fixed" style={{ background: '#fff' }}>
         <Toolbar>
           <Button
             component={Link}
@@ -133,27 +131,19 @@ export default function Header(props) {
               to='/design'
               label='Start'
             />
-
             {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
               component={Link}
-              to='/userdashboard'
+              to='/dashboard'
               label='User Dashboard'
             />
             <Tab
               className={classes.tab}
               component={Link}
-              to='/logout'
-              label='Logout'
-              onClick={() =>
-                firebase
-                  .auth()
-                  .signOut()
-                  .then(() => {
-                    // console.log('user signed out');
-                  })
-              }
+              to="/logout"
+              label="Logout"
+              onClick={handleClick}
             />
           </Tabs>
         </Toolbar>

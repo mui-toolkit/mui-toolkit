@@ -1,23 +1,23 @@
 import React from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { PreviewButton, PreviewTypography, PreviewGeneral } from '../preview';
+import { PreviewButton, PreviewTypography, PreviewGeneral, PreviewAlert } from '../preview';
 import { Box, Typography } from '@material-ui/core';
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  return (
-    <Typography
-      component='div'
-      role='tabpanel'
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={4}>{children}</Box>}
-    </Typography>
-  );
+	const { children, value, index, ...other } = props;
+	return (
+		<Typography
+			component="div"
+			role="tabpanel"
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}
+		>
+			{value === index && <Box p={4}>{children}</Box>}
+		</Typography>
+	);
 }
 
 export function PreviewTabs(props) {

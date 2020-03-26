@@ -4,20 +4,30 @@ import { createMuiTheme } from '@material-ui/core/';
 import { ThemeProvider } from '@material-ui/styles';
 
 export const Store = () => {
-  //General
-  const [color, setColor] = useState('#3f51b5');
-  const [secondaryColor, setSecondaryColor] = useState('#f50057');
-  const [defaultColor, setDefaultColor] = useState('#fff');
-  const [paperColor, setPaperColor] = useState('#fff');
-  const [displayColorPicker, setDisplayColorPicker] = useState(false);
-  const [
-    displaySecondaryColorPicker,
-    setDisplaySecondaryColorPicker,
-  ] = useState(false);
-  const [displayDefaultColorPicker, setDisplayDefaultColorPicker] = useState(
-    false,
-  );
-  const [displayPaperColorPicker, setDisplayPaperColorPicker] = useState(false);
+	//General
+	const [ color, setColor ] = useState('#3f51b5');
+	const [ secondaryColor, setSecondaryColor ] = useState('#f50057');
+	const [ defaultColor, setDefaultColor ] = useState('#fafafa');
+	const [ paperColor, setPaperColor ] = useState('#fff');
+	const [ displayColorPicker, setDisplayColorPicker ] = useState(false);
+	const [ displaySecondaryColorPicker, setDisplaySecondaryColorPicker ] = useState(false);
+	const [ displayDefaultColorPicker, setDisplayDefaultColorPicker ] = useState(false);
+	const [ displayPaperColorPicker, setDisplayPaperColorPicker ] = useState(false);
+
+  	//Buttons
+	const [ buttonRipple, setButtonRipple ] = useState(true);
+	const [ buttonElevation, setButtonElevation ] = useState(true);
+	const [ buttonHoverColor, setButtonHoverColor ] = useState('#000000');
+	const [ buttonHoverOpacity, setButtonHoverOpacity ] = useState(0.04);
+	const [ buttonFontWeight, setButtonFontWeight ] = useState(500);
+	const [ buttonFontSize, setButtonFontSize ] = useState(0.875);
+	const [ buttonTextTransform, setButtonTextTransform ] = useState('none');
+	const [ open, setOpen ] = useState(false);
+	const [ buttonHeight, setButtonHeight ] = useState(46);
+	const [ buttonPadding, setButtonPadding ] = useState(10);
+	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(5);
+	const [ expanded, setExpanded ] = useState('panel1');
+	const [ tab, setTab ] = useState(0);
 
   //Typography
   const [fontStyle, setFontStyle] = useState({
@@ -30,7 +40,7 @@ export const Store = () => {
   const [secondaryTextColorPicker, setSecondaryTextColorPicker] = useState(
     false,
   );
-
+  
   //Material-UI states
   const [expanded, setExpanded] = useState('panel1');
   const [tab, setTab] = useState(0);
@@ -40,17 +50,71 @@ export const Store = () => {
     setColor(color.hex);
   };
 
-  const changeSecondaryColor = secondaryColor => {
-    setSecondaryColor(secondaryColor.hex);
-  };
+	//Alerts
 
-  const changeDefaultColor = defaultColor => {
-    setDefaultColor(defaultColor.hex);
-  };
 
-  const changePaperColor = paperColor => {
-    setPaperColor(paperColor.hex);
-  };
+	//General Handlers
+	const changeColor = (color) => {
+		setColor(color.hex);
+	};
+	const changeSecondaryColor = (secondaryColor) => {
+		setSecondaryColor(secondaryColor.hex);
+	};
+	const changeDefaultColor = (defaultColor) => {
+		setDefaultColor(defaultColor.hex);
+	};
+	const changePaperColor = (paperColor) => {
+		setPaperColor(paperColor.hex);
+	};
+	const changeColorPickerDisplayed = () => {
+		setDisplayColorPicker(!displayColorPicker ? true : false);
+	};
+	const changeSecondaryColorPickerDisplayed = () => {
+		setDisplaySecondaryColorPicker(!displaySecondaryColorPicker ? true : false);
+	};
+	const changeDefaultColorPickerDisplayed = () => {
+		setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
+	};
+	const changePaperColorPickerDisplayed = () => {
+		setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
+	};
+
+	//Buttons handlers
+	const changeButtonRipple = () => {
+		setButtonRipple(!buttonRipple ? true : false);
+	};
+	const changeButtonElevation = () => {
+		setButtonElevation(!buttonElevation ? true : false);
+	};
+	const changeButtonHoverColor = (buttonHoverColor) => {
+		setButtonHoverColor(buttonHoverColor.hex);
+	};
+	const changeButtonHoverOpacity = (buttonHoverOpacity) => {
+		setButtonHoverOpacity(buttonHoverOpacity);
+	};
+	const changeButtonFontWeight = (buttonFontWeight) => {
+		setButtonFontWeight(buttonFontWeight);
+	};
+	const changeButtonFontSize = (buttonFontSize) => {
+		setButtonFontSize(buttonFontSize);
+	};
+	const changeButtonTextTransform = (buttonTextTransform) => {
+		setButtonTextTransform(buttonTextTransform);
+	};
+	const changeButtonHeight = (buttonHeight) => {
+		setButtonHeight(buttonHeight);
+	};
+	const changeButtonPadding = (buttonPadding) => {
+		setButtonPadding(buttonPadding);
+	};
+	const changeButtonBorderRadius = (buttonBorderRadius) => {
+		setButtonBorderRadius(buttonBorderRadius);
+	};
+
+	//Material-Ui handlers
+	const changeExpanded = (panel) => (event, newExpanded) => {
+		setExpanded(newExpanded ? panel : false);
+	};
 
   const changePrimaryTextColor = textColor => {
     setPrimaryTextColor(textColor.hex);
@@ -94,9 +158,9 @@ export const Store = () => {
 
   let downloadTheme = {
     palette: {
-      primary: { main: `${color}` ? `${color}` : '#3f51b5' },
+      primary: { main: `${color}`},
       secondary: {
-        main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057',
+        main: `${secondaryColor}`
       },
       text: {
         primary: `${primaryTextColor}`,
@@ -110,14 +174,36 @@ export const Store = () => {
     typography: {
       fontFamily: `${fontStyle.fontFamily}`,
       fontSize: `${fontStyle.fontSize}`,
+      button: {
+				fontWeight: `${buttonFontWeight}`,
+				fontSize: `${buttonFontSize}`,
+				textTransform: `${buttonTextTransform}`
+			},
     },
+    props: {
+			MuiButtonBase: {
+				disableRipple: `${buttonRipple}`
+			},
+			MuiButton: {
+				disableElevation: `${buttonElevation}`
+			},
+		},
+    overrides: {
+			MuiButton: {
+				root: {
+					borderRadius: `${buttonBorderRadius}`,
+					height: `${buttonHeight}`,
+					padding: `${buttonPadding}`
+				},
+			},
+		},
   };
 
   const customTheme = createMuiTheme({
-    palette: {
-      primary: { main: `${color}` ? `${color}` : '#3f51b5' },
+   palette: {
+      primary: { main: `${color}`},
       secondary: {
-        main: `${secondaryColor}` ? `${secondaryColor}` : '#f50057',
+        main: `${secondaryColor}`
       },
       text: {
         primary: `${primaryTextColor}`,
@@ -131,7 +217,29 @@ export const Store = () => {
     typography: {
       fontFamily: `${fontStyle.fontFamily}`,
       fontSize: `${fontStyle.fontSize}`,
+      button: {
+				fontWeight: `${buttonFontWeight}`,
+				fontSize: `${buttonFontSize}`,
+				textTransform: `${buttonTextTransform}`
+			},
     },
+    props: {
+			MuiButtonBase: {
+				disableRipple: `${buttonRipple}`
+			},
+			MuiButton: {
+				disableElevation: `${buttonElevation}`
+			},
+		},
+    overrides: {
+			MuiButton: {
+				root: {
+					borderRadius: `${buttonBorderRadius}`,
+					height: `${buttonHeight}`,
+					padding: `${buttonPadding}`
+				},
+			},
+		},
   });
 
   return (
@@ -162,6 +270,29 @@ export const Store = () => {
         displayDefaultColorPicker={displayDefaultColorPicker}
         displayPaperColorPicker={displayPaperColorPicker}
         downloadTheme={downloadTheme}
+        //buttons
+					buttonRipple={buttonRipple}
+					changeButtonRipple={changeButtonRipple}
+					buttonElevation={buttonElevation}
+					changeButtonElevation={changeButtonElevation}
+					buttonHoverColor={buttonHoverColor}
+					changeButtonHoverColor={changeButtonHoverColor}
+					buttonHoverOpacity={buttonHoverOpacity}
+					changeButtonHoverOpacity={changeButtonHoverOpacity}
+					buttonFontWeight={buttonFontWeight}
+					changeButtonFontWeight={changeButtonFontWeight}
+					buttonFontSize={buttonFontSize}
+					changeButtonFontSize={changeButtonFontSize}
+					buttonTextTransform={buttonTextTransform}
+					changeButtonTextTransform={changeButtonTextTransform}
+					open={open}
+					setOpen={setOpen}
+					buttonHeight={buttonHeight}
+					changeButtonHeight={changeButtonHeight}
+					buttonPadding={buttonPadding}
+					changeButtonPadding={changeButtonPadding}
+					buttonBorderRadius={buttonBorderRadius}
+					changeButtonBorderRadius={changeButtonBorderRadius}
         //Typography
         fontStyle={fontStyle}
         setFontStyle={setFontStyle}

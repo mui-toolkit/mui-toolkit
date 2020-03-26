@@ -15,6 +15,8 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 function createData(
   themeName,
@@ -193,7 +195,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SavedThemes() {
+export default function ThemesTable() {
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
@@ -267,6 +269,7 @@ export default function SavedThemes() {
                       key={row.themeName}
                       component={Link}
                       to={`/design/${row.themeName}/`}
+                      style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
                         component="th"
@@ -282,6 +285,9 @@ export default function SavedThemes() {
                         {row.secondaryPalette}
                       </TableCell>
                       <TableCell align="right">{row.typography}</TableCell>
+                      <IconButton aria-label="delete">
+                        <DeleteIcon />
+                      </IconButton>
                     </TableRow>
                   );
                 })}

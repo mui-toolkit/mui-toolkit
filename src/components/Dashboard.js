@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,12 +26,17 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import StarIcon from "@material-ui/icons/Star";
 import ThemesTable from "./ThemesTable";
+import UserProfile from "./UserProfile";
+import firebase from "firebase";
+import "firebase/auth";
+import { db } from "../config/firebase";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
+    // backgroundColor: theme.palette.background.paper
   },
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed
@@ -109,14 +114,60 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function UserDashboard() {
+export default function Dashboard({ user }) {
+  console.log("Dashboard -> user", user);
+  const [themes, setThemes] = useState([]);
+  const [foundUser, setFoundUser] = useState("");
+
+  useEffect(() => {
+    const userThemes = [];
+    const response = async () => {
+      await db
+        .collection("Users")
+        .doc(`${user.uid}`)
+        .get()
+        .then(doc => {
+          // console.log("FOUND USER", doc.data());
+
+          setFoundUser(doc.data());
+          let foundUser = doc.data();
+          Promise.all(
+            foundUser.themes.map(theme => {
+              db.collection("CustomizedThemes")
+                .doc(`${theme.id}`)
+                .get()
+                .then(theme => {
+                  // console.log("themes", theme.data());
+                  userThemes.push(theme.data());
+                  // console.log("response -> userThemes", userThemes);
+                  setThemes([...userThemes]);
+                });
+            })
+          );
+        })
+        .catch(err => {
+          console.log("Error getting document", err);
+        });
+    };
+    response();
+  }, []);
+
+  console.log("UsersThemes -> foundUser", foundUser, foundUser.themes);
+  console.log("USERS SAVED THEMES", themes);
+
   const classes = useStyles();
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [open, setOpen] = useState(true);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
@@ -171,25 +222,41 @@ export default function UserDashboard() {
         </div>
         <Divider />
         <div>
-          <ListItem button>
+          <ListItem
+            button
+            selected={selectedIndex === 0}
+            onClick={event => handleListItemClick(event, 0)}
+          >
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
-          <ListItem button component={Link} to="/userprofile">
+          <ListItem
+            button
+            selected={selectedIndex === 1}
+            onClick={event => handleListItemClick(event, 1)}
+          >
             <ListItemIcon>
               <FaceIcon />
             </ListItemIcon>
             <ListItemText primary="User Profile" />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            selected={selectedIndex === 2}
+            onClick={event => handleListItemClick(event, 2)}
+          >
             <ListItemIcon>
               <PaletteIcon />
             </ListItemIcon>
             <ListItemText primary="My Saved Themes" />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            selected={selectedIndex === 3}
+            onClick={event => handleListItemClick(event, 3)}
+          >
             <ListItemIcon>
               <GroupAddIcon />
             </ListItemIcon>
@@ -201,7 +268,7 @@ export default function UserDashboard() {
             </ListItemIcon>
             <ListItemText primary="Add New Project" />
           </ListItem>
-          <ListItem button component={Link} to="/home">
+          <ListItem button component={Link} to="/">
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
@@ -215,19 +282,27 @@ export default function UserDashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* SAVED THEMES TABLE*/}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <ThemesTable />
+                {selectedIndex === 0 && <div>SOME COOL USER DATA COMING</div>}
+                {selectedIndex === 1 && (
+                  <UserProfile user={foundUser} uid={user.uid} />
+                )}
+                {selectedIndex === 2 && <ThemesTable />}
+                {selectedIndex === 3 && (
+                  <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
+                )}
               </Paper>
             </Grid>
             {/* PREVIEW */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                {/* <PreviewComponent /> */}
-                PREVIEW PLACEHOLDER (MODAL? GROW, ZOOM, POPOVER transitions??)
-              </Paper>
-            </Grid>
+            {selectedIndex === 2 && (
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper className={fixedHeightPaper}>
+                  {/* <PreviewComponent /> */}
+                  PREVIEW PLACEHOLDER (MODAL? GROW, ZOOM, POPOVER transitions??)
+                </Paper>
+              </Grid>
+            )}
           </Grid>
         </Container>
       </main>

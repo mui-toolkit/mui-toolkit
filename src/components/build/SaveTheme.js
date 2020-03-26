@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { db } from '../../config/firebase';
+import { Alert, AlertTitle } from '@material-ui/lab/';
 import {
   Button,
   TextField,
@@ -11,15 +12,15 @@ import {
 } from '@material-ui/core/';
 import SaveIcon from '@material-ui/icons/Save';
 
-export const SaveTheme = props => {
-  const { downloadTheme } = props;
+export const SaveTheme = (props) => {
+	const { downloadTheme } = props;
 
-  const [open, setOpen] = useState(false);
-  const [themeName, setThemeName] = useState('untitled');
+	const [ open, setOpen ] = useState(false);
+	const [ themeName, setThemeName ] = useState('untitled');
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
 
   const handleCancel = e => {
     setOpen(false);
