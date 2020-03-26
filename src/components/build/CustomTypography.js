@@ -28,13 +28,17 @@ export const CustomTypography = props => {
         <Grid
           container
           direction='row'
-          style={{ marginBottom: '1em' }}
           justify='flex-start'
           alignItems='center'
         >
           <Grid item xs={6} align='left'>
             <Typography
-              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
+              style={{
+                color: '#000',
+                fontSize: 16,
+                fontFamily: 'Roboto',
+                lineHeight: 3,
+              }}
             >
               Font Family
             </Typography>
@@ -61,15 +65,15 @@ export const CustomTypography = props => {
             </Select>
           </Grid>
         </Grid>
-        <Grid
-          container
-          direction='row'
-          alignItems='center'
-          style={{ marginBottom: '1em' }}
-        >
+        <Grid container direction='row' alignItems='center'>
           <Grid item xs={6} align='left'>
             <Typography
-              style={{ color: '#000', fontSize: 16, fontFamily: 'Roboto' }}
+              style={{
+                color: '#000',
+                fontSize: 16,
+                fontFamily: 'Roboto',
+                lineHeight: 3,
+              }}
             >
               Font Size (1-39)
             </Typography>
@@ -96,12 +100,7 @@ export const CustomTypography = props => {
             </form>
           </Grid>
         </Grid>
-        <Grid
-          container
-          direction='row'
-          alignItems='center'
-          style={{ marginBottom: '1em' }}
-        >
+        <Grid container direction='row' alignItems='center'>
           <ColorPop
             color={props.primaryTextColor}
             changeColor={props.changePrimaryTextColor}
@@ -116,17 +115,13 @@ export const CustomTypography = props => {
               color: '#000',
               fontSize: 16,
               fontFamily: 'Roboto',
+              lineHeight: 4,
             }}
           >
             Primary Text Color
           </Typography>
         </Grid>
-        <Grid
-          container
-          direction='row'
-          alignItems='center'
-          style={{ marginBottom: '1em' }}
-        >
+        <Grid container direction='row' alignItems='center'>
           <ColorPop
             color={props.secondaryTextColor}
             changeColor={props.changeSecondaryTextColor}
@@ -141,6 +136,7 @@ export const CustomTypography = props => {
               color: '#000',
               fontSize: 16,
               fontFamily: 'Roboto',
+              lineHeight: 4,
             }}
           >
             Secondary Text Color
@@ -154,6 +150,7 @@ export const CustomTypography = props => {
               color: '#000',
               fontSize: 16,
               fontFamily: 'Roboto',
+              lineHeight: 3,
             }}
             onClick={() => console.log('ON CLICK!')}
           >
