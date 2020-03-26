@@ -117,7 +117,7 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard({ user }) {
   console.log("Dashboard -> user", user);
   const [themes, setThemes] = useState([]);
-  const [foundUser, setUser] = useState("");
+  const [foundUser, setFoundUser] = useState("");
 
   useEffect(() => {
     const userThemes = [];
@@ -143,7 +143,7 @@ export default function Dashboard({ user }) {
                 });
             })
           );
-          setUser(doc.data());
+          setFoundUser(doc.data());
         })
         .catch(err => {
           console.log("Error getting document", err);
@@ -285,7 +285,9 @@ export default function Dashboard({ user }) {
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
                 {selectedIndex === 0 && <div>SOME COOL USER DATA COMING</div>}
-                {selectedIndex === 1 && <UserProfile user={user} />}
+                {selectedIndex === 1 && (
+                  <UserProfile user={foundUser} uid={user.uid} />
+                )}
                 {selectedIndex === 2 && <ThemesTable />}
                 {selectedIndex === 3 && (
                   <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
@@ -293,12 +295,14 @@ export default function Dashboard({ user }) {
               </Paper>
             </Grid>
             {/* PREVIEW */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                {/* <PreviewComponent /> */}
-                PREVIEW PLACEHOLDER (MODAL? GROW, ZOOM, POPOVER transitions??)
-              </Paper>
-            </Grid>
+            {selectedIndex === 2 && (
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper className={fixedHeightPaper}>
+                  {/* <PreviewComponent /> */}
+                  PREVIEW PLACEHOLDER (MODAL? GROW, ZOOM, POPOVER transitions??)
+                </Paper>
+              </Grid>
+            )}
           </Grid>
         </Container>
       </main>

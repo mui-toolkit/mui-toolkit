@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -6,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import { db } from "../config/firebase";
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -38,10 +40,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function UserProfile({ user }) {
-  console.log("UserProfile -> user", user);
+function UserProfile(props) {
+  const { uid, user } = props;
+  console.log("UserProfile -> user", user, uid);
+  const [firstName, setFirstName] = useState(`${user.firstName}`);
+  const [lastName, setLastName] = useState(`${user.lastName}`);
+  const [username, setUsername] = useState(`${user.username}`);
+  const [email, setEmail] = useState(`${user.email}`);
+  const [password, setPassword] = useState(`${user.password}`);
 
   const classes = useStyles();
+  const handleUpdate = async () => {
+    await db
+      .collection("Users")
+      .doc(`${uid}`)
+      .update({
+        firstName,
+        lastName,
+        username,
+        email,
+        password
+      });
+    alert("Profile Updated");
+    props.history.push("/");
+  };
 
   return (
     <React.Fragment>
@@ -53,8 +75,7 @@ export default function UserProfile({ user }) {
           </Typography>
           <React.Fragment>
             <Typography variant="h6" gutterBottom>
-              DYNAMIC OR NOT? {user.email}
-              {user.firstName} {user.lastName}
+              {user.firstName.toUpperCase()} {user.lastName.toUpperCase()}
             </Typography>
             <Grid item xs={12}></Grid>
             <Grid container spacing={3}>
@@ -64,6 +85,9 @@ export default function UserProfile({ user }) {
                   id="firstName"
                   name="firstName"
                   label="First name"
+                  type="text"
+                  value={firstName}
+                  onChange={e => setFirstName(e.target.value)}
                   fullWidth
                 />
               </Grid>
@@ -73,6 +97,9 @@ export default function UserProfile({ user }) {
                   id="lastName"
                   name="lastName"
                   label="Last name"
+                  type="text"
+                  value={lastName}
+                  onChange={e => setLastName(e.target.value)}
                   fullWidth
                 />
               </Grid>
@@ -82,6 +109,9 @@ export default function UserProfile({ user }) {
                   id="username"
                   name="username"
                   label="Username"
+                  type="text"
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
                   fullWidth
                 />
               </Grid>
@@ -91,6 +121,9 @@ export default function UserProfile({ user }) {
                   id="email"
                   name="email"
                   label="Email address"
+                  type="text"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   fullWidth
                 />
               </Grid>
@@ -99,11 +132,13 @@ export default function UserProfile({ user }) {
                   id="password"
                   name="password"
                   label="New Password"
+                  type="text"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={12}></Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   id="password"
                   name="password"
@@ -111,7 +146,7 @@ export default function UserProfile({ user }) {
                   // test if match
                   fullWidth
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}></Grid>
             </Grid>
             <React.Fragment>
@@ -119,7 +154,7 @@ export default function UserProfile({ user }) {
                 <Button
                   variant="contained"
                   color="primary"
-                  // onClick={handleUpdate} // firebase update user
+                  onClick={handleUpdate} // firebase update user
                   className={classes.button}
                 >
                   Update Profile
@@ -132,3 +167,5 @@ export default function UserProfile({ user }) {
     </React.Fragment>
   );
 }
+
+export default withRouter(UserProfile);
