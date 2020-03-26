@@ -114,7 +114,7 @@ const UserConsumer = UserContext.Consumer;
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      callback({ loggedIn: true, email: user.email, uid: user.uid });
+      callback({ loggedIn: true, email: user.email });
     } else {
       callback({ loggedIn: false });
     }

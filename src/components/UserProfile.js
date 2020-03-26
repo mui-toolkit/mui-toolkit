@@ -78,7 +78,7 @@ function UserProfile(props) {
           </Typography>
           <React.Fragment>
             <Typography variant="h6" gutterBottom>
-              {user.firstName.toUpperCase()} {user.lastName.toUpperCase()}
+              {user.firstName} {user.lastName}
             </Typography>
             <Grid item xs={12}></Grid>
             <Grid container spacing={3}>
