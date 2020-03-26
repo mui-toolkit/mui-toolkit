@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
 import 'firebase/auth';
 import Login from '../Login';
-
 
 const useStyles = makeStyles(theme => ({
   // toolBarMargin: {
@@ -26,9 +24,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1rem',
     minWidth: 10,
     marginLeft: '25px',
-    color: '#000'
-
-  }
+    color: '#000',
+    fontFamily: 'Roboto',
+  },
 }));
 const UserContext = React.createContext({});
 const UserProvider = UserContext.Provider;
@@ -57,9 +55,13 @@ export default function Header(props) {
           <Toolbar>
             <Button
               component={Link}
-              to="/"
+              to='/'
               disableRipple
-              // className={classes.logoContainer}
+              style={{
+                fontFamily: 'Roboto',
+                fontSize: 14,
+                color: '#000',
+              }}
             >
               MUI Theme Builder
             </Button>
@@ -67,20 +69,20 @@ export default function Header(props) {
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/"
-                label="Home"
+                to='/'
+                label='Home'
               />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/learn"
-                label="Learn"
+                to='/learn'
+                label='Learn'
               />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/design"
-                label="Start"
+                to='/design'
+                label='Start'
               />
               {/* <Tab
                 className={classes.tab}
@@ -92,8 +94,8 @@ export default function Header(props) {
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/signup"
-                label="Signup"
+                to='/signup'
+                label='Signup'
               />
             </Tabs>
             <Login />
@@ -109,28 +111,33 @@ export default function Header(props) {
         <Toolbar>
           <Button
             component={Link}
-            to="/"
+            to='/'
             disableRipple
             // className={classes.logoContainer}
           >
             MUI Theme Builder
           </Button>
           <Tabs className={classes.tabContainer}>
-            <Tab className={classes.tab} component={Link} to="/" label="Home" />
+            <Tab className={classes.tab} component={Link} to='/' label='Home' />
             <Tab
               className={classes.tab}
               component={Link}
-              to="/learn"
-              label="Learn"
+              to='/learn'
+              label='Learn'
             />
             <Tab
               className={classes.tab}
               component={Link}
-              to="/design"
-              label="Start"
+              to='/design'
+              label='Start'
             />
             {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
-
+            <Tab
+              className={classes.tab}
+              component={Link}
+              to='/dashboard'
+              label='User Dashboard'
+            />
             <Tab
               className={classes.tab}
               component={Link}

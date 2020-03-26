@@ -14,7 +14,7 @@ export const Store = () => {
 	const [ displayDefaultColorPicker, setDisplayDefaultColorPicker ] = useState(false);
 	const [ displayPaperColorPicker, setDisplayPaperColorPicker ] = useState(false);
 
-	//Buttons
+  	//Buttons
 	const [ buttonRipple, setButtonRipple ] = useState(true);
 	const [ buttonElevation, setButtonElevation ] = useState(true);
 	const [ buttonHoverColor, setButtonHoverColor ] = useState('#000000');
@@ -29,7 +29,29 @@ export const Store = () => {
 	const [ expanded, setExpanded ] = useState('panel1');
 	const [ tab, setTab ] = useState(0);
 
+  //Typography
+  const [fontStyle, setFontStyle] = useState({
+    fontFamily: 'Roboto',
+    fontSize: 14,
+  });
+  const [primaryTextColor, setPrimaryTextColor] = useState('#000');
+  const [secondaryTextColor, setSecondaryTextColor] = useState('#000');
+  const [primaryTextColorPicker, setPrimaryTextColorPicker] = useState(false);
+  const [secondaryTextColorPicker, setSecondaryTextColorPicker] = useState(
+    false,
+  );
+  
+  //Material-UI states
+  const [expanded, setExpanded] = useState('panel1');
+  const [tab, setTab] = useState(0);
+
+  //On Change Handlers
+  const changeColor = color => {
+    setColor(color.hex);
+  };
+
 	//Alerts
+
 
 	//General Handlers
 	const changeColor = (color) => {
@@ -94,126 +116,161 @@ export const Store = () => {
 		setExpanded(newExpanded ? panel : false);
 	};
 
-	const changeTab = (event, newTab) => {
-		setTab(newTab);
-	};
+  const changePrimaryTextColor = textColor => {
+    setPrimaryTextColor(textColor.hex);
+  };
 
-	let downloadTheme = {
-		palette: {
-			primary: { main: `${color}` },
-			secondary: {
-				main: `${secondaryColor}`
-			},
-			background: {
-				paper: `${paperColor}`,
-				default: `${defaultColor}`
-			},
-			action: {
-				// active: 'rgba(0, 0, 0, 0.54)',
-				hover: `${buttonHoverColor}`,
-				hoverOpacity: `${buttonHoverOpacity}`
-				// selected: 'rgba(0, 0, 0, 0.04)',
-				// selectedOpacity: 0.08
-			}
-		},
-		typography: {
-			button: {
+  const changeSecondaryTextColor = textColor => {
+    setSecondaryTextColor(textColor.hex);
+  };
+
+  const changeColorPickerDisplayed = type => {
+    if (type === 'primary') {
+      setDisplayColorPicker(!displayColorPicker ? true : false);
+    }
+    if (type === 'secondary') {
+      setDisplaySecondaryColorPicker(
+        !displaySecondaryColorPicker ? true : false,
+      );
+    }
+    if (type === 'default') {
+      setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
+    }
+    if (type === 'paper') {
+      setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
+    }
+    if (type === 'primaryText') {
+      setPrimaryTextColorPicker(!primaryTextColorPicker ? true : false);
+    }
+    if (type === 'secondaryText') {
+      setSecondaryTextColorPicker(!secondaryTextColorPicker ? true : false);
+    }
+  };
+
+  //Material-Ui handlers
+  const changeExpanded = panel => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
+  const changeTab = (event, newTab) => {
+    setTab(newTab);
+  };
+
+  let downloadTheme = {
+    palette: {
+      primary: { main: `${color}`},
+      secondary: {
+        main: `${secondaryColor}`
+      },
+      text: {
+        primary: `${primaryTextColor}`,
+        secondary: `${secondaryTextColor}`,
+      },
+      background: {
+        paper: `${paperColor}`,
+        default: `${defaultColor}`,
+      },
+    },
+    typography: {
+      fontFamily: `${fontStyle.fontFamily}`,
+      fontSize: `${fontStyle.fontSize}`,
+      button: {
 				fontWeight: `${buttonFontWeight}`,
 				fontSize: `${buttonFontSize}`,
 				textTransform: `${buttonTextTransform}`
-			}
-		},
-		props: {
+			},
+    },
+    props: {
 			MuiButtonBase: {
 				disableRipple: `${buttonRipple}`
 			},
 			MuiButton: {
 				disableElevation: `${buttonElevation}`
-			}
+			},
 		},
-		overrides: {
+    overrides: {
 			MuiButton: {
 				root: {
 					borderRadius: `${buttonBorderRadius}`,
 					height: `${buttonHeight}`,
 					padding: `${buttonPadding}`
-				}
-			}
-		}
-	};
+				},
+			},
+		},
+  };
 
-	const customTheme = createMuiTheme({
-		palette: {
-			primary: { main: `${color}` },
-			secondary: {
-				main: `${secondaryColor}`
-			},
-			background: {
-				paper: `${paperColor}`,
-				default: `${defaultColor}`
-			},
-			action: {
-				hover: `${buttonHoverColor}`,
-				hoverOpacity: `${buttonHoverOpacity}`
-			}
-		},
-		typography: {
-			button: {
-				fontWeight: buttonFontWeight,
-				fontSize: `${buttonFontSize}rem`,
+  const customTheme = createMuiTheme({
+   palette: {
+      primary: { main: `${color}`},
+      secondary: {
+        main: `${secondaryColor}`
+      },
+      text: {
+        primary: `${primaryTextColor}`,
+        secondary: `${secondaryTextColor}`,
+      },
+      background: {
+        paper: `${paperColor}`,
+        default: `${defaultColor}`,
+      },
+    },
+    typography: {
+      fontFamily: `${fontStyle.fontFamily}`,
+      fontSize: `${fontStyle.fontSize}`,
+      button: {
+				fontWeight: `${buttonFontWeight}`,
+				fontSize: `${buttonFontSize}`,
 				textTransform: `${buttonTextTransform}`
-			}
-		},
-		props: {
+			},
+    },
+    props: {
 			MuiButtonBase: {
-				disableRipple: buttonRipple
+				disableRipple: `${buttonRipple}`
 			},
 			MuiButton: {
-				disableElevation: buttonElevation
-			}
+				disableElevation: `${buttonElevation}`
+			},
 		},
-		overrides: {
+    overrides: {
 			MuiButton: {
 				root: {
-					borderRadius: buttonBorderRadius,
-					height: buttonHeight,
-					padding: `${buttonPadding}px`
-				}
-			}
-		}
-	});
+					borderRadius: `${buttonBorderRadius}`,
+					height: `${buttonHeight}`,
+					padding: `${buttonPadding}`
+				},
+			},
+		},
+  });
 
-	return (
-		<React.Fragment>
-			<ThemeProvider theme={customTheme}>
-				<Build
-					color={color}
-					setColor={setColor}
-					secondaryColor={secondaryColor}
-					setSecondaryColor={setSecondaryColor}
-					defaultColor={defaultColor}
-					setDefaultColor={setDefaultColor}
-					paperColor={paperColor}
-					setPaperColor={setPaperColor}
-					expanded={expanded}
-					tab={tab}
-					displayColorPicker={displayColorPicker}
-					changeColor={changeColor}
-					changeSecondaryColor={changeSecondaryColor}
-					changeDefaultColor={changeDefaultColor}
-					changePaperColor={changePaperColor}
-					changeExpanded={changeExpanded}
-					changeTab={changeTab}
-					changeColorPickerDisplayed={changeColorPickerDisplayed}
-					downloadTheme={downloadTheme}
-					displaySecondaryColorPicker={displaySecondaryColorPicker}
-					changeSecondaryColorPickerDisplayed={changeSecondaryColorPickerDisplayed}
-					displayDefaultColorPicker={displayDefaultColorPicker}
-					changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
-					displayPaperColorPicker={displayPaperColorPicker}
-					changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
-					downloadTheme={downloadTheme}
-					//buttons
+  return (
+    <React.Fragment>
+      <Build
+        //General
+        color={color}
+        setColor={setColor}
+        secondaryColor={secondaryColor}
+        setSecondaryColor={setSecondaryColor}
+        defaultColor={defaultColor}
+        setDefaultColor={setDefaultColor}
+        paperColor={paperColor}
+        setPaperColor={setPaperColor}
+        expanded={expanded}
+        tab={tab}
+        setTab={setTab}
+        displayColorPicker={displayColorPicker}
+        changeColor={changeColor}
+        changeSecondaryColor={changeSecondaryColor}
+        changeDefaultColor={changeDefaultColor}
+        changePaperColor={changePaperColor}
+        changeExpanded={changeExpanded}
+        changeTab={changeTab}
+        changeColorPickerDisplayed={changeColorPickerDisplayed}
+        downloadTheme={downloadTheme}
+        displaySecondaryColorPicker={displaySecondaryColorPicker}
+        displayDefaultColorPicker={displayDefaultColorPicker}
+        displayPaperColorPicker={displayPaperColorPicker}
+        downloadTheme={downloadTheme}
+        //buttons
 					buttonRipple={buttonRipple}
 					changeButtonRipple={changeButtonRipple}
 					buttonElevation={buttonElevation}
@@ -236,8 +293,17 @@ export const Store = () => {
 					changeButtonPadding={changeButtonPadding}
 					buttonBorderRadius={buttonBorderRadius}
 					changeButtonBorderRadius={changeButtonBorderRadius}
-				/>
-			</ThemeProvider>
-		</React.Fragment>
-	);
+        //Typography
+        fontStyle={fontStyle}
+        setFontStyle={setFontStyle}
+        primaryTextColor={primaryTextColor}
+        secondaryTextColor={secondaryTextColor}
+        primaryTextColorPicker={primaryTextColorPicker}
+        secondaryTextColorPicker={secondaryTextColorPicker}
+        changePrimaryTextColor={changePrimaryTextColor}
+        changeSecondaryTextColor={changeSecondaryTextColor}
+        customTheme={customTheme}
+      />
+    </React.Fragment>
+  );
 };
