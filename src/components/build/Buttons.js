@@ -52,12 +52,6 @@ export const Buttons = (props) => {
 		<React.Fragment>
 			<Grid container direction="column" justify="flex">
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
-					<Switch
-						checked={!checked}
-						onChange={handleAnotherChange}
-						inputProps={{ 'aria-label': 'primary checkbox' }}
-					/>
-
 					<Typography style={{ marginLeft: '15px' }}>Shadows</Typography>
 				</Grid>
 
