@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -27,6 +27,9 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import StarIcon from "@material-ui/icons/Star";
 import ThemesTable from "./ThemesTable";
 import UserProfile from "./UserProfile";
+import firebase from "firebase";
+import "firebase/auth";
+import { db } from "../config/firebase";
 
 const drawerWidth = 240;
 
@@ -111,10 +114,50 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Dashboard() {
+export default function Dashboard({ user }) {
+  console.log("Dashboard -> user", user);
+  const [themes, setThemes] = useState([]);
+  const [foundUser, setUser] = useState("");
+
+  useEffect(() => {
+    const userThemes = [];
+    const response = async () => {
+      await db
+        .collection("Users")
+        .doc(`${user.uid}`)
+        .get()
+        .then(doc => {
+          // console.log("FOUND USER", doc.data());
+
+          let foundUser = doc.data();
+          Promise.all(
+            foundUser.themes.map(theme => {
+              db.collection("CustomizedThemes")
+                .doc(`${theme.id}`)
+                .get()
+                .then(theme => {
+                  // console.log("themes", theme.data());
+                  userThemes.push(theme.data());
+                  // console.log("response -> userThemes", userThemes);
+                  setThemes([...userThemes]);
+                });
+            })
+          );
+          setUser(doc.data());
+        })
+        .catch(err => {
+          console.log("Error getting document", err);
+        });
+    };
+    response();
+  }, []);
+
+  console.log("UsersThemes -> foundUser", foundUser, foundUser.themes);
+  console.log("USERS SAVED THEMES", themes);
+
   const classes = useStyles();
 
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
@@ -225,7 +268,7 @@ export default function Dashboard() {
             </ListItemIcon>
             <ListItemText primary="Add New Project" />
           </ListItem>
-          <ListItem button component={Link} to="/home">
+          <ListItem button component={Link} to="/">
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
@@ -242,7 +285,7 @@ export default function Dashboard() {
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
                 {selectedIndex === 0 && <div>SOME COOL USER DATA COMING</div>}
-                {selectedIndex === 1 && <UserProfile />}
+                {selectedIndex === 1 && <UserProfile user={user} />}
                 {selectedIndex === 2 && <ThemesTable />}
                 {selectedIndex === 3 && (
                   <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>

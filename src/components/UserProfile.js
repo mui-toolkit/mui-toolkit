@@ -38,7 +38,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Checkout() {
+export default function UserProfile({ user }) {
+  console.log("UserProfile -> user", user);
+
   const classes = useStyles();
 
   return (
@@ -51,7 +53,8 @@ export default function Checkout() {
           </Typography>
           <React.Fragment>
             <Typography variant="h6" gutterBottom>
-              Dynamic User Name
+              DYNAMIC OR NOT? {user.email}
+              {user.firstName} {user.lastName}
             </Typography>
             <Grid item xs={12}></Grid>
             <Grid container spacing={3}>

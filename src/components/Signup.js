@@ -1,32 +1,29 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-// import { GridListTile } from '@material-ui/core';
-// import firebase from 'firebase-app';
-import firebase from 'firebase';
-import 'firebase/auth';
-// import db from "./Home";
-import { db } from '../config/firebase';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import firebase from "firebase";
+import "firebase/auth";
+import { db } from "../config/firebase";
 const useStyles = makeStyles(theme => ({}));
 
 export function Signup(props) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUserName] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUserName] = useState("");
   const handleSubmit = e => {
     e.preventDefault();
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(cred => {
-        console.log('cred', cred);
+        console.log("cred", cred);
         return db
-          .collection('Users')
+          .collection("Users")
           .doc(cred.user.uid)
           .set({
             firstName: firstName,
@@ -36,17 +33,17 @@ export function Signup(props) {
             username: username
           })
           .then(() => {
-            console.log('created new user in db,props', props);
-            props.history.push('/');
+            console.log("created new user in db,props", props);
+            props.history.push("/");
           });
       })
       .catch(function(error) {
-        console.log('error in signup', error.code);
+        console.log("error in signup", error.code);
       });
   };
 
   return (
-    <Grid container direction="row" style={{ marginTop: '5em' }}>
+    <Grid container direction="row" style={{ marginTop: "5em" }}>
       <Grid
         item
         container
@@ -62,14 +59,14 @@ export function Signup(props) {
             justify="center"
             alignItems="center"
           >
-            <Typography variant="h2">SSign Up</Typography>
+            <Typography variant="h2">Sign Up</Typography>
           </Grid>
         </Grid>
         <form onSubmit={handleSubmit}>
           <Grid
             item
             container
-            style={{ maxWidth: '20em' }}
+            style={{ maxWidth: "20em" }}
             justify="center"
             alignItems="center"
           >

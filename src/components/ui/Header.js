@@ -27,30 +27,16 @@ const useStyles = makeStyles(theme => ({
     color: "#000"
   }
 }));
-const defaultUser = { loggedIn: false, email: "" };
 const UserContext = React.createContext({});
 const UserProvider = UserContext.Provider;
 const UserConsumer = UserContext.Consumer;
-function onAuthStateChange(callback) {
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      callback({ loggedIn: true, email: user.email });
-    } else {
-      callback({ loggedIn: false });
-    }
-  });
-}
+
 export default function Header(props) {
   const classes = useStyles();
-  const [user, setUser] = useState({ loggedIn: false });
+
+  console.log("Header -> user", props.user);
   const [error, setError] = useState("");
-  useEffect(() => {
-    // do equivalent of unsubscribe
-    const unsubscribe = onAuthStateChange(setUser);
-    // return async () => {
-    //   await unsubscribe();
-    // };
-  }, []);
+
   const handleClick = e => {
     e.preventDefault();
     firebase
@@ -61,7 +47,7 @@ export default function Header(props) {
       });
   };
 
-  if (!user.loggedIn) {
+  if (!props.user.loggedIn) {
     return (
       <React.Fragment>
         <AppBar position="fixed" style={{ background: "#fff" }}>
