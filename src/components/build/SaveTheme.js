@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { db } from "../../config/firebase";
 import { Alert, AlertTitle } from "@material-ui/lab/";
-
 import {
   Button,
   TextField,
@@ -11,6 +10,7 @@ import {
   DialogContentText,
   DialogTitle
 } from "@material-ui/core/";
+import SaveIcon from "@material-ui/icons/Save";
 
 export const SaveTheme = props => {
   const { downloadTheme } = props;
@@ -49,8 +49,17 @@ export const SaveTheme = props => {
   };
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Save your theme
+      <Button
+        variant="outlined"
+        onClick={handleClickOpen}
+        style={{
+          fontFamily: "Roboto",
+          fontSize: 14,
+          marginBottom: "2em",
+          color: "#f50057"
+        }}
+      >
+        Save <SaveIcon style={{ marginLeft: "5px" }} />
       </Button>
       <Dialog
         open={open}

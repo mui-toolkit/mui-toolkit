@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Palette, SaveTheme, BuildNav, ColorPop } from '../build';
+import { SaveTheme, BuildNav } from '../build';
 import { PreviewAppBar, PreviewTabs } from '../preview';
 import Download from '../Download';
 import ColorGenerator from '../ColorGenerator';
@@ -9,6 +9,7 @@ import { Grid, Paper } from '@material-ui/core/';
 
 import { makeStyles } from '@material-ui/styles';
 import { db } from '../../config/firebase';
+import { ThemeProvider } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
 	preview: {
@@ -33,34 +34,44 @@ export const Build = (props) => {
 
 	const { savedTheme } = useParams();
 	console.log('savedTheme Name: ', savedTheme);
-
-	const {
-		color,
-		secondaryColor,
-		defaultColor,
-		paperColor,
-		expanded,
-		displayColorPicker,
-		changeColor,
-		changeSecondaryColor,
-		changePaperColor,
-		changeDefaultColor,
-		changeExpanded,
-		changeColorPickerDisplayed,
-		displaySecondaryColorPicker,
-		changeSecondaryColorPickerDisplayed,
-		displayDefaultColorPicker,
-		changeDefaultColorPickerDisplayed,
-		displayPaperColorPicker,
-		changePaperColorPickerDisplayed,
-		tab,
-		changeTab,
-		downloadTheme,
-		setColor,
-		setSecondaryColor,
-		setDefaultColor,
-		setPaperColor,
-		//buttons
+  
+  const {
+    color,
+    secondaryColor,
+    defaultColor,
+    paperColor,
+    expanded,
+    displayColorPicker,
+    changeColor,
+    changeSecondaryColor,
+    changePaperColor,
+    changeDefaultColor,
+    changeExpanded,
+    changeColorPickerDisplayed,
+    displaySecondaryColorPicker,
+    changeSecondaryColorPickerDisplayed,
+    displayDefaultColorPicker,
+    changeDefaultColorPickerDisplayed,
+    displayPaperColorPicker,
+    changePaperColorPickerDisplayed,
+    tab,
+    setTab,
+    changeTab,
+    downloadTheme,
+    setColor,
+    setSecondaryColor,
+    setDefaultColor,
+    setPaperColor,
+    fontStyle,
+    setFontStyle,
+    primaryTextColor,
+    secondaryTextColor,
+    primaryTextColorPicker,
+    secondaryTextColorPicker,
+    changePrimaryTextColor,
+    changeSecondaryTextColor,
+    customTheme,
+    //buttons
 		buttonRipple,
 		changeButtonRipple,
 		buttonElevation,
@@ -83,8 +94,9 @@ export const Build = (props) => {
 		changeButtonPadding,
 		buttonBorderRadius,
 		changeButtonBorderRadius
-	} = props;
+  } = props;
 
+  // Will render when a user selects to view a saved theme
 	useEffect(() => {
 		if (savedTheme) {
 			const response = async () => {
@@ -108,42 +120,45 @@ export const Build = (props) => {
 		}
 	}, []);
 
+
 	// needs a themeName pop up so user can name their theme and it will be referenced in the table of Saved Themes.  .collection('CT').doc(`${themeName}`.set({})) should create a new collection in CustomizedThemes with doc name themeName and allow the collection to contain any/all fields
 
-	return (
-		<section className={classes.root}>
-			<Grid container spacing={1}>
-				{/* BUILD START */}
-
-				<Grid item xs={3} className={classes.selector}>
-					<Paper className={classes.builderPaper}>
-						<ColorGenerator
+  return (
+    <section className={classes.root}>
+      <Grid container spacing={1}>
+        {/* BUILD NAV START */}
+        <Grid item xs={3}>
+          <Paper className={classes.builderPaper}>
+    <ColorGenerator
 							setColor={setColor}
 							setSecondaryColor={setSecondaryColor}
 							setDefaultColor={setDefaultColor}
 							setPaperColor={setPaperColor}
 						/>
-						<BuildNav
-							//general
-							expanded={expanded}
-							changeExpanded={changeExpanded}
-							color={color}
-							secondaryColor={secondaryColor}
-							defaultColor={defaultColor}
-							paperColor={paperColor}
-							changeColor={changeColor}
-							changeSecondaryColor={changeSecondaryColor}
-							changeDefaultColor={changeDefaultColor}
-							changePaperColor={changePaperColor}
-							displayColorPicker={displayColorPicker}
-							changeColorPickerDisplayed={changeColorPickerDisplayed}
-							displaySecondaryColorPicker={displaySecondaryColorPicker}
-							changeSecondaryColorPickerDisplayed={changeSecondaryColorPickerDisplayed}
-							displayDefaultColorPicker={displayDefaultColorPicker}
-							changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
-							displayPaperColorPicker={displayPaperColorPicker}
-							changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
-							//buttons
+            <BuildNav
+              expanded={expanded}
+              changeExpanded={changeExpanded}
+              color={color}
+              secondaryColor={secondaryColor}
+              defaultColor={defaultColor}
+              paperColor={paperColor}
+              changeColor={changeColor}
+              changeSecondaryColor={changeSecondaryColor}
+              changeDefaultColor={changeDefaultColor}
+              changePaperColor={changePaperColor}
+              displayColorPicker={displayColorPicker}
+              changeColorPickerDisplayed={changeColorPickerDisplayed}
+              displaySecondaryColorPicker={displaySecondaryColorPicker}
+              changeSecondaryColorPickerDisplayed={
+                changeSecondaryColorPickerDisplayed
+              }
+              displayDefaultColorPicker={displayDefaultColorPicker}
+              changeDefaultColorPickerDisplayed={
+                changeDefaultColorPickerDisplayed
+              }
+              displayPaperColorPicker={displayPaperColorPicker}
+              changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
+              //buttons
 							buttonRipple={buttonRipple}
 							changeButtonRipple={changeButtonRipple}
 							buttonElevation={buttonElevation}
@@ -166,23 +181,42 @@ export const Build = (props) => {
 							changeButtonPadding={changeButtonPadding}
 							buttonBorderRadius={buttonBorderRadius}
 							changeButtonBorderRadius={changeButtonBorderRadius}
-						/>
-						<Grid item>
-							<Download downloadTheme={downloadTheme} />
-							<SaveTheme downloadTheme={downloadTheme} />
-						</Grid>
-					</Paper>
-				</Grid>
-				{/* BUILD END */}
-				{/* Preview Start */}
-				<Grid item xs={9} className={classes.preview}>
-					<Paper className={classes.previewPaper} style={{ background: `${defaultColor}` }}>
-						<PreviewAppBar secondaryColor={secondaryColor} color={color} className={classes.container} />
-						<PreviewTabs tab={tab} changeTab={changeTab} />
-					</Paper>
-				</Grid>
-				{/* Preview End */}
-			</Grid>
-		</section>
-	);
+              //Typography
+              fontStyle={fontStyle}
+              setFontStyle={setFontStyle}
+              primaryTextColor={primaryTextColor}
+              secondaryTextColor={secondaryTextColor}
+              primaryTextColorPicker={primaryTextColorPicker}
+              secondaryTextColorPicker={secondaryTextColorPicker}
+              changePrimaryTextColor={changePrimaryTextColor}
+              changeSecondaryTextColor={changeSecondaryTextColor}
+              setTab={setTab}
+            />
+            <Grid item>
+              <Download downloadTheme={downloadTheme} />
+              <SaveTheme downloadTheme={downloadTheme} />
+            </Grid>
+          </Paper>
+        </Grid>
+        {/* BUILD NAV END */}
+        {/* Preview Start */}
+        <Grid item xs={9} className={classes.preview}>
+          <Paper
+            className={classes.previewPaper}
+            style={{ background: `${defaultColor}` }}
+          >
+            <ThemeProvider theme={customTheme}>
+              <PreviewAppBar
+                secondaryColor={secondaryColor}
+                color={color}
+                className={classes.container}
+              />
+              <PreviewTabs tab={tab} changeTab={changeTab} />
+            </ThemeProvider>
+          </Paper>
+        </Grid>
+        {/* Preview End */}
+      </Grid>
+    </section>
+  );
 };

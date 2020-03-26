@@ -5,6 +5,7 @@
 //  */
 export { Build } from './Build';
 export { General } from './General';
+export { CustomTypography } from './CustomTypography';
 export { Store } from './Store';
 export { SaveTheme } from './SaveTheme';
 export { BuildNav } from './BuildNav';

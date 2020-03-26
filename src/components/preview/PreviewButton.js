@@ -20,7 +20,11 @@ export const PreviewButton = props => {
       <div className={classes.buttonRoot}>
         <Typography variant='h4'>BUTTONS</Typography>
         <Button className={classes.button}>Default</Button>
-        <Button color='primary' className={classes.button}>
+        <Button
+          color='primary'
+          className={classes.button}
+          style={{ fontSize: 14 }}
+        >
           Primary
         </Button>
         <Button color='secondary' className={classes.button}>
