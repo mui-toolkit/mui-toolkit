@@ -65,14 +65,6 @@ export default function UserProfile({ uid, user }) {
       return;
     }
     setOpen(false);
-    // await db
-    //   .collection("Users")
-    //   .doc(`${uid}`)
-    //   .get()
-    //   .then(doc => {
-    //     console.log(doc.data());
-    //     setFirstName(doc.data().firstName);
-    //   });
   };
 
   const handleUpdate = async () => {
