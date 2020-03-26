@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import firebase from 'firebase';
@@ -13,7 +11,8 @@ import {
   DialogContentText,
   DialogTitle
 } from '@material-ui/core/';
-import Tab from '@material-ui/core/Tab';
+import useForm from './useForm';
+import validate from './LoginFormValidationRules';
 
 const useStyles = makeStyles(theme => ({ button: { marginRight: '20px' } }));
 
@@ -71,6 +70,7 @@ export function Login(props) {
             id="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
+            required
           />
         </DialogContent>
         {/* <DialogTitle id="form-dialog-title">Password</DialogTitle> */}
