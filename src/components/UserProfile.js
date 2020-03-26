@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -40,8 +39,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function UserProfile(props) {
-  const { uid, user } = props;
+export default function UserProfile({ uid, user }) {
   console.log("UserProfile -> user", user, uid);
   const [firstName, setFirstName] = useState(`${user.firstName}`);
   const [lastName, setLastName] = useState(`${user.lastName}`);
@@ -50,6 +48,7 @@ function UserProfile(props) {
   const [password, setPassword] = useState(`${user.password}`);
 
   const classes = useStyles();
+
   const handleUpdate = async () => {
     await db
       .collection("Users")
@@ -63,7 +62,6 @@ function UserProfile(props) {
       })
       .then(() => {
         console.log("updated user in db,props");
-        props.history.push("/");
       });
     alert("Profile Updated");
   };
@@ -170,5 +168,3 @@ function UserProfile(props) {
     </React.Fragment>
   );
 }
-
-export default withRouter(UserProfile);
