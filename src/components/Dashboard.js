@@ -125,29 +125,33 @@ export default function Dashboard({ user }) {
       await db
         .collection("Users")
         .doc(`${user.uid}`)
-        .get()
-        .then(doc => {
+        .onSnapshot(doc => {
+          // .get()
+          // .then(doc => {
           // console.log("FOUND USER", doc.data());
 
           setFoundUser(doc.data());
           let foundUser = doc.data();
-          Promise.all(
-            foundUser.themes.map(theme => {
-              db.collection("CustomizedThemes")
-                .doc(`${theme.id}`)
-                .get()
-                .then(theme => {
-                  // console.log("themes", theme.data());
-                  userThemes.push(theme.data());
-                  // console.log("response -> userThemes", userThemes);
-                  setThemes([...userThemes]);
-                });
-            })
-          );
-        })
-        .catch(err => {
-          console.log("Error getting document", err);
+          if (foundUser.themes) {
+            Promise.all(
+              foundUser.themes.map(theme => {
+                db.collection("CustomizedThemes")
+                  .doc(`${theme.id}`)
+                  // .get()
+                  // .then(theme => {
+                  .onSnapshot(theme => {
+                    // console.log("themes", theme.data());
+                    userThemes.push(theme.data());
+                    // console.log("response -> userThemes", userThemes);
+                    setThemes([...userThemes]);
+                  });
+              })
+            );
+          }
         });
+      // .catch(err => {
+      //   console.log("Error getting document", err);
+      // });
     };
     response();
   }, []);
@@ -175,7 +179,7 @@ export default function Dashboard({ user }) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="absolute"
+        position="fixed"
         className={clsx(classes.appBar, open && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
@@ -288,7 +292,7 @@ export default function Dashboard({ user }) {
                 {selectedIndex === 1 && (
                   <UserProfile user={foundUser} uid={user.uid} />
                 )}
-                {selectedIndex === 2 && <ThemesTable />}
+                {selectedIndex === 2 && <ThemesTable themes={themes} />}
                 {selectedIndex === 3 && (
                   <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
                 )}

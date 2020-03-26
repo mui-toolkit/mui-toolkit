@@ -1,11 +1,25 @@
 import React from 'react';
 import saveAs from 'file-saver';
-import { createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  button: {
+    marginRight: '20px',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+    fontWeight: 400,
+    textTransform: 'none',
+    borderRadius: 5,
+    height: 46,
+    padding: 10,
+  },
+}));
 
 export const Download = props => {
-  // const defaultTheme = createMuiTheme();
+  const classes = useStyles();
   console.log('PROPS IN DOWNLOAD', props);
 
   const download = async theme => {
@@ -27,8 +41,9 @@ export const Download = props => {
           color: '#3f51b5',
         }}
         onClick={() => download(props.downloadTheme)}
+        className={classes.button}
       >
-        DOWNLOAD <SaveAltIcon style={{ marginLeft: '5px' }} />
+        Download <SaveAltIcon style={{ marginLeft: '5px' }} />
       </Button>
     </div>
   );

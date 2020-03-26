@@ -1,37 +1,36 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { SaveTheme, BuildNav } from '../build';
-import { PreviewAppBar, PreviewTabs } from '../preview';
-import Download from '../Download';
-import ColorGenerator from '../ColorGenerator';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { SaveTheme, BuildNav } from "../build";
+import { PreviewAppBar, PreviewTabs } from "../preview";
+import Download from "../Download";
+import ColorGenerator from "../ColorGenerator";
 
-import { Grid, Paper } from '@material-ui/core/';
+import { Grid, Paper } from "@material-ui/core/";
 
-import { makeStyles } from '@material-ui/styles';
-import { db } from '../../config/firebase';
-import { ThemeProvider } from '@material-ui/styles';
+import { makeStyles } from "@material-ui/styles";
+import { db } from "../../config/firebase";
+import { ThemeProvider } from "@material-ui/styles";
 
-const useStyles = makeStyles((theme) => ({
-	preview: {
-		padding: '2em',
-		textAlign: 'center'
-	},
-	previewPaper: {
-		marginTop: '5em',
-		textAlign: 'center',
-		background: '#fff',
-		height: '100%'
-	},
-	builderPaper: {
-		marginTop: '5em',
-		textAlign: 'center',
-		background: '#fff'
-	}
+const useStyles = makeStyles(theme => ({
+  preview: {
+    padding: "2em",
+    textAlign: "center"
+  },
+  previewPaper: {
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff",
+    height: "100%"
+  },
+  builderPaper: {
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff"
+  }
 }));
 
-export const Build = (props) => {
-	const classes = useStyles();
-
+export const Build = props => {
+  const classes = useStyles();
 	const { savedTheme } = useParams();
 	console.log('savedTheme Name: ', savedTheme);
 
@@ -138,8 +137,6 @@ export const Build = (props) => {
 			response();
 		}
 	}, []);
-
-	// needs a themeName pop up so user can name their theme and it will be referenced in the table of Saved Themes.  .collection('CT').doc(`${themeName}`.set({})) should create a new collection in CustomizedThemes with doc name themeName and allow the collection to contain any/all fields
 
 	return (
 		<section className={classes.root}>
@@ -249,4 +246,5 @@ export const Build = (props) => {
 			</Grid>
 		</section>
 	);
+
 };
