@@ -171,12 +171,42 @@ export const Buttons = props => {
                 value={buttonTextTransform}
                 onChange={handleChange}
               >
-                <MenuItem value={'none'}>None</MenuItem>
-                <MenuItem value={'capitalize'}>Capitalize</MenuItem>
-                <MenuItem value={'uppercase'}>Uppercase</MenuItem>
-                <MenuItem value={'lowercase'}>Lowercase</MenuItem>
-                <MenuItem value={'initial'}>Initial</MenuItem>
-                <MenuItem value={'inherit'}>Inherit</MenuItem>
+                <MenuItem
+                  style={{ color: '#000', backgroundColor: '#fff' }}
+                  value={'none'}
+                >
+                  None
+                </MenuItem>
+                <MenuItem
+                  style={{ color: '#000', backgroundColor: '#fff' }}
+                  value={'capitalize'}
+                >
+                  Capitalize
+                </MenuItem>
+                <MenuItem
+                  style={{ color: '#000', backgroundColor: '#fff' }}
+                  value={'uppercase'}
+                >
+                  Uppercase
+                </MenuItem>
+                <MenuItem
+                  style={{ color: '#000', backgroundColor: '#fff' }}
+                  value={'lowercase'}
+                >
+                  Lowercase
+                </MenuItem>
+                <MenuItem
+                  style={{ color: '#000', backgroundColor: '#fff' }}
+                  value={'initial'}
+                >
+                  Initial
+                </MenuItem>
+                <MenuItem
+                  style={{ color: '#000', backgroundColor: '#fff' }}
+                  value={'inherit'}
+                >
+                  Inherit
+                </MenuItem>
               </Select>
             </FormControl>
           </Grid>

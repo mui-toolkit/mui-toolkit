@@ -12,11 +12,19 @@ import 'firebase/auth';
 import Login from '../Login';
 
 const useStyles = makeStyles(theme => ({
-  // toolBarMargin: {
-  //   ...theme.mixins.toolbar,
-  // },
+  button: {
+    marginRight: '20px',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+    fontWeight: 400,
+    textTransform: 'none',
+    borderRadius: 5,
+    height: 46,
+    padding: 10,
+  },
   tabContainer: {
-    marginLeft: 'auto'
+    marginLeft: 'auto',
   },
   tab: {
     textTransform: 'none',
@@ -35,8 +43,8 @@ const UserConsumer = UserContext.Consumer;
 export default function Header(props) {
   const classes = useStyles();
 
-  console.log("Header -> user", props.user);
-  const [error, setError] = useState("");
+  console.log('Header -> user', props.user);
+  const [error, setError] = useState('');
 
   const handleClick = e => {
     e.preventDefault();
@@ -44,14 +52,14 @@ export default function Header(props) {
       .auth()
       .signOut()
       .then(() => {
-        console.log("user signed out props");
+        console.log('user signed out props');
       });
   };
 
   if (!props.user.loggedIn) {
     return (
       <React.Fragment>
-        <AppBar position="fixed" style={{ background: "#fff" }}>
+        <AppBar position='fixed' style={{ background: '#fff' }}>
           <Toolbar>
             <Button
               component={Link}
@@ -59,11 +67,13 @@ export default function Header(props) {
               disableRipple
               style={{
                 fontFamily: 'Roboto',
-                fontSize: 14,
+                fontWeight: 200,
+                fontSize: 28,
                 color: '#000',
               }}
+              className={classes.button}
             >
-              MUI Theme Builder
+              mymui.
             </Button>
             <Tabs className={classes.tabContainer}>
               <Tab
@@ -107,15 +117,21 @@ export default function Header(props) {
   }
   return (
     <React.Fragment>
-      <AppBar position="fixed" style={{ background: '#fff' }}>
+      <AppBar position='fixed' style={{ background: '#fff' }}>
         <Toolbar>
           <Button
             component={Link}
             to='/'
             disableRipple
-            // className={classes.logoContainer}
+            style={{
+              fontFamily: 'Roboto',
+              fontWeight: 200,
+              fontSize: 28,
+              color: '#000',
+            }}
+            className={classes.button}
           >
-            MUI Theme Builder
+            mymui.
           </Button>
           <Tabs className={classes.tabContainer}>
             <Tab className={classes.tab} component={Link} to='/' label='Home' />
@@ -141,8 +157,8 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              to="/logout"
-              label="Logout"
+              to='/logout'
+              label='Logout'
               onClick={handleClick}
             />
           </Tabs>
