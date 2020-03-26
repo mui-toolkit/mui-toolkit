@@ -129,6 +129,7 @@ export default function Dashboard({ user }) {
         .then(doc => {
           // console.log("FOUND USER", doc.data());
 
+          setFoundUser(doc.data());
           let foundUser = doc.data();
           Promise.all(
             foundUser.themes.map(theme => {
@@ -143,7 +144,6 @@ export default function Dashboard({ user }) {
                 });
             })
           );
-          setFoundUser(doc.data());
         })
         .catch(err => {
           console.log("Error getting document", err);
