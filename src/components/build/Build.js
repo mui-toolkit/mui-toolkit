@@ -109,7 +109,10 @@ export const Build = (props) => {
 		changeSuccessColor,
 		//Shadow
 		shadow,
-		changeShadow
+		changeShadow,
+		setShadow,
+		shadowTrue,
+		shadowFalse
 	} = props;
 
 	// Will render when a user selects to view a saved theme
@@ -195,6 +198,9 @@ export const Build = (props) => {
 							//Shadow
 							shadow={shadow}
 							changeShadow={changeShadow}
+							setShadow={setShadow}
+							shadowTrue={shadowTrue}
+							shadowFalse={shadowFalse}
 							//Typography
 							fontStyle={fontStyle}
 							setFontStyle={setFontStyle}

@@ -91,6 +91,11 @@ export function BuildNav(props) {
 							changeDefaultColorPickerDisplayed={props.changeDefaultColorPickerDisplayed}
 							displayPaperColorPicker={props.displayPaperColorPicker}
 							changePaperColorPickerDisplayed={props.changePaperColorPickerDisplayed}
+							shadow={props.shadow}
+							changeShadow={props.changeShadow}
+							setShadow={props.setShadow}
+							shadowTrue={props.shadowTrue}
+							shadowFalse={props.shadowFalse}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
@@ -127,8 +132,6 @@ export function BuildNav(props) {
 							changeButtonPadding={props.changeButtonPadding}
 							buttonBorderRadius={props.buttonBorderRadius}
 							changeButtonBorderRadius={props.changeButtonBorderRadius}
-							shadow={props.shadow}
-							changeShadow={props.changeShadow}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>

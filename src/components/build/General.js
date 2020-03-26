@@ -1,5 +1,5 @@
-import React from 'react';
-import { Grid, Typography } from '@material-ui/core/';
+import React, { useState } from 'react';
+import { Grid, Typography, Switch } from '@material-ui/core/';
 import { ColorPop } from './index';
 import { makeStyles } from '@material-ui/styles';
 
@@ -13,6 +13,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const General = (props) => {
+	const [ checked, setChecked ] = useState(true);
+
+	const { changeShadow, setShadow, shadowTrue, shadowFalse } = props;
+
+	const handleAnotherChange = (event) => {
+		setChecked(!event.target.checked);
+		if (checked) {
+			setShadow(shadowTrue);
+		} else if (!checked) {
+			setShadow(shadowFalse);
+		}
+	};
 	const classes = useStyles();
 	console.log('changecolor', props.changeColor);
 	return (
@@ -54,6 +66,15 @@ export const General = (props) => {
 						changeColorPickerDisplayed={() => props.changeColorPickerDisplayed('paper')}
 					/>
 					<Typography className={classes.typography}>Paper Color</Typography>
+				</Grid>
+				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
+					<Switch
+						checked={!checked}
+						onChange={handleAnotherChange}
+						inputProps={{ 'aria-label': 'primary checkbox' }}
+					/>
+
+					<Typography style={{ marginLeft: '15px' }}>Shadows</Typography>
 				</Grid>
 			</Grid>
 		</React.Fragment>

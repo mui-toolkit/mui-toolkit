@@ -67,7 +67,7 @@ export const Alerts = (props) => {
 						color={successColor}
 						changeColor={changeSuccessColor}
 						displayColorPicker={successColorPicker}
-						changeColorPickerDisplayed={() => changeColorPickerDisplayed('error')}
+						changeColorPickerDisplayed={() => changeColorPickerDisplayed('success')}
 					/>
 					<Typography className={classes.typography}>successColor Color</Typography>
 				</Grid>

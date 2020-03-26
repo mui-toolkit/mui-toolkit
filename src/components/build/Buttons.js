@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Grid,
 	Typography,
@@ -8,7 +8,8 @@ import {
 	Button,
 	FormControl,
 	InputLabel,
-	MenuItem
+	MenuItem,
+	Checkbox
 } from '@material-ui/core/';
 
 export const Buttons = (props) => {
@@ -33,8 +34,10 @@ export const Buttons = (props) => {
 		changeButtonPadding,
 		buttonBorderRadius,
 		changeButtonBorderRadius,
-		shadow,
-		changeShadow
+		changeShadow,
+		setShadow,
+		shadowTrue,
+		shadowFalse
 	} = props;
 
 	const handleClose = () => {
@@ -48,11 +51,29 @@ export const Buttons = (props) => {
 	const handleChange = (e) => {
 		changeButtonTextTransform(e.target.value);
 	};
+
+	const [ checked, setChecked ] = useState(true);
+
+	const handleAnotherChange = (event) => {
+		setChecked(!event.target.checked);
+		if (checked) {
+			setShadow(shadowTrue);
+		} else if (!checked) {
+			setShadow(shadowFalse);
+		}
+	};
+
+	console.log('change shadow func', changeShadow);
 	return (
 		<React.Fragment>
 			<Grid container direction="column" justify="flex">
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
-					{<Switch checked={!shadow} onChange={changeShadow} />}
+					<Switch
+						checked={!checked}
+						onChange={handleAnotherChange}
+						inputProps={{ 'aria-label': 'primary checkbox' }}
+					/>
+
 					<Typography style={{ marginLeft: '15px' }}>Shadows</Typography>
 				</Grid>
 

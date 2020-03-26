@@ -15,7 +15,7 @@ export const Store = () => {
 	const [ displayPaperColorPicker, setDisplayPaperColorPicker ] = useState(false);
 
 	//Buttons
-	const [ buttonRipple, setButtonRipple ] = useState(true);
+	const [ buttonRipple, setButtonRipple ] = useState([ true ]);
 	const [ buttonElevation, setButtonElevation ] = useState(true);
 	const [ buttonHoverColor, setButtonHoverColor ] = useState('#000000');
 	const [ buttonHoverOpacity, setButtonHoverOpacity ] = useState(0.04);
@@ -57,7 +57,7 @@ export const Store = () => {
 
 	const shadowFalse = [ 'none' ];
 	//Shadows
-	const [ shadow, setShadow ] = useState(shadowFalse);
+	const [ shadow, setShadow ] = useState([]);
 
 	//Typography
 	const [ fontStyle, setFontStyle ] = useState({
@@ -135,6 +135,7 @@ export const Store = () => {
 	//Shadow Handler
 	const changeShadow = () => {
 		setShadow(!shadow ? shadowTrue : shadowFalse);
+		setShadow(!shadow ? true : false);
 
 		// if (shadow === true) {
 		// 	setShadow(shadowTrue);
@@ -388,6 +389,9 @@ export const Store = () => {
 				//Shadow
 				shadow={shadow}
 				changeShadow={changeShadow}
+				setShadow={setShadow}
+				shadowTrue={shadowTrue}
+				shadowFalse={shadowFalse}
 				//Typography
 				fontStyle={fontStyle}
 				setFontStyle={setFontStyle}
