@@ -22,9 +22,9 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 400,
     fontSize: '1rem',
     minWidth: 10,
-
     marginLeft: '25px',
     color: '#000',
+    fontFamily: 'Roboto',
   },
 }));
 const defaultUser = { loggedIn: false, email: '' };
@@ -61,7 +61,11 @@ export default function Header(props) {
               component={Link}
               to='/'
               disableRipple
-              // className={classes.logoContainer}
+              style={{
+                fontFamily: 'Roboto',
+                fontSize: 14,
+                color: '#000',
+              }}
             >
               MUI Theme Builder
             </Button>
