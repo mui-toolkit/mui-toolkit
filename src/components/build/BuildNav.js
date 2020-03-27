@@ -6,7 +6,7 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	bubble: {
 		borderColor: '#c2c2c2',
 		borderStyle: 'solid',
