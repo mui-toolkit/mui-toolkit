@@ -19,16 +19,8 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import EditIcon from "@material-ui/icons/Edit";
-
-// function createData(
-//   themeName,
-//   createdAt,
-//   primaryPalette,
-//   secondaryPalette,
-//   typography
-// ) {
-//   return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
-// }
+import { db } from "../config/firebase";
+import firebase from "firebase";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -174,7 +166,8 @@ export default function ThemesTable({ themes }) {
     primaryPalette: themeObject.palette.primary.main,
     secondaryPalette: themeObject.palette.secondary.main,
     typography: themeObject.typography.fontFamily,
-    themeId: themeObject.themeId
+    themeId: themeObject.themeId,
+    userId: themeObject.userId
   }));
 
   const classes = useStyles();
@@ -203,6 +196,36 @@ export default function ThemesTable({ themes }) {
     setDense(event.target.checked);
   };
 
+  // const handleDelete = e => {
+
+  //   deleteTheme(themeId, userId, themeName)
+  //   alert("Theme Deleted")
+  // }
+  const handleDelete = async (themeId, userId, themeName) => {
+    console.log(themeId, userId);
+    // delete collection
+    await db
+      .collection("CustomizedThemes")
+      .doc(`${themeId}`)
+      .delete()
+      .then(function() {
+        console.log("Deleted Saved Theme from collection");
+      })
+      .catch(function(error) {
+        console.log("Error deleting theme: ", error);
+      });
+    //delete from user array
+    await db
+      .collection("Users")
+      .doc(`${userId}`)
+      .update({
+        themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
+      })
+      .then(() => {
+        console.log("deleted reference to this theme");
+      });
+    alert("Theme Deleted");
+  };
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -245,9 +268,7 @@ export default function ThemesTable({ themes }) {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      // key={row.themeId}
-                      // component={Link}
-                      // to={`/design/${row.themeId}/`}
+                      key={row.themeId}
                       style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
@@ -269,13 +290,18 @@ export default function ThemesTable({ themes }) {
                       </IconButton>
                       <IconButton
                         aria-label="edit"
-                        key={row.themeId}
+                        // key={row.themeId}
                         component={Link}
                         to={`/design/${row.themeId}/`}
                       >
                         <EditIcon />
                       </IconButton>
-                      <IconButton aria-label="delete">
+                      <IconButton
+                        aria-label="delete"
+                        onClick={() =>
+                          handleDelete(row.themeId, row.userId, row.themeName)
+                        }
+                      >
                         <DeleteIcon />
                       </IconButton>
                     </TableRow>
