@@ -103,6 +103,8 @@ export const Build = (props) => {
 		changeWarningColor,
 		changeInfoColor,
 		changeSuccessColor,
+		alertVariant,
+		changeAlertVariant,
 		//Shadow
 		shadow,
 		changeShadow,
@@ -205,7 +207,7 @@ export const Build = (props) => {
 							changePrimaryTextColor={changePrimaryTextColor}
 							changeSecondaryTextColor={changeSecondaryTextColor}
 							setTab={setTab}
-							//
+							//Alerts
 							errorColor={errorColor}
 							warningColor={warningColor}
 							infoColor={infoColor}
@@ -218,6 +220,8 @@ export const Build = (props) => {
 							changeWarningColor={changeWarningColor}
 							changeInfoColor={changeInfoColor}
 							changeSuccessColor={changeSuccessColor}
+							alertVariant={alertVariant}
+							changeAlertVariant={changeAlertVariant}
 						/>
 						<Grid item>
 							<Download downloadTheme={downloadTheme} />

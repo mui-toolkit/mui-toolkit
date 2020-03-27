@@ -109,8 +109,6 @@ export const Buttons = (props) => {
 					<Grid container direction="column">
 						<FormControl>
 							<Select
-								labelId="demo-controlled-open-select-label"
-								id="demo-controlled-open-select"
 								open={open}
 								onClose={handleClose}
 								onOpen={handleOpen}
