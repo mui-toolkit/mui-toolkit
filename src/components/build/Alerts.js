@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core/';
 import { ColorPop } from './index';
+import { Grid, Typography } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,8 +29,6 @@ export const Alerts = (props) => {
 		changeSuccessColor,
 		changeColorPickerDisplayed
 	} = props;
-
-	console.log('change error color', changeErrorColor);
 
 	return (
 		<React.Fragment>
