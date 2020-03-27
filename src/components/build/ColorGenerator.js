@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import CasinoTwoToneIcon from '@material-ui/icons/CasinoTwoTone';
+
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 const useStyles = makeStyles(() => ({
@@ -71,7 +73,7 @@ export const ColorGenerator = (props) => {
 				}}
 				className={classes.button}
 			>
-				CLICK HERE FOR RANDOM COLORS
+				<CasinoTwoToneIcon /> CLICK FOR RANDOM COLORS <CasinoTwoToneIcon />
 			</Button>
 		</div>
 	);
