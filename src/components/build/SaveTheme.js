@@ -10,32 +10,32 @@ import {
   DialogContentText,
   DialogTitle,
   Paper,
-  Typography,
-} from '@material-ui/core/';
-import SaveIcon from '@material-ui/icons/Save';
-import { makeStyles } from '@material-ui/core/styles';
+  Typography
+} from "@material-ui/core/";
+import SaveIcon from "@material-ui/icons/Save";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   button: {
-    marginRight: '20px',
-    '&:hover': {
-      backgroundColor: 'transparent',
+    marginRight: "20px",
+    "&:hover": {
+      backgroundColor: "transparent"
     },
     fontWeight: 400,
-    textTransform: 'none',
+    textTransform: "none",
     borderRadius: 5,
     height: 46,
-    padding: 10,
-  },
+    padding: 10
+  }
 }));
 
-export const SaveTheme = props => {
+export const SaveTheme = ({ downloadTheme, user }) => {
   const classes = useStyles();
 
-  const { downloadTheme } = props;
+  // const { downloadTheme, user } = props;
 
   const [open, setOpen] = useState(false);
-  const [themeName, setThemeName] = useState('untitled');
+  const [themeName, setThemeName] = useState("untitled");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,11 +49,35 @@ export const SaveTheme = props => {
     sendPalette(themeName);
     alert("New Customized Theme Saved");
   };
+  const addThemeToUser = (themeName, userId) => {
+    // db.collection("Users")
+    //   .doc(`${user.uid}`)
+    //   .update({ themes: FieldValue.arrayUnion(`${themeName}`) })
+    //   .then(() => {
+    //     console.log("updated user with reference to theme");
+    //   });
+
+    const themeNameUserRef = db
+      .collection("Users")
+      .doc(`${userId}`)
+      .collection("CustomizedThemes");
+
+    themeNameUserRef
+      .doc(`${themeName}`)
+      .set({})
+      .then(function() {
+        console.log("Theme Added ");
+      })
+      .catch(function(error) {
+        console.error("Error adding theme: ", error);
+      });
+  };
 
   const sendPalette = async themeName => {
     console.log(downloadTheme);
     downloadTheme.createdAt = new Date();
     downloadTheme.themeName = themeName;
+    downloadTheme.starsCount = 0;
     let newTheme = await db
       .collection("CustomizedThemes")
       .doc(`${themeName}`)
@@ -65,13 +89,7 @@ export const SaveTheme = props => {
         console.log("Error creating a new theme: ", error);
       });
     console.log("Test -> newTheme", newTheme);
-    // await db
-    //   .collection("Users")
-    //   .doc(`${user.uid}`)
-    //   .update({ themes: [...themes, downloadTheme] })
-    //   .then(() => {
-    //     console.log("updated user with reference to theme");
-    //   });
+    addThemeToUser(themeName, user.uid);
   };
   return (
     <div>
@@ -93,15 +111,15 @@ export const SaveTheme = props => {
         onClose={handleCancel}
         aria-labelledby="form-dialog-title"
       >
-        <Paper style={{ backgroundColor: '#fff' }}>
+        <Paper style={{ backgroundColor: "#fff" }}>
           <Typography
-            id='form-dialog-title'
-            align='center'
+            id="form-dialog-title"
+            align="center"
             style={{
-              color: '#000',
+              color: "#000",
               fontSize: 18,
-              fontFamily: 'Roboto',
-              lineHeight: 3,
+              fontFamily: "Roboto",
+              lineHeight: 3
             }}
           >
             YOUR THEME
@@ -109,20 +127,20 @@ export const SaveTheme = props => {
           <DialogContent>
             <DialogContentText
               style={{
-                color: '#000',
+                color: "#000",
                 fontSize: 16,
-                fontFamily: 'Roboto',
-                lineHeight: 3,
+                fontFamily: "Roboto",
+                lineHeight: 3
               }}
             >
               Name your saved theme something quirky
             </DialogContentText>
             <TextField
               autoFocus
-              margin='dense'
-              id='themeName'
-              label='themeName'
-              type='text'
+              margin="dense"
+              id="themeName"
+              label="themeName"
+              type="text"
               value={themeName}
               onChange={e => setThemeName(e.target.value)}
               fullWidth
@@ -132,10 +150,10 @@ export const SaveTheme = props => {
             <Button
               onClick={handleCancel}
               style={{
-                fontFamily: 'Roboto',
+                fontFamily: "Roboto",
                 fontSize: 14,
-                marginBottom: '2em',
-                color: '#f50057',
+                marginBottom: "2em",
+                color: "#f50057"
               }}
               className={classes.button}
             >
@@ -144,10 +162,10 @@ export const SaveTheme = props => {
             <Button
               onClick={handleSave}
               style={{
-                fontFamily: 'Roboto',
+                fontFamily: "Roboto",
                 fontSize: 14,
-                marginBottom: '2em',
-                color: '#3F51B5',
+                marginBottom: "2em",
+                color: "#3F51B5"
               }}
               className={classes.button}
             >
