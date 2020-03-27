@@ -15,16 +15,16 @@ const useStyles = makeStyles(theme => ({
   button: {
     marginRight: '20px',
     '&:hover': {
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     },
     fontWeight: 400,
     textTransform: 'none',
     borderRadius: 5,
     height: 46,
-    padding: 10,
+    padding: 10
   },
   tabContainer: {
-    marginLeft: 'auto',
+    marginLeft: 'auto'
   },
   tab: {
     textTransform: 'none',
@@ -59,7 +59,7 @@ export default function Header(props) {
   if (!props.user.loggedIn) {
     return (
       <React.Fragment>
-        <AppBar position='fixed' style={{ background: '#fff' }}>
+        <AppBar position="fixed" style={{ background: '#fff' }}>
           <Toolbar>
             <Button
               component={Link}
@@ -69,7 +69,7 @@ export default function Header(props) {
                 fontFamily: 'Roboto',
                 fontWeight: 200,
                 fontSize: 28,
-                color: '#000',
+                color: '#000'
               }}
               className={classes.button}
             >
@@ -101,7 +101,7 @@ export default function Header(props) {
                 label="Signup"
               />
             </Tabs>
-            <Login />
+            <Login fallback={<p>Loading..</p>} />
           </Toolbar>
         </AppBar>
         <div className={classes.toolBarMargin} />
@@ -110,7 +110,7 @@ export default function Header(props) {
   }
   return (
     <React.Fragment>
-      <AppBar position='fixed' style={{ background: '#fff' }}>
+      <AppBar position="fixed" style={{ background: '#fff' }}>
         <Toolbar>
           <Button
             component={Link}
@@ -120,7 +120,7 @@ export default function Header(props) {
               fontFamily: 'Roboto',
               fontWeight: 200,
               fontSize: 28,
-              color: '#000',
+              color: '#000'
             }}
             className={classes.button}
           >
@@ -150,8 +150,8 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              to='/logout'
-              label='Logout'
+              to="/logout"
+              label="Logout"
               onClick={handleClick}
             />
           </Tabs>
