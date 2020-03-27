@@ -132,20 +132,6 @@ export const Store = () => {
 		setButtonBorderRadius(buttonBorderRadius);
 	};
 
-	//Shadow Handler
-	const changeShadow = () => {
-		setShadow(!shadow ? shadowTrue : shadowFalse);
-		setShadow(!shadow ? true : false);
-
-		// if (shadow === true) {
-		// 	setShadow(shadowTrue);
-		// } else {
-		// 	setShadow(shadowFalse);
-		// }
-		// shadow ? setShadow(shadowTrue) : (shadow = setShadow(shadowFalse));
-		// setShadow(!shadow ? shadowTrue : shadowFalse);
-	};
-
 	//Alerts Handlers
 	const changeErrorColor = (errorColor) => {
 		setErrorColor(errorColor.hex);
@@ -237,10 +223,7 @@ export const Store = () => {
 				main: `${successColor}`
 			},
 			action: {
-				// active: 'rgba(0, 0, 0, 0.54)',
 				hoverOpacity: `${buttonHoverOpacity}`
-				// selected: 'rgba(0, 0, 0, 0.04)',
-				// selectedOpacity: 0.08
 			}
 		},
 		typography: {
@@ -333,8 +316,6 @@ export const Store = () => {
 		}
 	});
 
-	console.log(customTheme.shadows);
-
 	return (
 		<React.Fragment>
 			<Build
@@ -388,7 +369,6 @@ export const Store = () => {
 				changeButtonBorderRadius={changeButtonBorderRadius}
 				//Shadow
 				shadow={shadow}
-				changeShadow={changeShadow}
 				setShadow={setShadow}
 				shadowTrue={shadowTrue}
 				shadowFalse={shadowFalse}

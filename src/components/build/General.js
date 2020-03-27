@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Switch } from '@material-ui/core/';
+import { Grid, Typography, Switch, Link } from '@material-ui/core/';
 import { ColorPop } from './index';
 import { makeStyles } from '@material-ui/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const useStyles = makeStyles((theme) => ({
 	typography: {
@@ -14,8 +15,27 @@ const useStyles = makeStyles((theme) => ({
 
 export const General = (props) => {
 	const [ checked, setChecked ] = useState(true);
+	const {
+		setShadow,
+		shadowTrue,
+		shadowFalse,
+		color,
+		changeColor,
+		displayColorPicker,
+		changeColorPickerDisplayed,
+		secondaryColor,
+		changeSecondaryColor,
+		displaySecondaryColorPicker,
+		defaultColor,
+		changeDefaultColor,
+		displayDefaultColorPicker,
+		paperColor,
+		changePaperColor,
+		displayPaperColorPicker,
+		setTab
+	} = props;
 
-	const { changeShadow, setShadow, shadowTrue, shadowFalse } = props;
+	const classes = useStyles();
 
 	const handleAnotherChange = (event) => {
 		setChecked(!event.target.checked);
@@ -25,45 +45,44 @@ export const General = (props) => {
 			setShadow(shadowFalse);
 		}
 	};
-	const classes = useStyles();
-	console.log('changecolor', props.changeColor);
+
 	return (
 		<React.Fragment>
 			<Grid container direction="column" justify="flex">
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
 					<ColorPop
-						color={props.color}
-						changeColor={props.changeColor}
-						displayColorPicker={props.displayColorPicker}
-						changeColorPickerDisplayed={() => props.changeColorPickerDisplayed('primary')}
+						color={color}
+						changeColor={changeColor}
+						displayColorPicker={displayColorPicker}
+						changeColorPickerDisplayed={() => changeColorPickerDisplayed('primary')}
 					/>
 					<Typography className={classes.typography}>Primary Color</Typography>
 				</Grid>
 
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
 					<ColorPop
-						color={props.secondaryColor}
-						changeColor={props.changeSecondaryColor}
-						displayColorPicker={props.displaySecondaryColorPicker}
-						changeColorPickerDisplayed={() => props.changeColorPickerDisplayed('secondary')}
+						color={secondaryColor}
+						changeColor={changeSecondaryColor}
+						displayColorPicker={displaySecondaryColorPicker}
+						changeColorPickerDisplayed={() => changeColorPickerDisplayed('secondary')}
 					/>
 					<Typography className={classes.typography}>Secondary Color</Typography>
 				</Grid>
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
 					<ColorPop
-						color={props.defaultColor}
-						changeColor={props.changeDefaultColor}
-						displayColorPicker={props.displayDefaultColorPicker}
-						changeColorPickerDisplayed={() => props.changeColorPickerDisplayed('default')}
+						color={defaultColor}
+						changeColor={changeDefaultColor}
+						displayColorPicker={displayDefaultColorPicker}
+						changeColorPickerDisplayed={() => changeColorPickerDisplayed('default')}
 					/>
 					<Typography className={classes.typography}>Default Color</Typography>
 				</Grid>
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
 					<ColorPop
-						color={props.paperColor}
-						changeColor={props.changePaperColor}
-						displayColorPicker={props.displayPaperColorPicker}
-						changeColorPickerDisplayed={() => props.changeColorPickerDisplayed('paper')}
+						color={paperColor}
+						changeColor={changePaperColor}
+						displayColorPicker={displayPaperColorPicker}
+						changeColorPickerDisplayed={() => changeColorPickerDisplayed('paper')}
 					/>
 					<Typography className={classes.typography}>Paper Color</Typography>
 				</Grid>
@@ -73,9 +92,13 @@ export const General = (props) => {
 						onChange={handleAnotherChange}
 						inputProps={{ 'aria-label': 'primary checkbox' }}
 					/>
-
 					<Typography style={{ marginLeft: '15px' }}>Shadows</Typography>
 				</Grid>
+				<Link onClick={() => setTab(0)}>
+					<Typography variant="outlined" className={classes.typography}>
+						Preview <VisibilityIcon />
+					</Typography>
+				</Link>
 			</Grid>
 		</React.Fragment>
 	);
