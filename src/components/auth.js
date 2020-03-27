@@ -102,11 +102,11 @@
 //   );
 // }
 
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import firebase from "firebase";
-import "firebase/auth";
+import React, { useState, useEffect, useCallback, useContext } from 'react';
+import firebase from 'firebase';
+import 'firebase/auth';
 
-const defaultUser = { loggedIn: false, email: "" };
+// const defaultUser = { loggedIn: false, email: "" };
 const UserContext = React.createContext({});
 const UserProvider = UserContext.Provider;
 const UserConsumer = UserContext.Consumer;
@@ -134,8 +134,8 @@ function logout() {
   firebase.auth().signOut();
 }
 function LoginView({ onClick, error }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <div>
       <input
@@ -172,7 +172,7 @@ function LogoutView({ onClick }) {
 
 export function Auth() {
   const [user, setUser] = useState({ loggedIn: false });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
     return () => {

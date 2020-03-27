@@ -139,33 +139,19 @@ export const Store = props => {
     setButtonBorderRadius(buttonBorderRadius);
   };
 
-  //Shadow Handler
-  const changeShadow = () => {
-    setShadow(!shadow ? shadowTrue : shadowFalse);
-    setShadow(!shadow ? true : false);
-
-    // if (shadow === true) {
-    // 	setShadow(shadowTrue);
-    // } else {
-    // 	setShadow(shadowFalse);
-    // }
-    // shadow ? setShadow(shadowTrue) : (shadow = setShadow(shadowFalse));
-    // setShadow(!shadow ? shadowTrue : shadowFalse);
-  };
-
-  //Alerts Handlers
-  const changeErrorColor = errorColor => {
-    setErrorColor(errorColor.hex);
-  };
-  const changeWarningColor = warningColor => {
-    setWarningColor(warningColor.hex);
-  };
-  const changeInfoColor = infoColor => {
-    setInfoColor(infoColor.hex);
-  };
-  const changeSuccessColor = successColor => {
-    setSuccessColor(successColor.hex);
-  };
+	//Alerts Handlers
+	const changeErrorColor = (errorColor) => {
+		setErrorColor(errorColor.hex);
+	};
+	const changeWarningColor = (warningColor) => {
+		setWarningColor(warningColor.hex);
+	};
+	const changeInfoColor = (infoColor) => {
+		setInfoColor(infoColor.hex);
+	};
+	const changeSuccessColor = (successColor) => {
+		setSuccessColor(successColor.hex);
+	};
 
   //Material-Ui handlers
   const changeExpanded = panel => (event, newExpanded) => {
@@ -219,6 +205,7 @@ export const Store = props => {
     setTab(newTab);
   };
 
+<<<<<<< HEAD
   let downloadTheme = {
     palette: {
       primary: { main: `${color}` },
@@ -279,6 +266,65 @@ export const Store = props => {
       }
     }
   };
+=======
+	let downloadTheme = {
+		palette: {
+			primary: { main: `${color}` },
+			secondary: {
+				main: `${secondaryColor}`
+			},
+			text: {
+				primary: `${primaryTextColor}`,
+				secondary: `${secondaryTextColor}`
+			},
+			background: {
+				paper: `${paperColor}`,
+				default: `${defaultColor}`
+			},
+			error: {
+				main: `${errorColor}`
+			},
+			warning: {
+				main: `${warningColor}`
+			},
+			info: {
+				main: `${infoColor}`
+			},
+			success: {
+				main: `${successColor}`
+			},
+			action: {
+				hoverOpacity: `${buttonHoverOpacity}`
+			}
+		},
+		typography: {
+			fontFamily: `${fontStyle.fontFamily}`,
+			fontSize: `${fontStyle.fontSize}`,
+			button: {
+				fontWeight: `${buttonFontWeight}`,
+				fontSize: `${buttonFontSize}rem`,
+				textTransform: `${buttonTextTransform}`
+			}
+		},
+		props: {
+			MuiButtonBase: {
+				disableRipple: buttonRipple
+			},
+			MuiButton: {
+				disableElevation: buttonElevation
+			}
+		},
+		overrides: {
+			MuiButton: {
+				root: {
+					borderRadius: buttonBorderRadius,
+					height: buttonHeight,
+					padding: `${buttonPadding}px`
+				}
+			}
+		}
+	};
+>>>>>>> master
 
   const customTheme = createMuiTheme({
     shadows: shadow,
@@ -342,6 +388,7 @@ export const Store = props => {
     }
   });
 
+<<<<<<< HEAD
   console.log(customTheme.shadows);
 
   return (
@@ -428,4 +475,88 @@ export const Store = props => {
       />
     </React.Fragment>
   );
+=======
+	return (
+		<React.Fragment>
+			<Build
+				//General
+				color={color}
+				setColor={setColor}
+				secondaryColor={secondaryColor}
+				setSecondaryColor={setSecondaryColor}
+				defaultColor={defaultColor}
+				setDefaultColor={setDefaultColor}
+				paperColor={paperColor}
+				setPaperColor={setPaperColor}
+				expanded={expanded}
+				tab={tab}
+				setTab={setTab}
+				displayColorPicker={displayColorPicker}
+				changeColor={changeColor}
+				changeSecondaryColor={changeSecondaryColor}
+				changeDefaultColor={changeDefaultColor}
+				changePaperColor={changePaperColor}
+				changeExpanded={changeExpanded}
+				changeTab={changeTab}
+				changeColorPickerDisplayed={changeColorPickerDisplayed}
+				downloadTheme={downloadTheme}
+				displaySecondaryColorPicker={displaySecondaryColorPicker}
+				displayDefaultColorPicker={displayDefaultColorPicker}
+				displayPaperColorPicker={displayPaperColorPicker}
+				downloadTheme={downloadTheme}
+				//buttons
+				buttonRipple={buttonRipple}
+				changeButtonRipple={changeButtonRipple}
+				buttonElevation={buttonElevation}
+				changeButtonElevation={changeButtonElevation}
+				buttonHoverColor={buttonHoverColor}
+				changeButtonHoverColor={changeButtonHoverColor}
+				buttonHoverOpacity={buttonHoverOpacity}
+				changeButtonHoverOpacity={changeButtonHoverOpacity}
+				buttonFontWeight={buttonFontWeight}
+				changeButtonFontWeight={changeButtonFontWeight}
+				buttonFontSize={buttonFontSize}
+				changeButtonFontSize={changeButtonFontSize}
+				buttonTextTransform={buttonTextTransform}
+				changeButtonTextTransform={changeButtonTextTransform}
+				open={open}
+				setOpen={setOpen}
+				buttonHeight={buttonHeight}
+				changeButtonHeight={changeButtonHeight}
+				buttonPadding={buttonPadding}
+				changeButtonPadding={changeButtonPadding}
+				buttonBorderRadius={buttonBorderRadius}
+				changeButtonBorderRadius={changeButtonBorderRadius}
+				//Shadow
+				shadow={shadow}
+				setShadow={setShadow}
+				shadowTrue={shadowTrue}
+				shadowFalse={shadowFalse}
+				//Typography
+				fontStyle={fontStyle}
+				setFontStyle={setFontStyle}
+				primaryTextColor={primaryTextColor}
+				secondaryTextColor={secondaryTextColor}
+				primaryTextColorPicker={primaryTextColorPicker}
+				secondaryTextColorPicker={secondaryTextColorPicker}
+				changePrimaryTextColor={changePrimaryTextColor}
+				changeSecondaryTextColor={changeSecondaryTextColor}
+				customTheme={customTheme}
+				//Alerts
+				errorColor={errorColor}
+				warningColor={warningColor}
+				infoColor={infoColor}
+				successColor={successColor}
+				errorColorPicker={errorColorPicker}
+				warningColorPicker={warningColorPicker}
+				infoColorPicker={infoColorPicker}
+				successColorPicker={successColorPicker}
+				changeErrorColor={changeErrorColor}
+				changeWarningColor={changeWarningColor}
+				changeInfoColor={changeInfoColor}
+				changeSuccessColor={changeSuccessColor}
+			/>
+		</React.Fragment>
+	);
+>>>>>>> master
 };
