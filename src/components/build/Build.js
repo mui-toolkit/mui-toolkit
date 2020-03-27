@@ -1,37 +1,38 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { SaveTheme, BuildNav, ColorGenerator } from '../build';
-import { PreviewAppBar, PreviewTabs } from '../preview';
-import Download from '../Download';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { SaveTheme, BuildNav, ColorGenerator } from "../build";
+import { PreviewAppBar, PreviewTabs } from "../preview";
+import Download from "../Download";
 
-import { Grid, Paper } from '@material-ui/core/';
-import { makeStyles, ThemeProvider } from '@material-ui/styles';
-import { db } from '../../config/firebase';
+import { Grid, Paper } from "@material-ui/core/";
+import { makeStyles, ThemeProvider } from "@material-ui/styles";
+import { db } from "../../config/firebase";
 
-const useStyles = makeStyles((theme) => ({
-	preview: {
-		padding: '2em',
-		textAlign: 'center'
-	},
-	previewPaper: {
-		marginTop: '5em',
-		textAlign: 'center',
-		background: '#fff',
-		height: '100%'
-	},
-	builderPaper: {
-		marginTop: '5em',
-		textAlign: 'center',
-		background: '#fff'
-	}
+const useStyles = makeStyles(theme => ({
+  preview: {
+    padding: "2em",
+    textAlign: "center"
+  },
+  previewPaper: {
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff",
+    height: "100%"
+  },
+  builderPaper: {
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff"
+  }
 }));
 
-export const Build = (props) => {
-	const classes = useStyles();
-	const { savedTheme } = useParams();
-	console.log('savedTheme Name: ', savedTheme);
+export const Build = props => {
+  const classes = useStyles();
+  const { savedTheme } = useParams();
+  console.log("savedTheme Name: ", savedTheme);
 
 	const {
+		user,
 		color,
 		secondaryColor,
 		defaultColor,
@@ -113,29 +114,32 @@ export const Build = (props) => {
 		shadowFalse
 	} = props;
 
-	// Will render when a user selects to view a saved theme
-	useEffect(() => {
-		if (savedTheme) {
-			const response = async () => {
-				await db
-					.collection('CustomizedThemes')
-					.doc(`${savedTheme}`)
-					.get()
-					.then((doc) => {
-						console.log('saved Theme doc', doc.data());
-						if (doc.data().palette.primary.main) setColor(doc.data().palette.primary.main);
-						if (doc.data().palette.secondary.main) setSecondaryColor(doc.data().palette.secondary.main);
-						if (doc.data().palette.background.default)
-							setDefaultColor(doc.data().palette.background.default);
-						if (doc.data().palette.background.paper) setPaperColor(doc.data().palette.background.paper);
-					})
-					.catch((err) => {
-						console.log('Error getting documents', err);
-					});
-			};
-			response();
-		}
-	}, []);
+  // Will render when a user selects to view a saved theme
+  useEffect(() => {
+    if (savedTheme) {
+      const response = async () => {
+        await db
+          .collection("CustomizedThemes")
+          .doc(`${savedTheme}`)
+          .get()
+          .then(doc => {
+            console.log("saved Theme doc", doc.data());
+            if (doc.data().palette.primary.main)
+              setColor(doc.data().palette.primary.main);
+            if (doc.data().palette.secondary.main)
+              setSecondaryColor(doc.data().palette.secondary.main);
+            if (doc.data().palette.background.default)
+              setDefaultColor(doc.data().palette.background.default);
+            if (doc.data().palette.background.paper)
+              setPaperColor(doc.data().palette.background.paper);
+          })
+          .catch(err => {
+            console.log("Error getting documents", err);
+          });
+      };
+      response();
+    }
+  }, []);
 
 	return (
 		<section className={classes.root}>
@@ -225,7 +229,7 @@ export const Build = (props) => {
 						/>
 						<Grid item>
 							<Download downloadTheme={downloadTheme} />
-							<SaveTheme downloadTheme={downloadTheme} />
+							<SaveTheme user={user} downloadTheme={downloadTheme} />
 						</Grid>
 					</Paper>
 				</Grid>

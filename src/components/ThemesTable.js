@@ -28,39 +28,6 @@ function createData(
   return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
 }
 
-//dummy data
-// const rows = [
-//   createData("DEMO", 20200307, "red", "blue", "Roboto"),
-//   createData("America", 20200101, "amarillo", "azul", "Arial"),
-//   createData("Haskell", 20200307, "red", "blue", "Roboto"),
-//   createData("RAINBOW BRIGHT", 20200307, "red", "silver", "Roboto"),
-//   createData("green", 20200307, "red", "silver", "Roboto"),
-//   createData("FullStack", 20200307, "pink", "silver", "Roboto"),
-//   createData("FullStack", 20200307, "pink", "silver", "Roboto"),
-//   createData("FullStack", 20200401, "pink", "silver", "Roboto"),
-//   createData("FullStack", 20200401, "pink", "blue", "Roboto"),
-//   createData("FullStack", 20200401, "pink", "blue", "Roboto"),
-//   createData("Oasis", 20200401, "red", "blue", "Roboto"),
-//   createData("Oasis", 20200401, "red", "blue", "Roboto"),
-//   createData("Oasis", 20200401, "green", "blue", "Roboto"),
-//   createData("Oasis", 20200401, "green", "gold", "Roboto"),
-//   createData("Oasis", 20200307, "green", "gold", "Roboto"),
-//   createData("Java", 20200307, "green", "gold", "Roboto"),
-//   createData("Java", 20200307, "green", "gold", "Roboto"),
-//   createData("Java", 20200307, "green", "gold", "Roboto"),
-//   createData("Java", 20200307, "red", "gold", "Roboto"),
-//   createData("Java", 20200401, "red", "blue", "Roboto"),
-//   createData("Haskell", 20200401, "red", "blue", "Roboto"),
-//   createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
-//   createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
-//   createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
-//   createData("Haskell", 20200401, "yellow", "blue", "Roboto"),
-//   createData("Python", 20200401, "yellow", "blue", "Roboto"),
-//   createData("Python", 20200307, "yellow", "blue", "Roboto"),
-//   createData("Python", 20200307, "red", "blue", "Roboto"),
-//   createData("Python", 20200307, "red", "blue", "Roboto")
-// ];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
