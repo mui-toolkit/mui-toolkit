@@ -22,16 +22,10 @@ import WebPreview from '../WebPreview/WebPreview';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import Tooltip from '@material-ui/core/Tooltip';
+import EditIcon from "@material-ui/icons/Edit";
+import { db } from "../config/firebase";
+import firebase from "firebase";
 
-// function createData(
-//   themeName,
-//   createdAt,
-//   primaryPalette,
-//   secondaryPalette,
-//   typography
-// ) {
-//   return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
-// }
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -178,6 +172,7 @@ export default function ThemesTable({ themes }) {
     secondaryPalette: themeObject.palette.secondary.main,
     typography: themeObject.typography.fontFamily,
     themeId: themeObject.themeId,
+    userId: themeObject.userId
   }));
 
   const classes = useStyles();
@@ -206,6 +201,34 @@ export default function ThemesTable({ themes }) {
     setDense(event.target.checked);
   };
 
+  const handlePreview = themeId => {
+    console.log("handlePreview -> themeId", themeId);
+
+  };
+  const handleDelete = async (themeId, userId, themeName) => {
+    // delete collection
+    await db
+      .collection("CustomizedThemes")
+      .doc(`${themeId}`)
+      .delete()
+      .then(function() {
+        console.log("Deleted Saved Theme from collection");
+      })
+      .catch(function(error) {
+        console.log("Error deleting theme: ", error);
+      });
+    //delete from user themes array
+    await db
+      .collection("Users")
+      .doc(`${userId}`)
+      .update({
+        themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
+      })
+      .then(() => {
+        console.log("deleted reference to this theme");
+      });
+    alert("Theme Deleted");
+  };
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -249,9 +272,7 @@ export default function ThemesTable({ themes }) {
                       role='checkbox'
                       tabIndex={-1}
                       key={row.themeId}
-                      component={Link}
-                      to={`/design/${row.themeId}/`}
-                      style={{ color: 'inherit', textDecoration: 'inherit' }}
+                      style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
                         component='th'
@@ -266,14 +287,29 @@ export default function ThemesTable({ themes }) {
                       <TableCell align='right'>
                         {row.secondaryPalette}
                       </TableCell>
-                      <TableCell align='right'>{row.typography}</TableCell>
-                      <TableCell align='right'>
-                        <Tooltip title='Delete'>
-                          <IconButton aria-label='delete'>
-                            <DeleteIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
+                      <TableCell align="right">{row.typography}</TableCell>
+                      <IconButton
+                        aria-label="preview"
+                        onClick={() => handlePreview(row.themeId)}
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                      <IconButton
+                        aria-label="edit"
+                        // key={row.themeId}
+                        component={Link}
+                        to={`/design/${row.themeId}/`}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        aria-label="delete"
+                        onClick={() =>
+                          handleDelete(row.themeId, row.userId, row.themeName)
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
                     </TableRow>
                   );
                 })}
