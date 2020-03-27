@@ -53,9 +53,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       .collection("Users")
       .doc(`${userId}`)
       .update({
-        themes: firebase.firestore.FieldValue.arrayUnion(
-          `${themeName}`
-        )
+        themes: firebase.firestore.FieldValue.arrayUnion(`${themeName}`)
       })
       .then(() => {
         console.log("updated user with reference to theme");
@@ -85,7 +83,8 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     downloadTheme.starsCount = 0;
     let newTheme = await db
       .collection("CustomizedThemes")
-      .doc(`${themeName}`)
+      // .doc(`${themeName}`) // want unique key here instead of name
+      .doc()
       .set({ ...downloadTheme })
       .then(function() {
         console.log("Added Theme to collection");
