@@ -164,6 +164,7 @@ export function BuildNav(props) {
 							setShadow={setShadow}
 							shadowTrue={shadowTrue}
 							shadowFalse={shadowFalse}
+							setTab={setTab}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
@@ -200,6 +201,7 @@ export function BuildNav(props) {
 							changeButtonPadding={changeButtonPadding}
 							buttonBorderRadius={buttonBorderRadius}
 							changeButtonBorderRadius={changeButtonBorderRadius}
+							setTab={setTab}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
@@ -245,6 +247,7 @@ export function BuildNav(props) {
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
 						<Alerts
+							setTab={setTab}
 							errorColor={errorColor}
 							warningColor={warningColor}
 							infoColor={infoColor}

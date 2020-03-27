@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Switch } from '@material-ui/core/';
+import { Grid, Typography, Switch, Link } from '@material-ui/core/';
 import { ColorPop } from './index';
 import { makeStyles } from '@material-ui/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const useStyles = makeStyles((theme) => ({
 	typography: {
@@ -30,7 +31,8 @@ export const General = (props) => {
 		displayDefaultColorPicker,
 		paperColor,
 		changePaperColor,
-		displayPaperColorPicker
+		displayPaperColorPicker,
+		setTab
 	} = props;
 
 	const classes = useStyles();
@@ -92,6 +94,11 @@ export const General = (props) => {
 					/>
 					<Typography style={{ marginLeft: '15px' }}>Shadows</Typography>
 				</Grid>
+				<Link onClick={() => setTab(0)}>
+					<Typography variant="outlined" className={classes.typography}>
+						Preview <VisibilityIcon />
+					</Typography>
+				</Link>
 			</Grid>
 		</React.Fragment>
 	);

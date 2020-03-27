@@ -1,6 +1,7 @@
 import React from 'react';
-import { Grid, Typography, Switch, Slider, Select, Button, FormControl, MenuItem } from '@material-ui/core/';
+import { Grid, Typography, Switch, Slider, Select, Button, FormControl, MenuItem, Link } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const useStyles = makeStyles(() => ({
 	typography: {
@@ -35,7 +36,8 @@ export const Buttons = (props) => {
 		buttonPadding,
 		changeButtonPadding,
 		buttonBorderRadius,
-		changeButtonBorderRadius
+		changeButtonBorderRadius,
+		setTab
 	} = props;
 
 	const handleClose = () => {
@@ -180,6 +182,11 @@ export const Buttons = (props) => {
 						/>
 					}
 				</Grid>
+				<Link onClick={() => setTab(1)}>
+					<Typography variant="outlined" className={classes.typography}>
+						Preview <VisibilityIcon />
+					</Typography>
+				</Link>
 			</Grid>
 		</React.Fragment>
 	);

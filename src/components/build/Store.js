@@ -369,7 +369,7 @@ export const Store = () => {
 				changeButtonBorderRadius={changeButtonBorderRadius}
 				//Shadow
 				shadow={shadow}
-				changeShadow={changeShadow}
+				setShadow={setShadow}
 				shadowTrue={shadowTrue}
 				shadowFalse={shadowFalse}
 				//Typography
