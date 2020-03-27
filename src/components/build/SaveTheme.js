@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { db } from '../../config/firebase';
+import React, { useState } from "react";
+import { db } from "../../config/firebase";
 import {
   Button,
   TextField,
@@ -35,9 +35,9 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   const [open, setOpen] = useState(false);
   const [themeName, setThemeName] = useState("untitled");
 
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   const handleCancel = e => {
     setOpen(false);
@@ -82,7 +82,6 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     downloadTheme.starsCount = 0;
     let newTheme = await db
       .collection("CustomizedThemes")
-      // .doc(`${themeName}`) // want unique key here instead of name
       .doc()
       .set({ ...downloadTheme })
       .then(function() {
