@@ -17,6 +17,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import EditIcon from "@material-ui/icons/Edit";
 
 // function createData(
 //   themeName,
@@ -243,9 +245,9 @@ export default function ThemesTable({ themes }) {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.themeId}
-                      component={Link}
-                      to={`/design/${row.themeId}/`}
+                      // key={row.themeId}
+                      // component={Link}
+                      // to={`/design/${row.themeId}/`}
                       style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
@@ -262,6 +264,17 @@ export default function ThemesTable({ themes }) {
                         {row.secondaryPalette}
                       </TableCell>
                       <TableCell align="right">{row.typography}</TableCell>
+                      <IconButton aria-label="preview">
+                        <VisibilityIcon />
+                      </IconButton>
+                      <IconButton
+                        aria-label="edit"
+                        key={row.themeId}
+                        component={Link}
+                        to={`/design/${row.themeId}/`}
+                      >
+                        <EditIcon />
+                      </IconButton>
                       <IconButton aria-label="delete">
                         <DeleteIcon />
                       </IconButton>
