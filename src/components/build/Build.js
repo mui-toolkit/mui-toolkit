@@ -1,35 +1,35 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { SaveTheme, BuildNav, ColorGenerator } from '../build';
-import { PreviewAppBar, PreviewTabs } from '../preview';
-import Download from '../Download';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { SaveTheme, BuildNav, ColorGenerator } from "../build";
+import { PreviewAppBar, PreviewTabs } from "../preview";
+import Download from "../Download";
 
-import { Grid, Paper } from '@material-ui/core/';
-import { makeStyles, ThemeProvider } from '@material-ui/styles';
-import { db } from '../../config/firebase';
+import { Grid, Paper } from "@material-ui/core/";
+import { makeStyles, ThemeProvider } from "@material-ui/styles";
+import { db } from "../../config/firebase";
 
-const useStyles = makeStyles((theme) => ({
-	preview: {
-		padding: '2em',
-		textAlign: 'center'
-	},
-	previewPaper: {
-		marginTop: '5em',
-		textAlign: 'center',
-		background: '#fff',
-		height: '100%'
-	},
-	builderPaper: {
-		marginTop: '5em',
-		textAlign: 'center',
-		background: '#fff'
-	}
+const useStyles = makeStyles(theme => ({
+  preview: {
+    padding: "2em",
+    textAlign: "center"
+  },
+  previewPaper: {
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff",
+    height: "100%"
+  },
+  builderPaper: {
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff"
+  }
 }));
 
-export const Build = (props) => {
-	const classes = useStyles();
-	const { savedTheme } = useParams();
-	console.log('savedTheme Name: ', savedTheme);
+export const Build = props => {
+  const classes = useStyles();
+  const { savedTheme } = useParams();
+  console.log("savedTheme Name: ", savedTheme);
 
   const {
     user,
@@ -112,136 +112,146 @@ export const Build = (props) => {
     shadowFalse
   } = props;
 
-	// Will render when a user selects to view a saved theme
-	useEffect(() => {
-		if (savedTheme) {
-			const response = async () => {
-				await db
-					.collection('CustomizedThemes')
-					.doc(`${savedTheme}`)
-					.get()
-					.then((doc) => {
-						console.log('saved Theme doc', doc.data());
-						if (doc.data().palette.primary.main) setColor(doc.data().palette.primary.main);
-						if (doc.data().palette.secondary.main) setSecondaryColor(doc.data().palette.secondary.main);
-						if (doc.data().palette.background.default)
-							setDefaultColor(doc.data().palette.background.default);
-						if (doc.data().palette.background.paper) setPaperColor(doc.data().palette.background.paper);
-					})
-					.catch((err) => {
-						console.log('Error getting documents', err);
-					});
-			};
-			response();
-		}
-	}, []);
+  // Will render when a user selects to view a saved theme
+  useEffect(() => {
+    if (savedTheme) {
+      const response = async () => {
+        await db
+          .collection("CustomizedThemes")
+          .doc(`${savedTheme}`)
+          .get()
+          .then(doc => {
+            console.log("saved Theme doc", doc.data());
+            if (doc.data().palette.primary.main)
+              setColor(doc.data().palette.primary.main);
+            if (doc.data().palette.secondary.main)
+              setSecondaryColor(doc.data().palette.secondary.main);
+            if (doc.data().palette.background.default)
+              setDefaultColor(doc.data().palette.background.default);
+            if (doc.data().palette.background.paper)
+              setPaperColor(doc.data().palette.background.paper);
+          })
+          .catch(err => {
+            console.log("Error getting documents", err);
+          });
+      };
+      response();
+    }
+  }, []);
 
-	return (
-		<section className={classes.root}>
-			<Grid container spacing={1}>
-				{/* BUILD NAV START */}
-				<Grid item xs={3}>
-					<Paper className={classes.builderPaper}>
-						<ColorGenerator
-							setColor={setColor}
-							setSecondaryColor={setSecondaryColor}
-							setDefaultColor={setDefaultColor}
-							setPaperColor={setPaperColor}
-						/>
-						<BuildNav
-							expanded={expanded}
-							changeExpanded={changeExpanded}
-							color={color}
-							secondaryColor={secondaryColor}
-							defaultColor={defaultColor}
-							paperColor={paperColor}
-							changeColor={changeColor}
-							changeSecondaryColor={changeSecondaryColor}
-							changeDefaultColor={changeDefaultColor}
-							changePaperColor={changePaperColor}
-							displayColorPicker={displayColorPicker}
-							changeColorPickerDisplayed={changeColorPickerDisplayed}
-							displaySecondaryColorPicker={displaySecondaryColorPicker}
-							changeSecondaryColorPickerDisplayed={changeSecondaryColorPickerDisplayed}
-							displayDefaultColorPicker={displayDefaultColorPicker}
-							changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
-							displayPaperColorPicker={displayPaperColorPicker}
-							changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
-							//buttons
-							buttonRipple={buttonRipple}
-							changeButtonRipple={changeButtonRipple}
-							buttonElevation={buttonElevation}
-							changeButtonElevation={changeButtonElevation}
-							buttonHoverColor={buttonHoverColor}
-							changeButtonHoverColor={changeButtonHoverColor}
-							buttonHoverOpacity={buttonHoverOpacity}
-							changeButtonHoverOpacity={changeButtonHoverOpacity}
-							buttonFontWeight={buttonFontWeight}
-							changeButtonFontWeight={changeButtonFontWeight}
-							buttonFontSize={buttonFontSize}
-							changeButtonFontSize={changeButtonFontSize}
-							buttonTextTransform={buttonTextTransform}
-							changeButtonTextTransform={changeButtonTextTransform}
-							open={open}
-							setOpen={setOpen}
-							buttonHeight={buttonHeight}
-							changeButtonHeight={changeButtonHeight}
-							buttonPadding={buttonPadding}
-							changeButtonPadding={changeButtonPadding}
-							buttonBorderRadius={buttonBorderRadius}
-							changeButtonBorderRadius={changeButtonBorderRadius}
-							//Shadow
-							shadow={shadow}
-							changeShadow={changeShadow}
-							setShadow={setShadow}
-							shadowTrue={shadowTrue}
-							shadowFalse={shadowFalse}
-							//Typography
-							fontStyle={fontStyle}
-							setFontStyle={setFontStyle}
-							primaryTextColor={primaryTextColor}
-							secondaryTextColor={secondaryTextColor}
-							primaryTextColorPicker={primaryTextColorPicker}
-							secondaryTextColorPicker={secondaryTextColorPicker}
-							changePrimaryTextColor={changePrimaryTextColor}
-							changeSecondaryTextColor={changeSecondaryTextColor}
-							setTab={setTab}
-							//
-							errorColor={errorColor}
-							warningColor={warningColor}
-							infoColor={infoColor}
-							successColor={successColor}
-							errorColorPicker={errorColorPicker}
-							warningColorPicker={warningColorPicker}
-							infoColorPicker={infoColorPicker}
-							successColorPicker={successColorPicker}
-							changeErrorColor={changeErrorColor}
-							changeWarningColor={changeWarningColor}
-							changeInfoColor={changeInfoColor}
-							changeSuccessColor={changeSuccessColor}
-						/>
-						<Grid item>
-							<Download downloadTheme={downloadTheme} />
-							<SaveTheme downloadTheme={downloadTheme} />
-						</Grid>
-					</Paper>
-				</Grid>
-				{/* BUILD NAV END */}
-				{/* Preview Start */}
-				<Grid item xs={9} className={classes.preview}>
-					<Paper className={classes.previewPaper} style={{ background: `${defaultColor}` }}>
-						<ThemeProvider theme={customTheme}>
-							<PreviewAppBar
-								secondaryColor={secondaryColor}
-								color={color}
-								className={classes.container}
-							/>
-							<PreviewTabs tab={tab} changeTab={changeTab} />
-						</ThemeProvider>
-					</Paper>
-				</Grid>
-				{/* Preview End */}
-			</Grid>
-		</section>
-	);
+  return (
+    <section className={classes.root}>
+      <Grid container spacing={1}>
+        {/* BUILD NAV START */}
+        <Grid item xs={3}>
+          <Paper className={classes.builderPaper}>
+            <ColorGenerator
+              setColor={setColor}
+              setSecondaryColor={setSecondaryColor}
+              setDefaultColor={setDefaultColor}
+              setPaperColor={setPaperColor}
+            />
+            <BuildNav
+              expanded={expanded}
+              changeExpanded={changeExpanded}
+              color={color}
+              secondaryColor={secondaryColor}
+              defaultColor={defaultColor}
+              paperColor={paperColor}
+              changeColor={changeColor}
+              changeSecondaryColor={changeSecondaryColor}
+              changeDefaultColor={changeDefaultColor}
+              changePaperColor={changePaperColor}
+              displayColorPicker={displayColorPicker}
+              changeColorPickerDisplayed={changeColorPickerDisplayed}
+              displaySecondaryColorPicker={displaySecondaryColorPicker}
+              changeSecondaryColorPickerDisplayed={
+                changeSecondaryColorPickerDisplayed
+              }
+              displayDefaultColorPicker={displayDefaultColorPicker}
+              changeDefaultColorPickerDisplayed={
+                changeDefaultColorPickerDisplayed
+              }
+              displayPaperColorPicker={displayPaperColorPicker}
+              changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
+              //buttons
+              buttonRipple={buttonRipple}
+              changeButtonRipple={changeButtonRipple}
+              buttonElevation={buttonElevation}
+              changeButtonElevation={changeButtonElevation}
+              buttonHoverColor={buttonHoverColor}
+              changeButtonHoverColor={changeButtonHoverColor}
+              buttonHoverOpacity={buttonHoverOpacity}
+              changeButtonHoverOpacity={changeButtonHoverOpacity}
+              buttonFontWeight={buttonFontWeight}
+              changeButtonFontWeight={changeButtonFontWeight}
+              buttonFontSize={buttonFontSize}
+              changeButtonFontSize={changeButtonFontSize}
+              buttonTextTransform={buttonTextTransform}
+              changeButtonTextTransform={changeButtonTextTransform}
+              open={open}
+              setOpen={setOpen}
+              buttonHeight={buttonHeight}
+              changeButtonHeight={changeButtonHeight}
+              buttonPadding={buttonPadding}
+              changeButtonPadding={changeButtonPadding}
+              buttonBorderRadius={buttonBorderRadius}
+              changeButtonBorderRadius={changeButtonBorderRadius}
+              //Shadow
+              shadow={shadow}
+              changeShadow={changeShadow}
+              setShadow={setShadow}
+              shadowTrue={shadowTrue}
+              shadowFalse={shadowFalse}
+              //Typography
+              fontStyle={fontStyle}
+              setFontStyle={setFontStyle}
+              primaryTextColor={primaryTextColor}
+              secondaryTextColor={secondaryTextColor}
+              primaryTextColorPicker={primaryTextColorPicker}
+              secondaryTextColorPicker={secondaryTextColorPicker}
+              changePrimaryTextColor={changePrimaryTextColor}
+              changeSecondaryTextColor={changeSecondaryTextColor}
+              setTab={setTab}
+              //
+              errorColor={errorColor}
+              warningColor={warningColor}
+              infoColor={infoColor}
+              successColor={successColor}
+              errorColorPicker={errorColorPicker}
+              warningColorPicker={warningColorPicker}
+              infoColorPicker={infoColorPicker}
+              successColorPicker={successColorPicker}
+              changeErrorColor={changeErrorColor}
+              changeWarningColor={changeWarningColor}
+              changeInfoColor={changeInfoColor}
+              changeSuccessColor={changeSuccessColor}
+            />
+            <Grid item>
+              <Download downloadTheme={downloadTheme} />
+              <SaveTheme user={user} downloadTheme={downloadTheme} />
+            </Grid>
+          </Paper>
+        </Grid>
+        {/* BUILD NAV END */}
+        {/* Preview Start */}
+        <Grid item xs={9} className={classes.preview}>
+          <Paper
+            className={classes.previewPaper}
+            style={{ background: `${defaultColor}` }}
+          >
+            <ThemeProvider theme={customTheme}>
+              <PreviewAppBar
+                secondaryColor={secondaryColor}
+                color={color}
+                className={classes.container}
+              />
+              <PreviewTabs tab={tab} changeTab={changeTab} />
+            </ThemeProvider>
+          </Paper>
+        </Grid>
+        {/* Preview End */}
+      </Grid>
+    </section>
+  );
 };
