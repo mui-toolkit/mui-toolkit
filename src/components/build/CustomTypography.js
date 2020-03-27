@@ -1,6 +1,6 @@
 import React from 'react';
 import { ColorPop } from './index';
-import { Typography, MenuItem, Select, TextField, Grid, Link, Paper } from '@material-ui/core';
+import { Typography, MenuItem, Select, TextField, Grid, Link } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { makeStyles } from '@material-ui/styles';
 
