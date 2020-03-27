@@ -82,10 +82,19 @@ export const Store = props => {
   const [infoColor, setInfoColor] = useState("#2dbde2");
   const [successColor, setSuccessColor] = useState("#5dd24d");
 
+<<<<<<< HEAD
   const [errorColorPicker, setErrorColorPicker] = useState(false);
   const [warningColorPicker, setWarningColorPicker] = useState(false);
   const [infoColorPicker, setInfoColorPicker] = useState(false);
   const [successColorPicker, setSuccessColorPicker] = useState(false);
+=======
+	const [ alertVariant, setAlertVariant ] = useState('');
+
+	const [ errorColorPicker, setErrorColorPicker ] = useState(false);
+	const [ warningColorPicker, setWarningColorPicker ] = useState(false);
+	const [ infoColorPicker, setInfoColorPicker ] = useState(false);
+	const [ successColorPicker, setSuccessColorPicker ] = useState(false);
+>>>>>>> master
 
   //Material-UI states
   const [expanded, setExpanded] = useState("panel1");
@@ -153,10 +162,21 @@ export const Store = props => {
 		setSuccessColor(successColor.hex);
 	};
 
+<<<<<<< HEAD
   //Material-Ui handlers
   const changeExpanded = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+=======
+	const changeAlertVariant = (alertVariant) => {
+		setAlertVariant(alertVariant);
+	};
+
+	//Material-Ui handlers
+	const changeExpanded = (panel) => (event, newExpanded) => {
+		setExpanded(newExpanded ? panel : false);
+	};
+>>>>>>> master
 
   const changePrimaryTextColor = textColor => {
     setPrimaryTextColor(textColor.hex);
@@ -250,6 +270,9 @@ export const Store = props => {
 			},
 			MuiButton: {
 				disableElevation: buttonElevation
+			},
+			MuiAlert: {
+				variant: alertVariant
 			}
 		},
 		overrides: {
@@ -263,67 +286,70 @@ export const Store = props => {
 		}
 	};
 
-  const customTheme = createMuiTheme({
-    shadows: shadow,
-    palette: {
-      primary: { main: `${color}` },
-      secondary: {
-        main: `${secondaryColor}`
-      },
-      text: {
-        primary: `${primaryTextColor}`,
-        secondary: `${secondaryTextColor}`
-      },
-      background: {
-        paper: `${paperColor}`,
-        default: `${defaultColor}`
-      },
-      error: {
-        main: `${errorColor}`
-      },
-      warning: {
-        main: `${warningColor}`
-      },
-      info: {
-        main: `${infoColor}`
-      },
-      success: {
-        main: `${successColor}`
-      },
-      action: {
-        // active: 'rgba(0, 0, 0, 0.54)',
-        hoverOpacity: `${buttonHoverOpacity}`
-        // selected: 'rgba(0, 0, 0, 0.04)',
-        // selectedOpacity: 0.08
-      }
-    },
-    typography: {
-      fontFamily: `${fontStyle.fontFamily}`,
-      fontSize: `${fontStyle.fontSize}`,
-      button: {
-        fontWeight: `${buttonFontWeight}`,
-        fontSize: `${buttonFontSize}rem`,
-        textTransform: `${buttonTextTransform}`
-      }
-    },
-    props: {
-      MuiButtonBase: {
-        disableRipple: buttonRipple
-      },
-      MuiButton: {
-        disableElevation: buttonElevation
-      }
-    },
-    overrides: {
-      MuiButton: {
-        root: {
-          borderRadius: buttonBorderRadius,
-          height: buttonHeight,
-          padding: `${buttonPadding}px`
-        }
-      }
-    }
-  });
+	const customTheme = createMuiTheme({
+		shadows: shadow,
+		palette: {
+			primary: { main: `${color}` },
+			secondary: {
+				main: `${secondaryColor}`
+			},
+			text: {
+				primary: `${primaryTextColor}`,
+				secondary: `${secondaryTextColor}`
+			},
+			background: {
+				paper: `${paperColor}`,
+				default: `${defaultColor}`
+			},
+			error: {
+				main: `${errorColor}`
+			},
+			warning: {
+				main: `${warningColor}`
+			},
+			info: {
+				main: `${infoColor}`
+			},
+			success: {
+				main: `${successColor}`
+			},
+			action: {
+				// active: 'rgba(0, 0, 0, 0.54)',
+				hoverOpacity: `${buttonHoverOpacity}`
+				// selected: 'rgba(0, 0, 0, 0.04)',
+				// selectedOpacity: 0.08
+			}
+		},
+		typography: {
+			fontFamily: `${fontStyle.fontFamily}`,
+			fontSize: `${fontStyle.fontSize}`,
+			button: {
+				fontWeight: `${buttonFontWeight}`,
+				fontSize: `${buttonFontSize}rem`,
+				textTransform: `${buttonTextTransform}`
+			}
+		},
+		props: {
+			MuiButtonBase: {
+				disableRipple: buttonRipple
+			},
+			MuiButton: {
+				disableElevation: buttonElevation
+			},
+			MuiAlert: {
+				variant: `${alertVariant}`
+			}
+		},
+		overrides: {
+			MuiButton: {
+				root: {
+					borderRadius: buttonBorderRadius,
+					height: buttonHeight,
+					padding: `${buttonPadding}px`
+				}
+			}
+		}
+	});
 
 	return (
 		<React.Fragment>
@@ -405,6 +431,8 @@ export const Store = props => {
 				changeWarningColor={changeWarningColor}
 				changeInfoColor={changeInfoColor}
 				changeSuccessColor={changeSuccessColor}
+				alertVariant={alertVariant}
+				changeAlertVariant={changeAlertVariant}
 			/>
 		</React.Fragment>
 	);

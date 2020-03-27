@@ -121,6 +121,8 @@ export function BuildNav(props) {
 		changeWarningColor,
 		changeInfoColor,
 		changeSuccessColor,
+		alertVariant,
+		changeAlertVariant,
 		//Shadow
 		shadow,
 		changeShadow,
@@ -261,6 +263,10 @@ export function BuildNav(props) {
 							changeInfoColor={changeInfoColor}
 							changeSuccessColor={changeSuccessColor}
 							changeColorPickerDisplayed={changeColorPickerDisplayed}
+							alertVariant={alertVariant}
+							changeAlertVariant={changeAlertVariant}
+							setOpen={setOpen}
+							open={open}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
