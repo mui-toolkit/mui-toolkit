@@ -31,6 +31,7 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import { db } from '../config/firebase';
 import Button from '@material-ui/core/Button';
+import WebPreview from '../WebPreview/WebPreview';
 
 const drawerWidth = 240;
 
@@ -126,7 +127,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function WebPreview({ user }) {
+export default function Dashboard({ user }) {
   console.log('Dashboard -> user', user);
   const [themes, setThemes] = useState([]);
   const [foundUser, setFoundUser] = useState('');
@@ -339,10 +340,7 @@ export default function WebPreview({ user }) {
             {/* PREVIEW */}
             {selectedIndex === 2 && (
               <Grid item xs={12} md={4} lg={3}>
-                <Paper className={fixedHeightPaper}>
-                  {/* <PreviewComponent theme={theme}????/> */}
-                  PREVIEW PLACEHOLDER (MODAL? GROW, ZOOM, POPOVER transitions??)
-                </Paper>
+                <Paper className={fixedHeightPaper}></Paper>
               </Grid>
             )}
           </Grid>
