@@ -1,36 +1,33 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { SaveTheme, BuildNav } from "../build";
-import { PreviewAppBar, PreviewTabs } from "../preview";
-import Download from "../Download";
-import ColorGenerator from "../ColorGenerator";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { SaveTheme, BuildNav, ColorGenerator } from '../build';
+import { PreviewAppBar, PreviewTabs } from '../preview';
+import Download from '../Download';
 
-import { Grid, Paper } from "@material-ui/core/";
+import { Grid, Paper } from '@material-ui/core/';
+import { makeStyles, ThemeProvider } from '@material-ui/styles';
+import { db } from '../../config/firebase';
 
-import { makeStyles } from "@material-ui/styles";
-import { db } from "../../config/firebase";
-import { ThemeProvider } from "@material-ui/styles";
-
-const useStyles = makeStyles(theme => ({
-  preview: {
-    padding: "2em",
-    textAlign: "center"
-  },
-  previewPaper: {
-    marginTop: "5em",
-    textAlign: "center",
-    background: "#fff",
-    height: "100%"
-  },
-  builderPaper: {
-    marginTop: "5em",
-    textAlign: "center",
-    background: "#fff"
-  }
+const useStyles = makeStyles((theme) => ({
+	preview: {
+		padding: '2em',
+		textAlign: 'center'
+	},
+	previewPaper: {
+		marginTop: '5em',
+		textAlign: 'center',
+		background: '#fff',
+		height: '100%'
+	},
+	builderPaper: {
+		marginTop: '5em',
+		textAlign: 'center',
+		background: '#fff'
+	}
 }));
 
-export const Build = props => {
-  const classes = useStyles();
+export const Build = (props) => {
+	const classes = useStyles();
 	const { savedTheme } = useParams();
 	console.log('savedTheme Name: ', savedTheme);
 
@@ -246,5 +243,4 @@ export const Build = props => {
 			</Grid>
 		</section>
 	);
-
 };

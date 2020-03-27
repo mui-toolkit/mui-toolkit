@@ -1,6 +1,5 @@
 import React from 'react';
 import { ColorPop } from './index';
-import { SketchPicker } from 'react-color';
 import {
   Typography,
   MenuItem,
@@ -8,12 +7,11 @@ import {
   TextField,
   Grid,
   Link,
-  Paper,
 } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   typography: {
     color: '#000',
     fontSize: 16,

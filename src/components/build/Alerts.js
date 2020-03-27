@@ -1,7 +1,8 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core/';
 import { ColorPop } from './index';
+import { Grid, Typography, Link } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const useStyles = makeStyles((theme) => ({
 	typography: {
@@ -27,10 +28,9 @@ export const Alerts = (props) => {
 		changeWarningColor,
 		changeInfoColor,
 		changeSuccessColor,
-		changeColorPickerDisplayed
+		changeColorPickerDisplayed,
+		setTab
 	} = props;
-
-	console.log('change error color', changeErrorColor);
 
 	return (
 		<React.Fragment>
@@ -71,6 +71,11 @@ export const Alerts = (props) => {
 					/>
 					<Typography className={classes.typography}>successColor Color</Typography>
 				</Grid>
+				<Link onClick={() => setTab(3)}>
+					<Typography variant="outlined" className={classes.typography}>
+						Preview <VisibilityIcon />
+					</Typography>
+				</Link>
 			</Grid>
 		</React.Fragment>
 	);

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Switch } from '@material-ui/core/';
+import { Grid, Typography, Switch, Link } from '@material-ui/core/';
 import { ColorPop } from './index';
 import { makeStyles } from '@material-ui/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const useStyles = makeStyles(theme => ({
   typography: {
