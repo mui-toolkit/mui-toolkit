@@ -13,7 +13,7 @@ import {
   Snackbar,
   IconButton,
   Typography,
-  Paper,
+  Paper
 } from '@material-ui/core/';
 import Tab from '@material-ui/core/Tab';
 import CloseIcon from '@material-ui/icons/Close';
@@ -22,13 +22,14 @@ const useStyles = makeStyles(theme => ({
   button: {
     marginRight: '20px',
     '&:hover': {
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     },
     fontWeight: 400,
     textTransform: 'none',
     borderRadius: 5,
     height: 46,
     padding: 10,
+    alignItems: 'center'
   },
   title: { backgroundColor: '#3d4576' },
   tab: {
@@ -38,8 +39,13 @@ const useStyles = makeStyles(theme => ({
     minWidth: 10,
     marginLeft: '25px',
     color: '#000',
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto'
   },
+  errorText: {
+    color: '#f50057',
+    marginBottom: 5,
+    textAlign: 'center'
+  }
 }));
 
 export function Login(props) {
@@ -48,12 +54,12 @@ export function Login(props) {
   const [password, setPassword] = useState('');
   const [openSnack, setOpenSnack] = useState(false);
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState(null);
 
   const handleClick = () => {
     setOpenSnack(true);
   };
   const handleClose = (event, reason) => {
-    console.log('hanCl', event, reason);
     if (reason === 'clickaway' || reason === 'timeout') {
       setOpenSnack(false);
       return;
@@ -76,14 +82,13 @@ export function Login(props) {
       .signInWithEmailAndPassword(email, password)
       .then(cred => {
         console.log(cred.user);
+        setData(cred.user);
       })
       .catch(function(error) {
         if (!isEmpty(error)) {
           handleClick();
         }
         console.log('error in login', error);
-        // alert(error.message);
-        // alert('Invalid username or password');
       });
   };
 
@@ -105,29 +110,46 @@ export function Login(props) {
 
   return (
     <div>
-      <Tab
-        label='Login'
-        className={classes.tab}
-        // variant="outlined"
-        // color="primary"
-        onClick={handleClickOpen}
-      >
+      <Tab label="Login" className={classes.tab} onClick={handleClickOpen}>
         Login
       </Tab>
       <Dialog
         open={open}
         onClose={handleCancel}
-        aria-labelledby='form-dialog-title'
+        aria-labelledby="form-dialog-title"
+        style={{ backgroundColor: '#fff' }}
       >
         <Paper style={{ backgroundColor: '#fff' }}>
+          {/* <Snackbar
+            anchorOrigin={{
+              vertical: 'center',
+              horizontal: 'center'
+            }}
+            open={openSnack}
+            autoHideDuration={4000}
+            onClose={handleClose}
+            message="Invalid Username or Password."
+            action={
+              <React.Fragment>
+                <IconButton
+                  size="small"
+                  aria-label="close"
+                  color="inherit"
+                  onClick={handleClose}
+                >
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </React.Fragment>
+            }
+          /> */}
           <Typography
-            id='form-dialog-title'
-            align='center'
+            id="form-dialog-title"
+            align="center"
             style={{
               color: '#fff',
               fontSize: 20,
               fontFamily: 'Roboto',
-              lineHeight: 3,
+              lineHeight: 3
             }}
             className={classes.title}
           >
@@ -135,12 +157,10 @@ export function Login(props) {
           </Typography>
           <DialogContent>
             <TextField
-              required
-              label='Email'
-              id='email'
+              label="Email"
+              id="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              required
               error={!isEmpty(validate(email)) && email.length > 0}
               helperText={
                 validate(email) && email.length > 0
@@ -156,14 +176,19 @@ export function Login(props) {
           </DialogContent>
           <DialogContent>
             <TextField
-              required
-              type='password'
-              label='Password'
-              id='password'
+              type="password"
+              label="Password"
+              id="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
+              style={{ marginBottom: '20px' }}
             />
           </DialogContent>
+          {openSnack && (
+            <Typography component="p" className={classes.errorText}>
+              Incorrect email or password
+            </Typography>
+          )}
           <DialogActions>
             <Button
               onClick={handleSubmit}
@@ -171,49 +196,27 @@ export function Login(props) {
                 fontFamily: 'Roboto',
                 fontSize: 14,
                 marginRight: '20px',
-                color: '#3F51B5',
+                color: '#3F51B5'
               }}
               className={classes.button}
             >
               Login
             </Button>
-            <Button
+            {/* <Button
               onClick={handleCancel}
               style={{
                 fontFamily: 'Roboto',
                 fontSize: 14,
                 marginRight: '20px',
-                color: '#f50057',
+                color: '#f50057'
               }}
               className={classes.button}
             >
               Cancel
-            </Button>
+            </Button> */}
           </DialogActions>
         </Paper>
       </Dialog>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'center',
-        }}
-        open={openSnack}
-        autoHideDuration={4000}
-        onClose={handleClose}
-        message='Invalid Username or Password.'
-        action={
-          <React.Fragment>
-            <IconButton
-              size='small'
-              aria-label='close'
-              color='inherit'
-              onClick={handleClose}
-            >
-              <CloseIcon fontSize='small' />
-            </IconButton>
-          </React.Fragment>
-        }
-      />
     </div>
   );
 }

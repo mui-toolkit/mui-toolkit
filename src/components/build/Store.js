@@ -75,6 +75,8 @@ export const Store = () => {
 	const [ infoColor, setInfoColor ] = useState('#2dbde2');
 	const [ successColor, setSuccessColor ] = useState('#5dd24d');
 
+	const [ alertVariant, setAlertVariant ] = useState('');
+
 	const [ errorColorPicker, setErrorColorPicker ] = useState(false);
 	const [ warningColorPicker, setWarningColorPicker ] = useState(false);
 	const [ infoColorPicker, setInfoColorPicker ] = useState(false);
@@ -144,6 +146,10 @@ export const Store = () => {
 	};
 	const changeSuccessColor = (successColor) => {
 		setSuccessColor(successColor.hex);
+	};
+
+	const changeAlertVariant = (alertVariant) => {
+		setAlertVariant(alertVariant);
 	};
 
 	//Material-Ui handlers
@@ -241,6 +247,9 @@ export const Store = () => {
 			},
 			MuiButton: {
 				disableElevation: buttonElevation
+			},
+			MuiAlert: {
+				variant: alertVariant
 			}
 		},
 		overrides: {
@@ -303,6 +312,9 @@ export const Store = () => {
 			},
 			MuiButton: {
 				disableElevation: buttonElevation
+			},
+			MuiAlert: {
+				variant: `${alertVariant}`
 			}
 		},
 		overrides: {
@@ -395,6 +407,8 @@ export const Store = () => {
 				changeWarningColor={changeWarningColor}
 				changeInfoColor={changeInfoColor}
 				changeSuccessColor={changeSuccessColor}
+				alertVariant={alertVariant}
+				changeAlertVariant={changeAlertVariant}
 			/>
 		</React.Fragment>
 	);
