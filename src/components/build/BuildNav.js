@@ -52,15 +52,83 @@ const ExpansionPanelSummary = withStyles({
 	expanded: {}
 })(MuiExpansionPanelSummary);
 
-const ExpansionPanelDetails = withStyles((theme) => ({
-	// root: {
-	//   padding: theme.spacing(2),
-	// },
-}))(MuiExpansionPanelDetails);
+const ExpansionPanelDetails = withStyles((theme) => ({}))(MuiExpansionPanelDetails);
 
 export function BuildNav(props) {
 	const classes = useStyles();
-	const { expanded, changeExpanded } = props;
+	const {
+		color,
+		secondaryColor,
+		defaultColor,
+		paperColor,
+		expanded,
+		displayColorPicker,
+		changeColor,
+		changeSecondaryColor,
+		changePaperColor,
+		changeDefaultColor,
+		changeExpanded,
+		changeColorPickerDisplayed,
+		displaySecondaryColorPicker,
+		changeSecondaryColorPickerDisplayed,
+		displayDefaultColorPicker,
+		changeDefaultColorPickerDisplayed,
+		displayPaperColorPicker,
+		changePaperColorPickerDisplayed,
+		setTab,
+		fontStyle,
+		setFontStyle,
+		primaryTextColor,
+		secondaryTextColor,
+		primaryTextColorPicker,
+		secondaryTextColorPicker,
+		changePrimaryTextColor,
+		changeSecondaryTextColor,
+		customTheme,
+		//buttons
+		buttonRipple,
+		changeButtonRipple,
+		buttonElevation,
+		changeButtonElevation,
+		buttonHoverColor,
+		changeButtonHoverColor,
+		buttonHoverOpacity,
+		changeButtonHoverOpacity,
+		buttonFontWeight,
+		changeButtonFontWeight,
+		buttonFontSize,
+		changeButtonFontSize,
+		buttonTextTransform,
+		changeButtonTextTransform,
+		open,
+		setOpen,
+		buttonHeight,
+		changeButtonHeight,
+		buttonPadding,
+		changeButtonPadding,
+		buttonBorderRadius,
+		changeButtonBorderRadius,
+		//Alerts
+		errorColor,
+		warningColor,
+		infoColor,
+		successColor,
+		errorColorPicker,
+		warningColorPicker,
+		infoColorPicker,
+		successColorPicker,
+		changeErrorColor,
+		changeWarningColor,
+		changeInfoColor,
+		changeSuccessColor,
+		//Shadow
+		shadow,
+		changeShadow,
+		setShadow,
+		shadowTrue,
+		shadowFalse
+	} = props;
+
 	return (
 		<React.Fragment>
 			<Grid Item>
@@ -75,27 +143,27 @@ export function BuildNav(props) {
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
 						<General
-							color={props.color}
-							secondaryColor={props.secondaryColor}
-							defaultColor={props.defaultColor}
-							paperColor={props.paperColor}
-							changeColor={props.changeColor}
-							changeSecondaryColor={props.changeSecondaryColor}
-							changeDefaultColor={props.changeDefaultColor}
-							changePaperColor={props.changePaperColor}
-							displayColorPicker={props.displayColorPicker}
-							changeColorPickerDisplayed={props.changeColorPickerDisplayed}
-							displaySecondaryColorPicker={props.displaySecondaryColorPicker}
-							changeSecondaryColorPickerDisplayed={props.changeSecondaryColorPickerDisplayed}
-							displayDefaultColorPicker={props.displayDefaultColorPicker}
-							changeDefaultColorPickerDisplayed={props.changeDefaultColorPickerDisplayed}
-							displayPaperColorPicker={props.displayPaperColorPicker}
-							changePaperColorPickerDisplayed={props.changePaperColorPickerDisplayed}
-							shadow={props.shadow}
-							changeShadow={props.changeShadow}
-							setShadow={props.setShadow}
-							shadowTrue={props.shadowTrue}
-							shadowFalse={props.shadowFalse}
+							color={color}
+							secondaryColor={secondaryColor}
+							defaultColor={defaultColor}
+							paperColor={paperColor}
+							changeColor={changeColor}
+							changeSecondaryColor={changeSecondaryColor}
+							changeDefaultColor={changeDefaultColor}
+							changePaperColor={changePaperColor}
+							displayColorPicker={displayColorPicker}
+							changeColorPickerDisplayed={changeColorPickerDisplayed}
+							displaySecondaryColorPicker={displaySecondaryColorPicker}
+							changeSecondaryColorPickerDisplayed={changeSecondaryColorPickerDisplayed}
+							displayDefaultColorPicker={displayDefaultColorPicker}
+							changeDefaultColorPickerDisplayed={changeDefaultColorPickerDisplayed}
+							displayPaperColorPicker={displayPaperColorPicker}
+							changePaperColorPickerDisplayed={changePaperColorPickerDisplayed}
+							shadow={shadow}
+							changeShadow={changeShadow}
+							setShadow={setShadow}
+							shadowTrue={shadowTrue}
+							shadowFalse={shadowFalse}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
@@ -110,28 +178,28 @@ export function BuildNav(props) {
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
 						<Buttons
-							buttonRipple={props.buttonRipple}
-							changeButtonRipple={props.changeButtonRipple}
-							buttonElevation={props.buttonElevation}
-							changeButtonElevation={props.changeButtonElevation}
-							buttonHoverColor={props.buttonHoverColor}
-							changeButtonHoverColor={props.changeButtonHoverColor}
-							buttonHoverOpacity={props.buttonHoverOpacity}
-							changeButtonHoverOpacity={props.changeButtonHoverOpacity}
-							buttonFontWeight={props.buttonFontWeight}
-							changeButtonFontWeight={props.changeButtonFontWeight}
-							buttonFontSize={props.buttonFontSize}
-							changeButtonFontSize={props.changeButtonFontSize}
-							buttonTextTransform={props.buttonTextTransform}
-							changeButtonTextTransform={props.changeButtonTextTransform}
-							open={props.open}
-							setOpen={props.setOpen}
-							buttonHeight={props.buttonHeight}
-							changeButtonHeight={props.changeButtonHeight}
-							buttonPadding={props.buttonPadding}
-							changeButtonPadding={props.changeButtonPadding}
-							buttonBorderRadius={props.buttonBorderRadius}
-							changeButtonBorderRadius={props.changeButtonBorderRadius}
+							buttonRipple={buttonRipple}
+							changeButtonRipple={changeButtonRipple}
+							buttonElevation={buttonElevation}
+							changeButtonElevation={changeButtonElevation}
+							buttonHoverColor={buttonHoverColor}
+							changeButtonHoverColor={changeButtonHoverColor}
+							buttonHoverOpacity={buttonHoverOpacity}
+							changeButtonHoverOpacity={changeButtonHoverOpacity}
+							buttonFontWeight={buttonFontWeight}
+							changeButtonFontWeight={changeButtonFontWeight}
+							buttonFontSize={buttonFontSize}
+							changeButtonFontSize={changeButtonFontSize}
+							buttonTextTransform={buttonTextTransform}
+							changeButtonTextTransform={changeButtonTextTransform}
+							open={open}
+							setOpen={setOpen}
+							buttonHeight={buttonHeight}
+							changeButtonHeight={changeButtonHeight}
+							buttonPadding={buttonPadding}
+							changeButtonPadding={changeButtonPadding}
+							buttonBorderRadius={buttonBorderRadius}
+							changeButtonBorderRadius={changeButtonBorderRadius}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
@@ -149,19 +217,19 @@ export function BuildNav(props) {
 					<ExpansionPanelDetails>
 						<Typography>
 							<CustomTypography
-								color={props.color}
-								changeColor={props.changeColor}
-								displayColorPicker={props.displayColorPicker}
-								changeColorPickerDisplayed={props.changeColorPickerDisplayed}
-								fontStyle={props.fontStyle}
-								setFontStyle={props.setFontStyle}
-								primaryTextColor={props.primaryTextColor}
-								secondaryTextColor={props.secondaryTextColor}
-								primaryTextColorPicker={props.primaryTextColorPicker}
-								secondaryTextColorPicker={props.secondaryTextColorPicker}
-								changePrimaryTextColor={props.changePrimaryTextColor}
-								changeSecondaryTextColor={props.changeSecondaryTextColor}
-								setTab={props.setTab}
+								color={color}
+								changeColor={changeColor}
+								displayColorPicker={displayColorPicker}
+								changeColorPickerDisplayed={changeColorPickerDisplayed}
+								fontStyle={fontStyle}
+								setFontStyle={setFontStyle}
+								primaryTextColor={primaryTextColor}
+								secondaryTextColor={secondaryTextColor}
+								primaryTextColorPicker={primaryTextColorPicker}
+								secondaryTextColorPicker={secondaryTextColorPicker}
+								changePrimaryTextColor={changePrimaryTextColor}
+								changeSecondaryTextColor={changeSecondaryTextColor}
+								setTab={setTab}
 							/>
 						</Typography>
 					</ExpansionPanelDetails>
@@ -177,19 +245,19 @@ export function BuildNav(props) {
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
 						<Alerts
-							errorColor={props.errorColor}
-							warningColor={props.warningColor}
-							infoColor={props.infoColor}
-							successColor={props.successColor}
-							errorColorPicker={props.errorColorPicker}
-							warningColorPicker={props.warningColorPicker}
-							infoColorPicker={props.infoColorPicker}
-							successColorPicker={props.successColorPicker}
-							changeErrorColor={props.changeErrorColor}
-							changeWarningColor={props.changeWarningColor}
-							changeInfoColor={props.changeInfoColor}
-							changeSuccessColor={props.changeSuccessColor}
-							changeColorPickerDisplayed={props.changeColorPickerDisplayed}
+							errorColor={errorColor}
+							warningColor={warningColor}
+							infoColor={infoColor}
+							successColor={successColor}
+							errorColorPicker={errorColorPicker}
+							warningColorPicker={warningColorPicker}
+							infoColorPicker={infoColorPicker}
+							successColorPicker={successColorPicker}
+							changeErrorColor={changeErrorColor}
+							changeWarningColor={changeWarningColor}
+							changeInfoColor={changeInfoColor}
+							changeSuccessColor={changeSuccessColor}
+							changeColorPickerDisplayed={changeColorPickerDisplayed}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
