@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import firebase from "firebase";
-import "firebase/auth";
-import { unaryExpression } from "@babel/types";
+import React, { useState, useEffect, useCallback, useContext } from 'react';
+import Typography from '@material-ui/core/Typography';
+import { Grid, Button } from '@material-ui/core';
+import firebase from 'firebase';
+import 'firebase/auth';
+import { Link } from 'react-router-dom';
+import { unaryExpression } from '@babel/types';
 
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -17,7 +18,7 @@ function onAuthStateChange(callback) {
 
 export default function Home() {
   const [user, setUser] = useState({ loggedIn: false });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
     // return async () => {
@@ -29,16 +30,75 @@ export default function Home() {
     return (
       <div>
         <div>
-          <Grid container direction="row" style={{ marginTop: "10em" }}>
+          <Grid container direction='column' style={{ marginTop: '10em' }}>
             <Grid
               item
               container
-              direction="column"
-              justify="center"
-              alignItems="center"
+              direction='row'
+              justify='center'
+              alignItems='center'
             >
-              {" "}
-              <Typography variant="h4">Welcome, guest </Typography>
+              <Typography variant='h4' style={{ marginRight: '5px' }}>
+                Welcome to{' '}
+              </Typography>
+              <Typography
+                variant='h4'
+                style={{
+                  fontFamily: 'Roboto',
+                  fontWeight: 200,
+                  fontSize: 30,
+                  color: '#000',
+                }}
+              >
+                mymui.
+              </Typography>
+            </Grid>
+
+            <Grid
+              container
+              direction='row'
+              spacing={2}
+              justify='center'
+              alignItems='center'
+            >
+              <Grid item>
+                <Button
+                  component={Link}
+                  to='/learn'
+                  disableRipple
+                  variant='contained'
+                  style={{
+                    fontFamily: 'Roboto',
+                    fontWeight: 200,
+                    fontSize: 28,
+                    color: '#000',
+                    marginTop: '1em',
+                    textTransform: 'none',
+                  }}
+                  // className={classes.button}
+                >
+                  learn.
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  component={Link}
+                  to='/design'
+                  disableRipple
+                  variant='contained'
+                  style={{
+                    fontFamily: 'Roboto',
+                    fontWeight: 200,
+                    fontSize: 28,
+                    color: '#000',
+                    marginTop: '1em',
+                    textTransform: 'none',
+                  }}
+                  // className={classes.button}
+                >
+                  get started.
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </div>
@@ -47,16 +107,16 @@ export default function Home() {
   }
   return (
     <div>
-      <Grid container direction="row" style={{ marginTop: "10em" }}>
+      <Grid container direction='row' style={{ marginTop: '10em' }}>
         <Grid
           item
           container
-          direction="column"
-          justify="center"
-          alignItems="center"
+          direction='column'
+          justify='center'
+          alignItems='center'
         >
-          {" "}
-          <Typography variant="h5">Welcome, {user.email} </Typography>
+          {' '}
+          <Typography variant='h5'>Welcome, {user.email} </Typography>
         </Grid>
       </Grid>
     </div>
