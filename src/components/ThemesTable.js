@@ -22,6 +22,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { db } from "../config/firebase";
 import firebase from "firebase";
 
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -196,13 +197,11 @@ export default function ThemesTable({ themes }) {
     setDense(event.target.checked);
   };
 
-  // const handleDelete = e => {
+  const handlePreview = themeId => {
+    console.log("handlePreview -> themeId", themeId);
 
-  //   deleteTheme(themeId, userId, themeName)
-  //   alert("Theme Deleted")
-  // }
+  };
   const handleDelete = async (themeId, userId, themeName) => {
-    console.log(themeId, userId);
     // delete collection
     await db
       .collection("CustomizedThemes")
@@ -214,7 +213,7 @@ export default function ThemesTable({ themes }) {
       .catch(function(error) {
         console.log("Error deleting theme: ", error);
       });
-    //delete from user array
+    //delete from user themes array
     await db
       .collection("Users")
       .doc(`${userId}`)
@@ -285,7 +284,10 @@ export default function ThemesTable({ themes }) {
                         {row.secondaryPalette}
                       </TableCell>
                       <TableCell align="right">{row.typography}</TableCell>
-                      <IconButton aria-label="preview">
+                      <IconButton
+                        aria-label="preview"
+                        onClick={() => handlePreview(row.themeId)}
+                      >
                         <VisibilityIcon />
                       </IconButton>
                       <IconButton
