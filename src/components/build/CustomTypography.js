@@ -33,6 +33,17 @@ export const CustomTypography = props => {
           justify='flex-start'
           alignItems='center'
         >
+          <Grid item xs={12}>
+            <Link onClick={() => props.setTab(2)}>
+              <Typography
+                variant='outlined'
+                className={classes.typography}
+                onClick={() => console.log('ON CLICK!')}
+              >
+                Preview <VisibilityIcon />
+              </Typography>
+            </Link>
+          </Grid>
           <Grid item xs={6} align='left'>
             <Typography className={classes.typography}>Font Family</Typography>
           </Grid>
@@ -163,15 +174,6 @@ export const CustomTypography = props => {
             Secondary Text Color
           </Typography>
         </Grid>
-        <Link onClick={() => props.setTab(2)}>
-          <Typography
-            variant='outlined'
-            className={classes.typography}
-            onClick={() => console.log('ON CLICK!')}
-          >
-            Preview <VisibilityIcon />
-          </Typography>
-        </Link>
       </Grid>
     </React.Fragment>
   );

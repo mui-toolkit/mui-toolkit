@@ -9,8 +9,10 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
+  Link,
 } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const useStyles = makeStyles(theme => ({
   typography: {
@@ -64,6 +66,17 @@ export const Buttons = props => {
   return (
     <React.Fragment>
       <Grid container direction='column' justify='flex'>
+        <Grid container direction='row' justify='center'>
+          <Link onClick={() => props.setTab(1)}>
+            <Typography
+              variant='outlined'
+              className={classes.typography}
+              onClick={() => console.log('ON CLICK!')}
+            >
+              Preview <VisibilityIcon />
+            </Typography>
+          </Link>
+        </Grid>
         <Grid
           container
           direction='row'
