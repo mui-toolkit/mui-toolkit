@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core/";
 import SaveIcon from "@material-ui/icons/Save";
 import { makeStyles } from "@material-ui/core/styles";
+import firebase from "firebase";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -32,8 +33,6 @@ const useStyles = makeStyles(theme => ({
 export const SaveTheme = ({ downloadTheme, user }) => {
   const classes = useStyles();
 
-  // const { downloadTheme, user } = props;
-
   const [open, setOpen] = useState(false);
   const [themeName, setThemeName] = useState("untitled");
 
@@ -49,41 +48,47 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     sendPalette(themeName);
     alert("New Customized Theme Saved");
   };
-  const addThemeToUser = (themeName, userId) => {
-    // db.collection("Users")
-    //   .doc(`${user.uid}`)
-    //   .update({ themes: FieldValue.arrayUnion(`${themeName}`) })
-    //   .then(() => {
-    //     console.log("updated user with reference to theme");
-    //   });
-
-    const themeNameUserRef = db
+  const addThemeToUser = async (themeName, userId) => {
+    await db
       .collection("Users")
       .doc(`${userId}`)
-      .collection("CustomizedThemes");
-
-    themeNameUserRef
-      .doc(`${themeName}`)
-      .set({})
-      .then(function() {
-        console.log("Theme Added ");
+      .update({
+        themes: firebase.firestore.FieldValue.arrayUnion(
+          `${themeName}`
+        )
       })
-      .catch(function(error) {
-        console.error("Error adding theme: ", error);
+      .then(() => {
+        console.log("updated user with reference to theme");
       });
+
+    // const themeNameUserRef = db
+    //   .collection("Users")
+    //   .doc(`${userId}`)
+    //   .collection("CustomizedThemes");
+
+    // themeNameUserRef
+    //   .doc(`${themeName}`)
+    //   .set({})
+    //   .then(function() {
+    //     console.log("Theme Added ");
+    //   })
+    //   .catch(function(error) {
+    //     console.error("Error adding theme: ", error);
+    //   });
   };
 
   const sendPalette = async themeName => {
     console.log(downloadTheme);
     downloadTheme.createdAt = new Date();
+    downloadTheme.userId = user.uid;
     downloadTheme.themeName = themeName;
     downloadTheme.starsCount = 0;
     let newTheme = await db
       .collection("CustomizedThemes")
       .doc(`${themeName}`)
       .set({ ...downloadTheme })
-      .then(ref => {
-        console.log("Added Theme ", `${ref.id}`);
+      .then(function() {
+        console.log("Added Theme to collection");
       })
       .catch(function(error) {
         console.log("Error creating a new theme: ", error);
