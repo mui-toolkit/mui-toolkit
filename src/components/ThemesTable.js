@@ -18,15 +18,15 @@ import Switch from "@material-ui/core/Switch";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-function createData(
-  themeName,
-  createdAt,
-  primaryPalette,
-  secondaryPalette,
-  typography
-) {
-  return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
-}
+// function createData(
+//   themeName,
+//   createdAt,
+//   primaryPalette,
+//   secondaryPalette,
+//   typography
+// ) {
+//   return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
+// }
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -171,7 +171,8 @@ export default function ThemesTable({ themes }) {
     ).slice(1, 11),
     primaryPalette: themeObject.palette.primary.main,
     secondaryPalette: themeObject.palette.secondary.main,
-    typography: themeObject.typography.fontFamily
+    typography: themeObject.typography.fontFamily,
+    themeId: themeObject.themeId
   }));
 
   const classes = useStyles();
@@ -242,9 +243,9 @@ export default function ThemesTable({ themes }) {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.themeName}
+                      key={row.themeId}
                       component={Link}
-                      to={`/design/${row.themeName}/`}
+                      to={`/design/${row.themeId}/`}
                       style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
