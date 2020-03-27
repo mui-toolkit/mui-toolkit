@@ -18,6 +18,13 @@ const useStyles = makeStyles(() => ({
     fontFamily: 'Roboto',
     lineHeight: 3,
   },
+  preview: {
+    color: '#000',
+    fontSize: 14,
+    fontFamily: 'Roboto',
+    lineHeight: 3,
+    marginLeft: '15px',
+  },
 }));
 
 export const CustomTypography = props => {
@@ -31,11 +38,11 @@ export const CustomTypography = props => {
           justify='flex-start'
           alignItems='center'
         >
-          <Grid item xs={12}>
+          <Grid item xs={12} align='right'>
             <Link onClick={() => props.setTab(2)}>
               <Typography
                 variant='outlined'
-                className={classes.typography}
+                className={classes.preview}
                 onClick={() => console.log('ON CLICK!')}
               >
                 Preview <VisibilityIcon />

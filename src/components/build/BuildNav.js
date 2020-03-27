@@ -223,6 +223,7 @@ export function BuildNav(props) {
               changeInfoColor={props.changeInfoColor}
               changeSuccessColor={props.changeSuccessColor}
               changeColorPickerDisplayed={props.changeColorPickerDisplayed}
+              setTab={props.setTab}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>

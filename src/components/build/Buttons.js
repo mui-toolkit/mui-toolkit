@@ -22,6 +22,13 @@ const useStyles = makeStyles(theme => ({
     lineHeight: 3,
     marginLeft: '15px',
   },
+  preview: {
+    color: '#000',
+    fontSize: 14,
+    fontFamily: 'Roboto',
+    lineHeight: 3,
+    marginLeft: '15px',
+  },
 }));
 
 export const Buttons = props => {
@@ -66,11 +73,11 @@ export const Buttons = props => {
   return (
     <React.Fragment>
       <Grid container direction='column' justify='flex'>
-        <Grid container direction='row' justify='center'>
+        <Grid container direction='row' justify='flex-end'>
           <Link onClick={() => props.setTab(1)}>
             <Typography
               variant='outlined'
-              className={classes.typography}
+              className={classes.preview}
               onClick={() => console.log('ON CLICK!')}
             >
               Preview <VisibilityIcon />
