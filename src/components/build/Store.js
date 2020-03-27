@@ -3,7 +3,7 @@ import { Build } from '../build';
 import { createMuiTheme } from '@material-ui/core/';
 import { ThemeProvider } from '@material-ui/styles';
 
-export const Store = () => {
+export const Store = (props) => {
 	//General
 	const [ color, setColor ] = useState('#3f51b5');
 	const [ secondaryColor, setSecondaryColor ] = useState('#f50057');
@@ -331,6 +331,7 @@ export const Store = () => {
 	return (
 		<React.Fragment>
 			<Build
+				user={props.user}
 				//General
 				color={color}
 				setColor={setColor}

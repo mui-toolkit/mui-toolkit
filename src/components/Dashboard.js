@@ -140,30 +140,49 @@ export default function Dashboard({ user }) {
         .onSnapshot(doc => {
           // .get()
           // .then(doc => {
-          // console.log("FOUND USER", doc.data());
+          console.log('FOUND USER', doc.data());
 
           setFoundUser(doc.data());
-          let foundUser = doc.data();
-          if (foundUser.themes) {
-            Promise.all(
-              foundUser.themes.map(theme => {
-                db.collection('CustomizedThemes')
-                  .doc(`${theme.id}`)
-                  // .get()
-                  // .then(theme => {
-                  .onSnapshot(theme => {
-                    // console.log("themes", theme.data());
-                    userThemes.push(theme.data());
-                    // console.log("response -> userThemes", userThemes);
-                    setThemes([...userThemes]);
-                  });
-              }),
-            );
-          }
         });
+      // let foundUser = doc.data();
+      // if (foundUser.themes) {
+      //     Promise.all(
+      //       foundUser.themes.map(theme => {
+      //         db.collection("CustomizedThemes")
+      //           .doc(`${theme.id}`)
+      //           // .get()
+      //           // .then(theme => {
+      //           .onSnapshot(theme => {
+      //             // console.log("themes", theme.data());
+      //             userThemes.push(theme.data());
+      //             // console.log("response -> userThemes", userThemes);
+      //             setThemes([...userThemes]);
+      //           });
+      //       })
+      //     );
+      //   // }
+      // });
       // .catch(err => {
       //   console.log("Error getting document", err);
       // });
+      await db
+        .collection('CustomizedThemes')
+        .where('userId', '==', `${user.uid}`)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log('No matching documents.');
+            return;
+          }
+          snapshot.forEach(theme => {
+            console.log(theme.id, '=>', theme.data());
+            userThemes.push(theme.data());
+            setThemes([...userThemes]);
+          });
+        })
+        .catch(err => {
+          console.log('Error getting documents', err);
+        });
     };
     response();
   }, []);
