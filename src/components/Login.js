@@ -44,7 +44,15 @@ const useStyles = makeStyles(theme => ({
   errorText: {
     color: '#f50057',
     marginBottom: 5,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 14
+  },
+  paper: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 'auto',
+    width: 'fit-content',
+    backgroundColor: '#fff'
   }
 }));
 
@@ -55,6 +63,16 @@ export function Login(props) {
   const [openSnack, setOpenSnack] = useState(false);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(null);
+  const [fullWidth, setFullWidth] = React.useState(true);
+  const [maxWidth, setMaxWidth] = React.useState('xs');
+
+  const handleMaxWidthChange = event => {
+    setMaxWidth(event.target.value);
+  };
+
+  const handleFullWidthChange = event => {
+    setFullWidth(event.target.checked);
+  };
 
   const handleClick = () => {
     setOpenSnack(true);
@@ -118,30 +136,19 @@ export function Login(props) {
         onClose={handleCancel}
         aria-labelledby="form-dialog-title"
         style={{ backgroundColor: '#fff' }}
+        fullWidth={fullWidth}
+        maxWidth={maxWidth}
       >
-        <Paper style={{ backgroundColor: '#fff' }}>
-          {/* <Snackbar
-            anchorOrigin={{
-              vertical: 'center',
-              horizontal: 'center'
-            }}
-            open={openSnack}
-            autoHideDuration={4000}
-            onClose={handleClose}
-            message="Invalid Username or Password."
-            action={
-              <React.Fragment>
-                <IconButton
-                  size="small"
-                  aria-label="close"
-                  color="inherit"
-                  onClick={handleClose}
-                >
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              </React.Fragment>
-            }
-          /> */}
+        <Paper
+        // className={classes.paper}
+        // style={{
+        //   display: 'flex',
+        //   flexDirection: 'column',
+        //   margin: 'auto',
+        //   width: 'fit-content',
+        //   backgroundColor: '#fff'
+        // }}
+        >
           <Typography
             id="form-dialog-title"
             align="center"
@@ -155,7 +162,7 @@ export function Login(props) {
           >
             LOG IN
           </Typography>
-          <DialogContent>
+          <DialogContent className={classes.paper}>
             <TextField
               label="Email"
               id="email"
@@ -174,7 +181,7 @@ export function Login(props) {
               }
             />
           </DialogContent>
-          <DialogContent>
+          <DialogContent className={classes.paper}>
             <TextField
               type="password"
               label="Password"
