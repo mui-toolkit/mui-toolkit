@@ -125,17 +125,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function WebPreview(props) {
-  const { themeId } = useParams();
-  console.log("WebPreview -> themeId", themeId);
+export default function WebPreview({ selectedThemeId }) {
+  console.log("WebPreview -> selectedThemeId", selectedThemeId);
+  // const { themeId } = useParams();
+  // console.log("WebPreview -> themeId", themeId);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [previewTheme, setPreviewTheme] = useState({});
+
   useEffect(() => {
     const response = async () => {
       await db
         .collection("CustomizedThemes")
-        .doc(`${themeId}`)
+        .doc(`${selectedThemeId}`)
         .onSnapshot(doc => {
           console.log("CHOSEN PREVIEW THEME", doc.data());
           setPreviewTheme(doc.data());

@@ -79,12 +79,12 @@ function App() {
             />
             <Route exact path="/themestable" component={ThemesTable} />
             <Route exact path="/userprofile" component={UserProfile} />
-
-            <Route
+            <Route exact path="/webpreview" component={WebPreview} />
+            {/* <Route
               render={props => <WebPreview {...props} />}
               exact
               path="/webpreview/:themeId"
-            />
+            /> */}
           </Switch>
         )}
       </Switch>

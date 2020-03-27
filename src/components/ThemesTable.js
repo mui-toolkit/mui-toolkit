@@ -25,7 +25,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import EditIcon from "@material-ui/icons/Edit";
 import { db } from "../config/firebase";
 import firebase from "firebase";
-
+import Zoom from "@material-ui/core/Zoom";
+import Grid from "@material-ui/core/Grid";
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -160,7 +161,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemesTable({ themes }) {
+export default function ThemesTable({ themes, selectedIndex }) {
   console.log("ThemesTable -> themes", themes);
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
@@ -175,12 +176,13 @@ export default function ThemesTable({ themes }) {
   }));
 
   const classes = useStyles();
+  const [selectedThemeId, setSelectedThemeId] = useState(`${rows[0].themeId}`);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const [pchecked, setpChecked] = useState(false);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -199,8 +201,13 @@ export default function ThemesTable({ themes }) {
   const handleChangeDense = event => {
     setDense(event.target.checked);
   };
-
-  
+  const handlepChange = () => {
+    setpChecked(prev => !prev);
+  };
+  const handlePreview = themeId => {
+    setSelectedThemeId(themeId);
+    handlepChange();
+  };
   const handleDelete = async (themeId, userId, themeName) => {
     // delete collection
     await db
@@ -288,9 +295,10 @@ export default function ThemesTable({ themes }) {
                       <Tooltip title="Preview Theme">
                         <IconButton
                           aria-label="preview"
-                          component={Link}
-                          to={`/webpreview/${row.themeId}`}
-                          target="_blank"
+                          // component={Link}
+                          // to={`/webpreview/${row.themeId}`}
+                          // target="_blank"
+                          onClick={() => handlePreview(row.themeId)}
                         >
                           <VisibilityIcon />
                         </IconButton>
@@ -298,7 +306,6 @@ export default function ThemesTable({ themes }) {
                       <Tooltip title="Edit Theme">
                         <IconButton
                           aria-label="edit"
-                          // key={row.themeId}
                           component={Link}
                           to={`/design/${row.themeId}/`}
                         >
@@ -341,6 +348,28 @@ export default function ThemesTable({ themes }) {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
+      {/* PREVIEW */}
+      {selectedIndex === 2 && (
+        <Grid item xs={12} md={4} lg={3}>
+          <FormControlLabel
+            control={<Switch pchecked={pchecked} onChange={handlepChange} />}
+            label="Preview"
+          />
+
+          <Zoom
+            in={pchecked}
+            style={{ transitionDelay: pchecked ? "500ms" : "0ms" }}
+          >
+            <Paper elevation={4} className={classes.paper}>
+              {/* <svg className={classes.svg}> */}
+              <div>SOMETHING</div>
+              {/* // hook listener for variable change */}
+              <WebPreview selectedThemeId={selectedThemeId} />
+              {/* </svg> */}
+            </Paper>
+          </Zoom>
+        </Grid>
+      )}
     </div>
   );
 }
