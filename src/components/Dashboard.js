@@ -195,7 +195,7 @@ export default function WebPreview({ user }) {
 
   console.log("UsersThemes -> foundUser", foundUser, foundUser.themes);
   console.log("USERS SAVED THEMES", themes);
-
+  const stars = themes.reduce((acc, theme) => theme.starsCount + acc, 0);
   const classes = useStyles();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -250,7 +250,7 @@ export default function WebPreview({ user }) {
           </Button>
           <IconButton color="black">
             {/* make star number this dynamic */}
-            <Badge badgeContent={8} color="secondary">
+            <Badge badgeContent={stars} color="secondary">
               <StarIcon />
             </Badge>
           </IconButton>
@@ -336,7 +336,9 @@ export default function WebPreview({ user }) {
                 {selectedIndex === 1 && (
                   <UserProfile user={foundUser} uid={user.uid} />
                 )}
-                {selectedIndex === 2 && <ThemesTable setThemes={setThemes} themes={themes} />}
+                {selectedIndex === 2 && (
+                  <ThemesTable setThemes={setThemes} themes={themes} />
+                )}
                 {selectedIndex === 3 && (
                   <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
                 )}
