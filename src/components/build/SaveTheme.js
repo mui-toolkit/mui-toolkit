@@ -34,27 +34,36 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const SaveTheme = ({ downloadTheme, user }) => {
+  console.log("SaveTheme -> user", user);
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
   const [themeName, setThemeName] = useState("untitled");
   const [message, setMessage] = useState("");
   let history = useHistory();
 
   const handleClickOpen = () => {
     // not loggedin should send user to signup
-    if (!user.uid) {
-      setMessage("you need to signup for an account in order to save");
-      // alert("you need to signup for an account in order to save");
+    if (!user.loggedIn) {
+      setMessage(
+        "You need to signup for an account in order to save. It's free!"
+      );
+      setSnackOpen(true);
       setTimeout(function() {
         history.push("/signup");
       }, 4000);
+    } else {
+      setOpen(true);
     }
-    setOpen(true);
   };
 
   const handleCancel = e => {
     setOpen(false);
+    setSnackOpen(false);
+  };
+  const handleSnackCancel = e => {
+    setSnackOpen(false);
   };
 
   const duplicateNameChecker = async themeName => {
@@ -76,12 +85,13 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     //test for duplicate names
     const duplicateTest = await duplicateNameChecker(themeName);
     if (duplicateTest) {
-      alert("That name is a popular name. Please choose another name!");
-      // setMessage("That name is a popular name. Please choose another name!");
+      setMessage("That name is a popular name. Please choose another name!");
+      setOpen(true);
+      setSnackOpen(true);
     } else {
       sendPalette(themeName);
-      alert("New Customized Theme Saved");
-      // setMessage("New Customized Theme Saved");
+      setMessage("New Customized Theme Saved");
+      setSnackOpen(true);
     }
   };
 
@@ -130,7 +140,13 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       >
         Save <SaveIcon style={{ marginLeft: "5px" }} />
       </Button>
-      <Snackbar open={open} onClose={handleCancel} message={message} />
+      <Snackbar
+        autoHideDuration={4000}
+        open={snackOpen}
+        onClose={handleSnackCancel}
+        message={message}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      />
       <Dialog
         open={open}
         onClose={handleCancel}
