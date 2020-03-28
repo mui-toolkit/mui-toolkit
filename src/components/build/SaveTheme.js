@@ -9,7 +9,10 @@ import {
   DialogContentText,
   DialogTitle,
   Paper,
-  Typography
+  Typography,
+  Fade,
+  Grow,
+  Snackbar
 } from "@material-ui/core/";
 import SaveIcon from "@material-ui/icons/Save";
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,15 +38,19 @@ export const SaveTheme = ({ downloadTheme, user }) => {
 
   const [open, setOpen] = useState(false);
   const [themeName, setThemeName] = useState("untitled");
+  const [message, setMessage] = useState("");
   let history = useHistory();
 
   const handleClickOpen = () => {
-    setOpen(true);
     // not loggedin should send user to signup
     if (!user.uid) {
-      alert("you need to signup for an account in order to save");
-      history.push("/signup");
+      setMessage("you need to signup for an account in order to save");
+      // alert("you need to signup for an account in order to save");
+      setTimeout(function() {
+        history.push("/signup");
+      }, 4000);
     }
+    setOpen(true);
   };
 
   const handleCancel = e => {
@@ -70,9 +77,11 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     const duplicateTest = await duplicateNameChecker(themeName);
     if (duplicateTest) {
       alert("That name is a popular name. Please choose another name!");
+      // setMessage("That name is a popular name. Please choose another name!");
     } else {
       sendPalette(themeName);
       alert("New Customized Theme Saved");
+      // setMessage("New Customized Theme Saved");
     }
   };
 
@@ -121,6 +130,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       >
         Save <SaveIcon style={{ marginLeft: "5px" }} />
       </Button>
+      <Snackbar open={open} onClose={handleCancel} message={message} />
       <Dialog
         open={open}
         onClose={handleCancel}
