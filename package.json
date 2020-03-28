@@ -26,6 +26,7 @@
 		"react-router-dom": "^5.1.2",
 		"react-scripts": "3.4.0",
 		"serve": "^11.3.0",
+		"travis-ci": "^2.2.0",
 		"ui": "^0.2.4",
 		"xmlhttprequest": "^1.8.0"
 	},
