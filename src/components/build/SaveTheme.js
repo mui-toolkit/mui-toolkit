@@ -49,6 +49,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   const handleCancel = e => {
     setOpen(false);
   };
+
   const duplicateNameChecker = async themeName => {
     const checkDuplicate = await db
       .collection("Users")
@@ -61,28 +62,14 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     console.log("SaveTheme -> checkDuplicate", checkDuplicate);
     return checkDuplicate;
   };
-  const handleSave = e => {
+
+  const handleSave = async e => {
     setOpen(false);
 
     //test for duplicate names
-    // const checkDuplicate = await db
-    //   .collection("Users")
-    //   .where("themes", "array-contains", `${themeName}`)
-    //   .get()
-    //   .then(querySnapshot => {
-    //     console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
-    //     return !querySnapshot.empty;
-    //   });
-    // if (checkDuplicate) {
-    //   alert("That name is a popular name. Please choose another name!");
-    // } else {
-    //   sendPalette(themeName);
-    //   alert("New Customized Theme Saved");
-    // }
-    if (duplicateNameChecker(themeName)) {
-      alert(
-        "That name is already in use in your saved Themes. Please choose another name!"
-      );
+    const duplicateTest = await duplicateNameChecker(themeName);
+    if (duplicateTest) {
+      alert("That name is a popular name. Please choose another name!");
     } else {
       sendPalette(themeName);
       alert("New Customized Theme Saved");
