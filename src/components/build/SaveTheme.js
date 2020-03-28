@@ -14,6 +14,7 @@ import {
 import SaveIcon from "@material-ui/icons/Save";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -34,19 +35,21 @@ export const SaveTheme = ({ downloadTheme, user }) => {
 
   const [open, setOpen] = useState(false);
   const [themeName, setThemeName] = useState("untitled");
+  let history = useHistory();
 
   const handleClickOpen = () => {
     setOpen(true);
+    // not loggedin should send user to signup
+    if (!user.uid) {
+      alert("you need to signup for an account in order to save");
+      history.push("/signup");
+    }
   };
 
   const handleCancel = e => {
     setOpen(false);
   };
-  const handleSave = async e => {
-    setOpen(false);
-    // not loggedin should send user to signup
-
-    //test for duplicate names
+  const duplicateNameChecker = async themeName => {
     const checkDuplicate = await db
       .collection("Users")
       .where("themes", "array-contains", `${themeName}`)
@@ -55,33 +58,36 @@ export const SaveTheme = ({ downloadTheme, user }) => {
         console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
         return !querySnapshot.empty;
       });
-    if (checkDuplicate) {
-      alert("That name is a popular name. Please choose another name!");
-    } else {
-      sendPalette(themeName);
-      alert("New Customized Theme Saved");
-    }
-    // if (duplicateNameChecker(themeName)) {
-    //   alert(
-    //     "That name is already in use in your saved Themes. Please choose another name!"
-    //   );
+    console.log("SaveTheme -> checkDuplicate", checkDuplicate);
+    return checkDuplicate;
+  };
+  const handleSave = e => {
+    setOpen(false);
+
+    //test for duplicate names
+    // const checkDuplicate = await db
+    //   .collection("Users")
+    //   .where("themes", "array-contains", `${themeName}`)
+    //   .get()
+    //   .then(querySnapshot => {
+    //     console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
+    //     return !querySnapshot.empty;
+    //   });
+    // if (checkDuplicate) {
+    //   alert("That name is a popular name. Please choose another name!");
     // } else {
     //   sendPalette(themeName);
     //   alert("New Customized Theme Saved");
     // }
+    if (duplicateNameChecker(themeName)) {
+      alert(
+        "That name is already in use in your saved Themes. Please choose another name!"
+      );
+    } else {
+      sendPalette(themeName);
+      alert("New Customized Theme Saved");
+    }
   };
-  // const duplicateNameChecker = async themeName => {
-  //   const checkDuplicate = await db
-  //     .collection("Users")
-  //     .where("themes", "array-contains", `${themeName}`)
-  //     .get()
-  //     .then(querySnapshot => {
-  //       console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
-  //       return !querySnapshot.empty;
-  //     });
-  //   console.log("SaveTheme -> checkDuplicate", checkDuplicate);
-  //   return checkDuplicate;
-  // };
 
   const addThemeToUser = async (themeName, userId) => {
     await db
@@ -93,21 +99,6 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       .then(() => {
         console.log("updated user with reference to theme");
       });
-
-    // const themeNameUserRef = db
-    //   .collection("Users")
-    //   .doc(`${userId}`)
-    //   .collection("CustomizedThemes");
-
-    // themeNameUserRef
-    //   .doc(`${themeName}`)
-    //   .set({})
-    //   .then(function() {
-    //     console.log("Theme Added ");
-    //   })
-    //   .catch(function(error) {
-    //     console.error("Error adding theme: ", error);
-    //   });
   };
 
   const sendPalette = async themeName => {
