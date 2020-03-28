@@ -217,6 +217,7 @@ export const Store = props => {
   };
 
   let downloadTheme = {
+    shadows: shadow,
     palette: {
       primary: { main: `${color}` },
       secondary: {
