@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
+
 import { SaveTheme, BuildNav, ColorGenerator } from "../build";
 import { PreviewAppBar, PreviewTabs } from "../preview";
 import Download from "../Download";
 
 import { Grid, Paper } from "@material-ui/core/";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
-import { db } from "../../config/firebase";
 
 const useStyles = makeStyles(theme => ({
   preview: {
@@ -28,11 +27,12 @@ const useStyles = makeStyles(theme => ({
 
 export const Build = props => {
   const classes = useStyles();
-  const { themeId } = useParams();
-  console.log("themeId Name: ", themeId);
+
+  console.log("themeId Name PASSED FROM STORE ", props.themeId);
 
   const {
     user,
+    themeId,
     color,
     secondaryColor,
     defaultColor,
@@ -114,32 +114,6 @@ export const Build = props => {
     shadowFalse
   } = props;
 
-  // Will render when a user selects to view a saved theme
-  useEffect(() => {
-    if (themeId) {
-      const response = async () => {
-        await db
-          .collection("CustomizedThemes")
-          .doc(`${themeId}`)
-          .get()
-          .then(doc => {
-            console.log("saved Theme doc", doc.data());
-            if (doc.data().palette.primary.main)
-              setColor(doc.data().palette.primary.main);
-            if (doc.data().palette.secondary.main)
-              setSecondaryColor(doc.data().palette.secondary.main);
-            if (doc.data().palette.background.default)
-              setDefaultColor(doc.data().palette.background.default);
-            if (doc.data().palette.background.paper)
-              setPaperColor(doc.data().palette.background.paper);
-          })
-          .catch(err => {
-            console.log("Error getting documents", err);
-          });
-      };
-      response();
-    }
-  }, []);
 
   return (
     <section className={classes.root}>

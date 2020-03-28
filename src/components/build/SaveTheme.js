@@ -45,7 +45,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
 
   const handleClickOpen = () => {
     // not loggedin should send user to signup
-    if (!user.loggedIn) {
+    if (!user.uid) {
       setMessage(
         "You need to signup for an account in order to save. It's free!"
       );
