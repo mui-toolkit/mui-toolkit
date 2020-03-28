@@ -65,8 +65,14 @@ function App() {
           exact
           path="/design/:themeId"
         />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
+
+        {!user.loggedIn && (
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+          </Switch>
+        )}
+
         <Route exact path="/auth" component={Auth} />
 
         {user.loggedIn && (
