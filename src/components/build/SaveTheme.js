@@ -42,12 +42,47 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   const handleCancel = e => {
     setOpen(false);
   };
-  const handleSave = e => {
+  const handleSave = async e => {
     setOpen(false);
     // not loggedin should send user to signup
-    sendPalette(themeName);
-    alert("New Customized Theme Saved");
+
+    //test for duplicate names
+    const checkDuplicate = await db
+      .collection("Users")
+      .where("themes", "array-contains", `${themeName}`)
+      .get()
+      .then(querySnapshot => {
+        console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
+        return !querySnapshot.empty;
+      });
+    if (checkDuplicate) {
+      alert("That name is a popular name. Please choose another name!");
+    } else {
+      sendPalette(themeName);
+      alert("New Customized Theme Saved");
+    }
+    // if (duplicateNameChecker(themeName)) {
+    //   alert(
+    //     "That name is already in use in your saved Themes. Please choose another name!"
+    //   );
+    // } else {
+    //   sendPalette(themeName);
+    //   alert("New Customized Theme Saved");
+    // }
   };
+  // const duplicateNameChecker = async themeName => {
+  //   const checkDuplicate = await db
+  //     .collection("Users")
+  //     .where("themes", "array-contains", `${themeName}`)
+  //     .get()
+  //     .then(querySnapshot => {
+  //       console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
+  //       return !querySnapshot.empty;
+  //     });
+  //   console.log("SaveTheme -> checkDuplicate", checkDuplicate);
+  //   return checkDuplicate;
+  // };
+
   const addThemeToUser = async (themeName, userId) => {
     await db
       .collection("Users")
@@ -86,12 +121,11 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       .doc()
       .set({ ...downloadTheme })
       .then(function() {
-        console.log("Added Theme to collection");
+        console.log(`Added Theme ${themeName} to collection`);
       })
       .catch(function(error) {
         console.log("Error creating a new theme: ", error);
       });
-    console.log("Test -> newTheme", newTheme);
     addThemeToUser(themeName, user.uid);
   };
   return (
@@ -142,7 +176,6 @@ export const SaveTheme = ({ downloadTheme, user }) => {
               autoFocus
               margin="dense"
               id="themeName"
-              label="themeName"
               type="text"
               value={themeName}
               onChange={e => setThemeName(e.target.value)}
