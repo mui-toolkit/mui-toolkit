@@ -66,6 +66,13 @@ function App() {
           path="/design/:themeId"
         />
 
+        <Route exact path="/auth" component={Auth} />
+        <Route
+          render={props => <WebPreview {...props} />}
+          exact
+          path="/webpreview/:themeId"
+        />
+
         {!user.loggedIn && (
           <Switch>
             <Route exact path="/login" component={Login} />
@@ -85,12 +92,6 @@ function App() {
             />
             <Route exact path="/themestable" component={ThemesTable} />
             <Route exact path="/userprofile" component={UserProfile} />
-
-            <Route
-              render={props => <WebPreview {...props} />}
-              exact
-              path="/webpreview/:themeId"
-            />
           </Switch>
         )}
       </Switch>
