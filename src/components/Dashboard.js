@@ -37,10 +37,9 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    // backgroundColor: theme.palette.background.paper
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: 24,
   },
   toolbarIcon: {
     display: 'flex',
@@ -109,6 +108,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
     flexDirection: 'column',
     maxHeight: '80vh',
+    width: '80vw',
   },
   fixedHeight: {
     maxHeight: '80vh',
@@ -204,7 +204,7 @@ export default function WebPreview({ user }) {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const fixedHeightPaper = clsx(classes.fixedHeight);
 
   return (
     <div className={classes.root}>
@@ -282,7 +282,7 @@ export default function WebPreview({ user }) {
             <ListItemIcon>
               <FaceIcon />
             </ListItemIcon>
-            <ListItemText primary='User Profile' />
+            <ListItemText primary='Profile' />
           </ListItem>
           <ListItem
             button
@@ -292,7 +292,7 @@ export default function WebPreview({ user }) {
             <ListItemIcon>
               <PaletteIcon />
             </ListItemIcon>
-            <ListItemText primary='My Saved Themes' />
+            <ListItemText primary='Saved Themes' />
           </ListItem>
           <ListItem
             button
@@ -302,13 +302,13 @@ export default function WebPreview({ user }) {
             <ListItemIcon>
               <GroupAddIcon />
             </ListItemIcon>
-            <ListItemText primary='Bookmarked Users' />
+            <ListItemText primary='Bookmarked' />
           </ListItem>
           <ListItem button component={Link} to='/design'>
             <ListItemIcon>
               <PostAddIcon />
             </ListItemIcon>
-            <ListItemText primary='Add New Project' />
+            <ListItemText primary='Add Theme' />
           </ListItem>
           <ListItem button component={Link} to='/'>
             <ListItemIcon>
@@ -324,27 +324,17 @@ export default function WebPreview({ user }) {
         <div className={classes.appBarSpacer} />
         <Container className={classes.container}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                {selectedIndex === 0 && <div>SOME COOL USER DATA COMING</div>}
-                {selectedIndex === 1 && (
-                  <UserProfile user={foundUser} uid={user.uid} />
-                )}
-                {selectedIndex === 2 && <ThemesTable themes={themes} />}
-                {selectedIndex === 3 && (
-                  <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
-                )}
-              </Paper>
+            <Grid item xs={12} md={12} lg={12}>
+              {selectedIndex === 0 && <div>SOME COOL USER DATA COMING</div>}
+              {selectedIndex === 1 && (
+                <UserProfile user={foundUser} uid={user.uid} />
+              )}
+              {selectedIndex === 2 && <ThemesTable themes={themes} />}
+              {selectedIndex === 3 && (
+                <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
+              )}
             </Grid>
             {/* PREVIEW */}
-            {selectedIndex === 2 && (
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper className={fixedHeightPaper}>
-                  {/* <PreviewComponent theme={theme}????/> */}
-                  PREVIEW PLACEHOLDER (MODAL? GROW, ZOOM, POPOVER transitions??)
-                </Paper>
-              </Grid>
-            )}
           </Grid>
         </Container>
       </main>
