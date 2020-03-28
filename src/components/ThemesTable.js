@@ -160,7 +160,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemesTable({ themes }) {
+export default function ThemesTable({ setThemes, themes }) {
   console.log("ThemesTable -> themes", themes);
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
@@ -200,7 +200,6 @@ export default function ThemesTable({ themes }) {
     setDense(event.target.checked);
   };
 
-  
   const handleDelete = async (themeId, userId, themeName) => {
     // delete collection
     await db
@@ -209,6 +208,11 @@ export default function ThemesTable({ themes }) {
       .delete()
       .then(function() {
         console.log("Deleted Saved Theme from collection");
+      })
+      .then(response => {
+        setThemes(prevThemes =>
+          prevThemes.filter(theme => theme.themeId !== themeId)
+        );
       })
       .catch(function(error) {
         console.log("Error deleting theme: ", error);
@@ -223,7 +227,6 @@ export default function ThemesTable({ themes }) {
       .then(() => {
         console.log("deleted reference to this theme");
       });
-    alert("Theme Deleted");
   };
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
