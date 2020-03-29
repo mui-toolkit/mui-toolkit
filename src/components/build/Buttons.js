@@ -88,7 +88,7 @@ export const Buttons = props => {
 
   return (
     <React.Fragment>
-      <Grid container direction='column' justify='flex'>
+      <Grid container direction='column'>
         <Grid
           container
           direction='row'
