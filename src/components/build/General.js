@@ -48,7 +48,7 @@ export const General = props => {
 
   return (
     <React.Fragment>
-      <Grid container direction='column' justify='flex'>
+      <Grid container direction='column'>
         <Grid
           container
           direction='row'
@@ -130,7 +130,7 @@ export const General = props => {
           <Typography className={classes.typography}>Shadows</Typography>
         </Grid>
         <Link onClick={() => setTab(0)}>
-          <Typography variant='outlined' className={classes.typography}>
+          <Typography className={classes.typography}>
             Preview <VisibilityIcon />
           </Typography>
         </Link>
