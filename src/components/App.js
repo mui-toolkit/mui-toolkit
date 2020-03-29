@@ -13,6 +13,7 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import { Store } from './build/';
 import WebPreview from '../WebPreview/WebPreview';
+import Explore from './Explore';
 
 firebase.auth().onAuthStateChanged(user => {
   console.log('user', user);
@@ -73,6 +74,7 @@ function App() {
           exact
           path='/webpreview/:themeId'
         />
+        <Route exact path='/explore' component={Explore} />
 
         {user.loggedIn && (
           <Switch>
