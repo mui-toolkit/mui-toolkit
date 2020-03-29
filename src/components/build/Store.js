@@ -324,6 +324,8 @@ export const Store = props => {
           });
       };
       response();
+    } else {
+      setLoading(false);
     }
   }, []);
 

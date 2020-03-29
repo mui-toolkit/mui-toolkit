@@ -63,7 +63,6 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -162,111 +161,116 @@ export default function WebPreview(props) {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
-    <ThemeProvider theme={webPreviewTheme}>
+    <React.Fragment>
       <Backdrop className={classes.backdrop} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position='absolute'
-          className={clsx(classes.appBar, open && classes.appBarShift)}
-        >
-          <Toolbar className={classes.toolbar}>
-            <IconButton
-              edge='start'
-              aria-label='open drawer'
-              onClick={handleDrawerOpen}
-              className={clsx(
-                classes.menuButton,
-                open && classes.menuButtonHidden,
-              )}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component='h1'
-              variant='h5'
-              noWrap
-              className={classes.title}
-            >
-              This is A Web Live Web Preview of Your Theme
-            </Typography>
-            <IconButton color='inherit'>
-              <Badge badgeContent={4} color='error'>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          variant='permanent'
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={open}
-        >
-          <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
-          <List>{secondaryListItems}</List>
-        </Drawer>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth='lg' className={classes.container}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper>
-                  <Chart />
-                  <Grid item style={{ padding: '5px' }}>
-                    <Button variant='contained' color='primary'>
-                      Primary Color Button
-                    </Button>
-                  </Grid>
-                  <Grid item style={{ padding: '5px' }}>
-                    <Button variant='contained' color='secondary'>
-                      Secondary Color Button
-                    </Button>
-                  </Grid>
-                  <Alert severity='error'>
-                    This is an error alert — check it out!
-                  </Alert>
-                  <Alert severity='warning'>
-                    This is a warning alert — check it out!
-                  </Alert>
-                  <Alert severity='info'>
-                    This is an info alert — check it out!
-                  </Alert>
-                  <Alert severity='success'>
-                    This is a success alert — check it out!
-                  </Alert>
-                </Paper>
+      <ThemeProvider theme={webPreviewTheme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar
+            position='absolute'
+            className={clsx(classes.appBar, open && classes.appBarShift)}
+          >
+            <Toolbar className={classes.toolbar}>
+              <IconButton
+                edge='start'
+                aria-label='open drawer'
+                onClick={handleDrawerOpen}
+                className={clsx(
+                  classes.menuButton,
+                  open && classes.menuButtonHidden,
+                )}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                component='h1'
+                variant='h5'
+                noWrap
+                className={classes.title}
+              >
+                This is A Web Live Web Preview of Your Theme
+              </Typography>
+              <IconButton color='inherit'>
+                <Badge badgeContent={4} color='error'>
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            variant='permanent'
+            classes={{
+              paper: clsx(
+                classes.drawerPaper,
+                !open && classes.drawerPaperClose,
+              ),
+            }}
+            open={open}
+          >
+            <div className={classes.toolbarIcon}>
+              <IconButton onClick={handleDrawerClose}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </div>
+            <Divider />
+            <List>{mainListItems}</List>
+            <Divider />
+            <List>{secondaryListItems}</List>
+          </Drawer>
+          <main className={classes.content}>
+            <div className={classes.appBarSpacer} />
+            <Container maxWidth='lg' className={classes.container}>
+              <Grid container spacing={3}>
+                {/* Chart */}
+                <Grid item xs={12} md={8} lg={9}>
+                  <Paper>
+                    <Chart />
+                    <Grid item style={{ padding: '5px' }}>
+                      <Button variant='contained' color='primary'>
+                        Primary Color Button
+                      </Button>
+                    </Grid>
+                    <Grid item style={{ padding: '5px' }}>
+                      <Button variant='contained' color='secondary'>
+                        Secondary Color Button
+                      </Button>
+                    </Grid>
+                    <Alert severity='error'>
+                      This is an error alert — check it out!
+                    </Alert>
+                    <Alert severity='warning'>
+                      This is a warning alert — check it out!
+                    </Alert>
+                    <Alert severity='info'>
+                      This is an info alert — check it out!
+                    </Alert>
+                    <Alert severity='success'>
+                      This is a success alert — check it out!
+                    </Alert>
+                  </Paper>
+                </Grid>
+                {/* Recent Deposits */}
+                <Grid item xs={12} md={4} lg={3}>
+                  <Paper className={fixedHeightPaper}>
+                    <Deposits />
+                  </Paper>
+                </Grid>
+                {/* Recent Orders */}
+                <Grid item xs={12}>
+                  <Paper className={classes.paper}>
+                    <Orders />
+                  </Paper>
+                </Grid>
               </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper className={fixedHeightPaper}>
-                  <Deposits />
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                  <Orders />
-                </Paper>
-              </Grid>
-            </Grid>
-            <Box pt={4}>
-              <Copyright />
-            </Box>
-          </Container>
-        </main>
-      </div>
-    </ThemeProvider>
+              <Box pt={4}>
+                <Copyright />
+              </Box>
+            </Container>
+          </main>
+        </div>
+      </ThemeProvider>
+    </React.Fragment>
   );
 }
