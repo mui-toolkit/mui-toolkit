@@ -153,13 +153,34 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     // });
   };
 
-  const updateUsersTheme = async themeName => {};
+  const updateUsersTheme = async (themeName, userId) => {
+    //delete from users array
+    // await db
+    //   .collection("Users")
+    //   .doc(`${userId}`)
+    //   .update({
+    //     themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
+    //   })
+    //   .then(() => {
+    //     console.log("deleted reference to this theme");
+    //   });
+    // // add updated to users array
+    // await db
+    //   .collection("Users")
+    //   .doc(`${userId}`)
+    //   .update({
+    //     themes: firebase.firestore.FieldValue.arrayUnion(`${themeName}`)
+    //   })
+    //   .then(() => {
+    //     console.log("updated user with reference to theme");
+    //   });
+  };
 
-  const editAndSavePalette = async themeName => {
+  const editAndSavePalette = async (themeName, userId) => {
     // allowing them to change the themeName?  more logic headaches
     updateTheme(themeName); // update theme
-    updateUsersTheme(themeName); // update the users theme array with that specific document
-    console.log("thinking.........");
+    updateUsersTheme(themeName, userId); // update the users theme array with that specific document
+    console.log("updating.........");
   };
   return (
     <div>
