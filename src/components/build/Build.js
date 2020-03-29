@@ -73,24 +73,21 @@ export const Build = props => {
     changeButtonRipple,
     buttonElevation,
     changeButtonElevation,
-    buttonHoverColor,
-    changeButtonHoverColor,
     buttonHoverOpacity,
-    changeButtonHoverOpacity,
     buttonFontWeight,
-    changeButtonFontWeight,
     buttonFontSize,
-    changeButtonFontSize,
     buttonTextTransform,
     changeButtonTextTransform,
     open,
     setOpen,
     buttonHeight,
-    changeButtonHeight,
     buttonPadding,
-    changeButtonPadding,
     buttonBorderRadius,
-    changeButtonBorderRadius,
+    setButtonFontWeight,
+    setButtonFontSize,
+    setButtonHeight,
+    setButtonBorderRadius,
+    setButtonPadding,
     //Alerts
     errorColor,
     warningColor,
@@ -155,24 +152,21 @@ export const Build = props => {
               changeButtonRipple={changeButtonRipple}
               buttonElevation={buttonElevation}
               changeButtonElevation={changeButtonElevation}
-              buttonHoverColor={buttonHoverColor}
-              changeButtonHoverColor={changeButtonHoverColor}
               buttonHoverOpacity={buttonHoverOpacity}
-              changeButtonHoverOpacity={changeButtonHoverOpacity}
               buttonFontWeight={buttonFontWeight}
-              changeButtonFontWeight={changeButtonFontWeight}
               buttonFontSize={buttonFontSize}
-              changeButtonFontSize={changeButtonFontSize}
               buttonTextTransform={buttonTextTransform}
               changeButtonTextTransform={changeButtonTextTransform}
               open={open}
               setOpen={setOpen}
               buttonHeight={buttonHeight}
-              changeButtonHeight={changeButtonHeight}
               buttonPadding={buttonPadding}
-              changeButtonPadding={changeButtonPadding}
               buttonBorderRadius={buttonBorderRadius}
-              changeButtonBorderRadius={changeButtonBorderRadius}
+              setButtonFontWeight={setButtonFontWeight}
+              setButtonFontSize={setButtonFontSize}
+              setButtonHeight={setButtonHeight}
+              setButtonBorderRadius={setButtonBorderRadius}
+              setButtonPadding={setButtonPadding}
               //Shadow
               shadow={shadow}
               changeShadow={changeShadow}

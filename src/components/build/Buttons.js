@@ -32,23 +32,22 @@ export const Buttons = props => {
     buttonElevation,
     changeButtonElevation,
     buttonHoverOpacity,
-    // changeButtonHoverOpacity,
     buttonFontWeight,
-    changeButtonFontWeight,
     buttonFontSize,
-    changeButtonFontSize,
     buttonTextTransform,
     changeButtonTextTransform,
     open,
     setOpen,
     buttonHeight,
-    changeButtonHeight,
     buttonPadding,
-    changeButtonPadding,
     buttonBorderRadius,
-    changeButtonBorderRadius,
     setTab,
     setButtonHoverOpacity,
+    setButtonFontWeight,
+    setButtonFontSize,
+    setButtonHeight,
+    setButtonBorderRadius,
+    setButtonPadding,
   } = props;
 
   const handleClose = () => {
@@ -65,6 +64,26 @@ export const Buttons = props => {
 
   const changeButtonHoverOpacity = (e, hoverOpacity) => {
     setButtonHoverOpacity(hoverOpacity);
+  };
+
+  const changeButtonFontWeight = (e, buttonFontWeight) => {
+    setButtonFontWeight(buttonFontWeight);
+  };
+
+  const changeButtonFontSize = (e, buttonFontSize) => {
+    setButtonFontSize(buttonFontSize);
+  };
+
+  const changeButtonHeight = (e, buttonHeight) => {
+    setButtonHeight(buttonHeight);
+  };
+
+  const changeButtonBorderRadius = (e, buttonBorderRadius) => {
+    setButtonBorderRadius(buttonBorderRadius);
+  };
+
+  const changeButtonPadding = (e, buttonPadding) => {
+    setButtonPadding(buttonPadding);
   };
 
   return (
@@ -128,12 +147,12 @@ export const Buttons = props => {
           </Typography>
           {
             <Slider
-              defaultValue={buttonFontWeight}
+              value={buttonFontWeight}
               step={100}
               min={100}
               max={700}
               valueLabelDisplay='auto'
-              getAriaValueText={changeButtonFontWeight}
+              onChange={changeButtonFontWeight}
             />
           }
         </Grid>
@@ -149,12 +168,12 @@ export const Buttons = props => {
 
           {
             <Slider
-              defaultValue={buttonFontSize}
-              step={0.1}
-              min={0.1}
-              max={2}
+              value={buttonFontSize}
+              step={1}
+              min={9}
+              max={18}
               valueLabelDisplay='auto'
-              getAriaValueText={changeButtonFontSize}
+              onChange={changeButtonFontSize}
             />
           }
         </Grid>
@@ -229,12 +248,12 @@ export const Buttons = props => {
 
           {
             <Slider
-              defaultValue={buttonBorderRadius}
+              value={buttonBorderRadius}
               step={1}
               min={0}
               max={25}
               valueLabelDisplay='auto'
-              getAriaValueText={changeButtonBorderRadius}
+              onChange={changeButtonBorderRadius}
             />
           }
         </Grid>
@@ -248,12 +267,12 @@ export const Buttons = props => {
 
           {
             <Slider
-              defaultValue={buttonHeight}
+              value={buttonHeight}
               step={1}
               min={20}
               max={100}
               valueLabelDisplay='auto'
-              getAriaValueText={changeButtonHeight}
+              onChange={changeButtonHeight}
             />
           }
         </Grid>
@@ -270,12 +289,12 @@ export const Buttons = props => {
 
           {
             <Slider
-              defaultValue={buttonPadding}
+              value={buttonPadding}
               step={1}
               min={0}
               max={200}
               valueLabelDisplay='auto'
-              getAriaValueText={changeButtonPadding}
+              onChange={changeButtonPadding}
             />
           }
         </Grid>

@@ -4,15 +4,12 @@ import { Build } from '../build';
 import { createMuiTheme } from '@material-ui/core/';
 import { ThemeProvider } from '@material-ui/styles';
 import { db } from '../../config/firebase';
+import { shadowTrue, shadowFalse } from './Shadows';
 
 export const Store = props => {
   const { themeId } = useParams();
   console.log('IN THE Store -> themeId', themeId);
 
-  const [fontStyle, setFontStyle] = useState({
-    fontFamily: 'Roboto',
-    fontSize: 14,
-  });
   //General
   const [color, setColor] = useState('#3f51b5');
   const [secondaryColor, setSecondaryColor] = useState('#f50057');
@@ -31,50 +28,22 @@ export const Store = props => {
   //Buttons
   const [buttonRipple, setButtonRipple] = useState([true]);
   const [buttonElevation, setButtonElevation] = useState(true);
-  const [buttonHoverColor, setButtonHoverColor] = useState('#000000');
   const [buttonHoverOpacity, setButtonHoverOpacity] = useState(0.04);
   const [buttonFontWeight, setButtonFontWeight] = useState(500);
-  const [buttonFontSize, setButtonFontSize] = useState(0.875);
+  const [buttonFontSize, setButtonFontSize] = useState(14);
   const [buttonTextTransform, setButtonTextTransform] = useState('none');
-  const [open, setOpen] = useState(false);
   const [buttonHeight, setButtonHeight] = useState(46);
   const [buttonPadding, setButtonPadding] = useState(10);
   const [buttonBorderRadius, setButtonBorderRadius] = useState(5);
 
-  const shadowTrue = [
-    'none',
-    '0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
-    '0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)',
-    '0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)',
-    '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
-    '0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)',
-    '0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)',
-    '0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)',
-    '0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)',
-    '0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12)',
-    '0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px…gba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12)',
-    '0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px…gba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12)',
-    '0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px…gba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12)',
-    '0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px…gba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12)',
-    '0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px…gba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12)',
-    '0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px…gba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12)',
-    '0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2p…gba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12)',
-    '0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2p…gba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12)',
-    '0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2p…gba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12)',
-    '0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2p…gba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12)',
-    '0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3…gba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12)',
-    '0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3…gba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)',
-    '0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3…gba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)',
-    '0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3…gba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)',
-    '0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3…gba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)',
-  ];
-
-  const shadowFalse = ['none'];
   //Shadows
   const [shadow, setShadow] = useState([]);
 
   //Typography
-
+  const [fontStyle, setFontStyle] = useState({
+    fontFamily: 'Roboto',
+    fontSize: 14,
+  });
   const [primaryTextColor, setPrimaryTextColor] = useState('#000');
   const [secondaryTextColor, setSecondaryTextColor] = useState('#000');
   const [primaryTextColorPicker, setPrimaryTextColorPicker] = useState(false);
@@ -98,8 +67,7 @@ export const Store = props => {
   //Material-UI states
   const [expanded, setExpanded] = useState('panel1');
   const [tab, setTab] = useState(0);
-
-  //On Change Handlers
+  const [open, setOpen] = useState(false);
 
   //General Handlers
   const changeColor = color => {
@@ -122,29 +90,8 @@ export const Store = props => {
   const changeButtonElevation = () => {
     setButtonElevation(!buttonElevation ? true : false);
   };
-  const changeButtonHoverColor = buttonHoverColor => {
-    setButtonHoverColor(buttonHoverColor.hex);
-  };
-  // const changeButtonHoverOpacity = (e, buttonHoverOpacity) => {
-  //   setButtonHoverOpacity(buttonHoverOpacity);
-  // };
-  const changeButtonFontWeight = buttonFontWeight => {
-    setButtonFontWeight(buttonFontWeight);
-  };
-  const changeButtonFontSize = buttonFontSize => {
-    setButtonFontSize(buttonFontSize);
-  };
   const changeButtonTextTransform = buttonTextTransform => {
     setButtonTextTransform(buttonTextTransform);
-  };
-  const changeButtonHeight = buttonHeight => {
-    setButtonHeight(buttonHeight);
-  };
-  const changeButtonPadding = buttonPadding => {
-    setButtonPadding(buttonPadding);
-  };
-  const changeButtonBorderRadius = buttonBorderRadius => {
-    setButtonBorderRadius(buttonBorderRadius);
   };
 
   //Alerts Handlers
@@ -165,21 +112,7 @@ export const Store = props => {
     setAlertVariant(alertVariant);
   };
 
-  //Fonts
-
-  //Material-Ui handlers
-  const changeExpanded = panel => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
-
-  const changePrimaryTextColor = textColor => {
-    setPrimaryTextColor(textColor.hex);
-  };
-
-  const changeSecondaryTextColor = textColor => {
-    setSecondaryTextColor(textColor.hex);
-  };
-
+  //ColorPicker Handlers
   const changeColorPickerDisplayed = type => {
     if (type === 'primary') {
       setDisplayColorPicker(!displayColorPicker ? true : false);
@@ -215,6 +148,16 @@ export const Store = props => {
     }
   };
 
+  //Material-Ui handlers
+  const changeExpanded = panel => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+  const changePrimaryTextColor = textColor => {
+    setPrimaryTextColor(textColor.hex);
+  };
+  const changeSecondaryTextColor = textColor => {
+    setSecondaryTextColor(textColor.hex);
+  };
   const changeTab = (event, newTab) => {
     setTab(newTab);
   };
@@ -276,8 +219,8 @@ export const Store = props => {
       fontFamily: fontStyle.fontFamily,
       fontSize: fontStyle.fontSize,
       button: {
-        fontWeight: buttonFontWeight,
-        fontSize: `${buttonFontSize}rem`,
+        fontWeight: `${buttonFontWeight}`,
+        fontSize: buttonFontSize,
         textTransform: `${buttonTextTransform}`,
       },
     },
@@ -316,10 +259,6 @@ export const Store = props => {
     setInfoColor(themeObject.palette.info.main);
     setSuccessColor(themeObject.palette.success.main);
     setButtonHoverOpacity(themeObject.palette.action.hoverOpacity);
-    console.log(
-      '=====================opacity',
-      themeObject.palette.action.hoverOpacity,
-    );
     setFontStyle({
       ...fontStyle,
       fontFamily: themeObject.typography.fontFamily,
@@ -359,7 +298,6 @@ export const Store = props => {
       response();
     }
   }, []);
-  console.log('SETBUTTONHOVEROPACITY', buttonHoverOpacity);
 
   const customTheme = createMuiTheme(downloadTheme);
   console.log('C', customTheme);
@@ -399,24 +337,22 @@ export const Store = props => {
         changeButtonRipple={changeButtonRipple}
         buttonElevation={buttonElevation}
         changeButtonElevation={changeButtonElevation}
-        buttonHoverColor={buttonHoverColor}
-        changeButtonHoverColor={changeButtonHoverColor}
         buttonHoverOpacity={buttonHoverOpacity}
-        // changeButtonHoverOpacity={changeButtonHoverOpacity}
         buttonFontWeight={buttonFontWeight}
-        changeButtonFontWeight={changeButtonFontWeight}
         buttonFontSize={buttonFontSize}
-        changeButtonFontSize={changeButtonFontSize}
         buttonTextTransform={buttonTextTransform}
         changeButtonTextTransform={changeButtonTextTransform}
         open={open}
         setOpen={setOpen}
         buttonHeight={buttonHeight}
-        changeButtonHeight={changeButtonHeight}
         buttonPadding={buttonPadding}
-        changeButtonPadding={changeButtonPadding}
         buttonBorderRadius={buttonBorderRadius}
-        changeButtonBorderRadius={changeButtonBorderRadius}
+        setButtonHoverOpacity={setButtonHoverOpacity}
+        setButtonFontWeight={setButtonFontWeight}
+        setButtonFontSize={setButtonFontSize}
+        setButtonHeight={setButtonHeight}
+        setButtonBorderRadius={setButtonBorderRadius}
+        setButtonPadding={setButtonPadding}
         //Shadow
         shadow={shadow}
         setShadow={setShadow}
@@ -447,7 +383,6 @@ export const Store = props => {
         changeSuccessColor={changeSuccessColor}
         alertVariant={alertVariant}
         changeAlertVariant={changeAlertVariant}
-        setButtonHoverOpacity={setButtonHoverOpacity}
       />
     </React.Fragment>
   );

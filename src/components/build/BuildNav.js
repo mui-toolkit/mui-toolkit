@@ -92,24 +92,20 @@ export function BuildNav(props) {
     changeButtonRipple,
     buttonElevation,
     changeButtonElevation,
-    buttonHoverColor,
-    changeButtonHoverColor,
     buttonHoverOpacity,
-    changeButtonHoverOpacity,
     buttonFontWeight,
-    changeButtonFontWeight,
     buttonFontSize,
-    changeButtonFontSize,
     buttonTextTransform,
     changeButtonTextTransform,
     open,
     setOpen,
     buttonHeight,
-    changeButtonHeight,
     buttonPadding,
-    changeButtonPadding,
     buttonBorderRadius,
-    changeButtonBorderRadius,
+    setButtonFontWeight,
+    setButtonFontSize,
+    setButtonHeight,
+    setButtonPadding,
     //Alerts
     errorColor,
     warningColor,
@@ -132,6 +128,7 @@ export function BuildNav(props) {
     shadowTrue,
     shadowFalse,
     setButtonHoverOpacity,
+    setButtonBorderRadius,
   } = props;
 
   return (
@@ -206,26 +203,23 @@ export function BuildNav(props) {
               changeButtonRipple={changeButtonRipple}
               buttonElevation={buttonElevation}
               changeButtonElevation={changeButtonElevation}
-              buttonHoverColor={buttonHoverColor}
-              changeButtonHoverColor={changeButtonHoverColor}
               buttonHoverOpacity={buttonHoverOpacity}
-              changeButtonHoverOpacity={changeButtonHoverOpacity}
               buttonFontWeight={buttonFontWeight}
-              changeButtonFontWeight={changeButtonFontWeight}
               buttonFontSize={buttonFontSize}
-              changeButtonFontSize={changeButtonFontSize}
               buttonTextTransform={buttonTextTransform}
               changeButtonTextTransform={changeButtonTextTransform}
               open={open}
               setOpen={setOpen}
               buttonHeight={buttonHeight}
-              changeButtonHeight={changeButtonHeight}
               buttonPadding={buttonPadding}
-              changeButtonPadding={changeButtonPadding}
               buttonBorderRadius={buttonBorderRadius}
-              changeButtonBorderRadius={changeButtonBorderRadius}
               setTab={setTab}
               setButtonHoverOpacity={setButtonHoverOpacity}
+              setButtonFontWeight={setButtonFontWeight}
+              setButtonFontSize={setButtonFontSize}
+              setButtonHeight={setButtonHeight}
+              setButtonBorderRadius={setButtonBorderRadius}
+              setButtonPadding={setButtonPadding}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
