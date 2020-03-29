@@ -59,8 +59,6 @@ export const Build = props => {
     setSecondaryColor,
     setDefaultColor,
     setPaperColor,
-    fontStyle,
-    setFontStyle,
     primaryTextColor,
     secondaryTextColor,
     primaryTextColorPicker,
@@ -88,6 +86,11 @@ export const Build = props => {
     setButtonHeight,
     setButtonBorderRadius,
     setButtonPadding,
+    //Fonts
+    fontFamily,
+    setFontFamily,
+    fontSize,
+    setFontSize,
     //Alerts
     errorColor,
     warningColor,
@@ -174,8 +177,10 @@ export const Build = props => {
               shadowTrue={shadowTrue}
               shadowFalse={shadowFalse}
               //Typography
-              fontStyle={fontStyle}
-              setFontStyle={setFontStyle}
+              fontFamily={fontFamily}
+              setFontFamily={setFontFamily}
+              fontSize={fontSize}
+              setFontSize={setFontSize}
               primaryTextColor={primaryTextColor}
               secondaryTextColor={secondaryTextColor}
               primaryTextColorPicker={primaryTextColorPicker}

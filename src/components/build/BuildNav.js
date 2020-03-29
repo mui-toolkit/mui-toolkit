@@ -78,8 +78,6 @@ export function BuildNav(props) {
     displayPaperColorPicker,
     changePaperColorPickerDisplayed,
     setTab,
-    fontStyle,
-    setFontStyle,
     primaryTextColor,
     secondaryTextColor,
     primaryTextColorPicker,
@@ -106,6 +104,11 @@ export function BuildNav(props) {
     setButtonFontSize,
     setButtonHeight,
     setButtonPadding,
+    //Typography
+    fontFamily,
+    setFontFamily,
+    fontSize,
+    setFontSize,
     //Alerts
     errorColor,
     warningColor,
@@ -246,8 +249,10 @@ export function BuildNav(props) {
                 changeColor={changeColor}
                 displayColorPicker={displayColorPicker}
                 changeColorPickerDisplayed={changeColorPickerDisplayed}
-                fontStyle={fontStyle}
-                setFontStyle={setFontStyle}
+                fontFamily={fontFamily}
+                setFontFamily={setFontFamily}
+                fontSize={fontSize}
+                setFontSize={setFontSize}
                 primaryTextColor={primaryTextColor}
                 secondaryTextColor={secondaryTextColor}
                 primaryTextColorPicker={primaryTextColorPicker}

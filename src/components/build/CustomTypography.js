@@ -22,8 +22,10 @@ const useStyles = makeStyles(() => ({
 
 export const CustomTypography = props => {
   const {
-    setFontStyle,
-    fontStyle,
+    fontFamily,
+    setFontFamily,
+    fontSize,
+    setFontSize,
     primaryTextColor,
     changePrimaryTextColor,
     primaryTextColorPicker,
@@ -45,14 +47,8 @@ export const CustomTypography = props => {
     setOpen(true);
   };
 
-  const handleChange = e => {
-    changeFontStyle(e.target.value);
-  };
-
-  const changeFontStyle = style => {
-    setFontStyle({
-      fontFamily: style,
-    });
+  const changeFontFamily = e => {
+    setFontFamily(e.target.value);
   };
 
   return (
@@ -70,11 +66,11 @@ export const CustomTypography = props => {
           <Grid item xs={6}>
             <Select
               id='fontFamily'
-              value={fontStyle.fontFamily}
+              value={fontFamily}
               open={open}
               onClose={handleClose}
               onOpen={handleOpen}
-              onChange={handleChange}
+              onChange={changeFontFamily}
             >
               {/* event =>
                 setFontStyle({
@@ -128,29 +124,14 @@ export const CustomTypography = props => {
         </Grid>
         <Grid container direction='row' alignItems='center'>
           <Grid item xs={6} align='left'>
-            <Typography className={classes.typography}>
-              Font Size (1-39)
-            </Typography>
+            <Typography className={classes.typography}>Font Size</Typography>
           </Grid>
           <Grid item item xs={6}>
             <form
-              onChange={event =>
-                event.target.value &&
-                Number(event.target.value) < 40 &&
-                Number(event.target.value) > 0
-                  ? setFontStyle({
-                      ...fontStyle,
-                      fontSize: Number(event.target.value),
-                    })
-                  : null
-              }
+              onChange={event => setFontSize(Number(event.target.value))}
               noValidate
-              autoComplete='off'
             >
-              <TextField
-                id='standard-basic'
-                defaultValue={fontStyle.fontSize}
-              />
+              <TextField id='standard-basic' value={fontSize} />
             </form>
           </Grid>
         </Grid>

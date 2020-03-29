@@ -44,6 +44,9 @@ export const Store = props => {
     fontFamily: 'Roboto',
     fontSize: 14,
   });
+
+  const [fontFamily, setFontFamily] = useState('Roboto');
+  const [fontSize, setFontSize] = useState(14);
   const [primaryTextColor, setPrimaryTextColor] = useState('#000');
   const [secondaryTextColor, setSecondaryTextColor] = useState('#000');
   const [primaryTextColorPicker, setPrimaryTextColorPicker] = useState(false);
@@ -216,8 +219,8 @@ export const Store = props => {
       },
     },
     typography: {
-      fontFamily: fontStyle.fontFamily,
-      fontSize: fontStyle.fontSize,
+      fontFamily: fontFamily,
+      fontSize: fontSize,
       button: {
         fontWeight: `${buttonFontWeight}`,
         fontSize: buttonFontSize,
@@ -259,14 +262,8 @@ export const Store = props => {
     setInfoColor(themeObject.palette.info.main);
     setSuccessColor(themeObject.palette.success.main);
     setButtonHoverOpacity(themeObject.palette.action.hoverOpacity);
-    setFontStyle({
-      ...fontStyle,
-      fontFamily: themeObject.typography.fontFamily,
-    });
-    setFontStyle({
-      ...fontStyle,
-      fontSize: Number(themeObject.typography.fontSize),
-    });
+    setFontFamily(themeObject.typography.fontFamily);
+    setFontSize(themeObject.typography.fontSize);
     setButtonFontWeight(themeObject.typography.button.fontWeight);
     setButtonFontSize(themeObject.typography.button.fontSize);
     setButtonTextTransform(themeObject.typography.button.textTransform);
@@ -359,8 +356,10 @@ export const Store = props => {
         shadowTrue={shadowTrue}
         shadowFalse={shadowFalse}
         //Typography
-        fontStyle={fontStyle}
-        setFontStyle={setFontStyle}
+        fontFamily={fontFamily}
+        setFontFamily={setFontFamily}
+        fontSize={fontSize}
+        setFontSize={setFontSize}
         primaryTextColor={primaryTextColor}
         secondaryTextColor={secondaryTextColor}
         primaryTextColorPicker={primaryTextColorPicker}
