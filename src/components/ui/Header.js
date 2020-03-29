@@ -155,7 +155,6 @@ export default function Header(props) {
               component={Link}
               to="/admin"
               label="Admin"
-              onClick={handleClick}
             />
           </Tabs>
         </Toolbar>

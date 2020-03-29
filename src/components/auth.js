@@ -21,7 +21,7 @@ function onAuthStateChange(callback) {
   });
 }
 
-export function Auth(props) {
+export function Auth() {
   const [email, setEmail] = useState('');
   const handleSubmit = e => {
     e.preventDefault();
@@ -41,9 +41,9 @@ export function Auth(props) {
         console.log('err in auth', error);
         // ...
       });
+    setEmail('');
   };
 
-  console.log('user in auth', props.user);
   return (
     <div>
       <Grid container direction="column" style={{ marginTop: '10em' }}>
@@ -58,6 +58,8 @@ export function Auth(props) {
               placeholder="User email"
               id="admin-email"
               required
+              onChange={e => setEmail(e.target.value)}
+              value={email}
             />
             <button className="btn-small yellow darken-2 z-depth-0">
               Make admin
