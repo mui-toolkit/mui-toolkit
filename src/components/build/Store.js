@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Build } from '../build';
 import { createMuiTheme } from '@material-ui/core/';
-import { ThemeProvider } from '@material-ui/styles';
 import { db } from '../../config/firebase';
 import { shadowTrue, shadowFalse } from './Shadows';
 
 export const Store = props => {
   const { themeId } = useParams();
-  console.log('IN THE Store -> themeId', themeId);
 
   //General
   const [color, setColor] = useState('#3f51b5');
@@ -279,9 +277,7 @@ export const Store = props => {
           .doc(`${themeId}`)
           .get()
           .then(async doc => {
-            console.log('IN THE STORE saved Theme doc', doc.data());
             await setHooks(doc.data());
-            // setButtonHoverOpacity(1);
           })
           .catch(err => {
             console.log('Error getting documents', err);
@@ -292,8 +288,7 @@ export const Store = props => {
   }, []);
 
   const customTheme = createMuiTheme(downloadTheme);
-  console.log('C', customTheme);
-  console.log('D', downloadTheme);
+
   return (
     <React.Fragment>
       <Build
