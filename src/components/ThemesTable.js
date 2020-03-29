@@ -160,7 +160,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemesTable({ setThemes, themes }) {
+export default function ThemesTable({ setThemes, themes, tableTitle }) {
   console.log("ThemesTable -> themes", themes);
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
@@ -243,7 +243,7 @@ export default function ThemesTable({ setThemes, themes }) {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography className={classes.title} variant="h6" id="tableTitle">
-          Saved Themes
+          {tableTitle}
         </Typography>
         <TableContainer>
           <Table

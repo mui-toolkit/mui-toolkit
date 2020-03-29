@@ -13,6 +13,7 @@ import firebase from "firebase";
 import "firebase/auth";
 import { Store } from "./build/";
 import WebPreview from "../WebPreview/WebPreview";
+import Explore from './Explore'
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -105,7 +106,7 @@ function App() {
           exact
           path="/webpreview/:themeId"
         />
-        {/* <Route exact path='/explore' component={Explore} /> */}
+        <Route exact path='/explore' component={Explore} />
 
         {!user.loggedIn && (
           <Switch>
