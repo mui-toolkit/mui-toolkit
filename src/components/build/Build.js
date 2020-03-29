@@ -28,8 +28,6 @@ const useStyles = makeStyles(theme => ({
 export const Build = props => {
   const classes = useStyles();
 
-  console.log('themeId Name PASSED FROM STORE ', props.themeId);
-
   const {
     user,
     themeId,
@@ -116,7 +114,7 @@ export const Build = props => {
   } = props;
 
   return (
-    <section className={classes.root}>
+    <section>
       <Grid container spacing={1}>
         {/* BUILD NAV START */}
         <Grid item xs={3}>
@@ -219,11 +217,7 @@ export const Build = props => {
             style={{ background: `${defaultColor}` }}
           >
             <ThemeProvider theme={customTheme}>
-              <PreviewAppBar
-                secondaryColor={secondaryColor}
-                color={color}
-                className={classes.container}
-              />
+              <PreviewAppBar />
               <PreviewTabs tab={tab} changeTab={changeTab} />
             </ThemeProvider>
           </Paper>
