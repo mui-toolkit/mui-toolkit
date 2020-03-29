@@ -99,8 +99,6 @@ function App() {
         />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
-        {/* <Route exact path="/auth" component={Auth} /> */}
-
         {user.loggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -110,7 +108,7 @@ function App() {
               component={() => <Dashboard user={user} />}
             />
             <Route exact path="/themestable" component={ThemesTable} />
-            {/* <Route exact path="/admin" component={Auth} /> */}
+
             {user.admin && <Route exact path="/admin" component={Auth} />}
             {/* <Route exact path="/admin" component={() => <Auth user={user} />} /> */}
 

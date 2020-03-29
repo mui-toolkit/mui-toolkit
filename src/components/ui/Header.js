@@ -48,7 +48,7 @@ export default function Header(props) {
       .auth()
       .signOut()
       .then(() => {
-        console.log('user signed out props');
+        console.log('user signed out', props);
       });
   };
 
@@ -154,7 +154,7 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              to="/logout"
+              to="/"
               label="Logout"
               onClick={handleClick}
             />
