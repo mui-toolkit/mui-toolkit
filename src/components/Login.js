@@ -78,8 +78,10 @@ export function Login(props) {
     setOpenSnack(true);
   };
   const handleClose = (event, reason) => {
+    console.log('hanCl');
     if (reason === 'clickaway' || reason === 'timeout') {
       setOpenSnack(false);
+      handleClick();
       return;
     }
 
@@ -139,6 +141,7 @@ export function Login(props) {
         fullWidth={fullWidth}
         maxWidth={maxWidth}
       >
+
         <Paper
         // className={classes.paper}
         // style={{
@@ -149,6 +152,7 @@ export function Login(props) {
         //   backgroundColor: '#fff'
         // }}
         >
+
           <Typography
             id="form-dialog-title"
             align="center"
@@ -209,18 +213,6 @@ export function Login(props) {
             >
               Login
             </Button>
-            {/* <Button
-              onClick={handleCancel}
-              style={{
-                fontFamily: 'Roboto',
-                fontSize: 14,
-                marginRight: '20px',
-                color: '#f50057'
-              }}
-              className={classes.button}
-            >
-              Cancel
-            </Button> */}
           </DialogActions>
         </Paper>
       </Dialog>
