@@ -21,14 +21,14 @@ function onAuthStateChange(callback) {
   });
 }
 
-export function Auth() {
+export function Auth(props) {
   const [email, setEmail] = useState('');
   const handleSubmit = e => {
     e.preventDefault();
     // get email
     const adminEmail = 'tues@fs.com';
     const addAdminRole = fc.httpsCallable('addAdminRole');
-
+    console.log('in auth handleSubmit');
     addAdminRole({ email: adminEmail })
       .then(result => {
         console.log(result);
@@ -43,18 +43,13 @@ export function Auth() {
       });
   };
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChange(setUser);
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
-
+  console.log('user in auth', props.user);
   return (
     <div>
       <Grid container direction="column" style={{ marginTop: '10em' }}>
         <Grid item container justify="center">
           <form
+            onSubmit={handleSubmit}
             // class="center-align admin-actions"
             style={{ margin: '40px auto; max-width: 300px' }}
           >
@@ -64,7 +59,7 @@ export function Auth() {
               id="admin-email"
               required
             />
-            <button class="btn-small yellow darken-2 z-depth-0">
+            <button className="btn-small yellow darken-2 z-depth-0">
               Make admin
             </button>
           </form>
