@@ -143,18 +143,20 @@ export default function Header(props) {
               to="/dashboard"
               label="Dashboard"
             />
+            {props.user.admin && (
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/admin"
+                label="Admin"
+              />
+            )}
             <Tab
               className={classes.tab}
               component={Link}
               to="/logout"
               label="Logout"
               onClick={handleClick}
-            />
-            <Tab
-              className={classes.tab}
-              component={Link}
-              to="/admin"
-              label="Admin"
             />
           </Tabs>
         </Toolbar>

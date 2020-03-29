@@ -84,7 +84,7 @@ function App() {
     // };
   }, []);
 
-  console.log('App -> user', user);
+  console.log('App -> user', user, 'admin', user.admin);
   return (
     <BrowserRouter>
       <Header user={user} />
@@ -110,7 +110,8 @@ function App() {
               component={() => <Dashboard user={user} />}
             />
             <Route exact path="/themestable" component={ThemesTable} />
-            <Route exact path="/admin" component={Auth} />
+            {/* <Route exact path="/admin" component={Auth} /> */}
+            {user.admin && <Route exact path="/admin" component={Auth} />}
             {/* <Route exact path="/admin" component={() => <Auth user={user} />} /> */}
 
             <Route exact path="/userprofile" component={UserProfile} />

@@ -26,7 +26,7 @@ export function Auth() {
   const handleSubmit = e => {
     e.preventDefault();
     // get email
-    const adminEmail = 'tues@fs.com';
+    const adminEmail = email;
     const addAdminRole = fc.httpsCallable('addAdminRole');
     console.log('in auth handleSubmit');
     addAdminRole({ email: adminEmail })
