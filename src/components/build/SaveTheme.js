@@ -45,9 +45,12 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   let history = useHistory();
 
   const handleClickOpen = () => {
-    // need to test if coming from themes table
+    // need to test if coming from themes table // can also check if (prop threaded theme)
     if (!user) {
-      setOpen(true);
+      setOpen(false);
+      setMessage("Theme Edited and Saved");
+      setSnackOpen(true);
+      editAndSavePalette(themeName);
     }
     // not loggedin should send user to signup
     else if (!user.loggedIn) {
@@ -89,11 +92,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
 
     //test for duplicate names
     const duplicateTest = await duplicateNameChecker(themeName);
-    if (!user) {
-      editAndSavePalette(themeName);
-      setMessage("Theme Edited and Saved");
-      setSnackOpen(true);
-    } else if (duplicateTest) {
+    if (duplicateTest) {
       setMessage("That name is a popular name. Please choose another name!");
       setOpen(true);
       setSnackOpen(true);
