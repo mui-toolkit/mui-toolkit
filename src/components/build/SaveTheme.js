@@ -194,7 +194,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
         }}
         className={classes.button}
       >
-        {!user ? "Edit and Save" : "Save"}{" "}
+        {!user ? "Update and Save" : "Save"}{" "}
         <SaveIcon style={{ marginLeft: "5px" }} />
       </Button>
       <Snackbar
