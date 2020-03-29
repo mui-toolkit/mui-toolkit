@@ -176,7 +176,9 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   };
 
   const editAndSavePalette = async (themeName, userId) => {
-    // allowing them to change the themeName?  more logic headaches
+    console.log("editAndSavePalette -> userId", downloadTheme);
+    console.log("editAndSavePalette -> userId", userId);
+    console.log("editAndSavePalette -> themeName", themeName);
     updateTheme(themeName); // update theme
     updateUsersTheme(themeName, userId); // update the users theme array with that specific document
     console.log("updating.........");
