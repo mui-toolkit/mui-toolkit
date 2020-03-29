@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const SaveTheme = ({ downloadTheme, user }) => {
+  console.log("SaveTheme -> downloadTheme", downloadTheme);
   console.log("SaveTheme -> user", user);
   const classes = useStyles();
 
@@ -44,8 +45,15 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   let history = useHistory();
 
   const handleClickOpen = () => {
+    // need to test if coming from themes table // can also check if (prop threaded theme)
+    if (!user) {
+      setOpen(false);
+      setMessage("Theme Edited and Saved");
+      setSnackOpen(true);
+      editAndSavePalette(themeName);
+    }
     // not loggedin should send user to signup
-    if (!user.uid) {
+    else if (!user.loggedIn) {
       setMessage(
         "You need to signup for an account in order to save. It's free!"
       );
@@ -89,12 +97,29 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       setOpen(true);
       setSnackOpen(true);
     } else {
-      sendPalette(themeName);
+      saveNewPalette(themeName);
       setMessage("New Customized Theme Saved");
       setSnackOpen(true);
     }
   };
 
+  const saveNewTheme = async themeName => {
+    console.log(downloadTheme);
+    downloadTheme.createdAt = new Date();
+    downloadTheme.userId = user.uid;
+    downloadTheme.themeName = themeName;
+    downloadTheme.starsCount = 0;
+    await db
+      .collection("CustomizedThemes")
+      .doc()
+      .set({ ...downloadTheme })
+      .then(function() {
+        console.log(`Added Theme ${themeName} to collection`);
+      })
+      .catch(function(error) {
+        console.log("Error creating a new theme: ", error);
+      });
+  };
   const addThemeToUser = async (themeName, userId) => {
     await db
       .collection("Users")
@@ -107,23 +132,56 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       });
   };
 
-  const sendPalette = async themeName => {
-    console.log(downloadTheme);
-    downloadTheme.createdAt = new Date();
-    downloadTheme.userId = user.uid;
-    downloadTheme.themeName = themeName;
-    downloadTheme.starsCount = 0;
-    let newTheme = await db
-      .collection("CustomizedThemes")
-      .doc()
-      .set({ ...downloadTheme })
-      .then(function() {
-        console.log(`Added Theme ${themeName} to collection`);
-      })
-      .catch(function(error) {
-        console.log("Error creating a new theme: ", error);
-      });
+  const saveNewPalette = async themeName => {
+    saveNewTheme(themeName);
     addThemeToUser(themeName, user.uid);
+  };
+
+  const updateTheme = async themeName => {
+    // .update nested obj risks overwriting. i think it's easier to .set
+    // propThreadedThemeObjectFromStore.createdAt = new Date();
+    // await db
+    // .collection("CustomizedThemes")
+    // .doc(// themeId name from Build.js)
+    // .set({ ...downloadTheme })
+    // .then(function() {
+    //   console.log(`Update ${themeName} to collection`);
+    // })
+    // .catch(function(error) {
+    //   console.log("Error updating a previously svaed theme: ", error);
+    // });
+  };
+
+  const updateUsersTheme = async (themeName, userId) => {
+    //delete from users array
+    // await db
+    //   .collection("Users")
+    //   .doc(`${userId}`)
+    //   .update({
+    //     themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
+    //   })
+    //   .then(() => {
+    //     console.log("deleted reference to this theme");
+    //   });
+    // // add updated to users array
+    // await db
+    //   .collection("Users")
+    //   .doc(`${userId}`)
+    //   .update({
+    //     themes: firebase.firestore.FieldValue.arrayUnion(`${themeName}`)
+    //   })
+    //   .then(() => {
+    //     console.log("updated user with reference to theme");
+    //   });
+  };
+
+  const editAndSavePalette = async (themeName, userId) => {
+    console.log("editAndSavePalette -> userId", downloadTheme);
+    console.log("editAndSavePalette -> userId", userId);
+    console.log("editAndSavePalette -> themeName", themeName);
+    updateTheme(themeName); // update theme
+    updateUsersTheme(themeName, userId); // update the users theme array with that specific document
+    console.log("updating.........");
   };
   return (
     <div>
@@ -138,7 +196,8 @@ export const SaveTheme = ({ downloadTheme, user }) => {
         }}
         className={classes.button}
       >
-        Save <SaveIcon style={{ marginLeft: "5px" }} />
+        {!user ? "Update and Save" : "Save"}{" "}
+        <SaveIcon style={{ marginLeft: "5px" }} />
       </Button>
       <Snackbar
         autoHideDuration={4000}
