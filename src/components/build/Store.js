@@ -1,27 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Build } from "../build";
-import { createMuiTheme } from "@material-ui/core/";
-import { ThemeProvider } from "@material-ui/styles";
-import { db } from "../../config/firebase";
-import { shadowTrue, shadowFalse } from "./Shadows";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Build } from '../build';
+import { createMuiTheme } from '@material-ui/core/';
+import { ThemeProvider } from '@material-ui/styles';
+import { db } from '../../config/firebase';
+import { shadowTrue, shadowFalse } from './Shadows';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+}));
 
 export const Store = props => {
   const { themeId } = useParams();
-  console.log("IN THE Store -> themeId", themeId);
+  const classes = useStyles();
+
+  console.log('IN THE Store -> themeId', themeId);
 
   //General
-  const [color, setColor] = useState("#3f51b5");
-  const [secondaryColor, setSecondaryColor] = useState("#f50057");
-  const [defaultColor, setDefaultColor] = useState("#fafafa");
-  const [paperColor, setPaperColor] = useState("#fff");
+  const [color, setColor] = useState('#3f51b5');
+  const [secondaryColor, setSecondaryColor] = useState('#f50057');
+  const [defaultColor, setDefaultColor] = useState('#fafafa');
+  const [paperColor, setPaperColor] = useState('#fff');
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const [
     displaySecondaryColorPicker,
-    setDisplaySecondaryColorPicker
+    setDisplaySecondaryColorPicker,
   ] = useState(false);
   const [displayDefaultColorPicker, setDisplayDefaultColorPicker] = useState(
-    false
+    false,
   );
   const [displayPaperColorPicker, setDisplayPaperColorPicker] = useState(false);
 
@@ -31,7 +43,7 @@ export const Store = props => {
   const [buttonHoverOpacity, setButtonHoverOpacity] = useState(0.04);
   const [buttonFontWeight, setButtonFontWeight] = useState(500);
   const [buttonFontSize, setButtonFontSize] = useState(14);
-  const [buttonTextTransform, setButtonTextTransform] = useState("none");
+  const [buttonTextTransform, setButtonTextTransform] = useState('none');
   const [buttonHeight, setButtonHeight] = useState(46);
   const [buttonPadding, setButtonPadding] = useState(10);
   const [buttonBorderRadius, setButtonBorderRadius] = useState(5);
@@ -40,22 +52,22 @@ export const Store = props => {
   const [shadow, setShadow] = useState([]);
 
   //Typography
-  const [fontFamily, setFontFamily] = useState("Roboto");
+  const [fontFamily, setFontFamily] = useState('Roboto');
   const [fontSize, setFontSize] = useState(14);
-  const [primaryTextColor, setPrimaryTextColor] = useState("#000");
-  const [secondaryTextColor, setSecondaryTextColor] = useState("#000");
+  const [primaryTextColor, setPrimaryTextColor] = useState('#000');
+  const [secondaryTextColor, setSecondaryTextColor] = useState('#000');
   const [primaryTextColorPicker, setPrimaryTextColorPicker] = useState(false);
   const [secondaryTextColorPicker, setSecondaryTextColorPicker] = useState(
-    false
+    false,
   );
 
   //Alerts
-  const [errorColor, setErrorColor] = useState("#f22983");
-  const [warningColor, setWarningColor] = useState("#ffd034");
-  const [infoColor, setInfoColor] = useState("#2dbde2");
-  const [successColor, setSuccessColor] = useState("#5dd24d");
+  const [errorColor, setErrorColor] = useState('#f22983');
+  const [warningColor, setWarningColor] = useState('#ffd034');
+  const [infoColor, setInfoColor] = useState('#2dbde2');
+  const [successColor, setSuccessColor] = useState('#5dd24d');
 
-  const [alertVariant, setAlertVariant] = useState("");
+  const [alertVariant, setAlertVariant] = useState('');
 
   const [errorColorPicker, setErrorColorPicker] = useState(false);
   const [warningColorPicker, setWarningColorPicker] = useState(false);
@@ -63,18 +75,19 @@ export const Store = props => {
   const [successColorPicker, setSuccessColorPicker] = useState(false);
 
   //Material-UI states
-  const [expanded, setExpanded] = useState("panel1");
+  const [expanded, setExpanded] = useState('panel1');
   const [tab, setTab] = useState(0);
   const [open, setOpen] = useState(false);
 
   // Preloaded Saved Theme
   const [createdAt, setCreatedAt] = useState(new Date());
   const [lastEditAt, setLastEditAt] = useState(new Date());
-  const [userId, setUserId] = useState("guest");
-  const [themeName, setThemeName] = useState("Untitled");
+  const [userId, setUserId] = useState('guest');
+  const [themeName, setThemeName] = useState('Untitled');
   const [starsCount, setStarsCount] = useState(0);
   const [explore, setExplore] = useState(false);
-  const [createdBy, setCreatedBy] = useState("anonymous");
+  const [createdBy, setCreatedBy] = useState('anonymous');
+  const [isLoading, setLoading] = useState(true);
 
   //General Handlers
   const changeColor = color => {
@@ -121,36 +134,36 @@ export const Store = props => {
 
   //ColorPicker Handlers
   const changeColorPickerDisplayed = type => {
-    if (type === "primary") {
+    if (type === 'primary') {
       setDisplayColorPicker(!displayColorPicker ? true : false);
     }
-    if (type === "secondary") {
+    if (type === 'secondary') {
       setDisplaySecondaryColorPicker(
-        !displaySecondaryColorPicker ? true : false
+        !displaySecondaryColorPicker ? true : false,
       );
     }
-    if (type === "default") {
+    if (type === 'default') {
       setDisplayDefaultColorPicker(!displayDefaultColorPicker ? true : false);
     }
-    if (type === "paper") {
+    if (type === 'paper') {
       setDisplayPaperColorPicker(!displayPaperColorPicker ? true : false);
     }
-    if (type === "primaryText") {
+    if (type === 'primaryText') {
       setPrimaryTextColorPicker(!primaryTextColorPicker ? true : false);
     }
-    if (type === "secondaryText") {
+    if (type === 'secondaryText') {
       setSecondaryTextColorPicker(!secondaryTextColorPicker ? true : false);
     }
-    if (type === "error") {
+    if (type === 'error') {
       setErrorColorPicker(!errorColorPicker ? true : false);
     }
-    if (type === "warning") {
+    if (type === 'warning') {
       setWarningColorPicker(!warningColorPicker ? true : false);
     }
-    if (type === "info") {
+    if (type === 'info') {
       setInfoColorPicker(!infoColorPicker ? true : false);
     }
-    if (type === "success") {
+    if (type === 'success') {
       setSuccessColorPicker(!successColorPicker ? true : false);
     }
   };
@@ -192,43 +205,43 @@ export const Store = props => {
       //palette secondary reflected in form
       //palette secondary change in download and custom object
       secondary: {
-        main: `${secondaryColor}`
+        main: `${secondaryColor}`,
       },
       //palette text primary and secondary did set
       //palette text primary and secondary reflected in form
       //palette text primary and secondary change in download and custom object
       text: {
         primary: `${primaryTextColor}`,
-        secondary: `${secondaryTextColor}`
+        secondary: `${secondaryTextColor}`,
       },
       //palette background paper and default did set
       //palette background paper and default reflected in form
       //palette background paper and default change in download and custom object
       background: {
         paper: `${paperColor}`,
-        default: `${defaultColor}`
+        default: `${defaultColor}`,
       },
       //palette error, warning, info and success did set
       //palette error, warning, info and success reflected in form
       //palette error, warning, info and success change in download and custom object
       error: {
-        main: `${errorColor}`
+        main: `${errorColor}`,
       },
       warning: {
-        main: `${warningColor}`
+        main: `${warningColor}`,
       },
       info: {
-        main: `${infoColor}`
+        main: `${infoColor}`,
       },
       success: {
-        main: `${successColor}`
+        main: `${successColor}`,
       },
       //hover opacity did not set
       //hover opaicty not reflected in form
       //hover opacity not changed in download and custom object
       action: {
-        hoverOpacity: `${buttonHoverOpacity}`
-      }
+        hoverOpacity: `${buttonHoverOpacity}`,
+      },
     },
     typography: {
       fontFamily: fontFamily,
@@ -236,29 +249,29 @@ export const Store = props => {
       button: {
         fontWeight: `${buttonFontWeight}`,
         fontSize: buttonFontSize,
-        textTransform: `${buttonTextTransform}`
-      }
+        textTransform: `${buttonTextTransform}`,
+      },
     },
     props: {
       MuiButtonBase: {
-        disableRipple: buttonRipple
+        disableRipple: buttonRipple,
       },
       MuiButton: {
-        disableElevation: buttonElevation
+        disableElevation: buttonElevation,
       },
       MuiAlert: {
-        variant: alertVariant
-      }
+        variant: alertVariant,
+      },
     },
     overrides: {
       MuiButton: {
         root: {
           borderRadius: buttonBorderRadius,
           height: buttonHeight,
-          padding: `${buttonPadding}px`
-        }
-      }
-    }
+          padding: `${buttonPadding}px`,
+        },
+      },
+    },
   };
 
   const setHooks = themeObject => {
@@ -299,23 +312,30 @@ export const Store = props => {
     if (themeId) {
       const response = async () => {
         await db
-          .collection("CustomizedThemes")
+          .collection('CustomizedThemes')
           .doc(`${themeId}`)
           .get()
-          .then(async doc => {
-            await setHooks(doc.data());
+          .then(doc => {
+            setHooks(doc.data());
+            setLoading(false);
           })
           .catch(err => {
-            console.log("Error getting documents", err);
+            console.log('Error getting documents', err);
           });
       };
       response();
+    } else {
+      setLoading(false);
     }
   }, []);
 
   const customTheme = createMuiTheme(downloadTheme);
   return (
     <React.Fragment>
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
+
       <Build
         user={props.user}
         themeId={themeId}
