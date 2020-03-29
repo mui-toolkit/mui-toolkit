@@ -17,16 +17,14 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-
-// function createData(
-//   themeName,
-//   createdAt,
-//   primaryPalette,
-//   secondaryPalette,
-//   typography
-// ) {
-//   return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
-// }
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import WebPreview from "../WebPreview/WebPreview";
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
+import Tooltip from "@material-ui/core/Tooltip";
+import EditIcon from "@material-ui/icons/Edit";
+import { db } from "../config/firebase";
+import firebase from "firebase";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -162,7 +160,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemesTable({ themes }) {
+export default function ThemesTable({ setThemes, themes }) {
   console.log("ThemesTable -> themes", themes);
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
@@ -172,7 +170,8 @@ export default function ThemesTable({ themes }) {
     primaryPalette: themeObject.palette.primary.main,
     secondaryPalette: themeObject.palette.secondary.main,
     typography: themeObject.typography.fontFamily,
-    themeId: themeObject.themeId
+    themeId: themeObject.themeId,
+    userId: themeObject.userId
   }));
 
   const classes = useStyles();
@@ -201,6 +200,34 @@ export default function ThemesTable({ themes }) {
     setDense(event.target.checked);
   };
 
+  const handleDelete = async (themeId, userId, themeName) => {
+    // delete collection
+    await db
+      .collection("CustomizedThemes")
+      .doc(`${themeId}`)
+      .delete()
+      .then(function() {
+        console.log("Deleted Saved Theme from collection");
+      })
+      .then(response => {
+        setThemes(prevThemes =>
+          prevThemes.filter(theme => theme.themeId !== themeId)
+        );
+      })
+      .catch(function(error) {
+        console.log("Error deleting theme: ", error);
+      });
+    //delete from user themes array
+    await db
+      .collection("Users")
+      .doc(`${userId}`)
+      .update({
+        themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
+      })
+      .then(() => {
+        console.log("deleted reference to this theme");
+      });
+  };
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -244,8 +271,6 @@ export default function ThemesTable({ themes }) {
                       role="checkbox"
                       tabIndex={-1}
                       key={row.themeId}
-                      component={Link}
-                      to={`/design/${row.themeId}/`}
                       style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
@@ -262,9 +287,37 @@ export default function ThemesTable({ themes }) {
                         {row.secondaryPalette}
                       </TableCell>
                       <TableCell align="right">{row.typography}</TableCell>
-                      <IconButton aria-label="delete">
-                        <DeleteIcon />
-                      </IconButton>
+
+                      <Tooltip title="Preview Theme">
+                        <IconButton
+                          aria-label="preview"
+                          component={Link}
+                          to={`/webpreview/${row.themeId}`}
+                          target="_blank"
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Edit Theme">
+                        <IconButton
+                          aria-label="edit"
+                          // key={row.themeId}
+                          component={Link}
+                          to={`/design/${row.themeId}/`}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Theme">
+                        <IconButton
+                          aria-label="delete"
+                          onClick={() =>
+                            handleDelete(row.themeId, row.userId, row.themeName)
+                          }
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </TableRow>
                   );
                 })}
@@ -286,6 +339,7 @@ export default function ThemesTable({ themes }) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"

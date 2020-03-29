@@ -44,6 +44,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   };
   const handleSave = e => {
     setOpen(false);
+    // not loggedin should send user to signup
     sendPalette(themeName);
     alert("New Customized Theme Saved");
   };

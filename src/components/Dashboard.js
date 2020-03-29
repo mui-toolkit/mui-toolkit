@@ -126,13 +126,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Dashboard({ user }) {
+export default function WebPreview({ user }) {
   console.log("Dashboard -> user", user);
   const [themes, setThemes] = useState([]);
   const [foundUser, setFoundUser] = useState("");
 
   useEffect(() => {
-    const userThemes = [];
     const response = async () => {
       await db
         .collection("Users")
@@ -165,6 +164,13 @@ export default function Dashboard({ user }) {
       // .catch(err => {
       //   console.log("Error getting document", err);
       // });
+    };
+    response();
+  }, []);
+
+  useEffect(() => {
+    const userThemes = [];
+    const unsub = async () => {
       await db
         .collection("CustomizedThemes")
         .where("userId", "==", `${user.uid}`)
@@ -176,7 +182,7 @@ export default function Dashboard({ user }) {
           }
           snapshot.forEach(theme => {
             console.log(theme.id, "=>", theme.data());
-            userThemes.push({...theme.data(), themeId: theme.id});
+            userThemes.push({ ...theme.data(), themeId: theme.id });
             setThemes([...userThemes]);
           });
         })
@@ -184,7 +190,7 @@ export default function Dashboard({ user }) {
           console.log("Error getting documents", err);
         });
     };
-    response();
+    unsub();
   }, []);
 
   console.log("UsersThemes -> foundUser", foundUser, foundUser.themes);
@@ -330,7 +336,7 @@ export default function Dashboard({ user }) {
                 {selectedIndex === 1 && (
                   <UserProfile user={foundUser} uid={user.uid} />
                 )}
-                {selectedIndex === 2 && <ThemesTable themes={themes} />}
+                {selectedIndex === 2 && <ThemesTable setThemes={setThemes} themes={themes} />}
                 {selectedIndex === 3 && (
                   <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
                 )}
