@@ -61,10 +61,10 @@ const headCells = [
     minWidth: 170
   },
   {
-    id: "createdAt",
+    id: "lastEditAt",
     columnAlignment: false,
     disablePadding: true,
-    label: "Date saved",
+    label: "Date edited",
     minWidth: 100
   },
 
@@ -145,7 +145,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2)
   },
   table: {
-    minWidth: 750
+    minWidth: 850
   },
   visuallyHidden: {
     border: 0,
@@ -164,8 +164,8 @@ export default function ThemesTable({ setThemes, themes }) {
   console.log("ThemesTable -> themes", themes);
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
-    createdAt: JSON.stringify(
-      new Date(themeObject.createdAt.seconds * 1000)
+    lastEditAt: JSON.stringify(
+      new Date(themeObject.lastEditAt.seconds * 1000)
     ).slice(1, 11),
     primaryPalette: themeObject.palette.primary.main,
     secondaryPalette: themeObject.palette.secondary.main,
@@ -281,7 +281,7 @@ export default function ThemesTable({ setThemes, themes }) {
                       >
                         {row.themeName}
                       </TableCell>
-                      <TableCell align="right">{row.createdAt}</TableCell>
+                      <TableCell align="right">{row.lastEditAt}</TableCell>
                       <TableCell align="right">{row.primaryPalette}</TableCell>
                       <TableCell align="right">
                         {row.secondaryPalette}

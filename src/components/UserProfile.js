@@ -76,7 +76,6 @@ export default function UserProfile({ uid, user }) {
         firstName,
         lastName,
         username,
-        email,
         password
       })
       .then(() => {

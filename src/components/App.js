@@ -51,9 +51,8 @@ var provider = new firebase.auth.GoogleAuthProvider();
 // });
 const defaultUser = {
   loggedIn: false,
-  email: '',
-  uid: ''
-
+  email: "",
+  uid: ""
 };
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -86,8 +85,7 @@ function App() {
     // };
   }, []);
 
-
-  console.log('App -> user', user, 'admin', user.admin);
+  console.log("App -> user", user, "admin", user.admin);
 
   return (
     <BrowserRouter>
@@ -102,12 +100,12 @@ function App() {
           path="/design/:themeId"
         />
 
-        <Route exact path="/auth" component={Auth} />
         <Route
           render={props => <WebPreview {...props} />}
           exact
           path="/webpreview/:themeId"
         />
+        {/* <Route exact path='/explore' component={Explore} /> */}
 
         {!user.loggedIn && (
           <Switch>
@@ -115,8 +113,6 @@ function App() {
             <Route exact path="/signup" component={Signup} />
           </Switch>
         )}
-
-        <Route exact path="/auth" component={Auth} />
 
         {user.loggedIn && (
           <Switch>
@@ -132,9 +128,6 @@ function App() {
             {/* <Route exact path="/admin" component={Auth} /> */}
             {user.admin && <Route exact path="/admin" component={Auth} />}
             {/* <Route exact path="/admin" component={() => <Auth user={user} />} /> */}
-
-
-
           </Switch>
         )}
       </Switch>

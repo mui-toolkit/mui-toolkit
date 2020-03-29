@@ -45,9 +45,12 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   let history = useHistory();
 
   const handleClickOpen = () => {
-    // need to test if coming from themes table
+    // need to test if coming from themes table // can also check if (prop threaded theme)
     if (!user) {
-      setOpen(true);
+      setOpen(false);
+      setMessage("Theme Edited and Saved");
+      setSnackOpen(true);
+      editAndSavePalette(themeName);
     }
     // not loggedin should send user to signup
     else if (!user.loggedIn) {
@@ -89,11 +92,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
 
     //test for duplicate names
     const duplicateTest = await duplicateNameChecker(themeName);
-    if (!user) {
-      editAndSavePalette(themeName);
-      setMessage("Theme Edited and Saved");
-      setSnackOpen(true);
-    } else if (duplicateTest) {
+    if (duplicateTest) {
       setMessage("That name is a popular name. Please choose another name!");
       setOpen(true);
       setSnackOpen(true);
@@ -107,9 +106,12 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   const saveNewTheme = async themeName => {
     console.log(downloadTheme);
     downloadTheme.createdAt = new Date();
+    downloadTheme.lastEditAt = new Date();
     downloadTheme.userId = user.uid;
     downloadTheme.themeName = themeName;
-    downloadTheme.starsCount = 0;
+    downloadTheme.starsCount = 0; // will be calculated by instances in a user's favThemes array
+    downloadTheme.explore = false;
+    downloadTheme.createdBy = user.email;
     await db
       .collection("CustomizedThemes")
       .doc()
@@ -137,28 +139,52 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     saveNewTheme(themeName);
     addThemeToUser(themeName, user.uid);
   };
+
   const updateTheme = async themeName => {
     // .update nested obj risks overwriting. i think it's easier to .set
     // propThreadedThemeObjectFromStore.createdAt = new Date();
-    await db
-    .collection("CustomizedThemes")
-    .doc(// themeId name from Build.js)
-    .set({ ...downloadTheme })
-    .then(function() {
-      console.log(`Update ${themeName} to collection`);
-    })
-    .catch(function(error) {
-      console.log("Error updating a previously svaed theme: ", error);
-    });
+    // await db
+    // .collection("CustomizedThemes")
+    // .doc(// themeId name from Build.js)
+    // .set({ ...downloadTheme })
+    // .then(function() {
+    //   console.log(`Update ${themeName} to collection`);
+    // })
+    // .catch(function(error) {
+    //   console.log("Error updating a previously svaed theme: ", error);
+    // });
   };
 
-  const updateUsersTheme = async themeName => {};
+  const updateUsersTheme = async (themeName, userId) => {
+    //delete from users array
+    // await db
+    //   .collection("Users")
+    //   .doc(`${userId}`)
+    //   .update({
+    //     themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
+    //   })
+    //   .then(() => {
+    //     console.log("deleted reference to this theme");
+    //   });
+    // // add updated to users array
+    // await db
+    //   .collection("Users")
+    //   .doc(`${userId}`)
+    //   .update({
+    //     themes: firebase.firestore.FieldValue.arrayUnion(`${themeName}`)
+    //   })
+    //   .then(() => {
+    //     console.log("updated user with reference to theme");
+    //   });
+  };
 
-  const editAndSavePalette = async themeName => {
-// allowing them to change the themeName?  more logic headaches
+  const editAndSavePalette = async (themeName, userId) => {
+    console.log("editAndSavePalette -> userId", downloadTheme);
+    console.log("editAndSavePalette -> userId", userId);
+    console.log("editAndSavePalette -> themeName", themeName);
     updateTheme(themeName); // update theme
-    updateUsersTheme(themeName) // update the users theme array with that specific document
-    console.log("thinking.........");
+    updateUsersTheme(themeName, userId); // update the users theme array with that specific document
+    console.log("updating.........");
   };
   return (
     <div>
@@ -173,7 +199,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
         }}
         className={classes.button}
       >
-        {!user ? "Edit and Save" : "Save"}{" "}
+        {!user ? "Update and Save" : "Save"}{" "}
         <SaveIcon style={{ marginLeft: "5px" }} />
       </Button>
       <Snackbar
