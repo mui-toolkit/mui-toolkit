@@ -40,7 +40,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
 
   const [open, setOpen] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
-  const [themeName, setThemeName] = useState("untitled");
+  const [themeName, setSaveThemeName] = useState(downloadTheme.themeName);
   const [message, setMessage] = useState("");
   let history = useHistory();
 
@@ -105,12 +105,8 @@ export const SaveTheme = ({ downloadTheme, user }) => {
 
   const saveNewTheme = async themeName => {
     console.log(downloadTheme);
-    downloadTheme.createdAt = new Date();
-    downloadTheme.lastEditAt = new Date();
     downloadTheme.userId = user.uid;
     downloadTheme.themeName = themeName;
-    downloadTheme.starsCount = 0; // will be calculated by instances in a user's favThemes array
-    downloadTheme.explore = false;
     downloadTheme.createdBy = user.email;
     await db
       .collection("CustomizedThemes")
@@ -244,7 +240,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
               id="themeName"
               type="text"
               value={themeName}
-              onChange={e => setThemeName(e.target.value)}
+              onChange={e => setSaveThemeName(e.target.value)}
               fullWidth
             />
           </DialogContent>

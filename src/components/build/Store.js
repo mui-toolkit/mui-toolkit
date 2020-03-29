@@ -70,7 +70,7 @@ export const Store = props => {
   // Preloaded Saved Theme
   const [createdAt, setCreatedAt] = useState(new Date());
   const [lastEditAt, setLastEditAt] = useState(new Date());
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("guest");
   const [themeName, setThemeName] = useState("Untitled");
   const [starsCount, setStarsCount] = useState(0);
   const [explore, setExplore] = useState(false);
@@ -170,6 +170,14 @@ export const Store = props => {
   };
 
   let downloadTheme = {
+    createdAt,
+    lastEditAt,
+    createdBy,
+    userId,
+    themeName,
+    starsCount,
+    explore,
+
     //shadows did set
     //shadows not reflected in form
     //shadows chagned in download and custom object
@@ -278,7 +286,7 @@ export const Store = props => {
     setButtonHeight(themeObject.overrides.MuiButton.root.height);
     setButtonPadding(themeObject.overrides.MuiButton.root.padding);
     setCreatedAt(themeObject.createdAt);
-    setLastEditAt(themeObject.lastEditAt)
+    setLastEditAt(themeObject.lastEditAt);
     setUserId(themeObject.userId);
     setThemeName(themeObject.themeName);
     setStarsCount(themeObject.starsCount);
