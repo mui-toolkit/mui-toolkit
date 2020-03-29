@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Build } from '../build';
 import { createMuiTheme } from '@material-ui/core/';
 import { ThemeProvider } from '@material-ui/styles';
+import { db } from '../../config/firebase';
 
 export const Store = props => {
+  const { themeId } = useParams();
+  console.log('IN THE Store -> themeId', themeId);
+
+  const [fontStyle, setFontStyle] = useState({
+    fontFamily: 'Roboto',
+    fontSize: 14,
+  });
   //General
   const [color, setColor] = useState('#3f51b5');
   const [secondaryColor, setSecondaryColor] = useState('#f50057');
@@ -65,10 +74,7 @@ export const Store = props => {
   const [shadow, setShadow] = useState([]);
 
   //Typography
-  const [fontStyle, setFontStyle] = useState({
-    fontFamily: 'Roboto',
-    fontSize: 14,
-  });
+
   const [primaryTextColor, setPrimaryTextColor] = useState('#000');
   const [secondaryTextColor, setSecondaryTextColor] = useState('#000');
   const [primaryTextColorPicker, setPrimaryTextColorPicker] = useState(false);
@@ -119,9 +125,9 @@ export const Store = props => {
   const changeButtonHoverColor = buttonHoverColor => {
     setButtonHoverColor(buttonHoverColor.hex);
   };
-  const changeButtonHoverOpacity = buttonHoverOpacity => {
-    setButtonHoverOpacity(buttonHoverOpacity);
-  };
+  // const changeButtonHoverOpacity = (e, buttonHoverOpacity) => {
+  //   setButtonHoverOpacity(buttonHoverOpacity);
+  // };
   const changeButtonFontWeight = buttonFontWeight => {
     setButtonFontWeight(buttonFontWeight);
   };
@@ -158,6 +164,8 @@ export const Store = props => {
   const changeAlertVariant = alertVariant => {
     setAlertVariant(alertVariant);
   };
+
+  //Fonts
 
   //Material-Ui handlers
   const changeExpanded = panel => (event, newExpanded) => {
@@ -212,19 +220,39 @@ export const Store = props => {
   };
 
   let downloadTheme = {
+    //shadows did set
+    //shadows not reflected in form
+    //shadows chagned in download and custom object
+    shadows: shadow,
+
     palette: {
+      //palette primary did set
+      //palette primary reflected in form
+      //palette primary change in download and custom object
       primary: { main: `${color}` },
+      //palette secondary did set
+      //palette secondary reflected in form
+      //palette secondary change in download and custom object
       secondary: {
         main: `${secondaryColor}`,
       },
+      //palette text primary and secondary did set
+      //palette text primary and secondary reflected in form
+      //palette text primary and secondary change in download and custom object
       text: {
         primary: `${primaryTextColor}`,
         secondary: `${secondaryTextColor}`,
       },
+      //palette background paper and default did set
+      //palette background paper and default reflected in form
+      //palette background paper and default change in download and custom object
       background: {
         paper: `${paperColor}`,
         default: `${defaultColor}`,
       },
+      //palette error, warning, info and success did set
+      //palette error, warning, info and success reflected in form
+      //palette error, warning, info and success change in download and custom object
       error: {
         main: `${errorColor}`,
       },
@@ -237,15 +265,18 @@ export const Store = props => {
       success: {
         main: `${successColor}`,
       },
+      //hover opacity did not set
+      //hover opaicty not reflected in form
+      //hover opacity not changed in download and custom object
       action: {
         hoverOpacity: `${buttonHoverOpacity}`,
       },
     },
     typography: {
-      fontFamily: `${fontStyle.fontFamily}`,
-      fontSize: `${fontStyle.fontSize}`,
+      fontFamily: fontStyle.fontFamily,
+      fontSize: fontStyle.fontSize,
       button: {
-        fontWeight: `${buttonFontWeight}`,
+        fontWeight: buttonFontWeight,
         fontSize: `${buttonFontSize}rem`,
         textTransform: `${buttonTextTransform}`,
       },
@@ -272,12 +303,72 @@ export const Store = props => {
     },
   };
 
-  const customTheme = createMuiTheme(downloadTheme);
+  const setHooks = themeObject => {
+    setShadow(themeObject.shadows);
+    setColor(themeObject.palette.primary.main);
+    setSecondaryColor(themeObject.palette.secondary.main);
+    setPrimaryTextColor(themeObject.palette.text.primary);
+    setSecondaryTextColor(themeObject.palette.text.secondary);
+    setDefaultColor(themeObject.palette.background.default);
+    setPaperColor(themeObject.palette.background.paper);
+    setErrorColor(themeObject.palette.error.main);
+    setWarningColor(themeObject.palette.warning.main);
+    setInfoColor(themeObject.palette.info.main);
+    setSuccessColor(themeObject.palette.success.main);
+    setButtonHoverOpacity(themeObject.palette.action.hoverOpacity);
+    console.log(
+      '=====================opacity',
+      themeObject.palette.action.hoverOpacity,
+    );
+    setFontStyle({
+      ...fontStyle,
+      fontFamily: themeObject.typography.fontFamily,
+    });
+    setFontStyle({
+      ...fontStyle,
+      fontSize: Number(themeObject.typography.fontSize),
+    });
+    setButtonFontWeight(themeObject.typography.button.fontWeight);
+    setButtonFontSize(themeObject.typography.button.fontSize);
+    setButtonTextTransform(themeObject.typography.button.textTransform);
+    setButtonRipple(themeObject.props.MuiButtonBase.disableRipple);
+    setButtonElevation(themeObject.props.MuiButton.disableElevation);
+    setAlertVariant(themeObject.props.MuiAlert.variant);
+    setButtonBorderRadius(themeObject.overrides.MuiButton.root.borderRadius);
+    setButtonHeight(themeObject.overrides.MuiButton.root.height);
+    setButtonPadding(themeObject.overrides.MuiButton.root.padding);
+  };
 
+  // Will render when a user selects to view a saved theme
+  useEffect(() => {
+    if (themeId) {
+      const response = async () => {
+        await db
+          .collection('CustomizedThemes')
+          .doc(`${themeId}`)
+          .get()
+          .then(async doc => {
+            console.log('IN THE STORE saved Theme doc', doc.data());
+            await setHooks(doc.data());
+            // setButtonHoverOpacity(1);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      };
+      response();
+    }
+  }, []);
+  console.log('SETBUTTONHOVEROPACITY', buttonHoverOpacity);
+
+  const customTheme = createMuiTheme(downloadTheme);
+  console.log('C', customTheme);
+  console.log('D', downloadTheme);
   return (
     <React.Fragment>
       <Build
         user={props.user}
+        themeId={themeId}
         //General
         color={color}
         setColor={setColor}
@@ -311,7 +402,7 @@ export const Store = props => {
         buttonHoverColor={buttonHoverColor}
         changeButtonHoverColor={changeButtonHoverColor}
         buttonHoverOpacity={buttonHoverOpacity}
-        changeButtonHoverOpacity={changeButtonHoverOpacity}
+        // changeButtonHoverOpacity={changeButtonHoverOpacity}
         buttonFontWeight={buttonFontWeight}
         changeButtonFontWeight={changeButtonFontWeight}
         buttonFontSize={buttonFontSize}
@@ -356,6 +447,7 @@ export const Store = props => {
         changeSuccessColor={changeSuccessColor}
         alertVariant={alertVariant}
         changeAlertVariant={changeAlertVariant}
+        setButtonHoverOpacity={setButtonHoverOpacity}
       />
     </React.Fragment>
   );

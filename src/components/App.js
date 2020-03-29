@@ -13,7 +13,6 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import { Store } from './build/';
 import WebPreview from '../WebPreview/WebPreview';
-import Explore from './Explore';
 
 firebase.auth().onAuthStateChanged(user => {
   console.log('user', user);
@@ -66,15 +65,23 @@ function App() {
           exact
           path='/design/:themeId'
         />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/signup' component={Signup} />
+
         <Route exact path='/auth' component={Auth} />
         <Route
           render={props => <WebPreview {...props} />}
           exact
           path='/webpreview/:themeId'
         />
-        <Route exact path='/explore' component={Explore} />
+        {/* <Route exact path='/explore' component={Explore} /> */}
+
+        {!user.loggedIn && (
+          <Switch>
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/signup' component={Signup} />
+          </Switch>
+        )}
+
+        <Route exact path='/auth' component={Auth} />
 
         {user.loggedIn && (
           <Switch>
