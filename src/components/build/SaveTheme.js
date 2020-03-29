@@ -9,11 +9,15 @@ import {
   DialogContentText,
   DialogTitle,
   Paper,
-  Typography
+  Typography,
+  Fade,
+  Grow,
+  Snackbar
 } from "@material-ui/core/";
 import SaveIcon from "@material-ui/icons/Save";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -30,24 +34,67 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const SaveTheme = ({ downloadTheme, user }) => {
+  console.log("SaveTheme -> user", user);
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
   const [themeName, setThemeName] = useState("untitled");
+  const [message, setMessage] = useState("");
+  let history = useHistory();
 
   const handleClickOpen = () => {
-    setOpen(true);
+    // not loggedin should send user to signup
+    if (!user.loggedIn) {
+      setMessage(
+        "You need to signup for an account in order to save. It's free!"
+      );
+      setSnackOpen(true);
+      setTimeout(function() {
+        history.push("/signup");
+      }, 4000);
+    } else {
+      setOpen(true);
+    }
   };
 
   const handleCancel = e => {
     setOpen(false);
+    setSnackOpen(false);
   };
-  const handleSave = e => {
+  const handleSnackCancel = e => {
+    setSnackOpen(false);
+  };
+
+  const duplicateNameChecker = async themeName => {
+    const checkDuplicate = await db
+      .collection("Users")
+      .where("themes", "array-contains", `${themeName}`)
+      .get()
+      .then(querySnapshot => {
+        console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
+        return !querySnapshot.empty;
+      });
+    console.log("SaveTheme -> checkDuplicate", checkDuplicate);
+    return checkDuplicate;
+  };
+
+  const handleSave = async e => {
     setOpen(false);
-    // not loggedin should send user to signup
-    sendPalette(themeName);
-    alert("New Customized Theme Saved");
+
+    //test for duplicate names
+    const duplicateTest = await duplicateNameChecker(themeName);
+    if (duplicateTest) {
+      setMessage("That name is a popular name. Please choose another name!");
+      setOpen(true);
+      setSnackOpen(true);
+    } else {
+      sendPalette(themeName);
+      setMessage("New Customized Theme Saved");
+      setSnackOpen(true);
+    }
   };
+
   const addThemeToUser = async (themeName, userId) => {
     await db
       .collection("Users")
@@ -58,21 +105,6 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       .then(() => {
         console.log("updated user with reference to theme");
       });
-
-    // const themeNameUserRef = db
-    //   .collection("Users")
-    //   .doc(`${userId}`)
-    //   .collection("CustomizedThemes");
-
-    // themeNameUserRef
-    //   .doc(`${themeName}`)
-    //   .set({})
-    //   .then(function() {
-    //     console.log("Theme Added ");
-    //   })
-    //   .catch(function(error) {
-    //     console.error("Error adding theme: ", error);
-    //   });
   };
 
   const sendPalette = async themeName => {
@@ -86,12 +118,11 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       .doc()
       .set({ ...downloadTheme })
       .then(function() {
-        console.log("Added Theme to collection");
+        console.log(`Added Theme ${themeName} to collection`);
       })
       .catch(function(error) {
         console.log("Error creating a new theme: ", error);
       });
-    console.log("Test -> newTheme", newTheme);
     addThemeToUser(themeName, user.uid);
   };
   return (
@@ -109,6 +140,13 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       >
         Save <SaveIcon style={{ marginLeft: "5px" }} />
       </Button>
+      <Snackbar
+        autoHideDuration={4000}
+        open={snackOpen}
+        onClose={handleSnackCancel}
+        message={message}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      />
       <Dialog
         open={open}
         onClose={handleCancel}
@@ -142,7 +180,6 @@ export const SaveTheme = ({ downloadTheme, user }) => {
               autoFocus
               margin="dense"
               id="themeName"
-              label="themeName"
               type="text"
               value={themeName}
               onChange={e => setThemeName(e.target.value)}
