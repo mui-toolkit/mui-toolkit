@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import { SaveTheme, BuildNav, ColorGenerator } from "../build";
 import { PreviewAppBar, PreviewTabs } from "../preview";
 import Download from "../Download";
-
+import StarIcon from "@material-ui/icons/Star";
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { Grid, Paper } from "@material-ui/core/";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { db } from "../../config/firebase";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
   preview: {
@@ -26,6 +29,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const handleStar = () => {
+  // add star to starCount of theme
+  // add theme to user favoriteTheme array
+};
 export const Build = props => {
   const classes = useStyles();
   const { themeId } = useParams();
@@ -234,6 +241,17 @@ export const Build = props => {
             <Grid item>
               <Download downloadTheme={downloadTheme} />
               <SaveTheme user={user} downloadTheme={downloadTheme} />
+              <Tooltip title="Star this theme">
+                <IconButton aria-label="star" onClick={() => handleStar}>
+                  <StarIcon />
+                </IconButton>
+              </Tooltip>
+              {/* <Tooltip title="Star this theme">
+                <IconButton aria-label="star" onClick={() => handleStar}>
+                  <StarBorderIcon />
+                  <StarIcon />
+                </IconButton>
+              </Tooltip> */}
             </Grid>
           </Paper>
         </Grid>

@@ -137,11 +137,27 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     saveNewTheme(themeName);
     addThemeToUser(themeName, user.uid);
   };
+  const updateTheme = async themeName => {
+    // .update nested obj risks overwriting. i think it's easier to .set
+    // propThreadedThemeObjectFromStore.createdAt = new Date();
+    await db
+    .collection("CustomizedThemes")
+    .doc(// themeId name from Build.js)
+    .set({ ...downloadTheme })
+    .then(function() {
+      console.log(`Update ${themeName} to collection`);
+    })
+    .catch(function(error) {
+      console.log("Error updating a previously svaed theme: ", error);
+    });
+  };
+
+  const updateUsersTheme = async themeName => {};
 
   const editAndSavePalette = async themeName => {
-    // propThreadedThemeObjectFromStore.createdAt = new Date();
-    // update firebase theme document
-    // update the users theme array with that specific document
+// allowing them to change the themeName?  more logic headaches
+    updateTheme(themeName); // update theme
+    updateUsersTheme(themeName) // update the users theme array with that specific document
     console.log("thinking.........");
   };
   return (
