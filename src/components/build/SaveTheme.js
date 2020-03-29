@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const SaveTheme = ({ downloadTheme, user }) => {
+  console.log("SaveTheme -> downloadTheme", downloadTheme);
   console.log("SaveTheme -> user", user);
   const classes = useStyles();
 
@@ -44,8 +45,12 @@ export const SaveTheme = ({ downloadTheme, user }) => {
   let history = useHistory();
 
   const handleClickOpen = () => {
+    // need to test if coming from themes table
+    if (!user) {
+      setOpen(true);
+    }
     // not loggedin should send user to signup
-    if (!user.loggedIn) {
+    else if (!user.loggedIn) {
       setMessage(
         "You need to signup for an account in order to save. It's free!"
       );
@@ -84,17 +89,38 @@ export const SaveTheme = ({ downloadTheme, user }) => {
 
     //test for duplicate names
     const duplicateTest = await duplicateNameChecker(themeName);
-    if (duplicateTest) {
+    if (!user) {
+      editAndSavePalette(themeName);
+      setMessage("Theme Edited and Saved");
+      setSnackOpen(true);
+    } else if (duplicateTest) {
       setMessage("That name is a popular name. Please choose another name!");
       setOpen(true);
       setSnackOpen(true);
     } else {
-      sendPalette(themeName);
+      saveNewPalette(themeName);
       setMessage("New Customized Theme Saved");
       setSnackOpen(true);
     }
   };
 
+  const saveNewTheme = async themeName => {
+    console.log(downloadTheme);
+    downloadTheme.createdAt = new Date();
+    downloadTheme.userId = user.uid;
+    downloadTheme.themeName = themeName;
+    downloadTheme.starsCount = 0;
+    await db
+      .collection("CustomizedThemes")
+      .doc()
+      .set({ ...downloadTheme })
+      .then(function() {
+        console.log(`Added Theme ${themeName} to collection`);
+      })
+      .catch(function(error) {
+        console.log("Error creating a new theme: ", error);
+      });
+  };
   const addThemeToUser = async (themeName, userId) => {
     await db
       .collection("Users")
@@ -107,23 +133,16 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       });
   };
 
-  const sendPalette = async themeName => {
-    console.log(downloadTheme);
-    downloadTheme.createdAt = new Date();
-    downloadTheme.userId = user.uid;
-    downloadTheme.themeName = themeName;
-    downloadTheme.starsCount = 0;
-    let newTheme = await db
-      .collection("CustomizedThemes")
-      .doc()
-      .set({ ...downloadTheme })
-      .then(function() {
-        console.log(`Added Theme ${themeName} to collection`);
-      })
-      .catch(function(error) {
-        console.log("Error creating a new theme: ", error);
-      });
+  const saveNewPalette = async themeName => {
+    saveNewTheme(themeName);
     addThemeToUser(themeName, user.uid);
+  };
+
+  const editAndSavePalette = async themeName => {
+    // propThreadedThemeObjectFromStore.createdAt = new Date();
+    // update firebase theme document
+    // update the users theme array with that specific document
+    console.log("thinking.........");
   };
   return (
     <div>
@@ -138,7 +157,8 @@ export const SaveTheme = ({ downloadTheme, user }) => {
         }}
         className={classes.button}
       >
-        Save <SaveIcon style={{ marginLeft: "5px" }} />
+        {!user ? "Edit and Save" : "Save"}{" "}
+        <SaveIcon style={{ marginLeft: "5px" }} />
       </Button>
       <Snackbar
         autoHideDuration={4000}
