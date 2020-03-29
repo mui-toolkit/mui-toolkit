@@ -9,6 +9,10 @@ export const Store = props => {
   const { themeId } = useParams();
   console.log("IN THE Store -> themeId", themeId);
 
+  const [fontStyle, setFontStyle] = useState({
+    fontFamily: "Roboto",
+    fontSize: 14
+  });
   //General
   const [color, setColor] = useState("#3f51b5");
   const [secondaryColor, setSecondaryColor] = useState("#f50057");
@@ -70,10 +74,7 @@ export const Store = props => {
   const [shadow, setShadow] = useState([]);
 
   //Typography
-  const [fontStyle, setFontStyle] = useState({
-    fontFamily: "Roboto",
-    fontSize: 14
-  });
+
   const [primaryTextColor, setPrimaryTextColor] = useState("#000");
   const [secondaryTextColor, setSecondaryTextColor] = useState("#000");
   const [primaryTextColorPicker, setPrimaryTextColorPicker] = useState(false);
@@ -217,20 +218,39 @@ export const Store = props => {
   };
 
   let downloadTheme = {
+    //shadows did set
+    //shadows not reflected in form
+    //shadows chagned in download and custom object
     shadows: shadow,
+
     palette: {
+      //palette primary did set
+      //palette primary reflected in form
+      //palette primary change in download and custom object
       primary: { main: `${color}` },
+      //palette secondary did set
+      //palette secondary reflected in form
+      //palette secondary change in download and custom object
       secondary: {
         main: `${secondaryColor}`
       },
+      //palette text primary and secondary did set
+      //palette text primary and secondary reflected in form
+      //palette text primary and secondary change in download and custom object
       text: {
         primary: `${primaryTextColor}`,
         secondary: `${secondaryTextColor}`
       },
+      //palette background paper and default did set
+      //palette background paper and default reflected in form
+      //palette background paper and default change in download and custom object
       background: {
         paper: `${paperColor}`,
         default: `${defaultColor}`
       },
+      //palette error, warning, info and success did set
+      //palette error, warning, info and success reflected in form
+      //palette error, warning, info and success change in download and custom object
       error: {
         main: `${errorColor}`
       },
@@ -243,15 +263,18 @@ export const Store = props => {
       success: {
         main: `${successColor}`
       },
+      //hover opacity did not set
+      //hover opaicty not reflected in form
+      //hover opacity not changed in download and custom object
       action: {
-        hoverOpacity: `${buttonHoverOpacity}`
+        hoverOpacity: Number(buttonHoverOpacity)
       }
     },
     typography: {
-      fontFamily: `${fontStyle.fontFamily}`,
-      fontSize: `${fontStyle.fontSize}`,
+      fontFamily: fontStyle.fontFamily,
+      fontSize: fontStyle.fontSize,
       button: {
-        fontWeight: `${buttonFontWeight}`,
+        fontWeight: buttonFontWeight,
         fontSize: `${buttonFontSize}rem`,
         textTransform: `${buttonTextTransform}`
       }
@@ -278,70 +301,38 @@ export const Store = props => {
     }
   };
 
-  const customTheme = createMuiTheme({
-    shadows: shadow,
-    palette: {
-      primary: { main: `${color}` },
-      secondary: {
-        main: `${secondaryColor}`
-      },
-      text: {
-        primary: `${primaryTextColor}`,
-        secondary: `${secondaryTextColor}`
-      },
-      background: {
-        paper: `${paperColor}`,
-        default: `${defaultColor}`
-      },
-      error: {
-        main: `${errorColor}`
-      },
-      warning: {
-        main: `${warningColor}`
-      },
-      info: {
-        main: `${infoColor}`
-      },
-      success: {
-        main: `${successColor}`
-      },
-      action: {
-        // active: 'rgba(0, 0, 0, 0.54)',
-        hoverOpacity: `${buttonHoverOpacity}`
-        // selected: 'rgba(0, 0, 0, 0.04)',
-        // selectedOpacity: 0.08
-      }
-    },
-    typography: {
-      fontFamily: `${fontStyle.fontFamily}`,
-      fontSize: `${fontStyle.fontSize}`,
-      button: {
-        fontWeight: `${buttonFontWeight}`,
-        fontSize: `${buttonFontSize}rem`,
-        textTransform: `${buttonTextTransform}`
-      }
-    },
-    props: {
-      MuiButtonBase: {
-        disableRipple: buttonRipple
-      },
-      MuiButton: {
-        disableElevation: buttonElevation
-      },
-      MuiAlert: {
-        variant: `${alertVariant}`
-      }
-    },
-    overrides: {
-      MuiButton: {
-        root: {
-          borderRadius: buttonBorderRadius,
-          height: buttonHeight,
-          padding: `${buttonPadding}px`
-        }
-      }
-    }
-  });
+  const setHooks = themeObject => {
+    setShadow(themeObject.shadows);
+    setColor(themeObject.palette.primary.main);
+    setSecondaryColor(themeObject.palette.secondary.main);
+    setPrimaryTextColor(themeObject.palette.text.primary);
+    setSecondaryTextColor(themeObject.palette.text.secondary);
+    setDefaultColor(themeObject.palette.background.default);
+    setPaperColor(themeObject.palette.background.paper);
+    setErrorColor(themeObject.palette.error.main);
+    setWarningColor(themeObject.palette.warning.main);
+    setInfoColor(themeObject.palette.info.main);
+    setSuccessColor(themeObject.palette.success.main);
+    setButtonHoverOpacity(0.84);
+    console.log("=====================opacity", buttonHoverOpacity);
+    setFontStyle({
+      ...fontStyle,
+      fontFamily: themeObject.typography.fontFamily
+    });
+    setFontStyle({
+      ...fontStyle,
+      fontSize: Number(themeObject.typography.fontSize)
+    });
+    setButtonFontWeight(themeObject.typography.button.fontWeight);
+    setButtonFontSize(themeObject.typography.button.fontSize);
+    setButtonTextTransform(themeObject.typography.button.textTransform);
+    setButtonRipple(themeObject.props.MuiButtonBase.disableRipple);
+    setButtonElevation(themeObject.props.MuiButton.disableElevation);
+    setAlertVariant(themeObject.props.MuiAlert.variant);
+    setButtonBorderRadius(themeObject.overrides.MuiButton.root.borderRadius);
+    setButtonHeight(themeObject.overrides.MuiButton.root.height);
+    setButtonPadding(themeObject.overrides.MuiButton.root.padding);
+  };
 
   // Will render when a user selects to view a saved theme
   useEffect(() => {
@@ -351,16 +342,9 @@ export const Store = props => {
           .collection("CustomizedThemes")
           .doc(`${themeId}`)
           .get()
-          .then(doc => {
-            console.log("saved Theme doc", doc.data());
-            if (doc.data().palette.primary.main)
-              setColor(doc.data().palette.primary.main);
-            if (doc.data().palette.secondary.main)
-              setSecondaryColor(doc.data().palette.secondary.main);
-            if (doc.data().palette.background.default)
-              setDefaultColor(doc.data().palette.background.default);
-            if (doc.data().palette.background.paper)
-              setPaperColor(doc.data().palette.background.paper);
+          .then(async doc => {
+            console.log("IN THE STORE saved Theme doc", doc.data());
+            await setHooks(doc.data());
           })
           .catch(err => {
             console.log("Error getting documents", err);
@@ -370,6 +354,9 @@ export const Store = props => {
     }
   }, []);
 
+  const customTheme = createMuiTheme(downloadTheme);
+  console.log("C", customTheme);
+  console.log("D", downloadTheme);
   return (
     <React.Fragment>
       <Build
