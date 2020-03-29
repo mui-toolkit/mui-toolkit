@@ -40,11 +40,6 @@ export const Store = props => {
   const [shadow, setShadow] = useState([]);
 
   //Typography
-  const [fontStyle, setFontStyle] = useState({
-    fontFamily: 'Roboto',
-    fontSize: 14,
-  });
-
   const [fontFamily, setFontFamily] = useState('Roboto');
   const [fontSize, setFontSize] = useState(14);
   const [primaryTextColor, setPrimaryTextColor] = useState('#000');
