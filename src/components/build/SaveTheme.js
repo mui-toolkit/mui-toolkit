@@ -33,7 +33,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const SaveTheme = ({ downloadTheme, user }) => {
+export const SaveTheme = ({ downloadTheme, user, themeId }) => {
+  console.log("SaveTheme -> themeId", themeId);
   console.log("SaveTheme -> downloadTheme", downloadTheme);
   console.log("SaveTheme -> user", user);
   const classes = useStyles();
@@ -50,6 +51,7 @@ export const SaveTheme = ({ downloadTheme, user }) => {
       setOpen(false);
       setMessage("Theme Edited and Saved");
       setSnackOpen(true);
+      setSaveThemeName(downloadTheme.themeName);
       editAndSavePalette(themeName);
     }
     // not loggedin should send user to signup
@@ -136,50 +138,48 @@ export const SaveTheme = ({ downloadTheme, user }) => {
     addThemeToUser(themeName, user.uid);
   };
 
-  const updateTheme = async themeName => {
+  const updateTheme = async oldThemeName => {
     // .update nested obj risks overwriting. i think it's easier to .set
-    // propThreadedThemeObjectFromStore.createdAt = new Date();
-    // await db
-    // .collection("CustomizedThemes")
-    // .doc(// themeId name from Build.js)
-    // .set({ ...downloadTheme })
-    // .then(function() {
-    //   console.log(`Update ${themeName} to collection`);
-    // })
-    // .catch(function(error) {
-    //   console.log("Error updating a previously svaed theme: ", error);
-    // });
+    downloadTheme.lastEditAt = new Date();
+    await db
+      .collection("CustomizedThemes")
+      .doc(`${themeId}`)
+      .set({ ...downloadTheme })
+      .then(function() {
+        console.log(`Update ${oldThemeName} to collection`);
+      })
+      .catch(function(error) {
+        console.log("Error updating a previously svaed theme: ", error);
+      });
   };
 
-  const updateUsersTheme = async (themeName, userId) => {
+  const updateUsersTheme = async (oldThemeName, userId) => {
     //delete from users array
-    // await db
-    //   .collection("Users")
-    //   .doc(`${userId}`)
-    //   .update({
-    //     themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
-    //   })
-    //   .then(() => {
-    //     console.log("deleted reference to this theme");
-    //   });
-    // // add updated to users array
-    // await db
-    //   .collection("Users")
-    //   .doc(`${userId}`)
-    //   .update({
-    //     themes: firebase.firestore.FieldValue.arrayUnion(`${themeName}`)
-    //   })
-    //   .then(() => {
-    //     console.log("updated user with reference to theme");
-    //   });
+    await db
+      .collection("Users")
+      .doc(`${userId}`)
+      .update({
+        themes: firebase.firestore.FieldValue.arrayRemove(`${oldThemeName}`)
+      })
+      .then(() => {
+        console.log("deleted reference to this theme");
+      });
+    // add updated to users array
+    await db
+      .collection("Users")
+      .doc(`${userId}`)
+      .update({
+        themes: firebase.firestore.FieldValue.arrayUnion(`${themeName}`)
+      })
+      .then(() => {
+        console.log("updated user with reference to theme");
+      });
   };
 
-  const editAndSavePalette = async (themeName, userId) => {
+  const editAndSavePalette = async => {
     console.log("editAndSavePalette -> userId", downloadTheme);
-    console.log("editAndSavePalette -> userId", userId);
-    console.log("editAndSavePalette -> themeName", themeName);
-    updateTheme(themeName); // update theme
-    updateUsersTheme(themeName, userId); // update the users theme array with that specific document
+    updateTheme(downloadTheme.themeName);
+    updateUsersTheme(downloadTheme.themeName, downloadTheme.userId);
     console.log("updating.........");
   };
   return (

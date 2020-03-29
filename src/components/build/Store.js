@@ -303,9 +303,7 @@ export const Store = props => {
           .doc(`${themeId}`)
           .get()
           .then(async doc => {
-            console.log("IN THE STORE saved Theme doc", doc.data());
             await setHooks(doc.data());
-            // setButtonHoverOpacity(1);
           })
           .catch(err => {
             console.log("Error getting documents", err);
@@ -316,8 +314,6 @@ export const Store = props => {
   }, []);
 
   const customTheme = createMuiTheme(downloadTheme);
-  console.log("C", customTheme);
-  console.log("D", downloadTheme);
   return (
     <React.Fragment>
       <Build

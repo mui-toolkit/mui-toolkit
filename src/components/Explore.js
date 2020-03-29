@@ -173,7 +173,7 @@ export default function Explore() {
                   open={open}
                   anchorEl={anchorEl}
                   onClose={handleClose}
-                  elevation={1}
+                  // elevation={1}
                   anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'center',
