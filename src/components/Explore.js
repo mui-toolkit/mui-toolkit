@@ -57,6 +57,12 @@ export default function Explore() {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  // get from database
+  //url to the preview (web)
+  //img
+  //user ==> username
+  // name: name of theme
+  // theme id dynamic // only if user adds to explore page
   const themes = [
     {
       img:

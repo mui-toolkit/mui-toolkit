@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Header from '../components/ui/Header';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from './Home';
-import Learn from './Learn';
-import Login from './Login';
-import Signup from './Signup';
-import ThemesTable from './ThemesTable';
-import Dashboard from './Dashboard';
-import UserProfile from './UserProfile';
-import { Auth } from './auth';
-import firebase from 'firebase';
-import 'firebase/auth';
-import { Store } from './build/';
-import WebPreview from '../WebPreview/WebPreview';
-import Explore from './Explore';
+import React, { useState, useEffect } from "react";
+import Header from "../components/ui/Header";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Home from "./Home";
+import Learn from "./Learn";
+import Login from "./Login";
+import Signup from "./Signup";
+import ThemesTable from "./ThemesTable";
+import Dashboard from "./Dashboard";
+import UserProfile from "./UserProfile";
+import { Auth } from "./auth";
+import firebase from "firebase";
+import "firebase/auth";
+import { Store } from "./build/";
+import WebPreview from "../WebPreview/WebPreview";
+import Explore from './Explore'
 
 // var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -101,7 +101,7 @@ function App() {
         <Route
           render={props => <Store {...props} />}
           exact
-          path='/design/:themeId'
+          path="/design/:themeId/:signedInUserId"
         />
 
 
