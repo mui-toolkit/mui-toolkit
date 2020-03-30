@@ -84,7 +84,7 @@ export default function Learn() {
               className={classes.contentLinks}
               href='https://material-ui.com/customization/theming/'
             >
-              Dowload
+              Download
             </Link>
             <br />
             <Link
