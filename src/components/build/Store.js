@@ -44,7 +44,7 @@ export const Store = (props) => {
 	const [ buttonBorderRadius, setButtonBorderRadius ] = useState(5);
 
 	//Shadows
-	const [ shadow, setShadow ] = useState([]);
+	const [ shadow, setShadow ] = useState(shadowFalse);
 
 	//Typography
 	const [ fontFamily, setFontFamily ] = useState('Roboto');
