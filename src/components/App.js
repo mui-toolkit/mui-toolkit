@@ -15,7 +15,7 @@ import { Store } from './build/';
 import WebPreview from '../WebPreview/WebPreview';
 import Explore from './Explore';
 
-var provider = new firebase.auth.GoogleAuthProvider();
+// var provider = new firebase.auth.GoogleAuthProvider();
 
 // firebase
 //   .auth()
@@ -86,7 +86,10 @@ function App() {
     // };
   }, []);
 
-  console.log('App -> user', user, 'admin', user.admin);
+
+
+  console.log('App -> user', user);
+
 
   return (
     <BrowserRouter>
@@ -100,6 +103,7 @@ function App() {
           exact
           path='/design/:themeId'
         />
+
 
         <Route
           render={props => <WebPreview {...props} />}
@@ -124,10 +128,14 @@ function App() {
               component={() => <Dashboard user={user} />}
             />
 
-            <Route exact path='/themestable' component={ThemesTable} />
-            <Route exact path='/userprofile' component={UserProfile} />
+
+            <Route exact path="/themestable" component={ThemesTable} />
+
+            <Route exact path="/userprofile" component={UserProfile} />
             {/* <Route exact path="/admin" component={Auth} /> */}
-            {user.admin && <Route exact path='/admin' component={Auth} />}
+
+            {user.admin && <Route exact path="/admin" component={Auth} />}
+
             {/* <Route exact path="/admin" component={() => <Auth user={user} />} /> */}
           </Switch>
         )}
