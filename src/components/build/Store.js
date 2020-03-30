@@ -5,12 +5,24 @@ import { createMuiTheme } from "@material-ui/core/";
 import { ThemeProvider } from "@material-ui/styles";
 import { db } from "../../config/firebase";
 import { shadowTrue, shadowFalse } from "./Shadows";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff"
+  }
+}));
 
 export const Store = props => {
   const { themeId, signedInUserId } = useParams();
   console.log("IN THE STORE ====> signedInUserId", signedInUserId);
   console.log("IN THE Store -> themeId", themeId);
   const [favorite, setFavorite] = useState({});
+  const classes = useStyles();
+
   //General
   const [color, setColor] = useState("#3f51b5");
   const [secondaryColor, setSecondaryColor] = useState("#f50057");
@@ -76,6 +88,7 @@ export const Store = props => {
   const [starsCount, setStarsCount] = useState(0);
   const [explore, setExplore] = useState(false);
   const [createdBy, setCreatedBy] = useState("anonymous");
+  const [isLoading, setLoading] = useState(true);
 
   //General Handlers
   const changeColor = color => {
@@ -303,14 +316,17 @@ export const Store = props => {
           .collection("CustomizedThemes")
           .doc(`${themeId}`)
           .get()
-          .then(async doc => {
-            await setHooks(doc.data());
+          .then(doc => {
+            setHooks(doc.data());
+            setLoading(false);
           })
           .catch(err => {
             console.log("Error getting documents", err);
           });
       };
       response();
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -346,6 +362,10 @@ export const Store = props => {
   const customTheme = createMuiTheme(downloadTheme);
   return (
     <React.Fragment>
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       <Build
         user={props.user}
         themeId={themeId}
