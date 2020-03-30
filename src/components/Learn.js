@@ -28,6 +28,13 @@ const useStyles = makeStyles({
     marginTop: '8em',
     marginBottom: '2em',
   },
+  contentLinks: {
+    color: '#818181',
+    fontSize: 20,
+    lineHeight: 2,
+    fontFamily: 'Roboto',
+    fontWeight: 100,
+  },
 });
 
 export default function Learn() {
@@ -57,6 +64,42 @@ export default function Learn() {
               for setting up you're environment and get started designing your
               custome Material-UI theme.
             </Typography>
+            <br />
+            <Typography> CONTENTS</Typography>
+            <Link
+              className={classes.contentLinks}
+              href='https://material-ui.com/customization/theming/'
+            >
+              What is Material-Ui?
+            </Link>
+            <br />
+            <Link
+              className={classes.contentLinks}
+              href='https://material-ui.com/customization/theming/'
+            >
+              What is myui?
+            </Link>
+            <br />
+            <Link
+              className={classes.contentLinks}
+              href='https://material-ui.com/customization/theming/'
+            >
+              Dowload
+            </Link>
+            <br />
+            <Link
+              className={classes.contentLinks}
+              href='https://material-ui.com/customization/theming/'
+            >
+              Save
+            </Link>
+            <br />
+            <Link
+              className={classes.contentLinks}
+              href='https://material-ui.com/customization/theming/'
+            >
+              Share
+            </Link>
           </Grid>
           <Grid item align='center' className={classes.title} xs={6}>
             <img alt='mui logo' src={muiLogo} style={{ width: '20%' }} />
