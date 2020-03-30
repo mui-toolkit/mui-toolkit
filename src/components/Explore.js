@@ -138,7 +138,10 @@ export default function Explore() {
               </Button>
             </Grid>
 
-            <ExploreAdd savedThemes={savedThemes} />
+            <ExploreAdd
+              savedThemes={savedThemes}
+              setExploreThemes={setExploreThemes}
+            />
           </Grid>
           <Grid container direction="row" justify="center" alignItems="center">
             {exploreThemes.map(theme => (
