@@ -13,7 +13,7 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import { Store } from './build/';
 
-var provider = new firebase.auth.GoogleAuthProvider();
+// var provider = new firebase.auth.GoogleAuthProvider();
 
 // firebase
 //   .auth()
@@ -84,7 +84,7 @@ function App() {
     // };
   }, []);
 
-  console.log('App -> user', user, 'admin', user.admin);
+  console.log('App -> user', user);
   return (
     <BrowserRouter>
       <Header user={user} />
