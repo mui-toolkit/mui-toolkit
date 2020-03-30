@@ -46,10 +46,9 @@ export default function Header(props) {
       .auth()
       .signOut()
       .then(() => {
-        console.log('user signed out props');
+        console.log('user signed out', props);
       });
   };
-
   if (!props.user.loggedIn) {
     return (
       <React.Fragment>
@@ -69,7 +68,7 @@ export default function Header(props) {
             >
               mymui.
             </Button>
-            <Tabs className={classes.tabContainer}>
+            <Tabs value={false} className={classes.tabContainer}>
               <Tab
                 className={classes.tab}
                 component={Link}
@@ -152,8 +151,9 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              to='/logout'
-              label='Logout'
+              to="/"
+              label="Logout"
+
               onClick={handleClick}
             />
           </Grid>

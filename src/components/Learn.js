@@ -7,19 +7,19 @@ import { Typography, Paper, Link } from '@material-ui/core';
 const useStyles = makeStyles({
   root: {
     color: 'black',
-    height: '100%',
+    height: '100%'
   },
   title: {
-    padding: '1em',
+    padding: '1em'
   },
   container: {
     paddingTop: '5em',
     paddingLeft: '200px',
-    paddingRight: '200px',
+    paddingRight: '200px'
   },
   tab: {
-    textIndent: '30px',
-  },
+    textIndent: '30px'
+  }
 });
 
 export default function Learn() {
@@ -30,29 +30,30 @@ export default function Learn() {
       <div className={classes.root}>
         <Grid
           container
-          direction='column'
-          alignItems='center'
+          direction="column"
+          alignItems="center"
           className={classes.container}
         >
+
           <Paper>
             <Grid item align='center' className={classes.title}>
               <img alt='mui logo' src={muiLogo} style={{ width: '20%' }} />
             </Grid>
             <Grid item className={classes.title}>
-              <Typography variant='h4' align='center'>
+              <Typography variant="h4" align="center">
                 What is Material UI?
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant='body1' align='center'>
+              <Typography variant="body1" align="center">
                 Material UI is a popular React UI Framework with 55.5k stars on
                 Github. Visit{' '}
-                <Link href='https://material-ui.com/'>Material UI</Link> to
+                <Link href="https://material-ui.com/">Material UI</Link> to
                 learn more.
               </Typography>
             </Grid>
             <Grid item className={classes.title}>
-              <Typography variant='h4' align='center'>
+              <Typography variant="h4" align="center">
                 What is mymui?
               </Typography>
             </Grid>
