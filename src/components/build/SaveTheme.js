@@ -33,8 +33,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const SaveTheme = ({ downloadTheme, user, themeId, clicked }) => {
-  console.log("SaveTheme -> clicked", clicked);
+export const SaveTheme = ({
+  downloadTheme,
+  user,
+  themeId,
+  starClicked,
+  bookmarkClicked
+}) => {
+  console.log("starClicked", starClicked);
+  console.log("bookmarkClicked", bookmarkClicked);
   console.log("SaveTheme -> themeId", themeId);
   console.log("SaveTheme -> downloadTheme", downloadTheme);
   console.log("SaveTheme -> user", user);

@@ -132,14 +132,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard({ user }) {
   console.log("Dashboard -> user", user);
+  const signedInUserId = user.uid;
   const [themes, setThemes] = useState([]);
   const [starredThemes, setStarredThemes] = useState([]);
   const [bookmarkedThemes, setBookmarkedThemes] = useState([]);
   const [foundUser, setFoundUser] = useState("");
 
   useEffect(() => {
-    const starred = [];
-    const bookmarked = [];
     const response = async () => {
       await db
         .collection("Users")
@@ -151,36 +150,6 @@ export default function Dashboard({ user }) {
           } else {
             console.log("FOUND USER", doc.data());
             await setFoundUser(doc.data());
-            // starred
-            doc.data().starred.map(async pk => {
-              console.log("response -> pk", pk);
-              await db
-                .collection("CustomizedThemes")
-                .doc(`${pk}`)
-                .get()
-                .then(doc => {
-                  starred.push({ ...doc.data(), themeId: doc.id });
-                  setStarredThemes([...starred]);
-                })
-                .catch(err => {
-                  console.log("Error getting starred themes", err);
-                });
-            });
-            // bookmarked
-            doc.data().bookmarked.map(async pk => {
-              console.log("response -> pk", pk);
-              await db
-                .collection("CustomizedThemes")
-                .doc(`${pk}`)
-                .get()
-                .then(doc => {
-                  bookmarked.push({ ...doc.data(), themeId: doc.id });
-                  setBookmarkedThemes([...bookmarked]);
-                })
-                .catch(err => {
-                  console.log("Error getting bookmarked themes", err);
-                });
-            });
           }
         })
         .catch(err => {
@@ -215,6 +184,56 @@ export default function Dashboard({ user }) {
     unsub();
   }, []);
 
+  // new schema
+  useEffect(() => {
+    const bookmarked = [];
+    const starred = [];
+    const unsubscribe = async () => {
+      //bookmarked
+      await db
+        .collection("FavoritedThemes")
+        .where("signedInUserId", "==", `${user.uid}`)
+        .where("bookmarked", "==", true)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log("Nothing bookmarked yet");
+            return;
+          }
+          snapshot.forEach(doc => {
+            console.log(doc.id, "bookmarked=>", doc.data());
+            bookmarked.push(doc.data());
+            setBookmarkedThemes([...bookmarked]);
+          });
+        })
+        .catch(err => {
+          console.log("Error getting bookmarked themes", err);
+        });
+
+      //starred
+      await db
+        .collection("FavoritedThemes")
+        .where("signedInUserId", "==", `${user.uid}`)
+        .where("starred", "==", true)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log("Nothing starred yet");
+            return;
+          }
+          snapshot.forEach(doc => {
+            console.log(doc.id, "starred=>", doc.data());
+            starred.push(doc.data());
+            setStarredThemes([...starred]);
+          });
+        })
+        .catch(err => {
+          console.log("Error getting starred themes", err);
+        });
+    };
+    unsubscribe();
+  }, []);
+  console.log("DASHBOARD FOUNDUSER", foundUser);
   console.log("USERS SAVED THEMES", themes);
   console.log("STARRED", starredThemes);
   console.log("BOOKMARKED", bookmarkedThemes);
@@ -384,6 +403,7 @@ export default function Dashboard({ user }) {
                     setThemes={setThemes}
                     themes={themes}
                     tableTitle={"Saved Themes"}
+                    signedInUserId={signedInUserId}
                   />
                 )}
                 {selectedIndex === 3 && (
@@ -391,6 +411,7 @@ export default function Dashboard({ user }) {
                     setThemes={setThemes}
                     themes={bookmarkedThemes}
                     tableTitle={"Bookmarked Themes"}
+                    signedInUserId={signedInUserId}
                   />
                 )}
                 {selectedIndex === 4 && (
@@ -398,6 +419,7 @@ export default function Dashboard({ user }) {
                     setThemes={setThemes}
                     themes={starredThemes}
                     tableTitle={"Favorite Themes"}
+                    signedInUserId={signedInUserId}
                   />
                 )}
               </Paper>

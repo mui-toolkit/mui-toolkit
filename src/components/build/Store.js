@@ -7,7 +7,8 @@ import { db } from "../../config/firebase";
 import { shadowTrue, shadowFalse } from "./Shadows";
 
 export const Store = props => {
-  const { themeId } = useParams();
+  const { themeId, signedInUserId } = useParams();
+  console.log("IN THE STORE ====> signedInUserId", signedInUserId)
   console.log("IN THE Store -> themeId", themeId);
 
   //General
@@ -319,6 +320,7 @@ export const Store = props => {
       <Build
         user={props.user}
         themeId={themeId}
+        signedInUserId={signedInUserId}
         //General
         color={color}
         setColor={setColor}

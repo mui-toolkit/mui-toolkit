@@ -98,7 +98,7 @@ function App() {
         <Route
           render={props => <Store {...props} />}
           exact
-          path="/design/:themeId"
+          path="/design/:themeId/:signedInUserId"
         />
 
         <Route

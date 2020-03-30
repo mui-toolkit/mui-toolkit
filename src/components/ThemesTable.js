@@ -160,7 +160,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemesTable({ setThemes, themes, tableTitle }) {
+export default function ThemesTable({ setThemes, themes, tableTitle, signedInUserId }) {
+  console.log("ThemesTable -> signedInUserId", signedInUserId)
   console.log("ThemesTable -> themes", themes);
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
@@ -303,7 +304,7 @@ export default function ThemesTable({ setThemes, themes, tableTitle }) {
                           aria-label="edit"
                           // key={row.themeId}
                           component={Link}
-                          to={`/design/${row.themeId}/`}
+                          to={`/design/${row.themeId}/${signedInUserId}`}
                         >
                           <EditIcon />
                         </IconButton>

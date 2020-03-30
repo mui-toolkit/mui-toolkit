@@ -10,6 +10,9 @@ import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { db } from "../../config/firebase";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDown";
 
 const useStyles = makeStyles(theme => ({
   preview: {
@@ -32,11 +35,13 @@ const useStyles = makeStyles(theme => ({
 export const Build = props => {
   const classes = useStyles();
 
-  const [clicked, setClicked] = useState(false);
+  const [starClicked, setStarClicked] = useState(false);
+  const [bookmarkClicked, setBookmarkClicked] = useState(false);
 
   const {
     user,
     themeId,
+    signedInUserId,
     color,
     secondaryColor,
     defaultColor,
@@ -120,12 +125,58 @@ export const Build = props => {
   } = props;
 
   const handleStar = () => {
-    setClicked(!clicked);
+    setStarClicked(!starClicked);
+    //// star boolean = starClicked
+
     // pass clicked to update button
     // add star to starCount of theme
 
     // add theme to user favoriteTheme array
   };
+  const handleBookmark = () => {
+    setBookmarkClicked(!bookmarkClicked);
+    //// bookmark boolean = bookmarkClicked
+    // pass clicked to update button
+  };
+  const updateFavoriteThemes = async () => {
+    const favPalette = {
+      primary: { main: downloadTheme.palette.primary.main },
+      secondary: { main: downloadTheme.palette.secondary.main }
+    };
+    const favTypography = {
+      fontFamily: downloadTheme.typography.fontFamily
+    };
+    const favoriteTheme = {
+      downloadTheme,
+      themeId,
+      bookmarked: !!bookmarkClicked,
+      starred: !!starClicked,
+      signedInUserId,
+      themeName: downloadTheme.themeName,
+      lastEditAt: downloadTheme.lastEditAt,
+      palette: favPalette,
+      typography: favTypography
+    };
+    await db
+      .collection("FavoritedThemes")
+      .doc()
+      .set({ ...favoriteTheme })
+      .then(function() {
+        console.log(`Added bookmark to ${downloadTheme.themeName} `);
+      })
+      .catch(function(error) {
+        console.log("Error bookmarking theme: ", error);
+      });
+  };
+
+  console.log(
+    "BUILD.JS============>>>>>>",
+    starClicked,
+    bookmarkClicked,
+    user,
+    themeId,
+    downloadTheme
+  );
   return (
     <section>
       <Grid container spacing={1}>
@@ -222,14 +273,36 @@ export const Build = props => {
                 themeId={themeId}
                 user={user}
                 downloadTheme={downloadTheme}
-                clicked={clicked}
+                starClicked={starClicked}
+                bookmarkClicked={bookmarkClicked}
               />
               {themeId && (
-              <Tooltip title="Star this theme">
-                <IconButton aria-label="star" onClick={handleStar}>
-                  {clicked ? <StarIcon /> : <StarBorderIcon />}
-                </IconButton>
-              </Tooltip>
+                <Tooltip title="Star this theme">
+                  <IconButton aria-label="star" onClick={handleStar}>
+                    {starClicked ? <StarIcon /> : <StarBorderIcon />}
+                  </IconButton>
+                </Tooltip>
+              )}
+              {themeId && (
+                <Tooltip title="Bookmark this theme">
+                  <IconButton aria-label="bookmark" onClick={handleBookmark}>
+                    {bookmarkClicked ? (
+                      <BookmarkIcon />
+                    ) : (
+                      <BookmarkBorderIcon />
+                    )}
+                  </IconButton>
+                </Tooltip>
+              )}
+              {themeId && (
+                <Tooltip title="Update favorites">
+                  <IconButton
+                    aria-label="update"
+                    onClick={updateFavoriteThemes}
+                  >
+                    <ThumbsUpDownIcon />
+                  </IconButton>
+                </Tooltip>
               )}
             </Grid>
           </Paper>
