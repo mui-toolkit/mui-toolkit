@@ -129,48 +129,66 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function WebPreview({ user }) {
+export default function Dashboard({ user }) {
   console.log("Dashboard -> user", user);
   const [themes, setThemes] = useState([]);
+  const [starredThemes, setStarredThemes] = useState([]);
+  const [bookmarkedThemes, setBookmarkedThemes] = useState([]);
   const [foundUser, setFoundUser] = useState("");
 
   useEffect(() => {
+    const starred = [];
+    const bookmarked = [];
     const response = async () => {
       await db
         .collection("Users")
         .doc(`${user.uid}`)
-        .onSnapshot(doc => {
-          // .get()
-          // .then(doc => {
-          console.log("FOUND USER", doc.data());
-
-          setFoundUser(doc.data());
+        .get()
+        .then(async doc => {
+          if (!doc.exists) {
+            console.log("No such document!");
+          } else {
+            console.log("FOUND USER", doc.data());
+            await setFoundUser(doc.data());
+            // starred
+            doc.data().starred.map(async pk => {
+              console.log("response -> pk", pk);
+              await db
+                .collection("CustomizedThemes")
+                .doc(`${pk}`)
+                .get()
+                .then(doc => {
+                  starred.push({ ...doc.data(), themeId: doc.id });
+                  setStarredThemes([...starred]);
+                })
+                .catch(err => {
+                  console.log("Error getting starred themes", err);
+                });
+            });
+            // bookmarked
+            doc.data().bookmarked.map(async pk => {
+              console.log("response -> pk", pk);
+              await db
+                .collection("CustomizedThemes")
+                .doc(`${pk}`)
+                .get()
+                .then(doc => {
+                  bookmarked.push({ ...doc.data(), themeId: doc.id });
+                  setBookmarkedThemes([...bookmarked]);
+                })
+                .catch(err => {
+                  console.log("Error getting bookmarked themes", err);
+                });
+            });
+          }
+        })
+        .catch(err => {
+          console.log("Error getting document", err);
         });
-      // let foundUser = doc.data();
-      // if (foundUser.themes) {
-      //     Promise.all(
-      //       foundUser.themes.map(theme => {
-      //         db.collection("CustomizedThemes")
-      //           .doc(`${theme.id}`)
-      //           // .get()
-      //           // .then(theme => {
-      //           .onSnapshot(theme => {
-      //             // console.log("themes", theme.data());
-      //             userThemes.push(theme.data());
-      //             // console.log("response -> userThemes", userThemes);
-      //             setThemes([...userThemes]);
-      //           });
-      //       })
-      //     );
-      //   // }
-      // });
-      // .catch(err => {
-      //   console.log("Error getting document", err);
-      // });
     };
     response();
   }, []);
-
+  //saved themes
   useEffect(() => {
     const userThemes = [];
     const unsub = async () => {
@@ -196,9 +214,11 @@ export default function WebPreview({ user }) {
     unsub();
   }, []);
 
-  console.log("UsersThemes -> foundUser", foundUser, foundUser.themes);
   console.log("USERS SAVED THEMES", themes);
+  console.log("STARRED", starredThemes);
+  console.log("BOOKMARKED", bookmarkedThemes);
   const stars = themes.reduce((acc, theme) => theme.starsCount + acc, 0);
+
   const classes = useStyles();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -367,14 +387,14 @@ export default function WebPreview({ user }) {
                 {selectedIndex === 3 && (
                   <ThemesTable
                     setThemes={setThemes}
-                    themes={themes}
+                    themes={bookmarkedThemes}
                     tableTitle={"Bookmarked Themes"}
                   />
                 )}
                 {selectedIndex === 4 && (
                   <ThemesTable
                     setThemes={setThemes}
-                    themes={themes}
+                    themes={starredThemes}
                     tableTitle={"Favorite Themes"}
                   />
                 )}
