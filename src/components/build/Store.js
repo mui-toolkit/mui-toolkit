@@ -331,7 +331,7 @@ export const Store = props => {
             }
             snapshot.forEach(doc => {
               console.log(doc.id, "favorited=>", doc.data());
-              setFavorite(doc.data());
+              setFavorite({ ...doc.data(), favId: doc.id });
             });
           })
           .catch(err => {

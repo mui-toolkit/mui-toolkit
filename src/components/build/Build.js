@@ -228,34 +228,6 @@ export const Build = props => {
                 signedInUserId={signedInUserId}
                 favorite={favorite}
               />
-              {/* {themeId && (
-                <Tooltip title="Star this theme">
-                  <IconButton aria-label="star" onClick={handleStar}>
-                    {starClicked ? <StarIcon /> : <StarBorderIcon />}
-                  </IconButton>
-                </Tooltip>
-              )}
-              {themeId && (
-                <Tooltip title="Bookmark this theme">
-                  <IconButton aria-label="bookmark" onClick={handleBookmark}>
-                    {bookmarkClicked ? (
-                      <BookmarkIcon />
-                    ) : (
-                      <BookmarkBorderIcon />
-                    )}
-                  </IconButton>
-                </Tooltip>
-              )}
-              {themeId && (
-                <Tooltip title="Update favorites">
-                  <IconButton
-                    aria-label="update"
-                    onClick={updateFavoriteThemes}
-                  >
-                    <ThumbsUpDownIcon />
-                  </IconButton>
-                </Tooltip>
-              )} */}
             </Grid>
           </Paper>
         </Grid>

@@ -61,9 +61,20 @@ export const FavoriteTheme = ({
   };
   const handleBookmark = () => {
     setBookmarkClicked(!bookmarkClicked);
-    //// bookmark boolean = bookmarkClicked
-    // pass clicked to update button
   };
+  // const duplicateFavoriteChecker = async themeName => {
+  //   const checkDuplicateFav = await db
+  //     .collection("FavoritedThemes")
+  //     .where("signedInUserId", "==", `${signedInUserId}`)
+  //     .where("themeId", "==", `${themeId}`)
+  //     .get()
+  //     .then(querySnapshot => {
+  //       console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
+  //       return !querySnapshot.empty;
+  //     });
+  //   console.log("SaveTheme -> checkDuplicateFav", checkDuplicateFav);
+  //   return checkDuplicateFav;
+  // };
   const updateFavoriteThemes = async () => {
     const favPalette = {
       primary: { main: downloadTheme.palette.primary.main },
@@ -72,23 +83,43 @@ export const FavoriteTheme = ({
     const favTypography = {
       fontFamily: downloadTheme.typography.fontFamily
     };
+    // const favoriteTheme = {
+    //   downloadTheme,
+    //   themeId,
+    //   bookmarked: !!bookmarkClicked,
+    //   starred: !!starClicked,
+    //   signedInUserId,
+    //   themeName: downloadTheme.themeName,
+    //   lastEditAt: downloadTheme.lastEditAt,
+    //   palette: favPalette,
+    //   typography: favTypography,
+    // };
     const favoriteTheme = {
-      downloadTheme,
-      themeId,
-      bookmarked: !!bookmarkClicked,
-      starred: !!starClicked,
-      signedInUserId,
-      themeName: downloadTheme.themeName,
-      lastEditAt: downloadTheme.lastEditAt,
-      palette: favPalette,
-      typography: favTypography
+      ...favorite
     };
+    favoriteTheme.bookmarked = !!bookmarkClicked;
+    favoriteTheme.starred = !!starClicked;
+
+    // await db
+    //   .collection("FavoritedThemes")
+    //   .where("signedInUserId", "==", `${signedInUserId}`)
+    //   .where("themeId", "==", `${themeId}`)
+    //   .get(querySnapshot => {
+    //     querySnapshot
+    //       .forEach(document => {
+    //         document.ref.update(favoriteTheme);
+    //         console.log(`Added bookmark to ${downloadTheme.themeName} `);
+    //       })
+    //       .catch(error => {
+    //         console.log("Error bookmarking theme: ", error);
+    //       });
+    //   });
     await db
       .collection("FavoritedThemes")
-      .doc()
-      .set({ ...favoriteTheme })
+      .doc(`${favoriteTheme.favId}`)
+      .update({ ...favoriteTheme })
       .then(function() {
-        console.log(`Added bookmark to ${downloadTheme.themeName} `);
+        console.log(`Added bookmark to ${favoriteTheme.themeName} `);
       })
       .catch(function(error) {
         console.log("Error bookmarking theme: ", error);

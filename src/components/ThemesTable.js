@@ -160,9 +160,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemesTable({ setThemes, themes, tableTitle, signedInUserId }) {
-  console.log("ThemesTable -> signedInUserId", signedInUserId)
-  console.log("ThemesTable -> themes", themes);
+export default function ThemesTable({
+  setThemes,
+  themes,
+  tableTitle,
+  signedInUserId
+}) {
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
     lastEditAt: JSON.stringify(
@@ -172,7 +175,8 @@ export default function ThemesTable({ setThemes, themes, tableTitle, signedInUse
     secondaryPalette: themeObject.palette.secondary.main,
     typography: themeObject.typography.fontFamily,
     themeId: themeObject.themeId,
-    userId: themeObject.userId
+    userId: themeObject.userId,
+    favId: themeObject.favId
   }));
 
   const classes = useStyles();

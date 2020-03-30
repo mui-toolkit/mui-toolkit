@@ -202,7 +202,7 @@ export default function Dashboard({ user }) {
           }
           snapshot.forEach(doc => {
             console.log(doc.id, "bookmarked=>", doc.data());
-            bookmarked.push(doc.data());
+            bookmarked.push({ ...doc.data(), favId: doc.id });
             setBookmarkedThemes([...bookmarked]);
           });
         })
@@ -223,7 +223,7 @@ export default function Dashboard({ user }) {
           }
           snapshot.forEach(doc => {
             console.log(doc.id, "starred=>", doc.data());
-            starred.push(doc.data());
+            starred.push({ ...doc.data(), favId: doc.id });
             setStarredThemes([...starred]);
           });
         })
