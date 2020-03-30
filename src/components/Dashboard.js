@@ -34,6 +34,7 @@ import Button from "@material-ui/core/Button";
 import ImageSearchIcon from "@material-ui/icons/ImageSearch";
 import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import StarsIcon from "@material-ui/icons/Stars";
+import Avatar from "@material-ui/core/Avatar";
 
 const drawerWidth = 240;
 
@@ -277,6 +278,7 @@ export default function Dashboard({ user }) {
               <StarIcon />
             </Badge>
           </IconButton>
+          <Avatar>{foundUser.firstName}</Avatar>
         </Toolbar>
       </AppBar>
       <Drawer
