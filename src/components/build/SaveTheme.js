@@ -33,7 +33,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const SaveTheme = ({ downloadTheme, user, themeId }) => {
+export const SaveTheme = ({ downloadTheme, user, themeId, clicked }) => {
+  console.log("SaveTheme -> clicked", clicked);
   console.log("SaveTheme -> themeId", themeId);
   console.log("SaveTheme -> downloadTheme", downloadTheme);
   console.log("SaveTheme -> user", user);
@@ -139,7 +140,6 @@ export const SaveTheme = ({ downloadTheme, user, themeId }) => {
   };
 
   const updateTheme = async oldThemeName => {
-    // .update nested obj risks overwriting. i think it's easier to .set
     downloadTheme.lastEditAt = new Date();
     await db
       .collection("CustomizedThemes")

@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+
 import { SaveTheme, BuildNav, ColorGenerator } from "../build";
 import { PreviewAppBar, PreviewTabs } from "../preview";
 import Download from "../Download";
 import StarIcon from "@material-ui/icons/Star";
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { Grid, Paper } from "@material-ui/core/";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { db } from "../../config/firebase";
@@ -13,28 +13,26 @@ import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
   preview: {
-    padding: '2em',
-    textAlign: 'center',
+    padding: "2em",
+    textAlign: "center"
   },
   previewPaper: {
-    marginTop: '5em',
-    textAlign: 'center',
-    background: '#fff',
-    height: '100%',
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff",
+    height: "100%"
   },
   builderPaper: {
-    marginTop: '5em',
-    textAlign: 'center',
-    background: '#fff',
-  },
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff"
+  }
 }));
 
-const handleStar = () => {
-  // add star to starCount of theme
-  // add theme to user favoriteTheme array
-};
 export const Build = props => {
   const classes = useStyles();
+
+  const [clicked, setClicked] = useState(false);
 
   const {
     user,
@@ -118,9 +116,16 @@ export const Build = props => {
     setShadow,
     shadowTrue,
     shadowFalse,
-    setButtonHoverOpacity,
+    setButtonHoverOpacity
   } = props;
 
+  const handleStar = () => {
+    setClicked(!clicked);
+    // pass clicked to update button
+    // add star to starCount of theme
+
+    // add theme to user favoriteTheme array
+  };
   return (
     <section>
       <Grid container spacing={1}>
@@ -213,18 +218,19 @@ export const Build = props => {
             />
             <Grid item>
               <Download downloadTheme={downloadTheme} />
-              <SaveTheme themeId={themeId} user={user} downloadTheme={downloadTheme} />
+              <SaveTheme
+                themeId={themeId}
+                user={user}
+                downloadTheme={downloadTheme}
+                clicked={clicked}
+              />
+              {themeId && (
               <Tooltip title="Star this theme">
-                <IconButton aria-label="star" onClick={() => handleStar}>
-                  <StarIcon />
+                <IconButton aria-label="star" onClick={handleStar}>
+                  {clicked ? <StarIcon /> : <StarBorderIcon />}
                 </IconButton>
               </Tooltip>
-              {/* <Tooltip title="Star this theme">
-                <IconButton aria-label="star" onClick={() => handleStar}>
-                  <StarBorderIcon />
-                  <StarIcon />
-                </IconButton>
-              </Tooltip> */}
+              )}
             </Grid>
           </Paper>
         </Grid>
