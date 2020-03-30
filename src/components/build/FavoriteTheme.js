@@ -47,8 +47,9 @@ export const FavoriteTheme = ({
   favorite
 }) => {
   const classes = useStyles();
-  const [starClicked, setStarClicked] = useState(false);
-  const [bookmarkClicked, setBookmarkClicked] = useState(false);
+  const [starClicked, setStarClicked] = useState(!favorite.starred);
+  const [bookmarkClicked, setBookmarkClicked] = useState(!favorite.bookmarked);
+
   const handleStar = () => {
     setStarClicked(!starClicked);
     //// star boolean = starClicked
@@ -101,7 +102,8 @@ export const FavoriteTheme = ({
     user,
     themeId,
     downloadTheme,
-    favorite
+    favorite.bookmarked,
+    favorite.starred
   );
   return (
     <div>
