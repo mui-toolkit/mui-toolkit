@@ -9,14 +9,31 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
+import M from "minimatch";
+import { updateExpression } from "@babel/types";
+import { db } from "../config/firebase";
 
-export default function ExploreAdd() {
+export default function ExploreAdd({ savedThemes }) {
+  console.log("ExploreAdd -> savedThemes", savedThemes);
   const [open, setOpen] = React.useState(false);
 
   const [selectedTheme, setSelectedTheme] = React.useState("");
 
+  const updateExplore = async themeObject => {
+    await db
+      .collection("CustomizedThemes")
+      .doc(`${themeObject.themeId}`)
+      .update({ explore: true })
+      .then(() => {
+        console.log("updated explore status");
+      });
+  };
   const handleChange = event => {
     setSelectedTheme(event.target.value);
+    const [exploreTheme] = savedThemes.filter(
+      themeObject => themeObject.themeId === event.target.value
+    );
+    updateExplore(exploreTheme);
   };
 
   const handleClickOpen = () => {
@@ -56,9 +73,9 @@ export default function ExploreAdd() {
             onChange={handleChange}
             style={{ width: "100%" }}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {savedThemes.map(theme => (
+              <MenuItem value={theme.themeId}>{theme.themeName}</MenuItem>
+            ))}
           </Select>
         </DialogContent>
         <DialogActions>

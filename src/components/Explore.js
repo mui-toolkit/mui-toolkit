@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { makeStyles } from "@material-ui/styles";
@@ -19,6 +19,7 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import ExploreAdd from "./ExploreAdd";
+import { db } from "../config/firebase";
 
 const useStyles = makeStyles({
   title: {
@@ -48,7 +49,34 @@ export default function Explore() {
   let location = useLocation();
   let savedThemes = location.state.themes.slice();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [exploreThemes, setExploreThemes] = useState([]);
+
+  useEffect(() => {
+    const explore = [];
+    const response = async () => {
+      // get favorite theme to pass
+      await db
+        .collection("CustomizedThemes")
+        .where("explore", "==", true)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log("No publicly displayed themes yet");
+            return;
+          }
+          snapshot.forEach(doc => {
+            console.log(doc.id, "explored=>", doc.data());
+            explore.push({ ...doc.data(), exploreId: doc.id });
+            setExploreThemes([...explore]);
+          });
+        })
+        .catch(err => {
+          console.log("Error getting explored themes", err);
+        });
+    };
+    response();
+  }, []);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -67,70 +95,17 @@ export default function Explore() {
   //user ==> username
   // name: name of theme
   // theme id dynamic // only if user adds to explore page
+
+  // *************
   savedThemes.map(themeObj => {
     themeObj.img = `https://image.thum.io/get/auth/8186-fe739dc2614dfdbf1478af6427346aa8/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/${themeObj.themeId}`;
     themeObj.user = themeObj.createdBy;
     themeObj.url = `https://mui-theme.firebaseapp.com/webpreview/${themeObj.themeId}`;
   });
-  console.log("Explore -> savedThemes", savedThemes);
-  // const themes = [
-  //   {
-  //     img:
-  //       "https://image.thum.io/get/auth/8186-fe739dc2614dfdbf1478af6427346aa8/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/JDL3JFArBfk8EL3vkG3v",
-  //     user: "MannyG",
-  //     name: "Autumn",
-  //     url: "JDL3JFArBfk8EL3vkG3v"
-  //   },
-  //   {
-  //     img:
-  //       "https://image.thum.io/get/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/ImZsctsSCmBECFnTrSXF",
-  //     user: "MannyG",
-  //     name: "Olive",
-  //     url: "ImZsctsSCmBECFnTrSXF"
-  //   },
-  //   {
-  //     img:
-  //       "https://image.thum.io/get/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/RP5z2XLqYOpEtg8gZbrJ",
-  //     user: "MannyG",
-  //     name: "Purple",
-  //     url: "RP5z2XLqYOpEtg8gZbrJ"
-  //   },
-  //   {
-  //     img:
-  //       "http://image.thum.io/get/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/RNjIqORxsSZIxT7FcB1Q",
-  //     user: "MannG",
-  //     name: "Another Brown Theme",
-  //     url: "https://mui-theme.firebaseapp.com/webpreview/RNjIqORxsSZIxT7FcB1Q"
-  //   },
-  //   {
-  //     img:
-  //       "https://image.thum.io/get/width/600/crop/800/http://mui-theme.firebaseapp.com/webpreview/B5xlrHw85lObNSJ1zHdY",
-  //     user: "MannG",
-  //     name: "Berries",
-  //     url: "http://mui-theme.firebaseapp.com/webpreview/B5xlrHw85lObNSJ1zHdY"
-  //   },
-  //   {
-  //     img:
-  //       "https://image.thum.io/get/auth/8186-fe739dc2614dfdbf1478af6427346aa8/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/mBVe6sGxrnXN77gfEaEA",
-  //     user: "MannG",
-  //     name: "Natural Pink",
-  //     url: "https://mui-theme.firebaseapp.com/webpreview/mBVe6sGxrnXN77gfEaEA"
-  //   },
-  //   {
-  //     img:
-  //       "https://image.thum.io/get/auth/8186-fe739dc2614dfdbf1478af6427346aa8/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/OaFqsL1LoxnlS236TQy1",
-  //     user: "MannG",
-  //     name: "Natural Pink",
-  //     url: "https://mui-theme.firebaseapp.com/webpreview/OaFqsL1LoxnlS236TQy1"
-  //   },
-  //   {
-  //     img:
-  //       "https://image.thum.io/get/auth/8186-fe739dc2614dfdbf1478af6427346aa8/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/2t0bVKwzHHOmclm8eaEi",
-  //     user: "MannG",
-  //     name: "Natural Pink",
-  //     url: "https://mui-theme.firebaseapp.com/webpreview/2t0bVKwzHHOmclm8eaEi"
-  //   }
-  // ];
+  // console.log("Explore -> savedThemes", savedThemes);
+  // *************
+
+  // console.log("Explore -> exploreThemes", exploreThemes);
 
   return (
     <React.Fragment>
@@ -163,10 +138,10 @@ export default function Explore() {
               </Button>
             </Grid>
 
-            <ExploreAdd />
+            <ExploreAdd savedThemes={savedThemes} />
           </Grid>
           <Grid container direction="row" justify="center" alignItems="center">
-            {savedThemes.map(theme => (
+            {exploreThemes.map(theme => (
               <Grid item key={theme.themeName} style={{ padding: "1em" }}>
                 <GridListTile style={{ color: "white" }}>
                   <img src={theme.img} width="300px" />
