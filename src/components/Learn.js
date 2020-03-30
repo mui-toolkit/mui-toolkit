@@ -34,9 +34,10 @@ export default function Learn() {
           alignItems="center"
           className={classes.container}
         >
-          <Paper elevation={0}>
-            <Grid item align="center" className={classes.title}>
-              <img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
+
+          <Paper>
+            <Grid item align='center' className={classes.title}>
+              <img alt='mui logo' src={muiLogo} style={{ width: '20%' }} />
             </Grid>
             <Grid item className={classes.title}>
               <Typography variant="h4" align="center">
@@ -57,34 +58,32 @@ export default function Learn() {
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1" component={'span'}>
-                <div className={classes.tab}>
-                  mymui allows you to customize your Material UI theme without
-                  having to look at the documentation. The interface is user
-                  friendly, and gives you a step by step guide on the features
-                  you are customizing. Once finished, you can download the json
-                  file and copy an paste the code into your own file.
-                </div>
-                <div className={classes.tab}>
-                  mymui utilizes the{' '}
-                  <Link href="https://material-ui.com/customization/theming/">
-                    Theme Provider
-                  </Link>{' '}
-                  component that allows you to inject a theme into your
-                  application. To learn more about Material UI{' '}
-                  <Link href="https://material-ui.com/customization/theming/">
-                    Theming
-                  </Link>{' '}
-                  and the{' '}
-                  <Link href="https://material-ui.com/customization/theming/">
-                    Theme Provider
-                  </Link>{' '}
-                  component, visit the documentation{' '}
-                  <Link href="https://material-ui.com/customization/theming/">
-                    here
-                  </Link>
-                  .
-                </div>
+              <Typography className={classes.tab} variant='body1'>
+                mymui allows you to customize your Material UI theme without
+                having to look at the documentation. The interface is user
+                friendly, and gives you a step by step guide on the features you
+                are customizing. Once finished, you can download the json file
+                and copy an paste the code into your own file.
+              </Typography>
+              <Typography className={classes.tab} variant='body1'>
+                mymui utilizes the{' '}
+                <Link href='https://material-ui.com/customization/theming/'>
+                  Theme Provider
+                </Link>{' '}
+                component that allows you to inject a theme into your
+                application. To learn more about Material UI{' '}
+                <Link href='https://material-ui.com/customization/theming/'>
+                  Theming
+                </Link>{' '}
+                and the{' '}
+                <Link href='https://material-ui.com/customization/theming/'>
+                  Theme Provider
+                </Link>{' '}
+                component, visit the documentation{' '}
+                <Link href='https://material-ui.com/customization/theming/'>
+                  here
+                </Link>
+                .
               </Typography>
             </Grid>
           </Paper>

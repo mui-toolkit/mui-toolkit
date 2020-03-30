@@ -141,7 +141,18 @@ export function Login() {
         fullWidth={fullWidth}
         maxWidth={maxWidth}
       >
-        <Paper>
+
+        <Paper
+        // className={classes.paper}
+        // style={{
+        //   display: 'flex',
+        //   flexDirection: 'column',
+        //   margin: 'auto',
+        //   width: 'fit-content',
+        //   backgroundColor: '#fff'
+        // }}
+        >
+
           <Typography
             id="form-dialog-title"
             align="center"

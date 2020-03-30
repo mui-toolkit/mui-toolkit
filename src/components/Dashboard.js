@@ -1,146 +1,145 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import HomeIcon from "@material-ui/icons/Home";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import FaceIcon from "@material-ui/icons/Face";
-import PaletteIcon from "@material-ui/icons/Palette";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import PostAddIcon from "@material-ui/icons/PostAdd";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import StarIcon from "@material-ui/icons/Star";
-import ThemesTable from "./ThemesTable";
-import UserProfile from "./UserProfile";
-import firebase from "firebase";
-import "firebase/auth";
-import { db } from "../config/firebase";
-import Button from "@material-ui/core/Button";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import HomeIcon from '@material-ui/icons/Home';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import FaceIcon from '@material-ui/icons/Face';
+import PaletteIcon from '@material-ui/icons/Palette';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import StarIcon from '@material-ui/icons/Star';
+import ThemesTable from './ThemesTable';
+import UserProfile from './UserProfile';
+import firebase from 'firebase';
+import 'firebase/auth';
+import { db } from '../config/firebase';
+import Button from '@material-ui/core/Button';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: 'flex',
     // backgroundColor: theme.palette.background.paper
   },
   toolbar: {
-    paddingRight: 24 // keep right padding when drawer closed
+    paddingRight: 24, // keep right padding when drawer closed
   },
   toolbarIcon: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: "0 8px",
-    ...theme.mixins.toolbar
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
-    marginRight: 36
+    marginRight: 36,
   },
   menuButtonHidden: {
-    display: "none"
+    display: 'none',
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   drawerPaper: {
-    position: "relative",
-    whiteSpace: "nowrap",
+    position: 'relative',
+    whiteSpace: 'nowrap',
     width: drawerWidth,
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerPaperClose: {
-    overflowX: "hidden",
-    transition: theme.transitions.create("width", {
+    overflowX: 'hidden',
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9)
-    }
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9),
+    },
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: "100vh",
-    overflow: "auto"
+    height: '100vh',
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   paper: {
     padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-    maxHeight: "80vh"
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+    maxHeight: '80vh',
   },
   fixedHeight: {
-    maxHeight: "80vh"
+    maxHeight: '80vh',
   },
   button: {
-    marginRight: "20px",
-    "&:hover": {
-      backgroundColor: "transparent"
+    marginRight: '20px',
+    '&:hover': {
+      backgroundColor: 'transparent',
     },
     fontWeight: 400,
-    textTransform: "none",
+    textTransform: 'none',
     borderRadius: 5,
     height: 46,
-    padding: 10
-  }
+    padding: 10,
+  },
 }));
 
-export default function Dashboard({ user }) {
-  console.log("Dashboard -> user", user);
+export default function WebPreview({ user }) {
+  console.log('Dashboard -> user', user);
   const [themes, setThemes] = useState([]);
-  const [foundUser, setFoundUser] = useState("");
+  const [foundUser, setFoundUser] = useState('');
 
   useEffect(() => {
-    const userThemes = [];
     const response = async () => {
       await db
-        .collection("Users")
+        .collection('Users')
         .doc(`${user.uid}`)
         .onSnapshot(doc => {
           // .get()
           // .then(doc => {
-          console.log("FOUND USER", doc.data());
+          console.log('FOUND USER', doc.data());
 
           setFoundUser(doc.data());
         });
@@ -165,31 +164,38 @@ export default function Dashboard({ user }) {
       // .catch(err => {
       //   console.log("Error getting document", err);
       // });
-      await db
-        .collection("CustomizedThemes")
-        .where("userId", "==", `${user.uid}`)
-        .get()
-        .then(snapshot => {
-          if (snapshot.empty) {
-            console.log("No matching documents.");
-            return;
-          }
-          snapshot.forEach(theme => {
-            console.log(theme.id, "=>", theme.data());
-            userThemes.push({...theme.data(), themeId: theme.id});
-            setThemes([...userThemes]);
-          });
-        })
-        .catch(err => {
-          console.log("Error getting documents", err);
-        });
     };
     response();
   }, []);
 
-  console.log("UsersThemes -> foundUser", foundUser, foundUser.themes);
-  console.log("USERS SAVED THEMES", themes);
+  useEffect(() => {
+    const userThemes = [];
+    const unsub = async () => {
+      await db
+        .collection('CustomizedThemes')
+        .where('userId', '==', `${user.uid}`)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log('No matching documents.');
+            return;
+          }
+          snapshot.forEach(theme => {
+            console.log(theme.id, '=>', theme.data());
+            userThemes.push({ ...theme.data(), themeId: theme.id });
+            setThemes([...userThemes]);
+          });
+        })
+        .catch(err => {
+          console.log('Error getting documents', err);
+        });
+    };
+    unsub();
+  }, []);
 
+  console.log('UsersThemes -> foundUser', foundUser, foundUser.themes);
+  console.log('USERS SAVED THEMES', themes);
+  const stars = themes.reduce((acc, theme) => theme.starsCount + acc, 0);
   const classes = useStyles();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -210,50 +216,50 @@ export default function Dashboard({ user }) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position='fixed'
         className={clsx(classes.appBar, open && classes.appBarShift)}
-        style={{ background: "#fff" }}
+        style={{ background: '#fff' }}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
+            edge='start'
+            color='inherit'
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
             className={clsx(
               classes.menuButton,
-              open && classes.menuButtonHidden
+              open && classes.menuButtonHidden,
             )}
-            style={{ color: "#000" }}
+            style={{ color: '#000' }}
           >
             <MenuIcon />
           </IconButton>
           <Button
             component={Link}
-            to="/"
+            to='/'
             disableRipple
             style={{
-              fontFamily: "Roboto",
+              fontFamily: 'Roboto',
               fontWeight: 200,
               fontSize: 28,
-              color: "#000"
+              color: '#000',
             }}
             className={classes.button}
           >
             mymui.
           </Button>
-          <IconButton color="black">
+          <IconButton syle={{ color: '#000' }}>
             {/* make star number this dynamic */}
-            <Badge badgeContent={8} color="secondary">
+            <Badge badgeContent={stars} color='secondary'>
               <StarIcon />
             </Badge>
           </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="permanent"
+        variant='permanent'
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
         open={open}
       >
@@ -272,7 +278,7 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary='Dashboard' />
           </ListItem>
           <ListItem
             button
@@ -282,7 +288,7 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <FaceIcon />
             </ListItemIcon>
-            <ListItemText primary="User Profile" />
+            <ListItemText primary='User Profile' />
           </ListItem>
           <ListItem
             button
@@ -292,7 +298,7 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <PaletteIcon />
             </ListItemIcon>
-            <ListItemText primary="My Saved Themes" />
+            <ListItemText primary='My Saved Themes' />
           </ListItem>
           <ListItem
             button
@@ -302,19 +308,19 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <GroupAddIcon />
             </ListItemIcon>
-            <ListItemText primary="Bookmarked Users" />
+            <ListItemText primary='Bookmarked Users' />
           </ListItem>
-          <ListItem button component={Link} to="/design">
+          <ListItem button component={Link} to='/design'>
             <ListItemIcon>
               <PostAddIcon />
             </ListItemIcon>
-            <ListItemText primary="Add New Project" />
+            <ListItemText primary='Add New Project' />
           </ListItem>
-          <ListItem button component={Link} to="/">
+          <ListItem button component={Link} to='/'>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary="Home" />
+            <ListItemText primary='Home' />
           </ListItem>
         </div>
         {/* <Divider />
@@ -330,7 +336,9 @@ export default function Dashboard({ user }) {
                 {selectedIndex === 1 && (
                   <UserProfile user={foundUser} uid={user.uid} />
                 )}
-                {selectedIndex === 2 && <ThemesTable themes={themes} />}
+                {selectedIndex === 2 && (
+                  <ThemesTable setThemes={setThemes} themes={themes} />
+                )}
                 {selectedIndex === 3 && (
                   <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
                 )}

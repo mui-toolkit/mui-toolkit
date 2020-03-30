@@ -21,34 +21,29 @@ function TabPanel(props) {
 }
 
 export function PreviewTabs(props) {
-  const { tab, changeTab, fontStyle } = props;
-  return (
-    <React.Fragment>
-      <div>
-        <Tabs
-          value={tab}
-          onChange={changeTab}
-          aria-label='simple tabs example'
-          centered
-        >
-          <Tab label='General' />
-          <Tab label='Buttons' />
-          <Tab label='Typography' />
-          <Tab label='Alerts' />
-        </Tabs>
-        <TabPanel value={tab} index={0}>
-          <PreviewGeneral />
-        </TabPanel>
-        <TabPanel value={tab} index={1}>
-          <PreviewButton />
-        </TabPanel>
-        <TabPanel value={tab} index={2}>
-          <PreviewTypography />
-        </TabPanel>
-        <TabPanel value={tab} index={3}>
-          Alerts
-        </TabPanel>
-      </div>
-    </React.Fragment>
-  );
+	const { tab, changeTab, fontStyle } = props;
+	return (
+		<React.Fragment>
+			<div>
+				<Tabs value={tab} onChange={changeTab} aria-label="simple tabs example" centered>
+					<Tab label="General" />
+					<Tab label="Buttons" />
+					<Tab label="Typography" />
+					<Tab label="Alerts" />
+				</Tabs>
+				<TabPanel value={tab} index={0}>
+					<PreviewGeneral />
+				</TabPanel>
+				<TabPanel value={tab} index={1}>
+					<PreviewButton />
+				</TabPanel>
+				<TabPanel value={tab} index={2}>
+					<PreviewTypography />
+				</TabPanel>
+				<TabPanel value={tab} index={3}>
+					<PreviewAlert />
+				</TabPanel>
+			</div>
+		</React.Fragment>
+	);
 }
