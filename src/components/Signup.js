@@ -9,8 +9,6 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import { db } from '../config/firebase';
 
-const useStyles = makeStyles(theme => ({}));
-
 export function validate(values) {
   let errors = {};
   if (!values.email) {

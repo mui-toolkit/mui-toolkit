@@ -56,7 +56,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function Login() {
+export function Login(provider) {
+  var provider = new firebase.auth.GoogleAuthProvider();
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -76,6 +77,8 @@ export function Login() {
 
   const handleClick = () => {
     setOpenSnack(true);
+    setEmail('');
+    setPassword('');
   };
   const handleClose = (event, reason) => {
     console.log('hanCl');
@@ -126,6 +129,34 @@ export function Login() {
       if (obj.hasOwnProperty(key)) return false;
     }
     return true;
+  };
+
+  // provider.addScope('email');
+  // provider.addScope('https://www.googleapis.com/auth/plus.me');
+  const signInWithGoogle = provider => {
+    console.log('google provider', provider);
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        console.log('google user', user);
+        // ...
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        console.log('google error', error);
+        // ...
+      });
   };
 
   return (
@@ -201,6 +232,13 @@ export function Login() {
               className={classes.button}
             >
               Login
+            </Button>
+            <Button>
+              <input
+                onClick={signInWithGoogle}
+                type="submit"
+                value="Sign Up With Google"
+              />
             </Button>
           </DialogActions>
         </Paper>
