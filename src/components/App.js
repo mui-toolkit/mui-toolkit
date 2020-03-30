@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
-import Header from "../components/ui/Header";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./Home";
-import Learn from "./Learn";
-import Login from "./Login";
-import Signup from "./Signup";
-import ThemesTable from "./ThemesTable";
-import Dashboard from "./Dashboard";
-import UserProfile from "./UserProfile";
-import { Auth } from "./auth";
-import firebase from "firebase";
-import "firebase/auth";
-import { Store } from "./build/";
-import WebPreview from "../WebPreview/WebPreview";
+import React, { useState, useEffect } from 'react';
+import Header from '../components/ui/Header';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './Home';
+import Learn from './Learn';
+import Login from './Login';
+import Signup from './Signup';
+import ThemesTable from './ThemesTable';
+import Dashboard from './Dashboard';
+import UserProfile from './UserProfile';
+import { Auth } from './auth';
+import firebase from 'firebase';
+import 'firebase/auth';
+import { Store } from './build/';
+import WebPreview from '../WebPreview/WebPreview';
+import Explore from './Explore';
 
 // var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -51,8 +52,8 @@ import WebPreview from "../WebPreview/WebPreview";
 // });
 const defaultUser = {
   loggedIn: false,
-  email: "",
-  uid: ""
+  email: '',
+  uid: '',
 };
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -65,7 +66,7 @@ function onAuthStateChange(callback) {
           loggedIn: true,
           email: user.email,
           uid: user.uid,
-          admin: user.admin
+          admin: user.admin,
         });
       });
     } else {
@@ -86,33 +87,35 @@ function App() {
   }, []);
 
 
+
   console.log('App -> user', user);
+
 
   return (
     <BrowserRouter>
       <Header user={user} />
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/learn" component={Learn} />
-        <Route exact path="/design" component={() => <Store user={user} />} />
+        <Route exact path='/' component={Home} />
+        <Route exact path='/learn' component={Learn} />
+        <Route exact path='/design' component={() => <Store user={user} />} />
         <Route
           render={props => <Store {...props} />}
           exact
-          path="/design/:themeId"
+          path='/design/:themeId'
         />
 
 
         <Route
           render={props => <WebPreview {...props} />}
           exact
-          path="/webpreview/:themeId"
+          path='/webpreview/:themeId'
         />
-        {/* <Route exact path='/explore' component={Explore} /> */}
+        <Route exact path='/explore' component={Explore} />
 
         {!user.loggedIn && (
           <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/signup' component={Signup} />
           </Switch>
         )}
 
@@ -121,9 +124,10 @@ function App() {
             {/* Routes placed here are only available after logging in */}
             <Route
               exact
-              path="/dashboard"
+              path='/dashboard'
               component={() => <Dashboard user={user} />}
             />
+
 
             <Route exact path="/themestable" component={ThemesTable} />
 
@@ -131,6 +135,7 @@ function App() {
             {/* <Route exact path="/admin" component={Auth} /> */}
 
             {user.admin && <Route exact path="/admin" component={Auth} />}
+
             {/* <Route exact path="/admin" component={() => <Auth user={user} />} /> */}
           </Switch>
         )}
