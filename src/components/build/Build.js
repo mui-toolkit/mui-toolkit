@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { SaveTheme, BuildNav, ColorGenerator } from "../build";
+import { SaveTheme, BuildNav, ColorGenerator, FavoriteTheme } from "../build";
 import { PreviewAppBar, PreviewTabs } from "../preview";
 import Download from "../Download";
 import StarIcon from "@material-ui/icons/Star";
@@ -35,13 +35,11 @@ const useStyles = makeStyles(theme => ({
 export const Build = props => {
   const classes = useStyles();
 
-  const [starClicked, setStarClicked] = useState(false);
-  const [bookmarkClicked, setBookmarkClicked] = useState(false);
-
   const {
     user,
     themeId,
     signedInUserId,
+    favorite,
     color,
     secondaryColor,
     defaultColor,
@@ -124,59 +122,6 @@ export const Build = props => {
     setButtonHoverOpacity
   } = props;
 
-  const handleStar = () => {
-    setStarClicked(!starClicked);
-    //// star boolean = starClicked
-
-    // pass clicked to update button
-    // add star to starCount of theme
-
-    // add theme to user favoriteTheme array
-  };
-  const handleBookmark = () => {
-    setBookmarkClicked(!bookmarkClicked);
-    //// bookmark boolean = bookmarkClicked
-    // pass clicked to update button
-  };
-  const updateFavoriteThemes = async () => {
-    const favPalette = {
-      primary: { main: downloadTheme.palette.primary.main },
-      secondary: { main: downloadTheme.palette.secondary.main }
-    };
-    const favTypography = {
-      fontFamily: downloadTheme.typography.fontFamily
-    };
-    const favoriteTheme = {
-      downloadTheme,
-      themeId,
-      bookmarked: !!bookmarkClicked,
-      starred: !!starClicked,
-      signedInUserId,
-      themeName: downloadTheme.themeName,
-      lastEditAt: downloadTheme.lastEditAt,
-      palette: favPalette,
-      typography: favTypography
-    };
-    await db
-      .collection("FavoritedThemes")
-      .doc()
-      .set({ ...favoriteTheme })
-      .then(function() {
-        console.log(`Added bookmark to ${downloadTheme.themeName} `);
-      })
-      .catch(function(error) {
-        console.log("Error bookmarking theme: ", error);
-      });
-  };
-
-  console.log(
-    "BUILD.JS============>>>>>>",
-    starClicked,
-    bookmarkClicked,
-    user,
-    themeId,
-    downloadTheme
-  );
   return (
     <section>
       <Grid container spacing={1}>
@@ -273,10 +218,17 @@ export const Build = props => {
                 themeId={themeId}
                 user={user}
                 downloadTheme={downloadTheme}
-                starClicked={starClicked}
-                bookmarkClicked={bookmarkClicked}
+                // starClicked={starClicked}
+                // bookmarkClicked={bookmarkClicked}
               />
-              {themeId && (
+              <FavoriteTheme
+                themeId={themeId}
+                downloadTheme={downloadTheme}
+                user={user}
+                signedInUserId={signedInUserId}
+                favorite={favorite}
+              />
+              {/* {themeId && (
                 <Tooltip title="Star this theme">
                   <IconButton aria-label="star" onClick={handleStar}>
                     {starClicked ? <StarIcon /> : <StarBorderIcon />}
@@ -303,7 +255,7 @@ export const Build = props => {
                     <ThumbsUpDownIcon />
                   </IconButton>
                 </Tooltip>
-              )}
+              )} */}
             </Grid>
           </Paper>
         </Grid>
