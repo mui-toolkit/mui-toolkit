@@ -52,8 +52,8 @@ import Explore from './Explore'
 // });
 const defaultUser = {
   loggedIn: false,
-  email: "",
-  uid: ""
+  email: '',
+  uid: '',
 };
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -66,7 +66,7 @@ function onAuthStateChange(callback) {
           loggedIn: true,
           email: user.email,
           uid: user.uid,
-          admin: user.admin
+          admin: user.admin,
         });
       });
     } else {
@@ -87,15 +87,17 @@ function App() {
   }, []);
 
 
+
   console.log('App -> user', user);
+
 
   return (
     <BrowserRouter>
       <Header user={user} />
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/learn" component={Learn} />
-        <Route exact path="/design" component={() => <Store user={user} />} />
+        <Route exact path='/' component={Home} />
+        <Route exact path='/learn' component={Learn} />
+        <Route exact path='/design' component={() => <Store user={user} />} />
         <Route
           render={props => <Store {...props} />}
           exact
@@ -106,14 +108,14 @@ function App() {
         <Route
           render={props => <WebPreview {...props} />}
           exact
-          path="/webpreview/:themeId"
+          path='/webpreview/:themeId'
         />
         <Route exact path='/explore' component={Explore} />
 
         {!user.loggedIn && (
           <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/signup' component={Signup} />
           </Switch>
         )}
 
@@ -122,9 +124,10 @@ function App() {
             {/* Routes placed here are only available after logging in */}
             <Route
               exact
-              path="/dashboard"
+              path='/dashboard'
               component={() => <Dashboard user={user} />}
             />
+
 
             <Route exact path="/themestable" component={ThemesTable} />
 
@@ -132,6 +135,7 @@ function App() {
             {/* <Route exact path="/admin" component={Auth} /> */}
 
             {user.admin && <Route exact path="/admin" component={Auth} />}
+
             {/* <Route exact path="/admin" component={() => <Auth user={user} />} /> */}
           </Switch>
         )}
