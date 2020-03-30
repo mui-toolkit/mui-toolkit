@@ -160,8 +160,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemesTable({ setThemes, themes }) {
-  console.log("ThemesTable -> themes", themes);
+export default function ThemesTable({
+  setThemes,
+  themes,
+  tableTitle,
+  signedInUserId
+}) {
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
     lastEditAt: JSON.stringify(
@@ -171,7 +175,8 @@ export default function ThemesTable({ setThemes, themes }) {
     secondaryPalette: themeObject.palette.secondary.main,
     typography: themeObject.typography.fontFamily,
     themeId: themeObject.themeId,
-    userId: themeObject.userId
+    userId: themeObject.userId,
+    favId: themeObject.favId
   }));
 
   const classes = useStyles();
@@ -243,7 +248,7 @@ export default function ThemesTable({ setThemes, themes }) {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography className={classes.title} variant="h6" id="tableTitle">
-          Saved Themes
+          {tableTitle}
         </Typography>
         <TableContainer>
           <Table
@@ -303,7 +308,7 @@ export default function ThemesTable({ setThemes, themes }) {
                           aria-label="edit"
                           // key={row.themeId}
                           component={Link}
-                          to={`/design/${row.themeId}/`}
+                          to={`/design/${row.themeId}/${signedInUserId}`}
                         >
                           <EditIcon />
                         </IconButton>

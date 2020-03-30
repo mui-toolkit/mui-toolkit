@@ -1,44 +1,45 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { SaveTheme, BuildNav, ColorGenerator } from "../build";
+import React, { useState } from "react";
+
+import { SaveTheme, BuildNav, ColorGenerator, FavoriteTheme } from "../build";
 import { PreviewAppBar, PreviewTabs } from "../preview";
 import Download from "../Download";
 import StarIcon from "@material-ui/icons/Star";
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { Grid, Paper } from "@material-ui/core/";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { db } from "../../config/firebase";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDown";
 
 const useStyles = makeStyles(theme => ({
   preview: {
-    padding: '2em',
-    textAlign: 'center',
+    padding: "2em",
+    textAlign: "center"
   },
   previewPaper: {
-    marginTop: '5em',
-    textAlign: 'center',
-    background: '#fff',
-    height: '100%',
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff",
+    height: "100%"
   },
   builderPaper: {
-    marginTop: '5em',
-    textAlign: 'center',
-    background: '#fff',
-  },
+    marginTop: "5em",
+    textAlign: "center",
+    background: "#fff"
+  }
 }));
 
-const handleStar = () => {
-  // add star to starCount of theme
-  // add theme to user favoriteTheme array
-};
 export const Build = props => {
   const classes = useStyles();
 
   const {
     user,
     themeId,
+    signedInUserId,
+    favorite,
     color,
     secondaryColor,
     defaultColor,
@@ -118,7 +119,7 @@ export const Build = props => {
     setShadow,
     shadowTrue,
     shadowFalse,
-    setButtonHoverOpacity,
+    setButtonHoverOpacity
   } = props;
 
   return (
@@ -213,18 +214,20 @@ export const Build = props => {
             />
             <Grid item>
               <Download downloadTheme={downloadTheme} />
-              <SaveTheme themeId={themeId} user={user} downloadTheme={downloadTheme} />
-              <Tooltip title="Star this theme">
-                <IconButton aria-label="star" onClick={() => handleStar}>
-                  <StarIcon />
-                </IconButton>
-              </Tooltip>
-              {/* <Tooltip title="Star this theme">
-                <IconButton aria-label="star" onClick={() => handleStar}>
-                  <StarBorderIcon />
-                  <StarIcon />
-                </IconButton>
-              </Tooltip> */}
+              <SaveTheme
+                themeId={themeId}
+                user={user}
+                downloadTheme={downloadTheme}
+                // starClicked={starClicked}
+                // bookmarkClicked={bookmarkClicked}
+              />
+              <FavoriteTheme
+                themeId={themeId}
+                downloadTheme={downloadTheme}
+                user={user}
+                signedInUserId={signedInUserId}
+                favorite={favorite}
+              />
             </Grid>
           </Paper>
         </Grid>
