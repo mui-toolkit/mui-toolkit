@@ -86,6 +86,7 @@ export const Store = props => {
   const [userId, setUserId] = useState("guest");
   const [themeName, setThemeName] = useState("Untitled");
   const [starsCount, setStarsCount] = useState(0);
+  const [bookmarksCount, setBookmarksCount] = useState(0);
   const [explore, setExplore] = useState(false);
   const [createdBy, setCreatedBy] = useState("anonymous");
   const [isLoading, setLoading] = useState(true);
@@ -190,6 +191,7 @@ export const Store = props => {
     userId,
     themeName,
     starsCount,
+    bookmarksCount,
     explore,
 
     //shadows did set
@@ -304,6 +306,7 @@ export const Store = props => {
     setUserId(themeObject.userId);
     setThemeName(themeObject.themeName);
     setStarsCount(themeObject.starsCount);
+    setBookmarksCount(themeObject.bookmarksCount);
     setExplore(themeObject.explore);
     setCreatedBy(themeObject.createdBy);
   };

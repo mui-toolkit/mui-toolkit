@@ -55,7 +55,7 @@ export const FavoriteTheme = ({
     //// star boolean = starClicked
 
     // pass clicked to update button
-    // add star to starCount of theme
+    // add star to starsCount of theme
 
     // add theme to user favoriteTheme array
   };

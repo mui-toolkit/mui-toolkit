@@ -97,6 +97,19 @@ export default function Explore() {
   });
   // *************
   console.log("================>>>>>", exploreThemes);
+
+  // recently added
+  const recentlyAdded = exploreThemes.sort((a, b) => b.createdAt - a.createdAt);
+  console.log("Explore -> recentlyAdded", recentlyAdded);
+
+  // on buttonClick most stars // exploreThemes.map(themes => {})
+  const bookmarkedThemes = exploreThemes.sort(
+    (a, b) => b.bookmarksCount - a.bookmarksCount
+  );
+  const starredThemes = exploreThemes.sort(
+    (a, b) => b.starsCount - a.starsCount
+  );
+
   return (
     <React.Fragment>
       <Grid
@@ -170,6 +183,7 @@ export default function Explore() {
                   <Paper style={{ padding: "1em" }}>
                     <Tooltip title="Star">
                       <IconButton>
+                        {/* theme.starsCount */}
                         <Badge badgeContent={8} color="secondary">
                           <StarBorderIcon />
                         </Badge>

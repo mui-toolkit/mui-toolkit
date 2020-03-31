@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Typography, IconButton, Button } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import Dialog from "@material-ui/core/Dialog";
@@ -15,9 +15,41 @@ import { db } from "../config/firebase";
 
 export default function ExploreAdd({ savedThemes, setExploreThemes }) {
   console.log("ExploreAdd -> savedThemes", savedThemes);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
-  const [selectedTheme, setSelectedTheme] = React.useState("");
+  const [selectedTheme, setSelectedTheme] = useState("");
+  const [favorites, setFavorites] = useState([]);
+
+  const countStarsAndBookmarks = async themeObject => {
+    const faves = [];
+    await db
+      .collection("FavoritedThemes")
+      .where("themeId", "==", `${themeObject.themeId}`)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          console.log("Nothing favorited yet");
+          return;
+        }
+        snapshot.forEach(doc => {
+          console.log(doc.id, "favorited=>", doc.data());
+          faves.push(doc.data());
+          // setFavorites([...faves]);
+        });
+      })
+      .catch(err => {
+        console.log("Error getting favorite themes", err);
+      });
+
+    const bookmarked = faves.filter(themeObj => themeObj.bookmarked === true)
+      .length;
+    const starred = faves.filter(themeObj => themeObj.starred === true).length;
+    themeObject.bookmarksCount = bookmarked;
+    themeObject.starsCount = starred;
+    console.log("TESTING BOOKMARKS AND STARS COUNTS=====", themeObject);
+
+    return themeObject;
+  };
 
   const updateExplore = async themeObject => {
     await db
@@ -42,11 +74,12 @@ export default function ExploreAdd({ savedThemes, setExploreThemes }) {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleAdd = () => {
+  const handleAdd = async () => {
     const [exploreTheme] = savedThemes.filter(
       themeObject => themeObject.themeId === selectedTheme
     );
-    updateExplore(exploreTheme);
+
+    await updateExplore(await countStarsAndBookmarks(exploreTheme));
     setOpen(false);
   };
   return (
