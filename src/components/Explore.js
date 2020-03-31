@@ -1,24 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { makeStyles } from "@material-ui/styles";
-import {
-  Grid,
-  Typography,
-  Paper,
-  Button,
-  GridListTileBar,
-  GridListTile,
-  Popover,
-  Tooltip,
-  IconButton,
-  Badge
-} from "@material-ui/core";
-import InfoIcon from "@material-ui/icons/Info";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
+import { Grid, Paper, Button } from "@material-ui/core";
 import ExploreAdd from "./ExploreAdd";
+import ExploreTable from "./ExploreTable";
 import { db } from "../config/firebase";
 
 const useStyles = makeStyles({
@@ -49,8 +34,8 @@ export default function Explore() {
   let location = useLocation();
   let savedThemes = location.state.themes.slice();
 
-  const [anchorEl, setAnchorEl] = useState(null);
   const [exploreThemes, setExploreThemes] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
     const explore = [];
@@ -78,16 +63,9 @@ export default function Explore() {
     response();
   }, []);
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (event, index) => {
+    setSelectedIndex(index);
   };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
   // *************
   exploreThemes.map(themeObj => {
@@ -127,16 +105,36 @@ export default function Explore() {
             style={{ marginBottom: "2em" }}
           >
             <Grid item style={{ marginRight: "2em" }}>
-              <Button variant="outlined" className={classes.filterButton}>
+              <Button
+                variant="outlined"
+                className={classes.filterButton}
+                selected={selectedIndex === 0}
+                onClick={event => handleClick(event, 0)}
+              >
                 Trending
               </Button>
-              <Button variant="outlined" className={classes.filterButton}>
+              <Button
+                variant="outlined"
+                className={classes.filterButton}
+                selected={selectedIndex === 1}
+                onClick={event => handleClick(event, 1)}
+              >
                 Popular
               </Button>
-              <Button variant="outlined" className={classes.filterButton}>
+              <Button
+                variant="outlined"
+                className={classes.filterButton}
+                selected={selectedIndex === 2}
+                onClick={event => handleClick(event, 2)}
+              >
                 Recently Added
               </Button>
-              <Button variant="outlined" className={classes.filterButton}>
+              <Button
+                variant="outlined"
+                className={classes.filterButton}
+                selected={selectedIndex === 3}
+                onClick={event => handleClick(event, 3)}
+              >
                 Most Stars
               </Button>
             </Grid>
@@ -146,68 +144,12 @@ export default function Explore() {
               setExploreThemes={setExploreThemes}
             />
           </Grid>
-          <Grid container direction="row" justify="center" alignItems="center">
-            {exploreThemes.map(theme => (
-              <Grid item key={theme.themeName} style={{ padding: "1em" }}>
-                <GridListTile style={{ color: "white" }}>
-                  <img src={theme.img} width="300px" />
-                  <GridListTileBar
-                    title={theme.themeName}
-                    subtitle={<span>by: {theme.user}</span>}
-                    actionIcon={
-                      <IconButton
-                        aria-label={`info about ${theme.themeName}`}
-                        className={classes.icon}
-                        onClick={handleClick}
-                      >
-                        <InfoIcon />
-                      </IconButton>
-                    }
-                  />
-                </GridListTile>
-                <Popover
-                  id={id}
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  // elevation={1}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "center"
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left"
-                  }}
-                >
-                  <Paper style={{ padding: "1em" }}>
-                    <Tooltip title="Star">
-                      <IconButton>
-                        {/* theme.starsCount */}
-                        <Badge badgeContent={8} color="secondary">
-                          <StarBorderIcon />
-                        </Badge>
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Preview Theme">
-                      <IconButton
-                        component={Link}
-                        to={`/webpreview/${theme.url}`}
-                        target="_blank"
-                      >
-                        <VisibilityIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Bookmark">
-                      <IconButton>
-                        <BookmarkIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Paper>
-                </Popover>
-              </Grid>
-            ))}
-          </Grid>
+          {selectedIndex === 0 && <ExploreTable themesToMap={exploreThemes} />}
+          {selectedIndex === 1 && (
+            <ExploreTable themesToMap={bookmarkedThemes} />
+          )}
+          {selectedIndex === 2 && <ExploreTable themesToMap={recentlyAdded} />}
+          {selectedIndex === 3 && <ExploreTable themesToMap={starredThemes} />}
         </Paper>
       </Grid>
     </React.Fragment>
