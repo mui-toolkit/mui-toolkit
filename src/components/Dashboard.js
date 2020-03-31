@@ -394,7 +394,7 @@ export default function Dashboard({ user }) {
             component={Link}
             to={{
               pathname: "/explore",
-              state: { themes }
+              state: { themes, starredThemes, bookmarkedThemes }
             }}
           >
             <ListItemIcon>

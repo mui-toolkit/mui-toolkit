@@ -135,7 +135,7 @@ export default function UserProfile({ uid, user }) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                  disabled
                   id="email"
                   name="email"
                   label="Email address"

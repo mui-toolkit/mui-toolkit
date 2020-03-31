@@ -14,17 +14,11 @@ import {
   Badge
 } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
-import { Button } from "@material-ui/core/";
-import { makeStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
-import { Grid } from "@material-ui/core/";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 
 const useStyles = makeStyles({
@@ -50,13 +44,15 @@ const useStyles = makeStyles({
   }
 });
 
-function ExploreTable({ themesToMap }) {
+function ExploreTable({
+  themesToMap,
+  setStarClicked,
+  setBookmarkClicked,
+  starClicked,
+  bookmarkClicked
+}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-
-  //// do something here
-  const [starClicked, setStarClicked] = useState(!!favorite.starred);
-  const [bookmarkClicked, setBookmarkClicked] = useState(!!favorite.bookmarked);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -66,18 +62,31 @@ function ExploreTable({ themesToMap }) {
     setAnchorEl(null);
   };
 
-  const handleStar = () => {
-    setStarClicked(!starClicked);
-    //// star boolean = starClicked
+  // const handleStar = () => {
+  //   setStarClicked(!starClicked);
+  //   //// star boolean = starClicked
 
-    // pass clicked to update button
-    // add star to starsCount of theme
+  //   // pass clicked to update button
+  //   // add star to starsCount of theme
 
-    // add theme to user favoriteTheme array
-  };
-  const handleBookmark = () => {
-    setBookmarkClicked(!bookmarkClicked);
-    ///// do some stuff here
+  //   // add theme to user favoriteTheme array
+  // };
+  // const handleBookmark = () => {
+  //   setBookmarkClicked(!bookmarkClicked);
+  //   ///// do some stuff here
+  // };
+
+  const handleFav = (identifier, userId, exploreId) => {
+    if (identifier === "starred") {
+      setStarClicked(!starClicked);
+    } else if (identifier === "bookmarked") {
+      setBookmarkClicked(!bookmarkClicked);
+    }
+    // where(`${identifer}`,'==', boolean)
+    // const exists = checkPreviousFavStatus();
+    // if (exists) {
+    // } else {
+    // }
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -119,7 +128,12 @@ function ExploreTable({ themesToMap }) {
           >
             <Paper style={{ padding: "1em" }}>
               <Tooltip title="Star">
-                <IconButton aria-label="star" onClick={handleStar}>
+                <IconButton
+                  aria-label="star"
+                  onClick={() =>
+                    handleFav("starred", theme.userId, theme.exploreId)
+                  }
+                >
                   <Badge badgeContent={theme.starsCount} color="secondary">
                     {starClicked ? <StarIcon /> : <StarBorderIcon />}
                   </Badge>
@@ -135,7 +149,12 @@ function ExploreTable({ themesToMap }) {
                 </IconButton>
               </Tooltip>
               <Tooltip title="Bookmark this theme">
-                <IconButton aria-label="bookmark" onClick={handleBookmark}>
+                <IconButton
+                  aria-label="bookmark"
+                  onClick={() =>
+                    handleFav("bookmarked", theme.userId, theme.exploreId)
+                  }
+                >
                   {bookmarkClicked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
                 </IconButton>
               </Tooltip>

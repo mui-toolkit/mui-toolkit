@@ -33,9 +33,22 @@ export default function Explore() {
   const classes = useStyles();
   let location = useLocation();
   let savedThemes = location.state.themes.slice();
+  let mystarredThemes = location.state.starredThemes.slice();
+  console.log("Explore -> mystarredThemes", mystarredThemes);
+  let mybookmarkedThemes = location.state.bookmarkedThemes.slice();
+  console.log("Explore -> mybookmarkedThemes", mybookmarkedThemes);
+
+  // map through starred and bookmarked themes and set starClicked, bookmarkClicked
 
   const [exploreThemes, setExploreThemes] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  //// do something here // test if hook sets before firestore query
+  // favIcon is either set at true/false or undefined // set this first when setting explore status.
+  // const [starClicked, setStarClicked] = useState(!!favorite.starred);
+  // const [bookmarkClicked, setBookmarkClicked] = useState(!!favorite.bookmarked);
+  const [starClicked, setStarClicked] = useState(false);
+  const [bookmarkClicked, setBookmarkClicked] = useState(false);
 
   useEffect(() => {
     const explore = [];
@@ -142,14 +155,46 @@ export default function Explore() {
             <ExploreAdd
               savedThemes={savedThemes}
               setExploreThemes={setExploreThemes}
+              setStarClicked={setStarClicked}
+              setBookmarkClicked={setBookmarkClicked}
             />
           </Grid>
-          {selectedIndex === 0 && <ExploreTable themesToMap={exploreThemes} />}
-          {selectedIndex === 1 && (
-            <ExploreTable themesToMap={bookmarkedThemes} />
+          {selectedIndex === 0 && (
+            <ExploreTable
+              themesToMap={exploreThemes}
+              setStarClicked={setStarClicked}
+              setBookmarkClicked={setBookmarkClicked}
+              starClicked={starClicked}
+              bookmarkClicked={bookmarkClicked}
+            />
           )}
-          {selectedIndex === 2 && <ExploreTable themesToMap={recentlyAdded} />}
-          {selectedIndex === 3 && <ExploreTable themesToMap={starredThemes} />}
+          {selectedIndex === 1 && (
+            <ExploreTable
+              themesToMap={bookmarkedThemes}
+              setStarClicked={setStarClicked}
+              setBookmarkClicked={setBookmarkClicked}
+              starClicked={starClicked}
+              bookmarkClicked={bookmarkClicked}
+            />
+          )}
+          {selectedIndex === 2 && (
+            <ExploreTable
+              themesToMap={recentlyAdded}
+              setStarClicked={setStarClicked}
+              setBookmarkClicked={setBookmarkClicked}
+              starClicked={starClicked}
+              bookmarkClicked={bookmarkClicked}
+            />
+          )}
+          {selectedIndex === 3 && (
+            <ExploreTable
+              themesToMap={starredThemes}
+              setStarClicked={setStarClicked}
+              setBookmarkClicked={setBookmarkClicked}
+              starClicked={starClicked}
+              bookmarkClicked={bookmarkClicked}
+            />
+          )}
         </Paper>
       </Grid>
     </React.Fragment>

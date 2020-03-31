@@ -13,7 +13,7 @@ import M from "minimatch";
 import { updateExpression } from "@babel/types";
 import { db } from "../config/firebase";
 
-export default function ExploreAdd({ savedThemes, setExploreThemes }) {
+export default function ExploreAdd({ savedThemes, setExploreThemes, setStarClicked, setBookmarkClicked }) {
   console.log("ExploreAdd -> savedThemes", savedThemes);
   const [open, setOpen] = useState(false);
 
@@ -47,11 +47,13 @@ export default function ExploreAdd({ savedThemes, setExploreThemes }) {
     themeObject.bookmarksCount = bookmarked;
     themeObject.starsCount = starred;
     console.log("TESTING BOOKMARKS AND STARS COUNTS=====", themeObject);
-
+    // set signedInUserId's fav preferences on each explore theme
+    // await setFavStatus() ??
     return themeObject;
   };
 
   const updateExplore = async themeObject => {
+    // need to update bookmarksCount and starsCount in exploreTheme before updating
     await db
       .collection("CustomizedThemes")
       .doc(`${themeObject.themeId}`)

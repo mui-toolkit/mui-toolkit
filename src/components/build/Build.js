@@ -221,13 +221,13 @@ export const Build = props => {
                 // starClicked={starClicked}
                 // bookmarkClicked={bookmarkClicked}
               />
-              <FavoriteTheme
+              {/* <FavoriteTheme
                 themeId={themeId}
                 downloadTheme={downloadTheme}
                 user={user}
                 signedInUserId={signedInUserId}
                 favorite={favorite}
-              />
+              /> */}
             </Grid>
           </Paper>
         </Grid>
