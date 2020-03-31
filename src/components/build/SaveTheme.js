@@ -33,15 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const SaveTheme = ({
-  downloadTheme,
-  user,
-  themeId,
-  starClicked,
-  bookmarkClicked
-}) => {
-  console.log("starClicked", starClicked);
-  console.log("bookmarkClicked", bookmarkClicked);
+export const SaveTheme = ({ downloadTheme, user, themeId }) => {
   console.log("SaveTheme -> themeId", themeId);
   console.log("SaveTheme -> downloadTheme", downloadTheme);
   console.log("SaveTheme -> user", user);
@@ -51,6 +43,7 @@ export const SaveTheme = ({
   const [snackOpen, setSnackOpen] = useState(false);
   const [themeName, setSaveThemeName] = useState(downloadTheme.themeName);
   const [message, setMessage] = useState("");
+  const [refId, setRefId] = useState("");
   let history = useHistory();
 
   const handleClickOpen = () => {
@@ -113,17 +106,42 @@ export const SaveTheme = ({
     }
   };
 
+  const setNewFavoriteTheme = async downloadTheme => {
+    // favorites theme with bookmarked and starred set to false
+    const favoriteTheme = {
+      ...downloadTheme,
+      bookmarked: false,
+      starred: false,
+      signedInUserId: user.uid,
+      createdByUserId: user.uid,
+      themeName: downloadTheme.themeName
+    };
+    console.log("SaveTheme -> favoriteTheme", favoriteTheme);
+
+    await db
+      .collection("FavoritedThemes")
+      .doc()
+      .set({ ...favoriteTheme })
+      .then(function() {
+        console.log(`Added ${favoriteTheme.themeName} to favorites`);
+      })
+      .catch(function(error) {
+        console.log("Error favoriting theme: ", error);
+      });
+  };
   const saveNewTheme = async themeName => {
     console.log(downloadTheme);
     downloadTheme.userId = user.uid;
     downloadTheme.themeName = themeName;
     downloadTheme.createdBy = user.email;
+    // new customized theme
     await db
       .collection("CustomizedThemes")
-      .doc()
-      .set({ ...downloadTheme })
-      .then(function() {
-        console.log(`Added Theme ${themeName} to collection`);
+      .add({ ...downloadTheme })
+      .then(function(docRef) {
+        console.log(`Added Theme ${themeName} to collection`, docRef.id);
+        // setRefId(docRef.id);
+        downloadTheme.themeId = docRef.id;
       })
       .catch(function(error) {
         console.log("Error creating a new theme: ", error);
@@ -142,8 +160,9 @@ export const SaveTheme = ({
   };
 
   const saveNewPalette = async themeName => {
-    saveNewTheme(themeName);
-    addThemeToUser(themeName, user.uid);
+    await saveNewTheme(themeName);
+    await addThemeToUser(themeName, user.uid);
+    setNewFavoriteTheme(downloadTheme);
   };
 
   const updateTheme = async oldThemeName => {

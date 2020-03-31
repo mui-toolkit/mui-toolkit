@@ -47,8 +47,8 @@ export const FavoriteTheme = ({
   favorite
 }) => {
   const classes = useStyles();
-  const [starClicked, setStarClicked] = useState(favorite.starred);
-  const [bookmarkClicked, setBookmarkClicked] = useState(favorite.bookmarked);
+  const [starClicked, setStarClicked] = useState(!!favorite.starred);
+  const [bookmarkClicked, setBookmarkClicked] = useState(!!favorite.bookmarked);
 
   const handleStar = () => {
     setStarClicked(!starClicked);
@@ -62,27 +62,15 @@ export const FavoriteTheme = ({
   const handleBookmark = () => {
     setBookmarkClicked(!bookmarkClicked);
   };
-  // const duplicateFavoriteChecker = async themeName => {
-  //   const checkDuplicateFav = await db
-  //     .collection("FavoritedThemes")
-  //     .where("signedInUserId", "==", `${signedInUserId}`)
-  //     .where("themeId", "==", `${themeId}`)
-  //     .get()
-  //     .then(querySnapshot => {
-  //       console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
-  //       return !querySnapshot.empty;
-  //     });
-  //   console.log("SaveTheme -> checkDuplicateFav", checkDuplicateFav);
-  //   return checkDuplicateFav;
-  // };
+
   const updateFavoriteThemes = async () => {
-    const favPalette = {
-      primary: { main: downloadTheme.palette.primary.main },
-      secondary: { main: downloadTheme.palette.secondary.main }
-    };
-    const favTypography = {
-      fontFamily: downloadTheme.typography.fontFamily
-    };
+    // const favPalette = {
+    //   primary: { main: downloadTheme.palette.primary.main },
+    //   secondary: { main: downloadTheme.palette.secondary.main }
+    // };
+    // const favTypography = {
+    //   fontFamily: downloadTheme.typography.fontFamily
+    // };
     // const favoriteTheme = {
     //   downloadTheme,
     //   themeId,
@@ -94,12 +82,11 @@ export const FavoriteTheme = ({
     //   palette: favPalette,
     //   typography: favTypography,
     // };
-    const favoriteTheme = {
-      ...favorite
-    };
-    favoriteTheme.bookmarked = !!bookmarkClicked;
-    favoriteTheme.starred = !!starClicked;
-
+    // const favoriteTheme = {
+    //   ...favorite
+    // };
+    // favoriteTheme.bookmarked = !!bookmarkClicked;
+    // favoriteTheme.starred = !!starClicked;
     // await db
     //   .collection("FavoritedThemes")
     //   .where("signedInUserId", "==", `${signedInUserId}`)
@@ -114,6 +101,7 @@ export const FavoriteTheme = ({
     //         console.log("Error bookmarking theme: ", error);
     //       });
     //   });
+    /***************
     await db
       .collection("FavoritedThemes")
       .doc(`${favoriteTheme.favId}`)
@@ -124,7 +112,7 @@ export const FavoriteTheme = ({
       .catch(function(error) {
         console.log("Error bookmarking theme: ", error);
       });
-
+*****************/
     // await db
     //   .collection("FavoritedThemes")
     //   .doc(`${favoriteTheme.favId}`)
