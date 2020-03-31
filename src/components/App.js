@@ -14,7 +14,7 @@ import 'firebase/auth';
 import { Store } from './build/';
 import WebPreview from '../WebPreview/WebPreview';
 import Explore from './Explore';
-import GridBuilder from './GridBuilder';
+import GridBuilder from './GridBuilder/GridBuilder';
 
 // var provider = new firebase.auth.GoogleAuthProvider();
 
