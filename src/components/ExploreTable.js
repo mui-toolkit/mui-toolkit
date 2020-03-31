@@ -20,6 +20,7 @@ import firebase from "firebase";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import { db } from "../config/firebase";
 
 const useStyles = makeStyles({
   title: {
@@ -53,7 +54,7 @@ function ExploreTable({
 }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const [favoriteTheme, setFavoriteTheme] = useState({});
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -62,39 +63,94 @@ function ExploreTable({
     setAnchorEl(null);
   };
 
-  // const handleStar = () => {
-  //   setStarClicked(!starClicked);
-  //   //// star boolean = starClicked
+  const updateFavoriteTheme = async (identifier, favoriteTheme) => {
+    console.log("updateFavoriteTheme -> favoriteTheme", favoriteTheme);
+    if (identifier === "bookmarked") {
+      await db
+        .collection("FavoritedThemes")
+        .doc(`${favoriteTheme.thisThemeId}`)
+        .update({ bookmarked: bookmarkClicked })
+        .then(() => {
+          console.log("updated explore bookmarked status");
+        })
+        .catch(err => {
+          console.log("Error getting favorite themes", err);
+        });
+    } else if (identifier === "starred") {
+      await db
+        .collection("FavoritedThemes")
+        .doc(`${favoriteTheme.thisThemeId}`)
+        .update({ starred: starClicked })
+        .then(() => {
+          console.log("updated explore starred status");
+        })
+        .catch(err => {
+          console.log("Error getting favorite themes", err);
+        });
+    }
+  };
+  const getFavoriteTheme = async (identifier, userId, themeId) => {
+    console.log("getFavoriteTheme -> themeId", themeId);
+    console.log("getFavoriteTheme -> userId", userId);
+    var updateFav = {};
+    await db
+      .collection("FavoritedThemes")
+      .where("signedInUserId", "==", `${userId}`)
+      .where("themeId", "==", `${themeId}`)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          console.log("No matching documents.");
+          return;
+        }
+        snapshot.forEach(theme => {
+          console.log(theme.id, "=>", theme.data());
+          if (identifier === "bookmarked") {
+            updateFav = {
+              ...theme.data(),
+              bookmarked: bookmarkClicked,
+              thisThemeId: theme.id
+            };
+          } else if (identifier === "starred") {
+            updateFav = { ...theme.data(), starred: starClicked };
+          }
+          setFavoriteTheme(updateFav);
+        });
+      })
+      .catch(err => {
+        console.log("Error getting favorite theme", err);
+      });
+  };
 
-  //   // pass clicked to update button
-  //   // add star to starsCount of theme
+  const handleFav = async (identifier, userId, themeId) => {
+    console.log("handleFav -> userId", userId);
+    console.log("handleFav -> themeId", themeId);
 
-  //   // add theme to user favoriteTheme array
-  // };
-  // const handleBookmark = () => {
-  //   setBookmarkClicked(!bookmarkClicked);
-  //   ///// do some stuff here
-  // };
-
-  const handleFav = (identifier, userId, exploreId) => {
     if (identifier === "starred") {
       setStarClicked(!starClicked);
     } else if (identifier === "bookmarked") {
       setBookmarkClicked(!bookmarkClicked);
     }
-    // where(`${identifer}`,'==', boolean)
-    // const exists = checkPreviousFavStatus();
-    // if (exists) {
-    // } else {
-    // }
+    console.log("handleFav -> starClicked", starClicked);
+    console.log("handleFav -> bookmarkClicked", bookmarkClicked);
+
+    await getFavoriteTheme(identifier, userId, themeId);
+    await updateFavoriteTheme(identifier, favoriteTheme);
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  console.log(
+    "BUTTON",
+    themesToMap,
+    starClicked,
+    bookmarkClicked,
+    favoriteTheme.id
+  );
   return (
     <Grid container direction="row" justify="center" alignItems="center">
       {themesToMap.map(theme => (
-        <Grid item key={theme.themeName} style={{ padding: "1em" }}>
+        <Grid item key={theme.themeId} style={{ padding: "1em" }}>
           <GridListTile style={{ color: "white" }}>
             <img src={theme.img} width="300px" />
             <GridListTileBar
@@ -102,7 +158,7 @@ function ExploreTable({
               subtitle={<span>by: {theme.user}</span>}
               actionIcon={
                 <IconButton
-                  aria-label={`info about ${theme.themeName}`}
+                  aria-label={`info about ${theme.themeId}`}
                   className={classes.icon}
                   onClick={handleClick}
                 >
@@ -131,7 +187,7 @@ function ExploreTable({
                 <IconButton
                   aria-label="star"
                   onClick={() =>
-                    handleFav("starred", theme.userId, theme.exploreId)
+                    handleFav("starred", theme.userId, theme.themeId)
                   }
                 >
                   <Badge badgeContent={theme.starsCount} color="secondary">
@@ -152,10 +208,16 @@ function ExploreTable({
                 <IconButton
                   aria-label="bookmark"
                   onClick={() =>
-                    handleFav("bookmarked", theme.userId, theme.exploreId)
+                    handleFav("bookmarked", theme.userId, theme.themeId)
                   }
                 >
-                  {bookmarkClicked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+                  <Badge badgeContent={theme.bookmarksCount} color="secondary">
+                    {bookmarkClicked ? (
+                      <BookmarkIcon />
+                    ) : (
+                      <BookmarkBorderIcon />
+                    )}
+                  </Badge>
                 </IconButton>
               </Tooltip>
             </Paper>

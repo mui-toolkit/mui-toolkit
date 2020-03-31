@@ -13,7 +13,12 @@ import M from "minimatch";
 import { updateExpression } from "@babel/types";
 import { db } from "../config/firebase";
 
-export default function ExploreAdd({ savedThemes, setExploreThemes, setStarClicked, setBookmarkClicked }) {
+export default function ExploreAdd({
+  savedThemes,
+  setExploreThemes,
+  setStarClicked,
+  setBookmarkClicked
+}) {
   console.log("ExploreAdd -> savedThemes", savedThemes);
   const [open, setOpen] = useState(false);
 
@@ -44,20 +49,29 @@ export default function ExploreAdd({ savedThemes, setExploreThemes, setStarClick
     const bookmarked = faves.filter(themeObj => themeObj.bookmarked === true)
       .length;
     const starred = faves.filter(themeObj => themeObj.starred === true).length;
-    themeObject.bookmarksCount = bookmarked;
-    themeObject.starsCount = starred;
-    console.log("TESTING BOOKMARKS AND STARS COUNTS=====", themeObject);
+    // themeObject.bookmarksCount = bookmarked;
+    // themeObject.starsCount = starred;
+    console.log(
+      "TESTING BOOKMARKS AND STARS COUNTS=====",
+
+      bookmarked,
+      starred
+    );
     // set signedInUserId's fav preferences on each explore theme
     // await setFavStatus() ??
-    return themeObject;
+    return [bookmarked, starred];
   };
 
-  const updateExplore = async themeObject => {
+  const updateExplore = async (themeObject, bookmarksCount, starsCount) => {
     // need to update bookmarksCount and starsCount in exploreTheme before updating
     await db
       .collection("CustomizedThemes")
       .doc(`${themeObject.themeId}`)
-      .update({ explore: true })
+      .update({
+        explore: true,
+        bookmarksCount,
+        starsCount
+      })
       .then(() => {
         console.log("updated explore status");
       })
@@ -80,8 +94,11 @@ export default function ExploreAdd({ savedThemes, setExploreThemes, setStarClick
     const [exploreTheme] = savedThemes.filter(
       themeObject => themeObject.themeId === selectedTheme
     );
-
-    await updateExplore(await countStarsAndBookmarks(exploreTheme));
+    console.log("handleAdd -> exploreTheme", exploreTheme);
+    const [bookmarksCount, starsCount] = await countStarsAndBookmarks(
+      exploreTheme
+    );
+    await updateExplore(exploreTheme, bookmarksCount, starsCount);
     setOpen(false);
   };
   return (

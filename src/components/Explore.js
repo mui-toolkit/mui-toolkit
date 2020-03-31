@@ -33,12 +33,10 @@ export default function Explore() {
   const classes = useStyles();
   let location = useLocation();
   let savedThemes = location.state.themes.slice();
-  let mystarredThemes = location.state.starredThemes.slice();
-  console.log("Explore -> mystarredThemes", mystarredThemes);
-  let mybookmarkedThemes = location.state.bookmarkedThemes.slice();
-  console.log("Explore -> mybookmarkedThemes", mybookmarkedThemes);
-
-  // map through starred and bookmarked themes and set starClicked, bookmarkClicked
+  let myStarredThemes = location.state.starredThemes.slice();
+  console.log("Explore -> myStarredThemes", myStarredThemes);
+  let myBookmarkedThemes = location.state.bookmarkedThemes.slice();
+  console.log("Explore -> myBookmarkedThemes", myBookmarkedThemes);
 
   const [exploreThemes, setExploreThemes] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -76,6 +74,18 @@ export default function Explore() {
     response();
   }, []);
 
+  // map through starred and bookmarked themes, find common with exploreThemes array and set commons with starClicked, bookmarkClicked
+  // const findCommon = (arr1, arr2) =>
+  //   arr1.filter(obj =>
+  //     arr2.filter(exploreTheme => obj.themeId === exploreTheme.exploreId)
+  //   );
+  // const markEachFav = array => {
+  //   array.forEach(obj => )
+  // }
+
+  // const starThis = findCommon(myStarredThemes, exploreThemes);
+  // const bookmarkeThis = findCommon(myBookmarkedThemes, exploreThemes);
+
   const handleClick = (event, index) => {
     setSelectedIndex(index);
   };
@@ -90,8 +100,14 @@ export default function Explore() {
   console.log("================>>>>>", exploreThemes);
 
   // recently added
-  const recentlyAdded = exploreThemes.sort((a, b) => b.createdAt - a.createdAt);
-  console.log("Explore -> recentlyAdded", recentlyAdded);
+  // const recentlyAdded = exploreThemes.sort(
+  //   (a, b) => b.createdAt.seconds - a.createdAt.seconds
+  // );
+  // console.log(
+  //   "Explore -> recentlyAdded",
+  //   recentlyAdded,
+  //   exploreThemes[0].createdAt.seconds
+  // );
 
   // on buttonClick most stars // exploreThemes.map(themes => {})
   const bookmarkedThemes = exploreThemes.sort(
@@ -104,7 +120,6 @@ export default function Explore() {
   return (
     <React.Fragment>
       <Grid
-        container
         direction="column"
         alignItems="center"
         className={classes.container}
@@ -170,7 +185,9 @@ export default function Explore() {
           )}
           {selectedIndex === 1 && (
             <ExploreTable
-              themesToMap={bookmarkedThemes}
+              themesToMap={exploreThemes.sort(
+                (a, b) => b.bookmarksCount - a.bookmarksCount
+              )}
               setStarClicked={setStarClicked}
               setBookmarkClicked={setBookmarkClicked}
               starClicked={starClicked}
@@ -179,7 +196,9 @@ export default function Explore() {
           )}
           {selectedIndex === 2 && (
             <ExploreTable
-              themesToMap={recentlyAdded}
+              themesToMap={exploreThemes.sort(
+                (a, b) => b.createdAt.seconds - a.createdAt.seconds
+              )}
               setStarClicked={setStarClicked}
               setBookmarkClicked={setBookmarkClicked}
               starClicked={starClicked}
@@ -188,7 +207,9 @@ export default function Explore() {
           )}
           {selectedIndex === 3 && (
             <ExploreTable
-              themesToMap={starredThemes}
+              themesToMap={exploreThemes.sort(
+                (a, b) => b.starsCount - a.starsCount
+              )}
               setStarClicked={setStarClicked}
               setBookmarkClicked={setBookmarkClicked}
               starClicked={starClicked}
