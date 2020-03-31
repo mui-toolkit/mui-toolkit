@@ -28,17 +28,11 @@ export default function ExploreAdd({ savedThemes, setExploreThemes }) {
         console.log("updated explore status");
       })
       .then(response => {
-        setExploreThemes(prevThemes =>
-          prevThemes.filter(theme => theme.themeId !== themeObject.themeId)
-        );
+        setExploreThemes(prevThemes => [...prevThemes, themeObject]);
       });
   };
   const handleChange = event => {
     setSelectedTheme(event.target.value);
-    const [exploreTheme] = savedThemes.filter(
-      themeObject => themeObject.themeId === event.target.value
-    );
-    updateExplore(exploreTheme);
   };
 
   const handleClickOpen = () => {
@@ -46,6 +40,13 @@ export default function ExploreAdd({ savedThemes, setExploreThemes }) {
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+  const handleAdd = () => {
+    const [exploreTheme] = savedThemes.filter(
+      themeObject => themeObject.themeId === selectedTheme
+    );
+    updateExplore(exploreTheme);
     setOpen(false);
   };
   return (
@@ -87,7 +88,7 @@ export default function ExploreAdd({ savedThemes, setExploreThemes }) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleAdd} color="primary">
             Add
           </Button>
         </DialogActions>

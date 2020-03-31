@@ -47,8 +47,8 @@ export const FavoriteTheme = ({
   favorite
 }) => {
   const classes = useStyles();
-  const [starClicked, setStarClicked] = useState(!favorite.starred);
-  const [bookmarkClicked, setBookmarkClicked] = useState(!favorite.bookmarked);
+  const [starClicked, setStarClicked] = useState(favorite.starred);
+  const [bookmarkClicked, setBookmarkClicked] = useState(favorite.bookmarked);
 
   const handleStar = () => {
     setStarClicked(!starClicked);
@@ -117,13 +117,24 @@ export const FavoriteTheme = ({
     await db
       .collection("FavoritedThemes")
       .doc(`${favoriteTheme.favId}`)
-      .update({ ...favoriteTheme })
+      .set({ favoriteTheme })
       .then(function() {
         console.log(`Added bookmark to ${favoriteTheme.themeName} `);
       })
       .catch(function(error) {
         console.log("Error bookmarking theme: ", error);
       });
+
+    // await db
+    //   .collection("FavoritedThemes")
+    //   .doc(`${favoriteTheme.favId}`)
+    //   .update({ ...favoriteTheme })
+    //   .then(function() {
+    //     console.log(`Added bookmark to ${favoriteTheme.themeName} `);
+    //   })
+    //   .catch(function(error) {
+    //     console.log("Error bookmarking theme: ", error);
+    //   });
   };
 
   console.log(

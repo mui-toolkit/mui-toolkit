@@ -89,24 +89,14 @@ export default function Explore() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  // get from database
-  //url to the preview (web)
-  //img
-  //user ==> username
-  // name: name of theme
-  // theme id dynamic // only if user adds to explore page
-
   // *************
-  savedThemes.map(themeObj => {
+  exploreThemes.map(themeObj => {
     themeObj.img = `https://image.thum.io/get/auth/8186-fe739dc2614dfdbf1478af6427346aa8/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/${themeObj.themeId}`;
     themeObj.user = themeObj.createdBy;
     themeObj.url = `https://mui-theme.firebaseapp.com/webpreview/${themeObj.themeId}`;
   });
-  // console.log("Explore -> savedThemes", savedThemes);
   // *************
-
-  // console.log("Explore -> exploreThemes", exploreThemes);
-
+  console.log("================>>>>>", exploreThemes);
   return (
     <React.Fragment>
       <Grid
