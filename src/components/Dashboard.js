@@ -137,6 +137,8 @@ export default function Dashboard({ user }) {
   const [starredThemes, setStarredThemes] = useState([]);
   const [bookmarkedThemes, setBookmarkedThemes] = useState([]);
   const [foundUser, setFoundUser] = useState("");
+  // const [stars, setStars] = useState(0);
+  const userStars = 0;
 
   useEffect(() => {
     const response = async () => {
@@ -237,7 +239,6 @@ export default function Dashboard({ user }) {
   console.log("USERS SAVED THEMES", themes);
   console.log("STARRED", starredThemes);
   console.log("BOOKMARKED", bookmarkedThemes);
-  const stars = themes.reduce((acc, theme) => theme.starsCount + acc, 0);
 
   const classes = useStyles();
 
@@ -255,6 +256,29 @@ export default function Dashboard({ user }) {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const updateStars = async () => {
+    // users total star count
+    await db
+      .collection("FavoritedThemes")
+      .where("createdByUserId", "==", `${user.uid}`)
+      .where("starred", "==", true)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          console.log("Nothing starred yet");
+          return;
+        }
+        snapshot.forEach(doc => {
+          console.log(doc.id, "starred=>", doc.data());
+          // starred.push({ ...doc.data(), favId: doc.id });
+          // setStarredThemes([...starred]);
+          userStars++;
+        });
+      })
+      .catch(err => {
+        console.log("Error getting starred themes", err);
+      });
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -291,9 +315,8 @@ export default function Dashboard({ user }) {
           >
             mymui.
           </Button>
-          <IconButton syle={{ color: "#000" }}>
-            {/* make star number this dynamic */}
-            <Badge badgeContent={stars} color="secondary">
+          <IconButton syle={{ color: "#000" }} onClick={updateStars}>
+            <Badge badgeContent={userStars} color="secondary">
               <StarIcon />
             </Badge>
           </IconButton>
