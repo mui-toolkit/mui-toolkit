@@ -366,7 +366,14 @@ export default function Dashboard({ user }) {
             <ListItemText primary="Starred Themes" />
           </ListItem>
           <Divider variant="inset" />
-          <ListItem button component={Link} to="/explore">
+          <ListItem
+            button
+            component={Link}
+            to={{
+              pathname: "/explore",
+              state: { themes }
+            }}
+          >
             <ListItemIcon>
               <ImageSearchIcon />
             </ListItemIcon>
