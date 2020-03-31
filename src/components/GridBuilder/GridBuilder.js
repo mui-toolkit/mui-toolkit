@@ -5,6 +5,7 @@ import twelvecolumns from '../../imgs/12columns.jpg';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DragNDrop from './DragNDrop';
 import { cloneDeep } from 'lodash';
+import { ChangeSize } from './ChangeSize';
 
 // imgs/12columns.jpg
 
@@ -42,6 +43,7 @@ const useStyles = makeStyles({
 
 export default function GridBuilder() {
   const classes = useStyles();
+  const [size, setSize] = useState(12);
 
   const data = [
     {
@@ -110,10 +112,6 @@ export default function GridBuilder() {
     }
   };
 
-  // const checkEmpty = () => {
-  //   console.log('LIST', newList);
-  // };
-
   const handleDragEnd = () => {
     console.log('ending drag..');
     setDragging(false);
@@ -137,7 +135,33 @@ export default function GridBuilder() {
         { ...prevList[1] },
       ];
     });
+  };
 
+  const handleChangeSize = (e, params, newSize) => {
+    console.log('PARAMS', params);
+    console.log('ITEM', list[0].items[params.itemI].id);
+    console.log('SIZE', newSize);
+
+    let id = list[params.grpI].items[params.itemI].id;
+
+    list[params.grpI].items.forEach(item => {
+      if (item.id === id) {
+        item.cols = newSize;
+      } else {
+        return item;
+      }
+    });
+
+    setList(prevList => {
+      return [
+        {
+          cols: 9,
+          paper: classes.paperGrid,
+          items: [...list[0].items],
+        },
+        { ...prevList[1] },
+      ];
+    });
     // setList(prevList => prevList[0].items.filter(item => item.id !== id));
   };
 
@@ -148,7 +172,7 @@ export default function GridBuilder() {
         direction='row'
         // alignItems='center'
         className={classes.container}
-        spacing={1}
+        // spacing={1}
         justify='flex-end'
       >
         {list.map((group, grpI) => (
@@ -162,34 +186,56 @@ export default function GridBuilder() {
             }
           >
             <Paper className={group.paper}>
-              {group.items.map((item, itemI) => (
-                <Grid
-                  item
-                  style={{ backgroundColor: item.color, opacity: 0.5 }}
-                  className={
-                    dragging ? getStyles({ grpI, itemI }) : classes.box
-                  }
-                  xs={item.cols}
-                  align='center'
-                  draggable
-                  onDragEnter={
-                    dragging
-                      ? e => {
-                          handleDragEnter(e, { grpI, itemI });
-                        }
-                      : null
-                  }
-                  onDragStart={e => {
-                    handleDragStart(e, { grpI, itemI });
-                  }}
-                >
-                  <Typography>{`${item.id} = ${item.cols} column(s)`}</Typography>
-
-                  <Button onClick={e => handleDelete(e, { grpI, itemI })}>
-                    <DeleteForeverIcon />
-                  </Button>
-                </Grid>
-              ))}
+              <Grid container direction='row' justify='flex-end'>
+                {group.items.map((item, itemI) => (
+                  <Grid
+                    item
+                    style={{ backgroundColor: item.color, opacity: 0.5 }}
+                    className={
+                      dragging ? getStyles({ grpI, itemI }) : classes.box
+                    }
+                    xs={item.cols}
+                    align='center'
+                    draggable
+                    onDragEnter={
+                      dragging
+                        ? e => {
+                            handleDragEnter(e, { grpI, itemI });
+                          }
+                        : null
+                    }
+                    onDragStart={e => {
+                      handleDragStart(e, { grpI, itemI });
+                    }}
+                  >
+                    {' '}
+                    <Grid
+                      container
+                      direction='row'
+                      justify='center'
+                      alignItems='center'
+                    >
+                      <Grid item>
+                        <Typography>{`${item.id} =`}</Typography>
+                      </Grid>
+                      <Grid item>
+                        <ChangeSize
+                          handleChangeSize={handleChangeSize}
+                          size={size}
+                          setSize={setSize}
+                          grpI={grpI}
+                          itemI={itemI}
+                          list={list}
+                        />
+                      </Grid>
+                      <Grid item>column(s)</Grid>
+                    </Grid>
+                    <Button onClick={e => handleDelete(e, { grpI, itemI })}>
+                      <DeleteForeverIcon />
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
             </Paper>
           </Grid>
         ))}
