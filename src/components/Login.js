@@ -131,54 +131,6 @@ export function Login(provider) {
     return true;
   };
 
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then(function(result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      console.log('google user', user);
-      // ...
-    })
-    .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      console.log('google error', error);
-      // ...
-    });
-  const signInWithGoogle = provider => {
-    console.log('google provider', provider);
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        console.log('google user', user);
-        // ...
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        console.log('google error', error);
-        // ...
-      });
-  };
-
   return (
     <div>
       <Tab label="Login" className={classes.tab} onClick={handleClickOpen}>
@@ -253,37 +205,38 @@ export function Login(provider) {
             >
               Login
             </Button>
-            <Button>
-              <input
-                // onClick={signInWithGoogle}
-                onClick={() => {
-                  firebase
-                    .auth()
-                    .signInWithPopup(provider)
-                    .then(function(result) {
-                      // This gives you a Google Access Token. You can use it to access the Google API.
-                      var token = result.credential.accessToken;
-                      // The signed-in user info.
-                      var user = result.user;
-                      console.log('google user', user);
-                      // ...
-                    })
-                    .catch(function(error) {
-                      // Handle Errors here.
-                      var errorCode = error.code;
-                      var errorMessage = error.message;
-                      // The email of the user's account used.
-                      var email = error.email;
-                      // The firebase.auth.AuthCredential type that was used.
-                      var credential = error.credential;
-                      console.log('google error', error);
-                      // ...
-                    });
-                }}
-                type="submit"
-                value="Sign Up With Google"
+
+            <button
+              onClick={() => {
+                firebase
+                  .auth()
+                  .signInWithPopup(provider)
+                  .then(function(result) {
+                    var token = result.credential.accessToken;
+                    // The signed-in user info.
+                    var user = result.user;
+                    console.log('google user', user);
+                  })
+                  .catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    var email = error.email;
+                    var credential = error.credential;
+                    console.log('google error', error);
+                  });
+              }}
+              className="googleBtn"
+              type="button"
+              style={{ fontSize: 14, marginRight: '20px' }}
+            >
+              <img
+                style={{ fontSize: 14, width: '12px', marginRight: '5px' }}
+                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                alt="logo"
               />
-            </Button>
+              Login With Google
+            </button>
           </DialogActions>
         </Paper>
       </Dialog>
