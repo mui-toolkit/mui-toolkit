@@ -137,7 +137,7 @@ export default function Dashboard({ user }) {
   const [starredThemes, setStarredThemes] = useState([]);
   const [bookmarkedThemes, setBookmarkedThemes] = useState([]);
   const [foundUser, setFoundUser] = useState("");
-  // const [stars, setStars] = useState(0);
+  const [stars, setStars] = useState(0);
   const userStars = 0;
 
   useEffect(() => {
@@ -186,7 +186,7 @@ export default function Dashboard({ user }) {
     unsub();
   }, []);
 
-  // new schema
+  // favorites collection
   useEffect(() => {
     const bookmarked = [];
     const starred = [];
@@ -258,10 +258,10 @@ export default function Dashboard({ user }) {
 
   const updateStars = async () => {
     // users total star count
+    var starred = [];
     await db
       .collection("FavoritedThemes")
       .where("createdByUserId", "==", `${user.uid}`)
-      .where("starred", "==", true)
       .get()
       .then(snapshot => {
         if (snapshot.empty) {
@@ -270,9 +270,7 @@ export default function Dashboard({ user }) {
         }
         snapshot.forEach(doc => {
           console.log(doc.id, "starred=>", doc.data());
-          // starred.push({ ...doc.data(), favId: doc.id });
-          // setStarredThemes([...starred]);
-          userStars++;
+          setStars(prev => prev + Number(doc.data().starsCount));
         });
       })
       .catch(err => {
@@ -315,14 +313,14 @@ export default function Dashboard({ user }) {
           >
             mymui.
           </Button>
-          <IconButton syle={{ color: "#000" }} onClick={updateStars}>
-            <Badge badgeContent={userStars} color="secondary">
+          <IconButton syle={{ color: "#000" }} onClick={() => updateStars()}>
+            <Badge badgeContent={stars} color="secondary">
               <StarIcon />
             </Badge>
           </IconButton>
           <Avatar>
             {foundUser
-              ? `${foundUser.firstName[0]} ${foundUser.lastName[0]}`
+              ? `${foundUser.firstName[0]}${foundUser.lastName[0]}`
               : ""}
           </Avatar>
         </Toolbar>

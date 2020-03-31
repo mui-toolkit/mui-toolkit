@@ -156,15 +156,6 @@ export default function UserProfile({ uid, user }) {
                   fullWidth
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <TextField
-                  id="password"
-                  name="password"
-                  label="Repeat Password"
-                  // test if match
-                  fullWidth
-                />
-              </Grid> */}
               <Grid item xs={12}></Grid>
             </Grid>
             <React.Fragment>

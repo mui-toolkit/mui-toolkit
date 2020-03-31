@@ -103,19 +103,27 @@ function ExploreTable({
           console.log("No matching documents.");
           return;
         }
-        snapshot.forEach(theme => {
-          console.log(theme.id, "=>", theme.data());
-          if (identifier === "bookmarked") {
-            updateFav = {
-              ...theme.data(),
-              bookmarked: bookmarkClicked,
-              thisThemeId: theme.id
-            };
-          } else if (identifier === "starred") {
-            updateFav = { ...theme.data(), starred: starClicked };
-          }
-          setFavoriteTheme(updateFav);
-        });
+        snapshot
+          .forEach(theme => {
+            console.log(theme.id, "=>", theme.data());
+            if (identifier === "bookmarked") {
+              updateFav = {
+                ...theme.data(),
+                bookmarked: bookmarkClicked,
+                thisThemeId: theme.id
+              };
+            } else if (identifier === "starred") {
+              updateFav = {
+                ...theme.data(),
+                starred: starClicked,
+                thisThemeId: theme.id
+              };
+            }
+            // setFavoriteTheme(updateFav);
+          })
+          .then(response => {
+            setFavoriteTheme(updateFav);
+          });
       })
       .catch(err => {
         console.log("Error getting favorite theme", err);
