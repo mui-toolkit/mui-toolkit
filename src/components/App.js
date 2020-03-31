@@ -13,18 +13,6 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import { Store } from './build/';
 
-// firebase.auth().onAuthStateChanged(user => {
-//   console.log('user', user);
-//   if (user) {
-//     user.getIdTokenResult().then(idTokenResult => {
-//       user.admin = idTokenResult.claims.admin;
-//       // console.log('idToken', idTokenResult);
-//     });
-//     console.log('user logged in:', user);
-//   } else {
-//     console.log('user logged out');
-//   }
-// });
 const defaultUser = {
   loggedIn: false,
   email: '',
@@ -52,7 +40,6 @@ function onAuthStateChange(callback) {
 
 function App() {
   const [user, setUser] = useState({ loggedIn: true });
-  // console.log('user in after useState', user);
   useEffect(() => {
     // do equivalent of unsubscribe
     const unsubscribe = onAuthStateChange(setUser);

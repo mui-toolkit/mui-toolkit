@@ -77,8 +77,8 @@ export function Login(provider) {
 
   const handleClick = () => {
     setOpenSnack(true);
-    setEmail('');
-    setPassword('');
+    setEmail();
+    setPassword();
   };
   const handleClose = (event, reason) => {
     console.log('hanCl');
@@ -131,8 +131,28 @@ export function Login(provider) {
     return true;
   };
 
-  // provider.addScope('email');
-  // provider.addScope('https://www.googleapis.com/auth/plus.me');
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then(function(result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      console.log('google user', user);
+      // ...
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      console.log('google error', error);
+      // ...
+    });
   const signInWithGoogle = provider => {
     console.log('google provider', provider);
     firebase
@@ -235,7 +255,31 @@ export function Login(provider) {
             </Button>
             <Button>
               <input
-                onClick={signInWithGoogle}
+                // onClick={signInWithGoogle}
+                onClick={() => {
+                  firebase
+                    .auth()
+                    .signInWithPopup(provider)
+                    .then(function(result) {
+                      // This gives you a Google Access Token. You can use it to access the Google API.
+                      var token = result.credential.accessToken;
+                      // The signed-in user info.
+                      var user = result.user;
+                      console.log('google user', user);
+                      // ...
+                    })
+                    .catch(function(error) {
+                      // Handle Errors here.
+                      var errorCode = error.code;
+                      var errorMessage = error.message;
+                      // The email of the user's account used.
+                      var email = error.email;
+                      // The firebase.auth.AuthCredential type that was used.
+                      var credential = error.credential;
+                      console.log('google error', error);
+                      // ...
+                    });
+                }}
                 type="submit"
                 value="Sign Up With Google"
               />
