@@ -202,13 +202,21 @@ export function Signup(props) {
             >
               <li>
                 {' '}
-                <Button>
-                  <input type="submit" value="Sign Up" />
+                <Button
+                  style={{
+                    fontSize: 10,
+                    marginTop: '5px',
+                    marginBottom: '5px',
+                    marginLeft: '15px',
+                    borderRadius: '5px'
+                  }}
+                >
+                  <input type="submit" value="Sign Up with Email" />
                 </Button>
               </li>
               <li>
                 {' '}
-                <button
+                <Button
                   onClick={() => {
                     firebase
                       .auth()
@@ -238,7 +246,7 @@ export function Signup(props) {
                   className="googleBtn"
                   type="button"
                   style={{
-                    fontSize: 14,
+                    fontSize: 10,
                     // marginRight: '20px',
                     marginTop: '5px',
                     marginBottom: '5px',
@@ -246,16 +254,16 @@ export function Signup(props) {
                   }}
                 >
                   <img
-                    style={{ fontSize: 14, width: '12px', marginRight: '5px' }}
+                    style={{ width: '12px', marginRight: '5px' }}
                     src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
                     alt="logo"
                   />
                   Sign up with Google
-                </button>
+                </Button>
               </li>
               <li>
                 {' '}
-                <button
+                <Button
                   onClick={() => {
                     firebase
                       .auth()
@@ -298,8 +306,7 @@ export function Signup(props) {
                   className="googleBtn"
                   type="button"
                   style={{
-                    fontSize: 14,
-                    // marginRight: '20px',
+                    fontSize: 10,
                     marginTop: '5px',
                     borderRadius: '5px'
                   }}
@@ -310,7 +317,7 @@ export function Signup(props) {
                     alt="logo"
                   />
                   Sign up with Github
-                </button>
+                </Button>
               </li>
             </ul>
           </Grid>
