@@ -31,6 +31,10 @@ import firebase from "firebase";
 import "firebase/auth";
 import { db } from "../config/firebase";
 import Button from "@material-ui/core/Button";
+import ImageSearchIcon from "@material-ui/icons/ImageSearch";
+import BookmarksIcon from "@material-ui/icons/Bookmarks";
+import StarsIcon from "@material-ui/icons/Stars";
+import Avatar from "@material-ui/core/Avatar";
 
 const drawerWidth = 240;
 
@@ -128,43 +132,36 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard({ user }) {
   console.log("Dashboard -> user", user);
+  const signedInUserId = user.uid;
   const [themes, setThemes] = useState([]);
+  const [starredThemes, setStarredThemes] = useState([]);
+  const [bookmarkedThemes, setBookmarkedThemes] = useState([]);
   const [foundUser, setFoundUser] = useState("");
 
   useEffect(() => {
-    const userThemes = [];
     const response = async () => {
       await db
         .collection("Users")
         .doc(`${user.uid}`)
-        .onSnapshot(doc => {
-          // .get()
-          // .then(doc => {
-          console.log("FOUND USER", doc.data());
-
-          setFoundUser(doc.data());
+        .get()
+        .then(async doc => {
+          if (!doc.exists) {
+            console.log("No such document!");
+          } else {
+            console.log("FOUND USER", doc.data());
+            await setFoundUser(doc.data());
+          }
+        })
+        .catch(err => {
+          console.log("Error getting document", err);
         });
-      // let foundUser = doc.data();
-      // if (foundUser.themes) {
-      //     Promise.all(
-      //       foundUser.themes.map(theme => {
-      //         db.collection("CustomizedThemes")
-      //           .doc(`${theme.id}`)
-      //           // .get()
-      //           // .then(theme => {
-      //           .onSnapshot(theme => {
-      //             // console.log("themes", theme.data());
-      //             userThemes.push(theme.data());
-      //             // console.log("response -> userThemes", userThemes);
-      //             setThemes([...userThemes]);
-      //           });
-      //       })
-      //     );
-      //   // }
-      // });
-      // .catch(err => {
-      //   console.log("Error getting document", err);
-      // });
+    };
+    response();
+  }, []);
+  //saved themes
+  useEffect(() => {
+    const userThemes = [];
+    const unsub = async () => {
       await db
         .collection("CustomizedThemes")
         .where("userId", "==", `${user.uid}`)
@@ -176,7 +173,7 @@ export default function Dashboard({ user }) {
           }
           snapshot.forEach(theme => {
             console.log(theme.id, "=>", theme.data());
-            userThemes.push({...theme.data(), themeId: theme.id});
+            userThemes.push({ ...theme.data(), themeId: theme.id });
             setThemes([...userThemes]);
           });
         })
@@ -184,11 +181,63 @@ export default function Dashboard({ user }) {
           console.log("Error getting documents", err);
         });
     };
-    response();
+    unsub();
   }, []);
 
-  console.log("UsersThemes -> foundUser", foundUser, foundUser.themes);
+  // new schema
+  useEffect(() => {
+    const bookmarked = [];
+    const starred = [];
+    const unsubscribe = async () => {
+      //bookmarked
+      await db
+        .collection("FavoritedThemes")
+        .where("signedInUserId", "==", `${user.uid}`)
+        .where("bookmarked", "==", true)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log("Nothing bookmarked yet");
+            return;
+          }
+          snapshot.forEach(doc => {
+            console.log(doc.id, "bookmarked=>", doc.data());
+            bookmarked.push({ ...doc.data(), favId: doc.id });
+            setBookmarkedThemes([...bookmarked]);
+          });
+        })
+        .catch(err => {
+          console.log("Error getting bookmarked themes", err);
+        });
+
+      //starred
+      await db
+        .collection("FavoritedThemes")
+        .where("signedInUserId", "==", `${user.uid}`)
+        .where("starred", "==", true)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log("Nothing starred yet");
+            return;
+          }
+          snapshot.forEach(doc => {
+            console.log(doc.id, "starred=>", doc.data());
+            starred.push({ ...doc.data(), favId: doc.id });
+            setStarredThemes([...starred]);
+          });
+        })
+        .catch(err => {
+          console.log("Error getting starred themes", err);
+        });
+    };
+    unsubscribe();
+  }, []);
+  console.log("DASHBOARD FOUNDUSER", foundUser);
   console.log("USERS SAVED THEMES", themes);
+  console.log("STARRED", starredThemes);
+  console.log("BOOKMARKED", bookmarkedThemes);
+  const stars = themes.reduce((acc, theme) => theme.starsCount + acc, 0);
 
   const classes = useStyles();
 
@@ -242,12 +291,13 @@ export default function Dashboard({ user }) {
           >
             mymui.
           </Button>
-          <IconButton color="black">
+          <IconButton syle={{ color: "#000" }}>
             {/* make star number this dynamic */}
-            <Badge badgeContent={8} color="secondary">
+            <Badge badgeContent={stars} color="secondary">
               <StarIcon />
             </Badge>
           </IconButton>
+          <Avatar>{foundUser.firstName}</Avatar>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -284,6 +334,7 @@ export default function Dashboard({ user }) {
             </ListItemIcon>
             <ListItemText primary="User Profile" />
           </ListItem>
+          <Divider variant="inset" />
           <ListItem
             button
             selected={selectedIndex === 2}
@@ -300,9 +351,26 @@ export default function Dashboard({ user }) {
             onClick={event => handleListItemClick(event, 3)}
           >
             <ListItemIcon>
-              <GroupAddIcon />
+              <BookmarksIcon />
             </ListItemIcon>
-            <ListItemText primary="Bookmarked Users" />
+            <ListItemText primary="Bookmarked Themes" />
+          </ListItem>
+          <ListItem
+            button
+            selected={selectedIndex === 4}
+            onClick={event => handleListItemClick(event, 4)}
+          >
+            <ListItemIcon>
+              <StarsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Starred Themes" />
+          </ListItem>
+          <Divider variant="inset" />
+          <ListItem button component={Link} to="/explore">
+            <ListItemIcon>
+              <ImageSearchIcon />
+            </ListItemIcon>
+            <ListItemText primary="Explore" />
           </ListItem>
           <ListItem button component={Link} to="/design">
             <ListItemIcon>
@@ -330,9 +398,29 @@ export default function Dashboard({ user }) {
                 {selectedIndex === 1 && (
                   <UserProfile user={foundUser} uid={user.uid} />
                 )}
-                {selectedIndex === 2 && <ThemesTable themes={themes} />}
+                {selectedIndex === 2 && (
+                  <ThemesTable
+                    setThemes={setThemes}
+                    themes={themes}
+                    tableTitle={"Saved Themes"}
+                    signedInUserId={signedInUserId}
+                  />
+                )}
                 {selectedIndex === 3 && (
-                  <div>ALL YOUR FAVORITE USERS YOU FOLLOW:</div>
+                  <ThemesTable
+                    setThemes={setThemes}
+                    themes={bookmarkedThemes}
+                    tableTitle={"Bookmarked Themes"}
+                    signedInUserId={signedInUserId}
+                  />
+                )}
+                {selectedIndex === 4 && (
+                  <ThemesTable
+                    setThemes={setThemes}
+                    themes={starredThemes}
+                    tableTitle={"Favorite Themes"}
+                    signedInUserId={signedInUserId}
+                  />
                 )}
               </Paper>
             </Grid>

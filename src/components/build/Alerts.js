@@ -94,7 +94,7 @@ export const Alerts = (props) => {
 					</Grid>
 				</Grid>
 
-				<Grid container direction="column" justify="flex">
+				<Grid container direction="column">
 					<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
 						<ColorPop
 							color={errorColor}
@@ -129,7 +129,7 @@ export const Alerts = (props) => {
 							displayColorPicker={successColorPicker}
 							changeColorPickerDisplayed={() => changeColorPickerDisplayed('success')}
 						/>
-						<Typography className={classes.typography}>successColor Color</Typography>
+						<Typography className={classes.typography}>Success Color</Typography>
 					</Grid>
 					<Link onClick={() => setTab(3)}>
 						<Typography variant="outlined" className={classes.typography}>

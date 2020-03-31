@@ -17,16 +17,14 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-
-// function createData(
-//   themeName,
-//   createdAt,
-//   primaryPalette,
-//   secondaryPalette,
-//   typography
-// ) {
-//   return { themeName, createdAt, primaryPalette, secondaryPalette, typography };
-// }
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import WebPreview from "../WebPreview/WebPreview";
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
+import Tooltip from "@material-ui/core/Tooltip";
+import EditIcon from "@material-ui/icons/Edit";
+import { db } from "../config/firebase";
+import firebase from "firebase";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -63,10 +61,10 @@ const headCells = [
     minWidth: 170
   },
   {
-    id: "createdAt",
+    id: "lastEditAt",
     columnAlignment: false,
     disablePadding: true,
-    label: "Date saved",
+    label: "Date edited",
     minWidth: 100
   },
 
@@ -147,7 +145,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2)
   },
   table: {
-    minWidth: 750
+    minWidth: 850
   },
   visuallyHidden: {
     border: 0,
@@ -162,17 +160,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemesTable({ themes }) {
-  console.log("ThemesTable -> themes", themes);
+export default function ThemesTable({
+  setThemes,
+  themes,
+  tableTitle,
+  signedInUserId
+}) {
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
-    createdAt: JSON.stringify(
-      new Date(themeObject.createdAt.seconds * 1000)
+    lastEditAt: JSON.stringify(
+      new Date(themeObject.lastEditAt.seconds * 1000)
     ).slice(1, 11),
     primaryPalette: themeObject.palette.primary.main,
     secondaryPalette: themeObject.palette.secondary.main,
     typography: themeObject.typography.fontFamily,
-    themeId: themeObject.themeId
+    themeId: themeObject.themeId,
+    userId: themeObject.userId,
+    favId: themeObject.favId
   }));
 
   const classes = useStyles();
@@ -201,6 +205,34 @@ export default function ThemesTable({ themes }) {
     setDense(event.target.checked);
   };
 
+  const handleDelete = async (themeId, userId, themeName) => {
+    // delete collection
+    await db
+      .collection("CustomizedThemes")
+      .doc(`${themeId}`)
+      .delete()
+      .then(function() {
+        console.log("Deleted Saved Theme from collection");
+      })
+      .then(response => {
+        setThemes(prevThemes =>
+          prevThemes.filter(theme => theme.themeId !== themeId)
+        );
+      })
+      .catch(function(error) {
+        console.log("Error deleting theme: ", error);
+      });
+    //delete from user themes array
+    await db
+      .collection("Users")
+      .doc(`${userId}`)
+      .update({
+        themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
+      })
+      .then(() => {
+        console.log("deleted reference to this theme");
+      });
+  };
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -216,7 +248,7 @@ export default function ThemesTable({ themes }) {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography className={classes.title} variant="h6" id="tableTitle">
-          Saved Themes
+          {tableTitle}
         </Typography>
         <TableContainer>
           <Table
@@ -244,8 +276,6 @@ export default function ThemesTable({ themes }) {
                       role="checkbox"
                       tabIndex={-1}
                       key={row.themeId}
-                      component={Link}
-                      to={`/design/${row.themeId}/`}
                       style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
@@ -256,15 +286,43 @@ export default function ThemesTable({ themes }) {
                       >
                         {row.themeName}
                       </TableCell>
-                      <TableCell align="right">{row.createdAt}</TableCell>
+                      <TableCell align="right">{row.lastEditAt}</TableCell>
                       <TableCell align="right">{row.primaryPalette}</TableCell>
                       <TableCell align="right">
                         {row.secondaryPalette}
                       </TableCell>
                       <TableCell align="right">{row.typography}</TableCell>
-                      <IconButton aria-label="delete">
-                        <DeleteIcon />
-                      </IconButton>
+
+                      <Tooltip title="Preview Theme">
+                        <IconButton
+                          aria-label="preview"
+                          component={Link}
+                          to={`/webpreview/${row.themeId}`}
+                          target="_blank"
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Edit Theme">
+                        <IconButton
+                          aria-label="edit"
+                          // key={row.themeId}
+                          component={Link}
+                          to={`/design/${row.themeId}/${signedInUserId}`}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Theme">
+                        <IconButton
+                          aria-label="delete"
+                          onClick={() =>
+                            handleDelete(row.themeId, row.userId, row.themeName)
+                          }
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </TableRow>
                   );
                 })}
@@ -286,6 +344,7 @@ export default function ThemesTable({ themes }) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"

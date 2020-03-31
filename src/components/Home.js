@@ -38,7 +38,15 @@ export default function Home() {
               justify="center"
               alignItems="center"
             >
+<<<<<<< HEAD
               <Typography variant="h4" style={{ marginRight: '5px' }}>
+=======
+              <Typography
+                variant='h4'
+                style={{ marginRight: '5px' }}
+                gutterBottom
+              >
+>>>>>>> 5562792f33734628c2c4316329ae848dae387b7c
                 Welcome to{' '}
               </Typography>
               <Typography
@@ -49,8 +57,22 @@ export default function Home() {
                   fontSize: 30,
                   color: '#000'
                 }}
+                gutterBottom
               >
                 mymui.
+              </Typography>
+            </Grid>
+
+            <Grid container justify='center' alignItems='center'>
+              <Typography
+                style={{ marginTop: '10px' }}
+                align='center'
+                style={{ color: '#818181' }}
+              >
+                <b>Build</b> a Material-UI Custom Theme easier and faster.
+                <br />
+                <b>Save</b> and <b>edit</b> your progress. <b>Share</b> and
+                <b> explore</b> with others.
               </Typography>
             </Grid>
 
@@ -70,7 +92,7 @@ export default function Home() {
                   style={{
                     fontFamily: 'Roboto',
                     fontWeight: 200,
-                    fontSize: 28,
+                    fontSize: 24,
                     color: '#000',
                     marginTop: '1em',
                     textTransform: 'none'
@@ -89,7 +111,7 @@ export default function Home() {
                   style={{
                     fontFamily: 'Roboto',
                     fontWeight: 200,
-                    fontSize: 28,
+                    fontSize: 24,
                     color: '#000',
                     marginTop: '1em',
                     textTransform: 'none'

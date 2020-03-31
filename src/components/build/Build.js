@@ -1,12 +1,18 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { SaveTheme, BuildNav, ColorGenerator } from "../build";
+import React, { useState } from "react";
+
+import { SaveTheme, BuildNav, ColorGenerator, FavoriteTheme } from "../build";
 import { PreviewAppBar, PreviewTabs } from "../preview";
 import Download from "../Download";
-
+import StarIcon from "@material-ui/icons/Star";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { Grid, Paper } from "@material-ui/core/";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { db } from "../../config/firebase";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDown";
 
 const useStyles = makeStyles(theme => ({
   preview: {
@@ -28,11 +34,12 @@ const useStyles = makeStyles(theme => ({
 
 export const Build = props => {
   const classes = useStyles();
-  const { themeId } = useParams();
-  console.log("themeId Name: ", themeId);
 
   const {
     user,
+    themeId,
+    signedInUserId,
+    favorite,
     color,
     secondaryColor,
     defaultColor,
@@ -59,8 +66,6 @@ export const Build = props => {
     setSecondaryColor,
     setDefaultColor,
     setPaperColor,
-    fontStyle,
-    setFontStyle,
     primaryTextColor,
     secondaryTextColor,
     primaryTextColorPicker,
@@ -73,24 +78,26 @@ export const Build = props => {
     changeButtonRipple,
     buttonElevation,
     changeButtonElevation,
-    buttonHoverColor,
-    changeButtonHoverColor,
     buttonHoverOpacity,
-    changeButtonHoverOpacity,
     buttonFontWeight,
-    changeButtonFontWeight,
     buttonFontSize,
-    changeButtonFontSize,
     buttonTextTransform,
     changeButtonTextTransform,
     open,
     setOpen,
     buttonHeight,
-    changeButtonHeight,
     buttonPadding,
-    changeButtonPadding,
     buttonBorderRadius,
-    changeButtonBorderRadius,
+    setButtonFontWeight,
+    setButtonFontSize,
+    setButtonHeight,
+    setButtonBorderRadius,
+    setButtonPadding,
+    //Fonts
+    fontFamily,
+    setFontFamily,
+    fontSize,
+    setFontSize,
     //Alerts
     errorColor,
     warningColor,
@@ -111,38 +118,12 @@ export const Build = props => {
     changeShadow,
     setShadow,
     shadowTrue,
-    shadowFalse
+    shadowFalse,
+    setButtonHoverOpacity
   } = props;
 
-  // Will render when a user selects to view a saved theme
-  useEffect(() => {
-    if (themeId) {
-      const response = async () => {
-        await db
-          .collection("CustomizedThemes")
-          .doc(`${themeId}`)
-          .get()
-          .then(doc => {
-            console.log("saved Theme doc", doc.data());
-            if (doc.data().palette.primary.main)
-              setColor(doc.data().palette.primary.main);
-            if (doc.data().palette.secondary.main)
-              setSecondaryColor(doc.data().palette.secondary.main);
-            if (doc.data().palette.background.default)
-              setDefaultColor(doc.data().palette.background.default);
-            if (doc.data().palette.background.paper)
-              setPaperColor(doc.data().palette.background.paper);
-          })
-          .catch(err => {
-            console.log("Error getting documents", err);
-          });
-      };
-      response();
-    }
-  }, []);
-
   return (
-    <section className={classes.root}>
+    <section>
       <Grid container spacing={1}>
         {/* BUILD NAV START */}
         <Grid item xs={3}>
@@ -181,24 +162,21 @@ export const Build = props => {
               changeButtonRipple={changeButtonRipple}
               buttonElevation={buttonElevation}
               changeButtonElevation={changeButtonElevation}
-              buttonHoverColor={buttonHoverColor}
-              changeButtonHoverColor={changeButtonHoverColor}
               buttonHoverOpacity={buttonHoverOpacity}
-              changeButtonHoverOpacity={changeButtonHoverOpacity}
               buttonFontWeight={buttonFontWeight}
-              changeButtonFontWeight={changeButtonFontWeight}
               buttonFontSize={buttonFontSize}
-              changeButtonFontSize={changeButtonFontSize}
               buttonTextTransform={buttonTextTransform}
               changeButtonTextTransform={changeButtonTextTransform}
               open={open}
               setOpen={setOpen}
               buttonHeight={buttonHeight}
-              changeButtonHeight={changeButtonHeight}
               buttonPadding={buttonPadding}
-              changeButtonPadding={changeButtonPadding}
               buttonBorderRadius={buttonBorderRadius}
-              changeButtonBorderRadius={changeButtonBorderRadius}
+              setButtonFontWeight={setButtonFontWeight}
+              setButtonFontSize={setButtonFontSize}
+              setButtonHeight={setButtonHeight}
+              setButtonBorderRadius={setButtonBorderRadius}
+              setButtonPadding={setButtonPadding}
               //Shadow
               shadow={shadow}
               changeShadow={changeShadow}
@@ -206,8 +184,10 @@ export const Build = props => {
               shadowTrue={shadowTrue}
               shadowFalse={shadowFalse}
               //Typography
-              fontStyle={fontStyle}
-              setFontStyle={setFontStyle}
+              fontFamily={fontFamily}
+              setFontFamily={setFontFamily}
+              fontSize={fontSize}
+              setFontSize={setFontSize}
               primaryTextColor={primaryTextColor}
               secondaryTextColor={secondaryTextColor}
               primaryTextColorPicker={primaryTextColorPicker}
@@ -230,10 +210,24 @@ export const Build = props => {
               changeSuccessColor={changeSuccessColor}
               alertVariant={alertVariant}
               changeAlertVariant={changeAlertVariant}
+              setButtonHoverOpacity={setButtonHoverOpacity}
             />
             <Grid item>
               <Download downloadTheme={downloadTheme} />
-              <SaveTheme user={user} downloadTheme={downloadTheme} />
+              <SaveTheme
+                themeId={themeId}
+                user={user}
+                downloadTheme={downloadTheme}
+                // starClicked={starClicked}
+                // bookmarkClicked={bookmarkClicked}
+              />
+              <FavoriteTheme
+                themeId={themeId}
+                downloadTheme={downloadTheme}
+                user={user}
+                signedInUserId={signedInUserId}
+                favorite={favorite}
+              />
             </Grid>
           </Paper>
         </Grid>
@@ -245,11 +239,7 @@ export const Build = props => {
             style={{ background: `${defaultColor}` }}
           >
             <ThemeProvider theme={customTheme}>
-              <PreviewAppBar
-                secondaryColor={secondaryColor}
-                color={color}
-                className={classes.container}
-              />
+              <PreviewAppBar />
               <PreviewTabs tab={tab} changeTab={changeTab} />
             </ThemeProvider>
           </Paper>
