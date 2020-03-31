@@ -27,7 +27,7 @@ export function Signup(props) {
   const [username, setUserName] = useState('');
   const [errors, setErrors] = useState({});
   const [open, setOpen] = React.useState(false);
-
+  var provider = new firebase.auth.GoogleAuthProvider();
   const handleClick = () => {
     setOpen(true);
   };
@@ -194,6 +194,47 @@ export function Signup(props) {
             <Button>
               <input type="submit" value="Sign Up" />
             </Button>
+            <button
+              onClick={() => {
+                firebase
+                  .auth()
+                  .signInWithPopup(provider)
+                  .then(function(result) {
+                    var token = result.credential.accessToken;
+                    // The signed-in user info.
+                    var user = result.user;
+                    console.log('google user', user);
+                    db.collection('Users')
+                      .doc(user.uid)
+                      .set({
+                        // firstName: 'goog',
+                        // lastName: 'le',
+                        email: user.email,
+                        themes: []
+                        // password: '111111',
+                        // username: 'googleAuth'
+                      });
+                  })
+                  .catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    var email = error.email;
+                    var credential = error.credential;
+                    console.log('google error', error);
+                  });
+              }}
+              className="googleBtn"
+              type="button"
+              style={{ fontSize: 14, marginRight: '20px' }}
+            >
+              <img
+                style={{ fontSize: 14, width: '12px', marginRight: '5px' }}
+                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                alt="logo"
+              />
+              Sign up with Google
+            </button>
           </Grid>
         </form>
       </Grid>

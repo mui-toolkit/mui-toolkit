@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import firebase from 'firebase';
 import 'firebase/auth';
+import { db } from '../config/firebase';
 import {
   Dialog,
   DialogActions,
@@ -16,7 +17,6 @@ import {
   Paper
 } from '@material-ui/core/';
 import Tab from '@material-ui/core/Tab';
-import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -144,7 +144,6 @@ export function Login(provider) {
         fullWidth={fullWidth}
         maxWidth={maxWidth}
       >
-
         <Paper
         // className={classes.paper}
         // style={{
@@ -155,7 +154,6 @@ export function Login(provider) {
         //   backgroundColor: '#fff'
         // }}
         >
-
           <Typography
             id="form-dialog-title"
             align="center"
@@ -227,6 +225,16 @@ export function Login(provider) {
                     // The signed-in user info.
                     var user = result.user;
                     console.log('google user', user);
+                    // db.collection('Users')
+                    //   .doc(user.uid)
+                    //   // .set({ email: user.email.value });
+                    //   .set({
+                    //     firstName: 'goog',
+                    //     lastName: 'le',
+                    //     email: user.email,
+                    //     password: '111111',
+                    //     username: 'googleAuth'
+                    //   });
                   })
                   .catch(function(error) {
                     // Handle Errors here.
