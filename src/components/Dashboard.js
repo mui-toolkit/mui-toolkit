@@ -241,7 +241,7 @@ export default function Dashboard({ user }) {
     };
     unsubscribe();
   }, []);
-  console.log("DASHBOARD FOUNDUSER", foundUser);
+  console.log("DASHBOARD FOUNDUSER", foundUser, signedInUserId);
   console.log("USERS SAVED THEMES", themes);
   console.log("STARRED", starredThemes);
   console.log("BOOKMARKED", bookmarkedThemes);
@@ -446,6 +446,7 @@ export default function Dashboard({ user }) {
                     themes={themes}
                     tableTitle={"Saved Themes"}
                     signedInUserId={signedInUserId}
+                    table={"M"}
                   />
                 )}
                 {selectedIndex === 3 && (
@@ -454,6 +455,8 @@ export default function Dashboard({ user }) {
                     themes={bookmarkedThemes}
                     tableTitle={"Bookmarked Themes"}
                     signedInUserId={signedInUserId}
+                    table={"B"}
+                    setBookmarkedThemes={setBookmarkedThemes}
                   />
                 )}
                 {selectedIndex === 4 && (
@@ -462,6 +465,8 @@ export default function Dashboard({ user }) {
                     themes={starredThemes}
                     tableTitle={"Favorite Themes"}
                     signedInUserId={signedInUserId}
+                    table={"S"}
+                    setStarredThemes={setStarredThemes}
                   />
                 )}
               </Paper>

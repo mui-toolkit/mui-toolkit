@@ -14,8 +14,8 @@ import {
 import InfoIcon from "@material-ui/icons/Info";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
-import firebase from "firebase";
 import StarIcon from "@material-ui/icons/Star";
+import firebase from "firebase";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { db } from "../config/firebase";
@@ -183,11 +183,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
       {themesToMap.map(theme => (
         <Grid item key={theme.exploreId} style={{ padding: "1em" }}>
           <GridListTile style={{ color: "white" }}>
-            <img
-              // onClick={e => handleFav(e, theme.exploreId)}
-              src={theme.img}
-              width="300px"
-            />
+            <img src={theme.img} width="300px" />
 
             <GridListTileBar
               title={theme.themeName}
