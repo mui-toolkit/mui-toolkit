@@ -51,127 +51,121 @@ function ExploreTable({
   setStarClicked,
   setBookmarkClicked,
   starClicked,
-  bookmarkClicked
+  bookmarkClicked,
+  bookmarkedIds
 }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [favoriteTheme, setFavoriteTheme] = useState({});
-  const handleClick = event => {
+  const [selected, setSelected] = useState("");
+  const [bookmarks, setBookmarks] = useState([]);
+
+  useEffect(() => {
+    const temp = [];
+    const unsubscribe = async () => {
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .get()
+        .then(async doc => {
+          setBookmarks(doc.data().bookmarked);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    };
+    unsubscribe();
+  }, []);
+
+  const handleClick = (event, theme) => {
     setAnchorEl(event.currentTarget);
+    setSelected(theme);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const updateFavoriteTheme = async (identifier, favoriteTheme) => {
-    console.log("updateFavoriteTheme -> favoriteTheme", favoriteTheme);
-    if (identifier === "bookmarked") {
-      await db
-        .collection("FavoritedThemes")
-        .doc(`${favoriteTheme.thisThemeId}`)
-        .set({ bookmarked: bookmarkClicked, signedInUserId }, { merge: true })
-        .then(() => {
-          console.log(
-            "updated explore bookmarked status",
-            favoriteTheme.thisThemeId
-          );
-        })
-        .catch(err => {
-          console.log("Error getting favorite themes", err);
-        });
-    } else if (identifier === "starred") {
-      await db
-        .collection("FavoritedThemes")
-        .doc(`${favoriteTheme.thisThemeId}`)
-        .set({ starred: starClicked, signedInUserId }, { merge: true })
-        .then(() => {
-          console.log(
-            "updated explore starred status",
-            favoriteTheme.thisThemeId
-          );
-        })
-        .catch(err => {
-          console.log("Error getting favorite themes", err);
-        });
-    }
-  };
-  const getFavoriteTheme = async (identifier, userId, exploreId) => {
-    console.log("getFavoriteTheme -> exploreId", exploreId);
-    console.log("getFavoriteTheme -> userId", userId);
-    var updateFav = {};
-    await db
-      .collection("FavoritedThemes")
-      .where("signedInUserId", "==", `${userId}`)
-      .where("themeId", "==", `${exploreId}`)
-      .get()
-      .then(snapshot => {
-        if (snapshot.empty) {
-          console.log("No matching documents.");
-          return;
-        }
-        snapshot.forEach(theme => {
-          console.log(theme.id, "=>", theme.data());
-          if (identifier === "bookmarked") {
-            updateFav = {
-              ...theme.data(),
-              bookmarked: bookmarkClicked,
-              thisThemeId: theme.id
-            };
-          } else if (identifier === "starred") {
-            updateFav = {
-              ...theme.data(),
-              starred: starClicked,
-              thisThemeId: theme.id
-            };
-          }
-          setFavoriteTheme(prev => ({ ...updateFav }));
-        });
-      })
-      .catch(err => {
-        console.log("Error getting favorite theme", err);
-      });
-  };
+  const handleFav = async exploreId => {
+    ///******* post into users bookmarked/starred array */
 
-  const handleFav = async (identifier, userId, exploreId) => {
-    console.log("handleFav -> userId", userId);
     console.log("handleFav -> exploreId", exploreId);
 
-    if (identifier === "starred") {
-      setStarClicked(!starClicked);
-    } else if (identifier === "bookmarked") {
-      setBookmarkClicked(!bookmarkClicked);
-    }
-    console.log("handleFav -> starClicked", starClicked);
-    console.log("handleFav -> bookmarkClicked", bookmarkClicked);
+    // if (identifier === "starred") {
+    //   setStarClicked(!starClicked);
+    // } else if (identifier === "bookmarked") {
+    setBookmarkClicked(!bookmarkClicked);
+    // }
 
-    await getFavoriteTheme(identifier, userId, exploreId);
-    await updateFavoriteTheme(identifier, favoriteTheme);
+    if (bookmarks.includes(exploreId)) {
+      // remove from users bookmark array, decrement count
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .update({
+          bookmarked: firebase.firestore.FieldValue.arrayRemove(`${exploreId}`)
+        })
+        .then(() => {
+          console.log(`removed ${exploreId} from users bookmarked array`);
+          setBookmarks(bookmarks.filter(id => id !== exploreId));
+          console.log("?????????????", bookmarks);
+        });
+      await db
+        .collection("CustomizedThemes")
+        .doc(`${exploreId}`)
+        .update({
+          bookmarksCount: firebase.firestore.FieldValue.increment(-1)
+        })
+        .then(() => {
+          console.log("decrement bookmarkscount");
+        });
+    } else {
+      // add to users bookmark array, increment count
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .update({
+          bookmarked: firebase.firestore.FieldValue.arrayUnion(`${exploreId}`)
+        })
+        .then(() => {
+          console.log(`added ${exploreId} to users bookmarked array`);
+          setBookmarks(prevBookmarks => [...prevBookmarks, exploreId]);
+          console.log("?????????????!!!!", bookmarks);
+        });
+      await db
+        .collection("CustomizedThemes")
+        .doc(`${exploreId}`)
+        .update({
+          bookmarksCount: firebase.firestore.FieldValue.increment(1)
+        })
+        .then(() => {
+          console.log("incremented bookmarkscount");
+        });
+    }
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  console.log(
-    "BUTTON",
-    themesToMap,
-    starClicked,
-    bookmarkClicked,
-    favoriteTheme
-  );
   return (
     <Grid container direction="row" justify="center" alignItems="center">
       {themesToMap.map(theme => (
         <Grid item key={theme.exploreId} style={{ padding: "1em" }}>
           <GridListTile style={{ color: "white" }}>
-            <img src={theme.img} width="300px" />
+            <img
+              onClick={e => handleFav(e, theme.exploreId)}
+              src={theme.img}
+              width="300px"
+            />
+
             <GridListTileBar
-              title={theme.themeName}
-              subtitle={<span>by: {theme.user}</span>}
+              // title={theme.themeName}
+              title={theme.exploreId}
+              subtitle={<span>by: {theme.themeName}</span>}
               actionIcon={
                 <IconButton
-                  aria-label={`info about ${theme.exploreId}`}
+                  // aria-label={`info about ${theme.exploreId}`}
                   className={classes.icon}
-                  onClick={handleClick}
+                  onClick={e => handleClick(e, theme)}
                 >
                   <InfoIcon />
                 </IconButton>
@@ -179,11 +173,10 @@ function ExploreTable({
             />
           </GridListTile>
           <Popover
-            id={id}
+            // id={id}
             open={open}
             anchorEl={anchorEl}
             onClose={handleClose}
-            // elevation={1}
             anchorOrigin={{
               vertical: "top",
               horizontal: "center"
@@ -198,7 +191,12 @@ function ExploreTable({
                 <IconButton
                   aria-label="star"
                   onClick={() =>
-                    handleFav("starred", theme.userId, theme.exploreId)
+                    handleFav(
+                      "starred",
+                      theme.userId,
+                      theme.exploreId,
+                      theme.signedInUserId
+                    )
                   }
                 >
                   <Badge badgeContent={theme.starsCount} color="secondary">
@@ -209,7 +207,7 @@ function ExploreTable({
               <Tooltip title="Preview Theme">
                 <IconButton
                   component={Link}
-                  to={`/webpreview/${theme.url}`}
+                  to={`/webpreview/${selected.exploreId}`}
                   target="_blank"
                 >
                   <VisibilityIcon />
@@ -218,12 +216,10 @@ function ExploreTable({
               <Tooltip title="Bookmark this theme">
                 <IconButton
                   aria-label="bookmark"
-                  onClick={() =>
-                    handleFav("bookmarked", theme.userId, theme.exploreId)
-                  }
+                  onClick={() => handleFav(selected.exploreId)}
                 >
-                  <Badge badgeContent={theme.bookmarksCount} color="secondary">
-                    {bookmarkClicked ? (
+                  <Badge color="secondary">
+                    {bookmarks.includes(selected.exploreId) ? (
                       <BookmarkIcon />
                     ) : (
                       <BookmarkBorderIcon />

@@ -107,28 +107,28 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
     }
   };
 
-  const setNewFavoriteTheme = async downloadTheme => {
-    // favorites theme with bookmarked and starred set to false
-    const favoriteTheme = {
-      ...downloadTheme,
-      bookmarked: false,
-      starred: false,
-      signedInUserId: user.uid,
-      createdByUserId: user.uid,
-      themeName: downloadTheme.themeName
-    };
+  // const setNewFavoriteTheme = async downloadTheme => {
+  //   // favorites theme with bookmarked and starred set to false
+  //   const favoriteTheme = {
+  //     ...downloadTheme,
+  //     bookmarked: false,
+  //     starred: false,
+  //     signedInUserId: user.uid,
+  //     createdByUserId: user.uid,
+  //     themeName: downloadTheme.themeName
+  //   };
 
-    await db
-      .collection("FavoritedThemes")
-      .doc()
-      .set({ ...favoriteTheme })
-      .then(function() {
-        console.log(`Added ${favoriteTheme.themeName} to favorites`);
-      })
-      .catch(function(error) {
-        console.log("Error favoriting theme: ", error);
-      });
-  };
+  //   await db
+  //     .collection("FavoritedThemes")
+  //     .doc()
+  //     .set({ ...favoriteTheme })
+  //     .then(function() {
+  //       console.log(`Added ${favoriteTheme.themeName} to favorites`);
+  //     })
+  //     .catch(function(error) {
+  //       console.log("Error favoriting theme: ", error);
+  //     });
+  // };
   const saveNewTheme = async themeName => {
     downloadTheme.userId = user.uid;
     downloadTheme.themeName = themeName;
@@ -161,7 +161,7 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
   const saveNewPalette = async themeName => {
     await saveNewTheme(themeName);
     await addThemeToUser(themeName, user.uid);
-    setNewFavoriteTheme(downloadTheme);
+    // setNewFavoriteTheme(downloadTheme);
   };
 
   const updateTheme = async oldThemeName => {

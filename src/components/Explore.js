@@ -35,7 +35,9 @@ export default function Explore() {
   let savedThemes = location.state.themes.slice();
   let myStarredThemes = location.state.starredThemes.slice();
   console.log("Explore -> myStarredThemes", myStarredThemes);
-  let myBookmarkedThemes = location.state.bookmarkedThemes.slice();
+  let myBookmarkedThemes = location.state.bookmarkedThemes;
+  let bookmarkedIds = myBookmarkedThemes.map(obj => obj.themeId);
+  console.log("Explore -> bookmarkedIds", bookmarkedIds);
   console.log("Explore -> myBookmarkedThemes", myBookmarkedThemes);
   const signedInUserId = location.state.signedInUserId;
   console.log("Explore -> signedInUserId", signedInUserId);
@@ -127,6 +129,7 @@ export default function Explore() {
     obj.bookmarked = myBookmarkedThemes.includes(obj) ? true : false;
     obj.starred = myStarredThemes.includes(obj) ? true : false;
     obj.trendingTotal = obj.bookmarksCount + obj.starsCount;
+    obj.signedInUserId = signedInUserId;
   });
 
   console.log("Explore -++++++> NEW deepClone", deepClone);
@@ -189,15 +192,17 @@ export default function Explore() {
           </Grid>
           {selectedIndex === 0 && (
             <ExploreTable
-              themesToMap={deepClone.sort(
-                // (a, b) => a.themeName.charCodeAt(0) - b.themeName.charCodeAt(0)
-                (a, b) => b.trendingTotal - a.trendingTotal
-              )}
+              // themesToMap={deepClone.sort(
+              //   // (a, b) => a.themeName.charCodeAt(0) - b.themeName.charCodeAt(0)
+              //   (a, b) => b.trendingTotal - a.trendingTotal
+              // )}
+              themesToMap={exploreThemes}
               setStarClicked={setStarClicked}
               setBookmarkClicked={setBookmarkClicked}
               starClicked={starClicked}
               bookmarkClicked={bookmarkClicked}
               signedInUserId={signedInUserId}
+              bookmarkedIds={bookmarkedIds}
             />
           )}
           {selectedIndex === 1 && (
@@ -210,6 +215,7 @@ export default function Explore() {
               starClicked={starClicked}
               bookmarkClicked={bookmarkClicked}
               signedInUserId={signedInUserId}
+              bookmarkedIds={bookmarkedIds}
             />
           )}
           {selectedIndex === 2 && (
@@ -224,6 +230,7 @@ export default function Explore() {
               starClicked={starClicked}
               bookmarkClicked={bookmarkClicked}
               signedInUserId={signedInUserId}
+              bookmarkedIds={bookmarkedIds}
             />
           )}
           {selectedIndex === 3 && (
@@ -236,6 +243,7 @@ export default function Explore() {
               starClicked={starClicked}
               bookmarkClicked={bookmarkClicked}
               signedInUserId={signedInUserId}
+              bookmarkedIds={bookmarkedIds}
             />
           )}
         </Paper>

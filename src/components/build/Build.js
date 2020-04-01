@@ -31,7 +31,7 @@ export const Build = props => {
     user,
     themeId,
     signedInUserId,
-    favorite,
+    // favorite,
     color,
     secondaryColor,
     defaultColor,

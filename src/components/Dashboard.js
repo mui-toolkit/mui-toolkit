@@ -189,28 +189,60 @@ export default function Dashboard({ user }) {
   // favorites collection
   useEffect(() => {
     const bookmarked = [];
+
     const starred = [];
+    console.log("bookmarked =======", signedInUserId, user);
     const unsubscribe = async () => {
       //bookmarked
       await db
-        .collection("FavoritedThemes")
-        .where("signedInUserId", "==", `${user.uid}`)
-        .where("bookmarked", "==", true)
+        .collection("Users")
+        .doc(`${user.uid}`)
         .get()
-        .then(snapshot => {
-          if (snapshot.empty) {
-            console.log("Nothing bookmarked yet");
-            return;
+        .then(async doc => {
+          if (!doc.exists) {
+            console.log("No such document!");
+          } else {
+            console.log("FOUND USERS bookmark array", doc.data().bookmarked);
+
+            doc.data().bookmarked.forEach(async item => {
+              let query = await db
+                .collection("CustomizedThemes")
+                .doc(`${item}`)
+                .get()
+                .then(themedoc => {
+                  bookmarked.push({ ...themedoc.data(), themeId: item });
+                  // console.log(
+                  //   "found bookmarked theme from array=====",
+                  //   themedoc.data()
+                  // );
+                });
+            });
           }
-          snapshot.forEach(doc => {
-            console.log(doc.id, "bookmarked=>", doc.data());
-            bookmarked.push({ ...doc.data(), favId: doc.id });
-            setBookmarkedThemes([...bookmarked]);
-          });
         })
         .catch(err => {
-          console.log("Error getting bookmarked themes", err);
+          console.log("Error getting document", err);
         });
+      console.log("///////OUTSIDE=======", bookmarked);
+      setBookmarkedThemes(bookmarked);
+      // await db
+      //   .collection("FavoritedThemes")
+      //   .where("signedInUserId", "==", `${user.uid}`)
+      //   .where("bookmarked", "==", true)
+      //   .get()
+      //   .then(snapshot => {
+      //     if (snapshot.empty) {
+      //       console.log("Nothing bookmarked yet");
+      //       return;
+      //     }
+      //     snapshot.forEach(doc => {
+      //       console.log(doc.id, "bookmarked=>", doc.data());
+      //       bookmarked.push({ ...doc.data(), favId: doc.id });
+      //       setBookmarkedThemes([...bookmarked]);
+      //     });
+      //   })
+      //   .catch(err => {
+      //     console.log("Error getting bookmarked themes", err);
+      //   });
 
       //starred
       await db
