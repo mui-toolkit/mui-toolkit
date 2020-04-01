@@ -40,9 +40,6 @@ export default function Explore() {
   const [exploreThemes, setExploreThemes] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const [starClicked, setStarClicked] = useState(false);
-  const [bookmarkClicked, setBookmarkClicked] = useState(false);
-
   useEffect(() => {
     const explore = [];
     const response = async () => {
@@ -80,18 +77,8 @@ export default function Explore() {
     themeObj.trending = themeObj.bookmarksCount + themeObj.starsCount;
   });
   // *************
-  console.log("================>>>>>", exploreThemes);
-  // make a deep copy of exploreThemes (whenever it updates? gulp) and compare to myBookmarks and mySaves arrays and mark the commons to reflect starClicked and bookmarkClicked.  map deep copy to exploretable. give it 3 new fields. bookmarked: boolean, starred: boolean, trendingtotal: bookmarksCount+starsCount
-  // const deepClone = JSON.parse(JSON.stringify(exploreThemes));
+  console.log("explorable themes================>>>>>", exploreThemes);
 
-  // deepClone.forEach(obj => {
-  //   obj.bookmarked = myBookmarkedThemes.includes(obj) ? true : false;
-  //   obj.starred = myStarredThemes.includes(obj) ? true : false;
-  //   obj.trendingTotal = obj.bookmarksCount + obj.starsCount;
-  //   obj.signedInUserId = signedInUserId;
-  // });
-
-  // console.log("Explore -++++++> NEW deepClone", deepClone);
   return (
     <React.Fragment>
       <Grid
@@ -114,7 +101,7 @@ export default function Explore() {
                 selected={selectedIndex === 0}
                 onClick={event => handleClick(event, 0)}
               >
-                Trending
+                All
               </Button>
               <Button
                 variant="outlined"
@@ -122,7 +109,7 @@ export default function Explore() {
                 selected={selectedIndex === 1}
                 onClick={event => handleClick(event, 1)}
               >
-                Popular
+                Trending
               </Button>
               <Button
                 variant="outlined"
@@ -130,13 +117,21 @@ export default function Explore() {
                 selected={selectedIndex === 2}
                 onClick={event => handleClick(event, 2)}
               >
-                Recently Added
+                Most Bookmarked
               </Button>
               <Button
                 variant="outlined"
                 className={classes.filterButton}
                 selected={selectedIndex === 3}
                 onClick={event => handleClick(event, 3)}
+              >
+                Recently Added
+              </Button>
+              <Button
+                variant="outlined"
+                className={classes.filterButton}
+                selected={selectedIndex === 4}
+                onClick={event => handleClick(event, 4)}
               >
                 Most Stars
               </Button>
@@ -149,13 +144,19 @@ export default function Explore() {
           </Grid>
           {selectedIndex === 0 && (
             <ExploreTable
+              themesToMap={exploreThemes}
+              signedInUserId={signedInUserId}
+            />
+          )}
+          {selectedIndex === 1 && (
+            <ExploreTable
               themesToMap={exploreThemes.sort(
                 (a, b) => b.trending - a.trending
               )}
               signedInUserId={signedInUserId}
             />
           )}
-          {selectedIndex === 1 && (
+          {selectedIndex === 2 && (
             <ExploreTable
               themesToMap={exploreThemes.sort(
                 (a, b) => b.bookmarksCount - a.bookmarksCount
@@ -163,7 +164,7 @@ export default function Explore() {
               signedInUserId={signedInUserId}
             />
           )}
-          {selectedIndex === 2 && (
+          {selectedIndex === 3 && (
             <ExploreTable
               themesToMap={exploreThemes.sort(
                 (a, b) =>
@@ -173,7 +174,7 @@ export default function Explore() {
               signedInUserId={signedInUserId}
             />
           )}
-          {selectedIndex === 3 && (
+          {selectedIndex === 4 && (
             <ExploreTable
               themesToMap={exploreThemes.sort(
                 (a, b) => b.starsCount - a.starsCount
