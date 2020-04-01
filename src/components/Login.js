@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import firebase from 'firebase';
 import 'firebase/auth';
+import { db } from '../config/firebase';
 import {
   Dialog,
   DialogActions,
@@ -16,7 +17,6 @@ import {
   Paper
 } from '@material-ui/core/';
 import Tab from '@material-ui/core/Tab';
-import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -56,7 +56,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function Login() {
+export function Login(provider) {
+  var provider = new firebase.auth.GoogleAuthProvider();
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -76,6 +77,8 @@ export function Login() {
 
   const handleClick = () => {
     setOpenSnack(true);
+    setEmail();
+    setPassword();
   };
   const handleClose = (event, reason) => {
     console.log('hanCl');
@@ -141,7 +144,6 @@ export function Login() {
         fullWidth={fullWidth}
         maxWidth={maxWidth}
       >
-
         <Paper
         // className={classes.paper}
         // style={{
@@ -152,7 +154,6 @@ export function Login() {
         //   backgroundColor: '#fff'
         // }}
         >
-
           <Typography
             id="form-dialog-title"
             align="center"
@@ -213,6 +214,48 @@ export function Login() {
             >
               Login
             </Button>
+
+            <button
+              onClick={() => {
+                firebase
+                  .auth()
+                  .signInWithPopup(provider)
+                  .then(function(result) {
+                    var token = result.credential.accessToken;
+                    // The signed-in user info.
+                    var user = result.user;
+                    console.log('google user', user);
+                    // db.collection('Users')
+                    //   .doc(user.uid)
+                    //   // .set({ email: user.email.value });
+                    //   .set({
+                    //     firstName: 'goog',
+                    //     lastName: 'le',
+                    //     email: user.email,
+                    //     password: '111111',
+                    //     username: 'googleAuth'
+                    //   });
+                  })
+                  .catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    var email = error.email;
+                    var credential = error.credential;
+                    console.log('google error', error);
+                  });
+              }}
+              className="googleBtn"
+              type="button"
+              style={{ fontSize: 14, marginRight: '20px' }}
+            >
+              <img
+                style={{ fontSize: 14, width: '12px', marginRight: '5px' }}
+                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                alt="logo"
+              />
+              Login With Google
+            </button>
           </DialogActions>
         </Paper>
       </Dialog>

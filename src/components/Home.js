@@ -30,28 +30,28 @@ export default function Home() {
     return (
       <div>
         <div>
-          <Grid container direction='column' style={{ marginTop: '10em' }}>
+          <Grid container direction="column" style={{ marginTop: '10em' }}>
             <Grid
               item
               container
-              direction='row'
-              justify='center'
-              alignItems='center'
+              direction="row"
+              justify="center"
+              alignItems="center"
             >
               <Typography
-                variant='h4'
+                variant="h4"
                 style={{ marginRight: '5px' }}
                 gutterBottom
               >
                 Welcome to{' '}
               </Typography>
               <Typography
-                variant='h4'
+                variant="h4"
                 style={{
                   fontFamily: 'Roboto',
                   fontWeight: 200,
                   fontSize: 30,
-                  color: '#000',
+                  color: '#000'
                 }}
                 gutterBottom
               >
@@ -59,10 +59,10 @@ export default function Home() {
               </Typography>
             </Grid>
 
-            <Grid container justify='center' alignItems='center'>
+            <Grid container justify="center" alignItems="center">
               <Typography
                 style={{ marginTop: '10px' }}
-                align='center'
+                align="center"
                 style={{ color: '#818181' }}
               >
                 <b>Build</b> a Material-UI Custom Theme easier and faster.
@@ -74,24 +74,24 @@ export default function Home() {
 
             <Grid
               container
-              direction='row'
+              direction="row"
               spacing={2}
-              justify='center'
-              alignItems='center'
+              justify="center"
+              alignItems="center"
             >
               <Grid item>
                 <Button
                   component={Link}
-                  to='/learn'
+                  to="/learn"
                   disableRipple
-                  variant='contained'
+                  variant="contained"
                   style={{
                     fontFamily: 'Roboto',
                     fontWeight: 200,
                     fontSize: 24,
                     color: '#000',
                     marginTop: '1em',
-                    textTransform: 'none',
+                    textTransform: 'none'
                   }}
                   // className={classes.button}
                 >
@@ -101,16 +101,16 @@ export default function Home() {
               <Grid item>
                 <Button
                   component={Link}
-                  to='/design'
+                  to="/design"
                   disableRipple
-                  variant='contained'
+                  variant="contained"
                   style={{
                     fontFamily: 'Roboto',
                     fontWeight: 200,
                     fontSize: 24,
                     color: '#000',
                     marginTop: '1em',
-                    textTransform: 'none',
+                    textTransform: 'none'
                   }}
                   // className={classes.button}
                 >
@@ -125,16 +125,16 @@ export default function Home() {
   }
   return (
     <div>
-      <Grid container direction='row' style={{ marginTop: '10em' }}>
+      <Grid container direction="row" style={{ marginTop: '10em' }}>
         <Grid
           item
           container
-          direction='column'
-          justify='center'
-          alignItems='center'
+          direction="column"
+          justify="center"
+          alignItems="center"
         >
           {' '}
-          <Typography variant='h5'>Welcome, {user.email} </Typography>
+          <Typography variant="h5">Welcome, {user.email} </Typography>
         </Grid>
       </Grid>
     </div>

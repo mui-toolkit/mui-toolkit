@@ -15,41 +15,6 @@ import { Store } from "./build/";
 import WebPreview from "../WebPreview/WebPreview";
 import Explore from './Explore'
 
-// var provider = new firebase.auth.GoogleAuthProvider();
-
-// firebase
-//   .auth()
-//   .signInWithPopup(provider)
-//   .then(function(result) {
-//     // This gives you a Google Access Token. You can use it to access the Google API.
-//     var token = result.credential.accessToken;
-//     // The signed-in user info.
-//     var user = result.user;
-//     // ...
-//   })
-//   .catch(function(error) {
-//     // Handle Errors here.
-//     var errorCode = error.code;
-//     var errorMessage = error.message;
-//     // The email of the user's account used.
-//     var email = error.email;
-//     // The firebase.auth.AuthCredential type that was used.
-//     var credential = error.credential;
-//     // ...
-//   });
-
-// firebase.auth().onAuthStateChanged(user => {
-//   console.log('user', user);
-//   if (user) {
-//     user.getIdTokenResult().then(idTokenResult => {
-//       user.admin = idTokenResult.claims.admin;
-//       // console.log('idToken', idTokenResult);
-//     });
-//     console.log('user logged in:', user);
-//   } else {
-//     console.log('user logged out');
-//   }
-// });
 const defaultUser = {
   loggedIn: false,
   email: '',
@@ -77,7 +42,6 @@ function onAuthStateChange(callback) {
 
 function App() {
   const [user, setUser] = useState({ loggedIn: true });
-  // console.log('user in after useState', user);
   useEffect(() => {
     // do equivalent of unsubscribe
     const unsubscribe = onAuthStateChange(setUser);
