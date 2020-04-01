@@ -33,10 +33,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const SaveTheme = ({ downloadTheme, user, themeId }) => {
+export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
   console.log("SaveTheme -> themeId", themeId);
   console.log("SaveTheme -> downloadTheme", downloadTheme);
   console.log("SaveTheme -> user", user);
+  // might need a test if navigating to another user's theme
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);

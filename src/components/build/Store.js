@@ -18,8 +18,6 @@ const useStyles = makeStyles(theme => ({
 
 export const Store = props => {
   const { themeId, signedInUserId } = useParams();
-  console.log("IN THE STORE ====> signedInUserId", signedInUserId);
-  console.log("IN THE Store -> themeId", themeId);
   const [favorite, setFavorite] = useState({});
   const classes = useStyles();
 
