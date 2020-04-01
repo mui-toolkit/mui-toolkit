@@ -39,6 +39,7 @@ export default function Explore() {
   console.log("Explore -> myBookmarkedThemes", myBookmarkedThemes);
   const signedInUserId = location.state.signedInUserId;
   console.log("Explore -> signedInUserId", signedInUserId);
+  // starred and bookmarked themes that have explore toggled true should have their star/bookmarkClicked set accordingly.
 
   const [exploreThemes, setExploreThemes] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -118,7 +119,17 @@ export default function Explore() {
   });
   // *************
   console.log("================>>>>>", exploreThemes);
+  // make a deep copy of exploreThemes (whenever it updates? gulp) and compare to myBookmarks and mySaves arrays and mark the commons to reflect starClicked and bookmarkClicked.  map deep copy to exploretable. give it 3 new fields. bookmarked: boolean, starred: boolean, trendingtotal: bookmarksCount+starsCount
+  const deepClone = JSON.parse(JSON.stringify(exploreThemes));
+  console.log("Explore -> deepClone", deepClone);
 
+  deepClone.forEach(obj => {
+    obj.bookmarked = myBookmarkedThemes.includes(obj) ? true : false;
+    obj.starred = myStarredThemes.includes(obj) ? true : false;
+    obj.trendingTotal = obj.bookmarksCount + obj.starsCount;
+  });
+
+  console.log("Explore -++++++> NEW deepClone", deepClone);
   return (
     <React.Fragment>
       <Grid
@@ -178,8 +189,9 @@ export default function Explore() {
           </Grid>
           {selectedIndex === 0 && (
             <ExploreTable
-              themesToMap={exploreThemes.sort(
-                (a, b) => a.themeName.charCodeAt(0) - b.themeName.charCodeAt(0)
+              themesToMap={deepClone.sort(
+                // (a, b) => a.themeName.charCodeAt(0) - b.themeName.charCodeAt(0)
+                (a, b) => b.trendingTotal - a.trendingTotal
               )}
               setStarClicked={setStarClicked}
               setBookmarkClicked={setBookmarkClicked}
@@ -190,7 +202,7 @@ export default function Explore() {
           )}
           {selectedIndex === 1 && (
             <ExploreTable
-              themesToMap={exploreThemes.sort(
+              themesToMap={deepClone.sort(
                 (a, b) => b.bookmarksCount - a.bookmarksCount
               )}
               setStarClicked={setStarClicked}
@@ -202,7 +214,7 @@ export default function Explore() {
           )}
           {selectedIndex === 2 && (
             <ExploreTable
-              themesToMap={exploreThemes.sort(
+              themesToMap={deepClone.sort(
                 (a, b) =>
                   new Date(b.createdAt.seconds * 1000) -
                   new Date(a.createdAt.seconds * 1000)
@@ -216,7 +228,7 @@ export default function Explore() {
           )}
           {selectedIndex === 3 && (
             <ExploreTable
-              themesToMap={exploreThemes.sort(
+              themesToMap={deepClone.sort(
                 (a, b) => b.starsCount - a.starsCount
               )}
               setStarClicked={setStarClicked}
