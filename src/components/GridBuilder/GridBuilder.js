@@ -44,13 +44,14 @@ const useStyles = makeStyles({
 export default function GridBuilder() {
   const classes = useStyles();
   const [size, setSize] = useState(12);
+  const [letter, setLetter] = useState(101);
 
   const data = [
     {
       cols: 9,
       paper: classes.paperGrid,
       items: [
-        { id: 'a', cols: 12, color: '#da0000' },
+        { id: 'a', cols: 12, color: '#ff5436' },
         { id: 'b', cols: 4, color: '#00c7ce' },
         { id: 'c', cols: 5, color: '#7ed400' },
       ],
@@ -92,6 +93,7 @@ export default function GridBuilder() {
 
   const handleDragEnter = (e, params) => {
     console.log('entering drag', params);
+
     const currentItem = dragItem.current;
     if (e.target !== dragNode.current) {
       console.log('target is not the same');
@@ -105,7 +107,10 @@ export default function GridBuilder() {
         dragItem.current = params;
         console.log('NEWLIST LENGTH', newList[1].items.length);
         if (newList[1].items.length === 0) {
-          newList[1].items = [{ id: 'f', cols: 12, color: '#f8eb00' }];
+          setLetter(letter + 1);
+          newList[1].items = [
+            { id: String.fromCharCode(letter), cols: 12, color: '#f8eb00' },
+          ];
         }
         return newList;
       });
@@ -162,7 +167,6 @@ export default function GridBuilder() {
         { ...prevList[1] },
       ];
     });
-    // setList(prevList => prevList[0].items.filter(item => item.id !== id));
   };
 
   return (
@@ -216,7 +220,9 @@ export default function GridBuilder() {
                       alignItems='center'
                     >
                       <Grid item>
-                        <Typography>{`${item.id} =`}</Typography>
+                        <Typography
+                          style={{ marginRight: '5px', fontWeight: 800 }}
+                        >{`${item.id} = `}</Typography>
                       </Grid>
                       <Grid item>
                         <ChangeSize
@@ -228,7 +234,7 @@ export default function GridBuilder() {
                           list={list}
                         />
                       </Grid>
-                      <Grid item>column(s)</Grid>
+                      <Typography item>column(s)</Typography>
                     </Grid>
                     <Button onClick={e => handleDelete(e, { grpI, itemI })}>
                       <DeleteForeverIcon />

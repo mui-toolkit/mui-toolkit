@@ -65,7 +65,8 @@ export default function Home() {
                 align='center'
                 style={{ color: '#818181' }}
               >
-                <b>Build</b> a Material-UI Custom Theme easier and faster.
+                <b>Build</b> and <b>style</b> Material-UI <b>components</b>{' '}
+                easier and faster.
                 <br />
                 <b>Save</b> and <b>edit</b> your progress. <b>Share</b> and
                 <b> explore</b> with others.
