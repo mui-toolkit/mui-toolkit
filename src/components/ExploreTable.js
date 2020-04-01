@@ -69,7 +69,7 @@ function ExploreTable({
       await db
         .collection("FavoritedThemes")
         .doc(`${favoriteTheme.thisThemeId}`)
-        .update({ bookmarked: bookmarkClicked })
+        .update({ bookmarked: !bookmarkClicked })
         .then(() => {
           console.log("updated explore bookmarked status");
         })
@@ -80,7 +80,7 @@ function ExploreTable({
       await db
         .collection("FavoritedThemes")
         .doc(`${favoriteTheme.thisThemeId}`)
-        .update({ starred: starClicked })
+        .update({ starred: !starClicked })
         .then(() => {
           console.log("updated explore starred status");
         })
@@ -103,27 +103,23 @@ function ExploreTable({
           console.log("No matching documents.");
           return;
         }
-        snapshot
-          .forEach(theme => {
-            console.log(theme.id, "=>", theme.data());
-            if (identifier === "bookmarked") {
-              updateFav = {
-                ...theme.data(),
-                bookmarked: bookmarkClicked,
-                thisThemeId: theme.id
-              };
-            } else if (identifier === "starred") {
-              updateFav = {
-                ...theme.data(),
-                starred: starClicked,
-                thisThemeId: theme.id
-              };
-            }
-            // setFavoriteTheme(updateFav);
-          })
-          .then(response => {
-            setFavoriteTheme(updateFav);
-          });
+        snapshot.forEach(theme => {
+          console.log(theme.id, "=>", theme.data());
+          if (identifier === "bookmarked") {
+            updateFav = {
+              ...theme.data(),
+              bookmarked: bookmarkClicked,
+              thisThemeId: theme.id
+            };
+          } else if (identifier === "starred") {
+            updateFav = {
+              ...theme.data(),
+              starred: starClicked,
+              thisThemeId: theme.id
+            };
+          }
+          setFavoriteTheme(prev => ({ ...prev, ...updateFav }));
+        });
       })
       .catch(err => {
         console.log("Error getting favorite theme", err);

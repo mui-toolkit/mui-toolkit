@@ -99,24 +99,6 @@ export default function Explore() {
   // *************
   console.log("================>>>>>", exploreThemes);
 
-  // recently added
-  // const recentlyAdded = exploreThemes.sort(
-  //   (a, b) => b.createdAt.seconds - a.createdAt.seconds
-  // );
-  // console.log(
-  //   "Explore -> recentlyAdded",
-  //   recentlyAdded,
-  //   exploreThemes[0].createdAt.seconds
-  // );
-
-  // on buttonClick most stars // exploreThemes.map(themes => {})
-  const bookmarkedThemes = exploreThemes.sort(
-    (a, b) => b.bookmarksCount - a.bookmarksCount
-  );
-  const starredThemes = exploreThemes.sort(
-    (a, b) => b.starsCount - a.starsCount
-  );
-
   return (
     <React.Fragment>
       <Grid
@@ -176,7 +158,9 @@ export default function Explore() {
           </Grid>
           {selectedIndex === 0 && (
             <ExploreTable
-              themesToMap={exploreThemes}
+              themesToMap={exploreThemes.sort(
+                (a, b) => a.themeName.charCodeAt(0) - b.themeName.charCodeAt(0)
+              )}
               setStarClicked={setStarClicked}
               setBookmarkClicked={setBookmarkClicked}
               starClicked={starClicked}
