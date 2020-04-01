@@ -66,7 +66,8 @@ export function Login(provider) {
   const [data, setData] = useState(null);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState('xs');
-
+  var providerGH = new firebase.auth.GithubAuthProvider();
+  providerGH.addScope('repo');
   const handleMaxWidthChange = event => {
     setMaxWidth(event.target.value);
   };
@@ -215,7 +216,7 @@ export function Login(provider) {
               Login
             </Button>
 
-            <button
+            <Button
               onClick={() => {
                 firebase
                   .auth()
@@ -224,17 +225,6 @@ export function Login(provider) {
                     var token = result.credential.accessToken;
                     // The signed-in user info.
                     var user = result.user;
-                    console.log('google user', user);
-                    // db.collection('Users')
-                    //   .doc(user.uid)
-                    //   // .set({ email: user.email.value });
-                    //   .set({
-                    //     firstName: 'goog',
-                    //     lastName: 'le',
-                    //     email: user.email,
-                    //     password: '111111',
-                    //     username: 'googleAuth'
-                    //   });
                   })
                   .catch(function(error) {
                     // Handle Errors here.
@@ -247,15 +237,63 @@ export function Login(provider) {
               }}
               className="googleBtn"
               type="button"
-              style={{ fontSize: 14, marginRight: '20px' }}
+              style={{ fontSize: 10, marginRight: '20px' }}
             >
               <img
-                style={{ fontSize: 14, width: '12px', marginRight: '5px' }}
+                style={{ width: '12px', marginRight: '5px' }}
                 src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
                 alt="logo"
               />
               Login With Google
-            </button>
+            </Button>
+            <Button
+              onClick={() => {
+                firebase
+                  .auth()
+                  .signInWithPopup(providerGH)
+                  .then(function(result) {
+                    // This gives you a GitHub Access Token.
+                    var token = result.credential.accessToken;
+                    // The signed-in user info.
+                    var user = result.user;
+                    console.log('GH user', user);
+                  })
+                  .catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                    if (
+                      errorCode ===
+                      'auth/account-exists-with-different-credential'
+                    ) {
+                      alert(
+                        'You have signed up with a different provider for that email.'
+                      );
+                      // Handle linking here if your app allows it.
+                    } else {
+                      console.error(error);
+                    }
+                  });
+              }}
+              className="googleBtn"
+              type="button"
+              style={{
+                fontSize: 10,
+                marginTop: '5px',
+                borderRadius: '5px'
+              }}
+            >
+              <img
+                style={{ width: '30px', marginRight: '5px' }}
+                src="https://upload.wikimedia.org/wikipedia/commons/5/54/GitHub_Logo.png"
+                alt="logo"
+              />
+              Login with Github
+            </Button>
           </DialogActions>
         </Paper>
       </Dialog>

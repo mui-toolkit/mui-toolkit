@@ -28,6 +28,8 @@ export function Signup(props) {
   const [errors, setErrors] = useState({});
   const [open, setOpen] = React.useState(false);
   var provider = new firebase.auth.GoogleAuthProvider();
+  var providerGH = new firebase.auth.GithubAuthProvider();
+  providerGH.addScope('repo');
   const handleClick = () => {
     setOpen(true);
   };
@@ -191,50 +193,133 @@ export function Signup(props) {
                 }
               />
             </Grid>
-            <Button>
-              <input type="submit" value="Sign Up" />
-            </Button>
-            <button
-              onClick={() => {
-                firebase
-                  .auth()
-                  .signInWithPopup(provider)
-                  .then(function(result) {
-                    var token = result.credential.accessToken;
-                    // The signed-in user info.
-                    var user = result.user;
-                    console.log('google user', user);
-                    db.collection('Users')
-                      .doc(user.uid)
-                      .set({
-                        // firstName: 'goog',
-                        // lastName: 'le',
-                        email: user.email,
-                        themes: []
-                        // password: '111111',
-                        // username: 'googleAuth'
-                      });
-                  })
-                  .catch(function(error) {
-                    // Handle Errors here.
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    var email = error.email;
-                    var credential = error.credential;
-                    console.log('google error', error);
-                  });
+            <ul
+              style={{
+                listStyleType: 'none',
+                paddingInlineStart: '0px',
+                alignItems: 'center'
               }}
-              className="googleBtn"
-              type="button"
-              style={{ fontSize: 14, marginRight: '20px' }}
             >
-              <img
-                style={{ fontSize: 14, width: '12px', marginRight: '5px' }}
-                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                alt="logo"
-              />
-              Sign up with Google
-            </button>
+              <li>
+                {' '}
+                <Button
+                  style={{
+                    fontSize: 10,
+                    marginTop: '5px',
+                    marginBottom: '5px',
+                    marginLeft: '15px',
+                    borderRadius: '5px'
+                  }}
+                >
+                  <input type="submit" value="Sign Up with Email" />
+                </Button>
+              </li>
+              <li>
+                {' '}
+                <Button
+                  onClick={() => {
+                    firebase
+                      .auth()
+                      .signInWithPopup(provider)
+                      .then(function(result) {
+                        var token = result.credential.accessToken;
+                        // The signed-in user info.
+                        var user = result.user;
+                        console.log('google user', user);
+                        db.collection('Users')
+                          .doc(user.uid)
+                          .set({
+                            email: user.email,
+                            themes: [],
+                            username: user.email
+                          });
+                      })
+                      .catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        var email = error.email;
+                        var credential = error.credential;
+                        console.log('google error', error);
+                      });
+                  }}
+                  className="googleBtn"
+                  type="button"
+                  style={{
+                    fontSize: 10,
+                    // marginRight: '20px',
+                    marginTop: '5px',
+                    marginBottom: '5px',
+                    borderRadius: '5px'
+                  }}
+                >
+                  <img
+                    style={{ width: '12px', marginRight: '5px' }}
+                    src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                    alt="logo"
+                  />
+                  Sign up with Google
+                </Button>
+              </li>
+              <li>
+                {' '}
+                <Button
+                  onClick={() => {
+                    firebase
+                      .auth()
+                      .signInWithPopup(providerGH)
+                      .then(function(result) {
+                        // This gives you a GitHub Access Token.
+                        var token = result.credential.accessToken;
+                        // The signed-in user info.
+                        var user = result.user;
+                        console.log('GH user', user);
+                        db.collection('Users')
+                          .doc(user.uid)
+                          .set({
+                            email: user.email,
+                            themes: [],
+                            username: user.email
+                          });
+                      })
+                      .catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // The email of the user's account used.
+                        var email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        var credential = error.credential;
+                        if (
+                          errorCode ===
+                          'auth/account-exists-with-different-credential'
+                        ) {
+                          alert(
+                            'You have signed up with a different provider for that email.'
+                          );
+                          // Handle linking here if your app allows it.
+                        } else {
+                          console.error(error);
+                        }
+                      });
+                  }}
+                  className="googleBtn"
+                  type="button"
+                  style={{
+                    fontSize: 10,
+                    marginTop: '5px',
+                    borderRadius: '5px'
+                  }}
+                >
+                  <img
+                    style={{ width: '30px', marginRight: '5px' }}
+                    src="https://upload.wikimedia.org/wikipedia/commons/5/54/GitHub_Logo.png"
+                    alt="logo"
+                  />
+                  Sign up with Github
+                </Button>
+              </li>
+            </ul>
           </Grid>
         </form>
       </Grid>
