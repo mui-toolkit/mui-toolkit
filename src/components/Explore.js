@@ -37,6 +37,8 @@ export default function Explore() {
   console.log("Explore -> myStarredThemes", myStarredThemes);
   let myBookmarkedThemes = location.state.bookmarkedThemes.slice();
   console.log("Explore -> myBookmarkedThemes", myBookmarkedThemes);
+  const signedInUserId = location.state.signedInUserId;
+  console.log("Explore -> signedInUserId", signedInUserId);
 
   const [exploreThemes, setExploreThemes] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -89,6 +91,24 @@ export default function Explore() {
   const handleClick = (event, index) => {
     setSelectedIndex(index);
   };
+
+  // THIS WORKS BUT KEEP AN EYE ON TOO MANY REWRITES
+  // const addToFavorites = async obj => {
+  //   obj.signedInUserId = signedInUserId;
+  //   await db
+  //     .collection("FavoritedThemes")
+  //     .doc()
+  //     .set({ ...obj })
+  //     .then(function() {
+  //       console.log(`Added ${obj.themeName} to favorites`);
+  //     })
+  //     .catch(function(error) {
+  //       console.log("Error favoriting theme: ", error);
+  //     });
+  // };
+  // exploreThemes
+  //   .filter(themeObj => themeObj.userId !== signedInUserId)
+  //   .forEach(obj => addToFavorites(obj));
 
   // *************
   exploreThemes.map(themeObj => {
@@ -165,6 +185,7 @@ export default function Explore() {
               setBookmarkClicked={setBookmarkClicked}
               starClicked={starClicked}
               bookmarkClicked={bookmarkClicked}
+              signedInUserId={signedInUserId}
             />
           )}
           {selectedIndex === 1 && (
@@ -176,6 +197,7 @@ export default function Explore() {
               setBookmarkClicked={setBookmarkClicked}
               starClicked={starClicked}
               bookmarkClicked={bookmarkClicked}
+              signedInUserId={signedInUserId}
             />
           )}
           {selectedIndex === 2 && (
@@ -189,6 +211,7 @@ export default function Explore() {
               setBookmarkClicked={setBookmarkClicked}
               starClicked={starClicked}
               bookmarkClicked={bookmarkClicked}
+              signedInUserId={signedInUserId}
             />
           )}
           {selectedIndex === 3 && (
@@ -200,6 +223,7 @@ export default function Explore() {
               setBookmarkClicked={setBookmarkClicked}
               starClicked={starClicked}
               bookmarkClicked={bookmarkClicked}
+              signedInUserId={signedInUserId}
             />
           )}
         </Paper>

@@ -117,7 +117,6 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       createdByUserId: user.uid,
       themeName: downloadTheme.themeName
     };
-    console.log("SaveTheme -> favoriteTheme", favoriteTheme);
 
     await db
       .collection("FavoritedThemes")
@@ -131,7 +130,6 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       });
   };
   const saveNewTheme = async themeName => {
-    console.log(downloadTheme);
     downloadTheme.userId = user.uid;
     downloadTheme.themeName = themeName;
     downloadTheme.createdBy = user.email;
@@ -204,10 +202,8 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
   };
 
   const editAndSavePalette = async => {
-    console.log("editAndSavePalette -> userId", downloadTheme);
     updateTheme(downloadTheme.themeName);
     updateUsersTheme(downloadTheme.themeName, downloadTheme.userId);
-    console.log("updating.........");
   };
   return (
     <div>

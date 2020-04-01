@@ -272,7 +272,6 @@ export default function Dashboard({ user }) {
           console.log(doc.id, "starred=>", doc.data().starsCount);
           starredArr.push(doc.data().starsCount);
           setStars(starredArr);
-          // setStars(prev => prev + Number(doc.data().starsCount));
         });
       })
       .catch(err => {
@@ -401,7 +400,7 @@ export default function Dashboard({ user }) {
             component={Link}
             to={{
               pathname: "/explore",
-              state: { themes, starredThemes, bookmarkedThemes }
+              state: { themes, starredThemes, bookmarkedThemes, signedInUserId }
             }}
           >
             <ListItemIcon>

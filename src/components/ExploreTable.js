@@ -46,6 +46,7 @@ const useStyles = makeStyles({
 });
 
 function ExploreTable({
+  signedInUserId,
   themesToMap,
   setStarClicked,
   setBookmarkClicked,
@@ -69,9 +70,12 @@ function ExploreTable({
       await db
         .collection("FavoritedThemes")
         .doc(`${favoriteTheme.thisThemeId}`)
-        .update({ bookmarked: !bookmarkClicked })
+        .set({ bookmarked: bookmarkClicked, signedInUserId }, { merge: true })
         .then(() => {
-          console.log("updated explore bookmarked status", favoriteTheme.thisThemeId);
+          console.log(
+            "updated explore bookmarked status",
+            favoriteTheme.thisThemeId
+          );
         })
         .catch(err => {
           console.log("Error getting favorite themes", err);
@@ -80,9 +84,12 @@ function ExploreTable({
       await db
         .collection("FavoritedThemes")
         .doc(`${favoriteTheme.thisThemeId}`)
-        .update({ starred: !starClicked })
+        .set({ starred: starClicked, signedInUserId }, { merge: true })
         .then(() => {
-          console.log("updated explore starred status", favoriteTheme.thisThemeId);
+          console.log(
+            "updated explore starred status",
+            favoriteTheme.thisThemeId
+          );
         })
         .catch(err => {
           console.log("Error getting favorite themes", err);
