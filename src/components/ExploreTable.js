@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import {
   Grid,
-  Typography,
   Paper,
-  Button,
   GridListTileBar,
   GridListTile,
   Popover,
@@ -45,23 +43,14 @@ const useStyles = makeStyles({
   }
 });
 
-function ExploreTable({
-  signedInUserId,
-  themesToMap,
-  setStarClicked,
-  setBookmarkClicked,
-  starClicked,
-  bookmarkClicked,
-  bookmarkedIds
-}) {
+function ExploreTable({ signedInUserId, themesToMap }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [favoriteTheme, setFavoriteTheme] = useState({});
   const [selected, setSelected] = useState("");
   const [bookmarks, setBookmarks] = useState([]);
+  const [stars, setStars] = useState([]);
 
   useEffect(() => {
-    const temp = [];
     const unsubscribe = async () => {
       await db
         .collection("Users")
@@ -69,6 +58,17 @@ function ExploreTable({
         .get()
         .then(async doc => {
           setBookmarks(doc.data().bookmarked);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .get()
+        .then(async doc => {
+          setStars(doc.data().starred);
         })
         .catch(err => {
           console.error(err);
@@ -85,16 +85,52 @@ function ExploreTable({
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleFav = async exploreId => {
-    ///******* post into users bookmarked/starred array */
-
-    // if (identifier === "starred") {
-    //   setStarClicked(!starClicked);
-    // } else if (identifier === "bookmarked") {
-    // setBookmarkClicked(!bookmarkClicked);
-    // }
-
+  const handleFavStar = async exploreId => {
+    if (stars.includes(exploreId)) {
+      // remove from users star array, decrement count
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .update({
+          starred: firebase.firestore.FieldValue.arrayRemove(`${exploreId}`)
+        })
+        .then(() => {
+          console.log(`removed ${exploreId} from users starred array`);
+          setStars(stars.filter(id => id !== exploreId));
+        });
+      await db
+        .collection("CustomizedThemes")
+        .doc(`${exploreId}`)
+        .update({
+          starsCount: firebase.firestore.FieldValue.increment(-1)
+        })
+        .then(() => {
+          console.log("decrement starsCount");
+        });
+    } else {
+      // add to users star array, increment count
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .update({
+          starred: firebase.firestore.FieldValue.arrayUnion(`${exploreId}`)
+        })
+        .then(() => {
+          console.log(`added ${exploreId} to users starred array`);
+          setStars(prevStars => [...prevStars, exploreId]);
+        });
+      await db
+        .collection("CustomizedThemes")
+        .doc(`${exploreId}`)
+        .update({
+          starsCount: firebase.firestore.FieldValue.increment(1)
+        })
+        .then(() => {
+          console.log("incremented starsCount");
+        });
+    }
+  };
+  const handleFavBookmark = async exploreId => {
     if (bookmarks.includes(exploreId)) {
       // remove from users bookmark array, decrement count
       await db
@@ -148,14 +184,13 @@ function ExploreTable({
         <Grid item key={theme.exploreId} style={{ padding: "1em" }}>
           <GridListTile style={{ color: "white" }}>
             <img
-              onClick={e => handleFav(e, theme.exploreId)}
+              // onClick={e => handleFav(e, theme.exploreId)}
               src={theme.img}
               width="300px"
             />
 
             <GridListTileBar
-              // title={theme.themeName}
-              title={theme.exploreId}
+              title={theme.themeName}
               subtitle={<span>by: {theme.themeName}</span>}
               actionIcon={
                 <IconButton
@@ -169,7 +204,6 @@ function ExploreTable({
             />
           </GridListTile>
           <Popover
-            // id={id}
             open={open}
             anchorEl={anchorEl}
             onClose={handleClose}
@@ -186,17 +220,14 @@ function ExploreTable({
               <Tooltip title="Star">
                 <IconButton
                   aria-label="star"
-                  onClick={() =>
-                    handleFav(
-                      "starred",
-                      theme.userId,
-                      theme.exploreId,
-                      theme.signedInUserId
-                    )
-                  }
+                  onClick={() => handleFavStar(selected.exploreId)}
                 >
                   <Badge color="secondary">
-                    {starClicked ? <StarIcon /> : <StarBorderIcon />}
+                    {stars.includes(selected.exploreId) ? (
+                      <StarIcon />
+                    ) : (
+                      <StarBorderIcon />
+                    )}
                   </Badge>
                 </IconButton>
               </Tooltip>
@@ -209,10 +240,10 @@ function ExploreTable({
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Bookmark this theme">
+              <Tooltip title="Bookmark">
                 <IconButton
                   aria-label="bookmark"
-                  onClick={() => handleFav(selected.exploreId)}
+                  onClick={() => handleFavBookmark(selected.exploreId)}
                 >
                   <Badge color="secondary">
                     {bookmarks.includes(selected.exploreId) ? (

@@ -212,30 +212,32 @@ export default function Dashboard({ user }) {
         .catch(err => {
           console.log("Error getting document", err);
         });
-      console.log("///////OUTSIDE=======", bookmarked);
       setBookmarkedThemes(bookmarked);
-      
 
       //starred
       await db
-        .collection("FavoritedThemes")
-        .where("signedInUserId", "==", `${user.uid}`)
-        .where("starred", "==", true)
+        .collection("Users")
+        .doc(`${user.uid}`)
         .get()
-        .then(snapshot => {
-          if (snapshot.empty) {
-            console.log("Nothing starred yet");
-            return;
+        .then(async doc => {
+          if (!doc.exists) {
+            console.log("No such document!");
+          } else {
+            doc.data().starred.forEach(async item => {
+              let query = await db
+                .collection("CustomizedThemes")
+                .doc(`${item}`)
+                .get()
+                .then(themedoc => {
+                  starred.push({ ...themedoc.data(), themeId: item });
+                });
+            });
           }
-          snapshot.forEach(doc => {
-            console.log(doc.id, "starred=>", doc.data());
-            starred.push({ ...doc.data(), favId: doc.id });
-            setStarredThemes([...starred]);
-          });
         })
         .catch(err => {
-          console.log("Error getting starred themes", err);
+          console.log("Error getting document", err);
         });
+      setStarredThemes(starred);
     };
     unsubscribe();
   }, []);
