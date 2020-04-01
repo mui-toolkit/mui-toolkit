@@ -44,7 +44,6 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
   const [snackOpen, setSnackOpen] = useState(false);
   const [themeName, setSaveThemeName] = useState(downloadTheme.themeName);
   const [message, setMessage] = useState("");
-  const [refId, setRefId] = useState("");
   let history = useHistory();
 
   const handleClickOpen = () => {

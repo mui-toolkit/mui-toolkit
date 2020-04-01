@@ -40,16 +40,10 @@ export default function Explore() {
   console.log("Explore -> bookmarkedIds", bookmarkedIds);
   console.log("Explore -> myBookmarkedThemes", myBookmarkedThemes);
   const signedInUserId = location.state.signedInUserId;
-  console.log("Explore -> signedInUserId", signedInUserId);
-  // starred and bookmarked themes that have explore toggled true should have their star/bookmarkClicked set accordingly.
 
   const [exploreThemes, setExploreThemes] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  //// do something here // test if hook sets before firestore query
-  // favIcon is either set at true/false or undefined // set this first when setting explore status.
-  // const [starClicked, setStarClicked] = useState(!!favorite.starred);
-  // const [bookmarkClicked, setBookmarkClicked] = useState(!!favorite.bookmarked);
   const [starClicked, setStarClicked] = useState(false);
   const [bookmarkClicked, setBookmarkClicked] = useState(false);
 

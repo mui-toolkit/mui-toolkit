@@ -89,12 +89,10 @@ function ExploreTable({
   const handleFav = async exploreId => {
     ///******* post into users bookmarked/starred array */
 
-    console.log("handleFav -> exploreId", exploreId);
-
     // if (identifier === "starred") {
     //   setStarClicked(!starClicked);
     // } else if (identifier === "bookmarked") {
-    setBookmarkClicked(!bookmarkClicked);
+    // setBookmarkClicked(!bookmarkClicked);
     // }
 
     if (bookmarks.includes(exploreId)) {
@@ -108,7 +106,6 @@ function ExploreTable({
         .then(() => {
           console.log(`removed ${exploreId} from users bookmarked array`);
           setBookmarks(bookmarks.filter(id => id !== exploreId));
-          console.log("?????????????", bookmarks);
         });
       await db
         .collection("CustomizedThemes")
@@ -130,7 +127,6 @@ function ExploreTable({
         .then(() => {
           console.log(`added ${exploreId} to users bookmarked array`);
           setBookmarks(prevBookmarks => [...prevBookmarks, exploreId]);
-          console.log("?????????????!!!!", bookmarks);
         });
       await db
         .collection("CustomizedThemes")
@@ -199,7 +195,7 @@ function ExploreTable({
                     )
                   }
                 >
-                  <Badge badgeContent={theme.starsCount} color="secondary">
+                  <Badge color="secondary">
                     {starClicked ? <StarIcon /> : <StarBorderIcon />}
                   </Badge>
                 </IconButton>

@@ -131,7 +131,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Dashboard({ user }) {
-  console.log("Dashboard -> user", user);
   const signedInUserId = user.uid;
   const [themes, setThemes] = useState([]);
   const [starredThemes, setStarredThemes] = useState([]);
@@ -150,12 +149,11 @@ export default function Dashboard({ user }) {
           if (!doc.exists) {
             console.log("No such document!");
           } else {
-            console.log("FOUND USER", doc.data());
             await setFoundUser(doc.data());
           }
         })
         .catch(err => {
-          console.log("Error getting document", err);
+          console.error(err);
         });
     };
     response();
@@ -189,9 +187,7 @@ export default function Dashboard({ user }) {
   // favorites collection
   useEffect(() => {
     const bookmarked = [];
-
     const starred = [];
-    console.log("bookmarked =======", signedInUserId, user);
     const unsubscribe = async () => {
       //bookmarked
       await db
@@ -202,8 +198,6 @@ export default function Dashboard({ user }) {
           if (!doc.exists) {
             console.log("No such document!");
           } else {
-            console.log("FOUND USERS bookmark array", doc.data().bookmarked);
-
             doc.data().bookmarked.forEach(async item => {
               let query = await db
                 .collection("CustomizedThemes")
@@ -211,10 +205,6 @@ export default function Dashboard({ user }) {
                 .get()
                 .then(themedoc => {
                   bookmarked.push({ ...themedoc.data(), themeId: item });
-                  // console.log(
-                  //   "found bookmarked theme from array=====",
-                  //   themedoc.data()
-                  // );
                 });
             });
           }
@@ -224,25 +214,7 @@ export default function Dashboard({ user }) {
         });
       console.log("///////OUTSIDE=======", bookmarked);
       setBookmarkedThemes(bookmarked);
-      // await db
-      //   .collection("FavoritedThemes")
-      //   .where("signedInUserId", "==", `${user.uid}`)
-      //   .where("bookmarked", "==", true)
-      //   .get()
-      //   .then(snapshot => {
-      //     if (snapshot.empty) {
-      //       console.log("Nothing bookmarked yet");
-      //       return;
-      //     }
-      //     snapshot.forEach(doc => {
-      //       console.log(doc.id, "bookmarked=>", doc.data());
-      //       bookmarked.push({ ...doc.data(), favId: doc.id });
-      //       setBookmarkedThemes([...bookmarked]);
-      //     });
-      //   })
-      //   .catch(err => {
-      //     console.log("Error getting bookmarked themes", err);
-      //   });
+      
 
       //starred
       await db

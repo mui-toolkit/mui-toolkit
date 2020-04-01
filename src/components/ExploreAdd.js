@@ -69,8 +69,6 @@ export default function ExploreAdd({
       .doc(`${themeObject.themeId}`)
       .update({
         explore: true
-        // bookmarksCount,
-        // starsCount
       })
       .then(() => {
         console.log("updated explore status");
