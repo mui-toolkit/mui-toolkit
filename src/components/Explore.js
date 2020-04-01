@@ -181,7 +181,9 @@ export default function Explore() {
           {selectedIndex === 2 && (
             <ExploreTable
               themesToMap={exploreThemes.sort(
-                (a, b) => b.createdAt.seconds - a.createdAt.seconds
+                (a, b) =>
+                  new Date(b.createdAt.seconds * 1000) -
+                  new Date(a.createdAt.seconds * 1000)
               )}
               setStarClicked={setStarClicked}
               setBookmarkClicked={setBookmarkClicked}

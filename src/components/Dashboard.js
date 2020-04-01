@@ -137,7 +137,7 @@ export default function Dashboard({ user }) {
   const [starredThemes, setStarredThemes] = useState([]);
   const [bookmarkedThemes, setBookmarkedThemes] = useState([]);
   const [foundUser, setFoundUser] = useState("");
-  const [stars, setStars] = useState(0);
+  const [stars, setStars] = useState([]);
   const userStars = 0;
 
   useEffect(() => {
@@ -258,7 +258,7 @@ export default function Dashboard({ user }) {
 
   const updateStars = async () => {
     // users total star count
-    var starred = [];
+    var starredArr = [];
     await db
       .collection("FavoritedThemes")
       .where("createdByUserId", "==", `${user.uid}`)
@@ -269,8 +269,10 @@ export default function Dashboard({ user }) {
           return;
         }
         snapshot.forEach(doc => {
-          console.log(doc.id, "starred=>", doc.data());
-          setStars(prev => prev + Number(doc.data().starsCount));
+          console.log(doc.id, "starred=>", doc.data().starsCount);
+          starredArr.push(doc.data().starsCount);
+          setStars(starredArr);
+          // setStars(prev => prev + Number(doc.data().starsCount));
         });
       })
       .catch(err => {
@@ -314,7 +316,10 @@ export default function Dashboard({ user }) {
             mymui.
           </Button>
           <IconButton syle={{ color: "#000" }} onClick={() => updateStars()}>
-            <Badge badgeContent={stars} color="secondary">
+            <Badge
+              badgeContent={stars.reduce((acc, x) => acc + x, 0)}
+              color="secondary"
+            >
               <StarIcon />
             </Badge>
           </IconButton>

@@ -71,7 +71,7 @@ function ExploreTable({
         .doc(`${favoriteTheme.thisThemeId}`)
         .update({ bookmarked: !bookmarkClicked })
         .then(() => {
-          console.log("updated explore bookmarked status");
+          console.log("updated explore bookmarked status", favoriteTheme.thisThemeId);
         })
         .catch(err => {
           console.log("Error getting favorite themes", err);
@@ -82,21 +82,21 @@ function ExploreTable({
         .doc(`${favoriteTheme.thisThemeId}`)
         .update({ starred: !starClicked })
         .then(() => {
-          console.log("updated explore starred status");
+          console.log("updated explore starred status", favoriteTheme.thisThemeId);
         })
         .catch(err => {
           console.log("Error getting favorite themes", err);
         });
     }
   };
-  const getFavoriteTheme = async (identifier, userId, themeId) => {
-    console.log("getFavoriteTheme -> themeId", themeId);
+  const getFavoriteTheme = async (identifier, userId, exploreId) => {
+    console.log("getFavoriteTheme -> exploreId", exploreId);
     console.log("getFavoriteTheme -> userId", userId);
     var updateFav = {};
     await db
       .collection("FavoritedThemes")
       .where("signedInUserId", "==", `${userId}`)
-      .where("themeId", "==", `${themeId}`)
+      .where("themeId", "==", `${exploreId}`)
       .get()
       .then(snapshot => {
         if (snapshot.empty) {
@@ -118,7 +118,7 @@ function ExploreTable({
               thisThemeId: theme.id
             };
           }
-          setFavoriteTheme(prev => ({ ...prev, ...updateFav }));
+          setFavoriteTheme(prev => ({ ...updateFav }));
         });
       })
       .catch(err => {
@@ -126,9 +126,9 @@ function ExploreTable({
       });
   };
 
-  const handleFav = async (identifier, userId, themeId) => {
+  const handleFav = async (identifier, userId, exploreId) => {
     console.log("handleFav -> userId", userId);
-    console.log("handleFav -> themeId", themeId);
+    console.log("handleFav -> exploreId", exploreId);
 
     if (identifier === "starred") {
       setStarClicked(!starClicked);
@@ -138,7 +138,7 @@ function ExploreTable({
     console.log("handleFav -> starClicked", starClicked);
     console.log("handleFav -> bookmarkClicked", bookmarkClicked);
 
-    await getFavoriteTheme(identifier, userId, themeId);
+    await getFavoriteTheme(identifier, userId, exploreId);
     await updateFavoriteTheme(identifier, favoriteTheme);
   };
   const open = Boolean(anchorEl);
@@ -149,12 +149,12 @@ function ExploreTable({
     themesToMap,
     starClicked,
     bookmarkClicked,
-    favoriteTheme.id
+    favoriteTheme
   );
   return (
     <Grid container direction="row" justify="center" alignItems="center">
       {themesToMap.map(theme => (
-        <Grid item key={theme.themeId} style={{ padding: "1em" }}>
+        <Grid item key={theme.exploreId} style={{ padding: "1em" }}>
           <GridListTile style={{ color: "white" }}>
             <img src={theme.img} width="300px" />
             <GridListTileBar
@@ -162,7 +162,7 @@ function ExploreTable({
               subtitle={<span>by: {theme.user}</span>}
               actionIcon={
                 <IconButton
-                  aria-label={`info about ${theme.themeId}`}
+                  aria-label={`info about ${theme.exploreId}`}
                   className={classes.icon}
                   onClick={handleClick}
                 >
@@ -191,7 +191,7 @@ function ExploreTable({
                 <IconButton
                   aria-label="star"
                   onClick={() =>
-                    handleFav("starred", theme.userId, theme.themeId)
+                    handleFav("starred", theme.userId, theme.exploreId)
                   }
                 >
                   <Badge badgeContent={theme.starsCount} color="secondary">
@@ -212,7 +212,7 @@ function ExploreTable({
                 <IconButton
                   aria-label="bookmark"
                   onClick={() =>
-                    handleFav("bookmarked", theme.userId, theme.themeId)
+                    handleFav("bookmarked", theme.userId, theme.exploreId)
                   }
                 >
                   <Badge badgeContent={theme.bookmarksCount} color="secondary">
