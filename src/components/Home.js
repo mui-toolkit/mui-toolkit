@@ -25,119 +25,100 @@ export default function Home() {
     //   await unsubscribe();
     // };
   }, []);
-
-  if (!user.loggedIn) {
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          <Grid container direction="column" style={{ marginTop: '10em' }}>
-            <Grid
-              item
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
+        <Grid container direction='column' style={{ marginTop: '10em' }}>
+          <Grid
+            item
+            container
+            direction='row'
+            justify='center'
+            alignItems='center'
+          >
+            <Typography
+              variant='h4'
+              style={{ marginRight: '5px' }}
+              gutterBottom
             >
-              <Typography
-                variant="h4"
-                style={{ marginRight: '5px' }}
-                gutterBottom
-              >
-                Welcome to{' '}
-              </Typography>
-              <Typography
-                variant="h4"
+              Welcome to{' '}
+            </Typography>
+            <Typography
+              variant='h4'
+              style={{
+                fontFamily: 'Roboto',
+                fontWeight: 200,
+                fontSize: 30,
+                color: '#000',
+              }}
+              gutterBottom
+            >
+              mymui.
+            </Typography>
+          </Grid>
+
+          <Grid container justify='center' alignItems='center'>
+            <Typography
+              style={{ marginTop: '10px' }}
+              align='center'
+              style={{ color: '#818181' }}
+            >
+              <b>Build</b> and <b>style</b> Material-UI <b>components</b> easier
+              and faster.
+              <br />
+              <b>Save</b> and <b>edit</b> your progress. <b>Share</b> and
+              <b> explore</b> with others.
+            </Typography>
+          </Grid>
+
+          <Grid
+            container
+            direction='row'
+            spacing={2}
+            justify='center'
+            alignItems='center'
+          >
+            <Grid item>
+              <Button
+                component={Link}
+                to='/learn'
+                disableRipple
+                variant='contained'
                 style={{
                   fontFamily: 'Roboto',
                   fontWeight: 200,
-                  fontSize: 30,
-                  color: '#000'
+                  fontSize: 24,
+                  color: '#000',
+                  marginTop: '1em',
+                  textTransform: 'none',
                 }}
-                gutterBottom
+                // className={classes.button}
               >
-                mymui.
-              </Typography>
+                learn.
+              </Button>
             </Grid>
-
-            <Grid container justify="center" alignItems="center">
-              <Typography
-                style={{ marginTop: '10px' }}
-                align="center"
-                style={{ color: '#818181' }}
+            <Grid item>
+              <Button
+                component={Link}
+                to='/design'
+                disableRipple
+                variant='contained'
+                style={{
+                  fontFamily: 'Roboto',
+                  fontWeight: 200,
+                  fontSize: 24,
+                  color: '#000',
+                  marginTop: '1em',
+                  textTransform: 'none',
+                }}
+                // className={classes.button}
               >
-                <b>Build</b> and <b>style</b> Material-UI <b>components</b>{' '}
-                easier and faster.
-                <br />
-                <b>Save</b> and <b>edit</b> your progress. <b>Share</b> and
-                <b> explore</b> with others.
-              </Typography>
-            </Grid>
-
-            <Grid
-              container
-              direction="row"
-              spacing={2}
-              justify="center"
-              alignItems="center"
-            >
-              <Grid item>
-                <Button
-                  component={Link}
-                  to="/learn"
-                  disableRipple
-                  variant="contained"
-                  style={{
-                    fontFamily: 'Roboto',
-                    fontWeight: 200,
-                    fontSize: 24,
-                    color: '#000',
-                    marginTop: '1em',
-                    textTransform: 'none'
-                  }}
-                  // className={classes.button}
-                >
-                  learn.
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  component={Link}
-                  to="/design"
-                  disableRipple
-                  variant="contained"
-                  style={{
-                    fontFamily: 'Roboto',
-                    fontWeight: 200,
-                    fontSize: 24,
-                    color: '#000',
-                    marginTop: '1em',
-                    textTransform: 'none'
-                  }}
-                  // className={classes.button}
-                >
-                  get started.
-                </Button>
-              </Grid>
+                get started.
+              </Button>
             </Grid>
           </Grid>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div>
-      <Grid container direction="row" style={{ marginTop: '10em' }}>
-        <Grid
-          item
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          {' '}
-          <Typography variant="h5">Welcome, {user.email} </Typography>
         </Grid>
-      </Grid>
+      </div>
     </div>
   );
 }
