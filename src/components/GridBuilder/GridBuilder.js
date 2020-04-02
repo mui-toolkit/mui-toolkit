@@ -7,6 +7,20 @@ import DragNDrop from './DragNDrop';
 import { cloneDeep } from 'lodash';
 import { ChangeSize } from './ChangeSize';
 import { GridContainerPosition } from './GridContainerPosition';
+import {
+  red,
+  volcano,
+  gold,
+  yellow,
+  lime,
+  green,
+  cyan,
+  blue,
+  geekblue,
+  purple,
+  magenta,
+  grey,
+} from '@ant-design/colors';
 
 // imgs/12columns.jpg
 
@@ -49,11 +63,25 @@ export default function GridBuilder() {
   const classes = useStyles();
   const [size, setSize] = useState(12);
   const [letter, setLetter] = useState(101);
+  const [colorIndex, setColorIndex] = useState(1);
 
   //position state
   const [direction, setDirection] = useState('row');
   const [justify, setJustify] = useState('flex-start');
   const [alignItems, setAlignItems] = useState('flex-start');
+
+  const colors = [
+    '#f8eb00', // yellow
+    '#be00f8', // purple
+    green.primary,
+    '#00c7ce', // blue
+    '#ff5436', // red
+    '#7ed400', // yellow
+    '#f8eb00', // green
+    gold.primary, // gold
+    blue.primary, //
+    magenta.primary,
+  ];
 
   const data = [
     {
@@ -68,7 +96,7 @@ export default function GridBuilder() {
     {
       cols: 3,
       paper: classes.paper,
-      items: [{ id: 'd', cols: 12, color: '#f8eb00' }],
+      items: [{ id: 'd', cols: 12, color: colors[colorIndex - 1] }],
     },
   ];
 
@@ -103,26 +131,34 @@ export default function GridBuilder() {
   const handleDragEnter = (e, params) => {
     console.log('entering drag', params);
 
-    const currentItem = dragItem.current;
-    if (e.target !== dragNode.current) {
-      console.log('target is not the same');
-      setList(oldList => {
-        let newList = JSON.parse(JSON.stringify(oldList));
-        newList[params.grpI].items.splice(
-          params.itemI,
-          0,
-          newList[currentItem.grpI].items.splice(currentItem.itemI, 1)[0],
-        );
-        dragItem.current = params;
-        console.log('NEWLIST LENGTH', newList[1].items.length);
-        if (newList[1].items.length === 0) {
-          setLetter(letter + 1);
-          newList[1].items = [
-            { id: String.fromCharCode(letter), cols: 12, color: '#be00f8' },
-          ];
-        }
-        return newList;
-      });
+    if (colorIndex === 9) {
+      setColorIndex(0);
+    } else {
+      const currentItem = dragItem.current;
+      if (e.target !== dragNode.current) {
+        console.log('target is not the same');
+        setList(oldList => {
+          let newList = JSON.parse(JSON.stringify(oldList));
+          newList[params.grpI].items.splice(
+            params.itemI,
+            0,
+            newList[currentItem.grpI].items.splice(currentItem.itemI, 1)[0],
+          );
+          dragItem.current = params;
+          if (newList[1].items.length === 0) {
+            setColorIndex(colorIndex + 1);
+            setLetter(letter + 1);
+            newList[1].items = [
+              {
+                id: String.fromCharCode(letter),
+                cols: 12,
+                color: `${colors[colorIndex]}`,
+              },
+            ];
+          }
+          return newList;
+        });
+      }
     }
   };
 
@@ -187,8 +223,6 @@ export default function GridBuilder() {
       item => `<Grid item xs={${item.cols}} > ${item.id} </Grid>`,
     );
 
-    console.log('GRID ITEMS ========', gridItemMap);
-
     return gridItemMap.join('\n');
   };
 
@@ -197,9 +231,7 @@ export default function GridBuilder() {
       <Grid
         container
         direction='row'
-        // alignItems='center'
         className={classes.container}
-        // spacing={1}
         justify='flex-end'
       >
         {list.map((group, grpI) => (
