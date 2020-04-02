@@ -159,7 +159,7 @@ export default function Learn() {
 							<br />
 							<br />
 							The second tool is the{' '}
-							<Link to="grid">
+							<Link href="/grid">
 								<b>Grid Builder</b>
 							</Link>. This tool follows the 12 column grid system, and is meant to help users visualize
 							how Material-UI structures{' '}
@@ -187,7 +187,7 @@ export default function Learn() {
 						</Typography>
 						<Typography variant="body1" align="left" className={classes.paragraph} gutterBottom>
 							If you have trouble understanding grid systems and layouts, this tool is for you!{' '}
-							<Link to="grid">
+							<Link href="/grid">
 								<b>Grid Builder</b>
 							</Link>{' '}
 							helps visualize how Material-UI uses{' '}
@@ -215,7 +215,7 @@ export default function Learn() {
 						</Typography>
 						<Typography variant="body1" align="left" className={classes.paragraph} gutterBottom>
 							Our{' '}
-							<Link to="design">
+							<Link href="design">
 								<b>Theming Tool</b>
 							</Link>{' '}
 							allows you to style your ThemeProvider component with a dynamic and visual interface. No
@@ -242,7 +242,7 @@ export default function Learn() {
 						</Typography>
 						<Typography variant="body1" align="left" className={classes.paragraph} gutterBottom>
 							Once you've downloaded the file created by our{' '}
-							<Link to="/design">
+							<Link href="/design">
 								<b>Theming Tool</b>
 							</Link>
 							, open up the json file and copy the object into your createMuiTheme function. This will
@@ -305,7 +305,7 @@ export default function Learn() {
 						</Typography>
 						<Typography variant="body1" align="left" className={classes.paragraph} gutterBottom>
 							Upload and share your the themes you've created on our{' '}
-							<Link to="/explore">
+							<Link href="/explore">
 								{' '}
 								<b>explore page</b>
 							</Link>! The explore page allows you to view, star, and bookmark themes created by other
