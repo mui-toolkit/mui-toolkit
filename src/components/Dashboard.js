@@ -132,6 +132,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Dashboard({ user }) {
+  // console.log("Dashboard -> user", user);
+  // const userName = JSON.stringify(user.email).slice(0, user.email.indexOf("@"));
+  // console.log("Dashboard -> userName", userName);
   const signedInUserId = user.uid;
   const [themes, setThemes] = useState([]);
   const [starredThemes, setStarredThemes] = useState([]);
@@ -158,6 +161,7 @@ export default function Dashboard({ user }) {
     response();
   }, []);
   //saved themes
+  console.log("found user between useEffects", foundUser);
   useEffect(() => {
     const userThemes = [];
     const unsub = async () => {
@@ -172,7 +176,11 @@ export default function Dashboard({ user }) {
           }
           snapshot.forEach(theme => {
             console.log(theme.id, "=>", theme.data());
-            userThemes.push({ ...theme.data(), themeId: theme.id });
+            userThemes.push({
+              ...theme.data(),
+              themeId: theme.id,
+              userName: foundUser.username
+            });
             setThemes([...userThemes]);
           });
         })
@@ -387,7 +395,13 @@ export default function Dashboard({ user }) {
             component={Link}
             to={{
               pathname: "/explore",
-              state: { themes, starredThemes, bookmarkedThemes, signedInUserId }
+              state: {
+                themes,
+                starredThemes,
+                bookmarkedThemes,
+                signedInUserId,
+                foundUser
+              }
             }}
           >
             <ListItemIcon>
