@@ -8,4 +8,3 @@ export { ColorPop } from "./ColorPop";
 export { Buttons } from "./Buttons";
 export { Alerts } from "./Alerts";
 export { ColorGenerator } from "./ColorGenerator";
-export { FavoriteTheme } from "./FavoriteTheme";

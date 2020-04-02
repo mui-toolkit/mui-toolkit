@@ -1,18 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { SaveTheme, BuildNav, ColorGenerator, FavoriteTheme } from "../build";
+import { SaveTheme, BuildNav, ColorGenerator } from "../build";
 import { PreviewAppBar, PreviewTabs } from "../preview";
 import Download from "../Download";
-import StarIcon from "@material-ui/icons/Star";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { Grid, Paper } from "@material-ui/core/";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
-import { db } from "../../config/firebase";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDown";
 
 const useStyles = makeStyles(theme => ({
   preview: {
@@ -39,7 +31,7 @@ export const Build = props => {
     user,
     themeId,
     signedInUserId,
-    favorite,
+    // favorite,
     color,
     secondaryColor,
     defaultColor,
@@ -218,15 +210,7 @@ export const Build = props => {
                 themeId={themeId}
                 user={user}
                 downloadTheme={downloadTheme}
-                // starClicked={starClicked}
-                // bookmarkClicked={bookmarkClicked}
-              />
-              <FavoriteTheme
-                themeId={themeId}
-                downloadTheme={downloadTheme}
-                user={user}
                 signedInUserId={signedInUserId}
-                favorite={favorite}
               />
             </Grid>
           </Paper>

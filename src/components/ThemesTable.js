@@ -25,6 +25,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import EditIcon from "@material-ui/icons/Edit";
 import { db } from "../config/firebase";
 import firebase from "firebase";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
+import StarIcon from "@material-ui/icons/Star";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -164,7 +166,10 @@ export default function ThemesTable({
   setThemes,
   themes,
   tableTitle,
-  signedInUserId
+  signedInUserId,
+  table,
+  setBookmarkedThemes,
+  setStarredThemes
 }) {
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
@@ -205,6 +210,53 @@ export default function ThemesTable({
     setDense(event.target.checked);
   };
 
+  const handleFav = async (table, themeId) => {
+    if (table === "S") {
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .update({
+          starred: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
+        })
+        .then(() => {
+          console.log(`removed ${themeId} from users starred array`);
+          setStarredThemes(prevStarredThemes =>
+            prevStarredThemes.filter(theme => theme.themeId !== themeId)
+          );
+        });
+      await db
+        .collection("CustomizedThemes")
+        .doc(`${themeId}`)
+        .update({
+          starsCount: firebase.firestore.FieldValue.increment(-1)
+        })
+        .then(() => {
+          console.log("decrement starsCount");
+        });
+    } else if (table === "B") {
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .update({
+          bookmarked: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
+        })
+        .then(() => {
+          console.log(`removed ${themeId} from users bookmarked array`);
+          setBookmarkedThemes(prevBookmarkedThemes =>
+            prevBookmarkedThemes.filter(theme => theme.themeId !== themeId)
+          );
+        });
+      await db
+        .collection("CustomizedThemes")
+        .doc(`${themeId}`)
+        .update({
+          bookmarksCount: firebase.firestore.FieldValue.increment(-1)
+        })
+        .then(() => {
+          console.log("decrement bookmarkscount");
+        });
+    }
+  };
   const handleDelete = async (themeId, userId, themeName) => {
     // delete collection
     await db
@@ -313,16 +365,35 @@ export default function ThemesTable({
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Delete Theme">
-                        <IconButton
-                          aria-label="delete"
-                          onClick={() =>
-                            handleDelete(row.themeId, row.userId, row.themeName)
+
+                      {row.userId !== signedInUserId ? (
+                        <Tooltip
+                          title={
+                            table === "S" ? "Remove Star" : "Remove Bookmark"
                           }
                         >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
+                          <IconButton
+                            onClick={() => handleFav(table, row.themeId)}
+                          >
+                            {table === "S" ? <StarIcon /> : <BookmarkIcon />}
+                          </IconButton>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="Delete Theme">
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() =>
+                              handleDelete(
+                                row.themeId,
+                                row.userId,
+                                row.themeName
+                              )
+                            }
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
                     </TableRow>
                   );
                 })}

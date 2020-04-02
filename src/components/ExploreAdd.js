@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Typography, IconButton, Button } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import Dialog from "@material-ui/core/Dialog";
@@ -14,16 +14,16 @@ import { updateExpression } from "@babel/types";
 import { db } from "../config/firebase";
 
 export default function ExploreAdd({ savedThemes, setExploreThemes }) {
-  console.log("ExploreAdd -> savedThemes", savedThemes);
-  const [open, setOpen] = React.useState(false);
-
-  const [selectedTheme, setSelectedTheme] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState("");
 
   const updateExplore = async themeObject => {
     await db
       .collection("CustomizedThemes")
       .doc(`${themeObject.themeId}`)
-      .update({ explore: true })
+      .update({
+        explore: true
+      })
       .then(() => {
         console.log("updated explore status");
       })
@@ -42,11 +42,11 @@ export default function ExploreAdd({ savedThemes, setExploreThemes }) {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleAdd = () => {
+  const handleAdd = async () => {
     const [exploreTheme] = savedThemes.filter(
       themeObject => themeObject.themeId === selectedTheme
     );
-    updateExplore(exploreTheme);
+    await updateExplore(exploreTheme);
     setOpen(false);
   };
   return (
