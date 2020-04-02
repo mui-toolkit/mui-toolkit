@@ -297,6 +297,12 @@ export default function Dashboard({ user }) {
           >
             mymui.
           </Button>
+          <Avatar>
+            {foundUser
+              ? `${foundUser.firstName[0]}${foundUser.lastName[0]}`
+              : ""}
+          </Avatar>
+
           <IconButton title="your stars">
             <Badge
               badgeContent={themes.reduce(
@@ -308,11 +314,6 @@ export default function Dashboard({ user }) {
               <StarIcon />
             </Badge>
           </IconButton>
-          <Avatar>
-            {foundUser
-              ? `${foundUser.firstName[0]}${foundUser.lastName[0]}`
-              : ""}
-          </Avatar>
         </Toolbar>
       </AppBar>
       <Drawer
