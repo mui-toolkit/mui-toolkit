@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+// import Download from "./Download";
 import PropTypes from "prop-types";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -24,6 +24,7 @@ import { db } from "../config/firebase";
 import firebase from "firebase";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import StarIcon from "@material-ui/icons/Star";
+import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -352,16 +353,25 @@ export default function ThemesTable({
                           <VisibilityIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Edit Theme">
-                        <IconButton
-                          aria-label="edit"
-                          // key={row.themeId}
-                          component={Link}
-                          to={`/design/${row.themeId}/${signedInUserId}`}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
+                      {row.userId !== signedInUserId ? (
+                        <Tooltip title="Download">
+                          <IconButton aria-label="download">
+                            <SystemUpdateAltIcon />
+                            {/* <Download downloadTheme={row} /> */}
+                          </IconButton>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="Edit Theme">
+                          <IconButton
+                            aria-label="edit"
+                            // key={row.themeId}
+                            component={Link}
+                            to={`/design/${row.themeId}/${signedInUserId}`}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
 
                       {row.userId !== signedInUserId ? (
                         <Tooltip
