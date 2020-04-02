@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
-import Header from "../components/ui/Header";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./Home";
-import Learn from "./Learn";
-import Login from "./Login";
-import Signup from "./Signup";
-import ThemesTable from "./ThemesTable";
-import Dashboard from "./Dashboard";
-import UserProfile from "./UserProfile";
-import { Auth } from "./auth";
-import firebase from "firebase";
-import "firebase/auth";
-import { Store } from "./build/";
-import WebPreview from "../WebPreview/WebPreview";
-import Explore from './Explore'
+import React, { useState, useEffect } from 'react';
+import Header from '../components/ui/Header';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './Home';
+import Learn from './Learn';
+import Login from './Login';
+import Signup from './Signup';
+import ThemesTable from './ThemesTable';
+import Dashboard from './Dashboard';
+import UserProfile from './UserProfile';
+import { Auth } from './auth';
+import firebase from 'firebase';
+import 'firebase/auth';
+import { Store } from './build/';
+import WebPreview from '../WebPreview/WebPreview';
+import Explore from './Explore';
+import GridBuilder from './GridBuilder/GridBuilder';
 
 const defaultUser = {
   loggedIn: false,
@@ -50,10 +51,7 @@ function App() {
     // };
   }, []);
 
-
-
   console.log('App -> user', user);
-
 
   return (
     <BrowserRouter>
@@ -65,9 +63,8 @@ function App() {
         <Route
           render={props => <Store {...props} />}
           exact
-          path="/design/:themeId/:signedInUserId"
+          path='/design/:themeId/:signedInUserId'
         />
-
 
         <Route
           render={props => <WebPreview {...props} />}
@@ -75,6 +72,7 @@ function App() {
           path='/webpreview/:themeId'
         />
         <Route exact path='/explore' component={Explore} />
+        <Route exact path='/gridbuilder' component={GridBuilder} />
 
         {!user.loggedIn && (
           <Switch>
@@ -92,13 +90,12 @@ function App() {
               component={() => <Dashboard user={user} />}
             />
 
+            <Route exact path='/themestable' component={ThemesTable} />
 
-            <Route exact path="/themestable" component={ThemesTable} />
-
-            <Route exact path="/userprofile" component={UserProfile} />
+            <Route exact path='/userprofile' component={UserProfile} />
             {/* <Route exact path="/admin" component={Auth} /> */}
 
-            {user.admin && <Route exact path="/admin" component={Auth} />}
+            {user.admin && <Route exact path='/admin' component={Auth} />}
 
             {/* <Route exact path="/admin" component={() => <Auth user={user} />} /> */}
           </Switch>
