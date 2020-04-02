@@ -220,7 +220,7 @@ export default function GridBuilder() {
     let items = list[0].items;
 
     let gridItemMap = items.map(
-      item => `<Grid item xs={${item.cols}} > ${item.id} </Grid>`,
+      item => `${'  '}<Grid item xs={${item.cols}} > ${item.id} </Grid>`,
     );
 
     return gridItemMap.join('\n');
@@ -323,7 +323,17 @@ export default function GridBuilder() {
                 ))}
                 {grpI === 1 ? (
                   <Grid item>
-                    <pre>{`<Grid container \n direction={${direction}} \n justify={${justify}} \n alignItems={${alignItems}}> \n ${gridCodeBuilder()} \n </Grid>`}</pre>
+                    <Paper
+                      style={{
+                        backgroundColor: '#3c3c3c',
+                        color: '#fff',
+                        padding: '.5em',
+                        marginTop: '1em',
+                        marginBottom: '1em',
+                      }}
+                    >
+                      <pre>{`<Grid container\n${'  '}direction={${direction}}\n${'  '}justify={${justify}}\n${'  '}alignItems={${alignItems}}\n>\n${gridCodeBuilder()} \n</Grid>`}</pre>
+                    </Paper>
                     <GridContainerPosition
                       direction={direction}
                       setDirection={setDirection}
