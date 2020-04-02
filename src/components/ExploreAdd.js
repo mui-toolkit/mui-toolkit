@@ -13,7 +13,11 @@ import M from "minimatch";
 import { updateExpression } from "@babel/types";
 import { db } from "../config/firebase";
 
-export default function ExploreAdd({ savedThemes, setExploreThemes }) {
+export default function ExploreAdd({
+  savedThemes,
+  setExploreThemes,
+  foundUser
+}) {
   const [open, setOpen] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState("");
 
@@ -22,7 +26,8 @@ export default function ExploreAdd({ savedThemes, setExploreThemes }) {
       .collection("CustomizedThemes")
       .doc(`${themeObject.themeId}`)
       .update({
-        explore: true
+        explore: true,
+        userName: foundUser.username
       })
       .then(() => {
         console.log("updated explore status");

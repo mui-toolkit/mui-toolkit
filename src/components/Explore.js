@@ -36,6 +36,7 @@ export default function Explore() {
   let myStarredThemes = location.state.starredThemes;
   let myBookmarkedThemes = location.state.bookmarkedThemes;
   const signedInUserId = location.state.signedInUserId;
+  let foundUser = location.state.foundUser;
 
   const [exploreThemes, setExploreThemes] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -54,7 +55,11 @@ export default function Explore() {
             return;
           }
           snapshot.forEach(doc => {
-            explore.push({ ...doc.data(), exploreId: doc.id });
+            explore.push({
+              ...doc.data(),
+              themeId: doc.id,
+              userName: doc.data().userName
+            });
             setExploreThemes([...explore]);
           });
         })
@@ -68,7 +73,7 @@ export default function Explore() {
   const handleClick = (event, index) => {
     setSelectedIndex(index);
   };
-
+  console.log("explore themes ======>>>", exploreThemes);
   // *************
   exploreThemes.map(themeObj => {
     themeObj.img = `https://image.thum.io/get/auth/8186-fe739dc2614dfdbf1478af6427346aa8/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/${themeObj.themeId}`;
@@ -139,6 +144,7 @@ export default function Explore() {
             <ExploreAdd
               savedThemes={savedThemes}
               setExploreThemes={setExploreThemes}
+              foundUser={foundUser}
             />
           </Grid>
           {selectedIndex === 0 && (

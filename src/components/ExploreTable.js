@@ -57,7 +57,11 @@ function ExploreTable({ signedInUserId, themesToMap }) {
         .doc(`${signedInUserId}`)
         .get()
         .then(async doc => {
-          setBookmarks(doc.data().bookmarked);
+          if (doc.data().bookmarked) {
+            setBookmarks(doc.data().bookmarked);
+          } else {
+            setBookmarks([]);
+          }
         })
         .catch(err => {
           console.error(err);
@@ -68,7 +72,11 @@ function ExploreTable({ signedInUserId, themesToMap }) {
         .doc(`${signedInUserId}`)
         .get()
         .then(async doc => {
-          setStars(doc.data().starred);
+          if (doc.data().starred) {
+            setStars(doc.data().starred);
+          } else {
+            setStars([]);
+          }
         })
         .catch(err => {
           console.error(err);
@@ -85,22 +93,22 @@ function ExploreTable({ signedInUserId, themesToMap }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleFavStar = async exploreId => {
-    if (stars.includes(exploreId)) {
+  const handleFavStar = async themeId => {
+    if (stars.includes(themeId)) {
       // remove from users star array, decrement count
       await db
         .collection("Users")
         .doc(`${signedInUserId}`)
         .update({
-          starred: firebase.firestore.FieldValue.arrayRemove(`${exploreId}`)
+          starred: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
         })
         .then(() => {
-          console.log(`removed ${exploreId} from users starred array`);
-          setStars(stars.filter(id => id !== exploreId));
+          console.log(`removed ${themeId} from users starred array`);
+          setStars(stars.filter(id => id !== themeId));
         });
       await db
         .collection("CustomizedThemes")
-        .doc(`${exploreId}`)
+        .doc(`${themeId}`)
         .update({
           starsCount: firebase.firestore.FieldValue.increment(-1)
         })
@@ -113,15 +121,15 @@ function ExploreTable({ signedInUserId, themesToMap }) {
         .collection("Users")
         .doc(`${signedInUserId}`)
         .update({
-          starred: firebase.firestore.FieldValue.arrayUnion(`${exploreId}`)
+          starred: firebase.firestore.FieldValue.arrayUnion(`${themeId}`)
         })
         .then(() => {
-          console.log(`added ${exploreId} to users starred array`);
-          setStars(prevStars => [...prevStars, exploreId]);
+          console.log(`added ${themeId} to users starred array`);
+          setStars(prevStars => [...prevStars, themeId]);
         });
       await db
         .collection("CustomizedThemes")
-        .doc(`${exploreId}`)
+        .doc(`${themeId}`)
         .update({
           starsCount: firebase.firestore.FieldValue.increment(1)
         })
@@ -130,22 +138,22 @@ function ExploreTable({ signedInUserId, themesToMap }) {
         });
     }
   };
-  const handleFavBookmark = async exploreId => {
-    if (bookmarks.includes(exploreId)) {
+  const handleFavBookmark = async themeId => {
+    if (bookmarks.includes(themeId)) {
       // remove from users bookmark array, decrement count
       await db
         .collection("Users")
         .doc(`${signedInUserId}`)
         .update({
-          bookmarked: firebase.firestore.FieldValue.arrayRemove(`${exploreId}`)
+          bookmarked: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
         })
         .then(() => {
-          console.log(`removed ${exploreId} from users bookmarked array`);
-          setBookmarks(bookmarks.filter(id => id !== exploreId));
+          console.log(`removed ${themeId} from users bookmarked array`);
+          setBookmarks(bookmarks.filter(id => id !== themeId));
         });
       await db
         .collection("CustomizedThemes")
-        .doc(`${exploreId}`)
+        .doc(`${themeId}`)
         .update({
           bookmarksCount: firebase.firestore.FieldValue.increment(-1)
         })
@@ -158,15 +166,15 @@ function ExploreTable({ signedInUserId, themesToMap }) {
         .collection("Users")
         .doc(`${signedInUserId}`)
         .update({
-          bookmarked: firebase.firestore.FieldValue.arrayUnion(`${exploreId}`)
+          bookmarked: firebase.firestore.FieldValue.arrayUnion(`${themeId}`)
         })
         .then(() => {
-          console.log(`added ${exploreId} to users bookmarked array`);
-          setBookmarks(prevBookmarks => [...prevBookmarks, exploreId]);
+          console.log(`added ${themeId} to users bookmarked array`);
+          setBookmarks(prevBookmarks => [...prevBookmarks, themeId]);
         });
       await db
         .collection("CustomizedThemes")
-        .doc(`${exploreId}`)
+        .doc(`${themeId}`)
         .update({
           bookmarksCount: firebase.firestore.FieldValue.increment(1)
         })
@@ -181,16 +189,16 @@ function ExploreTable({ signedInUserId, themesToMap }) {
   return (
     <Grid container direction="row" justify="center" alignItems="center">
       {themesToMap.map(theme => (
-        <Grid item key={theme.exploreId} style={{ padding: "1em" }}>
+        <Grid item key={theme.themeId} style={{ padding: "1em" }}>
           <GridListTile style={{ color: "white" }}>
             <img src={theme.img} width="300px" />
 
             <GridListTileBar
               title={theme.themeName}
-              subtitle={<span>by: {theme.themeName}</span>}
+              subtitle={<span>by: {theme.userName}</span>}
               actionIcon={
                 <IconButton
-                  // aria-label={`info about ${theme.exploreId}`}
+                  // aria-label={`info about ${theme.themeId}`}
                   className={classes.icon}
                   onClick={e => handleClick(e, theme)}
                 >
@@ -216,10 +224,10 @@ function ExploreTable({ signedInUserId, themesToMap }) {
               <Tooltip title="Star">
                 <IconButton
                   aria-label="star"
-                  onClick={() => handleFavStar(selected.exploreId)}
+                  onClick={() => handleFavStar(selected.themeId)}
                 >
                   <Badge color="secondary">
-                    {stars.includes(selected.exploreId) ? (
+                    {stars.includes(selected.themeId) || stars.length === 0 ? (
                       <StarIcon />
                     ) : (
                       <StarBorderIcon />
@@ -230,7 +238,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
               <Tooltip title="Preview Theme">
                 <IconButton
                   component={Link}
-                  to={`/webpreview/${selected.exploreId}`}
+                  to={`/webpreview/${selected.themeId}`}
                   target="_blank"
                 >
                   <VisibilityIcon />
@@ -239,10 +247,11 @@ function ExploreTable({ signedInUserId, themesToMap }) {
               <Tooltip title="Bookmark">
                 <IconButton
                   aria-label="bookmark"
-                  onClick={() => handleFavBookmark(selected.exploreId)}
+                  onClick={() => handleFavBookmark(selected.themeId)}
                 >
                   <Badge color="secondary">
-                    {bookmarks.includes(selected.exploreId) ? (
+                    {bookmarks.includes(selected.themeId) ||
+                    bookmarks.length === 0 ? (
                       <BookmarkIcon />
                     ) : (
                       <BookmarkBorderIcon />
