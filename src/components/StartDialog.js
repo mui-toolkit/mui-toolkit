@@ -69,13 +69,13 @@ export default function StartDialog(props) {
                 color='secondary'
                 style={{ marginBottom: '1em' }}
                 component={Link}
-                to='/gridbuilder'
+                to='/grid'
                 disableRipple
                 onClick={handleClose}
               >
                 BUILD A GRID LAYOUT
               </Button>
-              <Links component={Link} to='/gridbuilder'>
+              <Links component={Link} to='/grid'>
                 <img
                   alt='grid builder'
                   src={gridBuilder}
