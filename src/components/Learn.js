@@ -68,23 +68,23 @@ export default function Learn() {
 							What is mymui?
 						</Link>
 						<br />
-						<Link className={classes.contentLinks} href="https://material-ui.com/customization/theming/">
+						<Link to="#grid-builder" className={classes.contentLinks}>
 							Grid Builder
 						</Link>
 						<br />
-						<Link className={classes.contentLinks} href="https://material-ui.com/customization/theming/">
+						<Link to="#theming-tool" className={classes.contentLinks}>
 							Theming Tool
 						</Link>
 						<br />
-						<Link className={classes.contentLinks} href="https://material-ui.com/customization/theming/">
+						<Link to="#download" className={classes.contentLinks}>
 							Download
 						</Link>
 						<br />
-						<Link className={classes.contentLinks} href="https://material-ui.com/customization/theming/">
+						<Link to="#save" className={classes.contentLinks}>
 							Save
 						</Link>
 						<br />
-						<Link className={classes.contentLinks} href="https://material-ui.com/customization/theming/">
+						<Link to="#share" className={classes.contentLinks}>
 							Share
 						</Link>
 					</Grid>
@@ -151,7 +151,7 @@ export default function Learn() {
 				</Grid>
 				<hr className={classes.hr} />
 
-				<Grid container direction="row" alignItems="center" className={classes.container}>
+				<Grid id="grid-builder" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
 							Grid Builder
@@ -170,7 +170,7 @@ export default function Learn() {
 
 				<hr className={classes.hr} />
 
-				<Grid container direction="row" alignItems="center" className={classes.container}>
+				<Grid id="theming-tool" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
 							Theming Tool
@@ -188,7 +188,7 @@ export default function Learn() {
 
 				<hr className={classes.hr} />
 
-				<Grid container direction="row" alignItems="center" className={classes.container}>
+				<Grid id="download" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
 							Download
@@ -212,7 +212,7 @@ export default function Learn() {
 					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
-				<Grid container direction="row" alignItems="center" className={classes.container}>
+				<Grid id="save" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
 							Save
@@ -231,7 +231,7 @@ export default function Learn() {
 					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
-				<Grid container direction="row" alignItems="center" className={classes.container}>
+				<Grid id="share" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
 							Share
