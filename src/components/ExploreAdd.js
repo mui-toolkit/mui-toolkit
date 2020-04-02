@@ -16,7 +16,7 @@ import { db } from "../config/firebase";
 export default function ExploreAdd({
   savedThemes,
   setExploreThemes,
-  foundUser
+  userName
 }) {
   const [open, setOpen] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState("");
@@ -27,7 +27,7 @@ export default function ExploreAdd({
       .doc(`${themeObject.themeId}`)
       .update({
         explore: true,
-        userName: foundUser.username
+        userName
       })
       .then(() => {
         console.log("updated explore status");

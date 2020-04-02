@@ -60,7 +60,7 @@ export default function Explore() {
         }
       ],
       signedInUserId: "guest",
-      foundUser: { username: "guest" }
+      userName: "guest"
     };
   }
   console.log("Explore -> location", location);
@@ -72,8 +72,8 @@ export default function Explore() {
   console.log("Explore -> myBookmarkedThemes", myBookmarkedThemes);
   const signedInUserId = location.state.signedInUserId;
   console.log("Explore -> signedInUserId", signedInUserId);
-  let foundUser = location.state.foundUser;
-  console.log("Explore -> foundUser", foundUser);
+  let userName = location.state.userName;
+  console.log("Explore -> userName", userName);
 
   const [exploreThemes, setExploreThemes] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -185,7 +185,7 @@ export default function Explore() {
             <ExploreAdd
               savedThemes={savedThemes}
               setExploreThemes={setExploreThemes}
-              foundUser={foundUser}
+              userName={userName}
             />
           </Grid>
           {selectedIndex === 0 && (

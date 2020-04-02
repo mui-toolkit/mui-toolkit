@@ -120,7 +120,7 @@ export default function Header(props) {
                       }
                     ],
                     signedInUserId: "guest",
-                    foundUser: { username: "guest" }
+                    userName: "guest"
                   }
                 }}
                 label="Explore"

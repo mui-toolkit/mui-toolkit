@@ -98,12 +98,7 @@ export const General = (props) => {
 					<Typography className={classes.typography}>Paper Color</Typography>
 				</Grid>
 				<Grid container direction="row" alignItems="center" style={{ marginBottom: '1em' }}>
-					<Switch
-						checked={checked}
-						onChange={toggleChecked}
-						name="shadows"
-						// inputProps={{ 'aria-label': 'primary checkbox' }}
-					/>
+					<Switch checked={checked} onChange={toggleChecked} name="shadows" />
 					<Typography className={classes.typography}>Shadows</Typography>
 				</Grid>
 				<Link onClick={() => setTab(0)}>

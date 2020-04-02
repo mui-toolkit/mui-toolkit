@@ -410,7 +410,7 @@ export default function Dashboard({ user }) {
                 starredThemes,
                 bookmarkedThemes,
                 signedInUserId,
-                foundUser
+                userName: foundUser.username
               }
             }}
           >
