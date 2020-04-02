@@ -58,12 +58,7 @@ export default function Learn() {
 						</Typography>
 						<br />
 						<Typography> CONTENTS</Typography>
-						<HashLink
-							smooth
-							to="#what-is-material-ui"
-							className={classes.contentLinks}
-							// href='https://material-ui.com/customization/theming/'
-						>
+						<HashLink smooth to="#what-is-material-ui" className={classes.contentLinks}>
 							What is Material-Ui?
 						</HashLink>
 						<br />
@@ -75,8 +70,8 @@ export default function Learn() {
 							Grid Builder
 						</HashLink>
 						<br />
-						<HashLink to="#theming-tool" className={classes.contentLinks}>
-							Theming Tool
+						<HashLink to="#theme-styler" className={classes.contentLinks}>
+							Theme Styler
 						</HashLink>
 						<br />
 						<HashLink smooth to="#download" className={classes.contentLinks}>
@@ -151,7 +146,7 @@ export default function Learn() {
 							<br />
 							The first is the{' '}
 							<Link href="/design">
-								<b>Theming Tool</b>
+								<b>Theme Styler</b>
 							</Link>, which allows you to customize your Material-UI theme without having to frequently
 							refer to documentation. The dynamic interface provides a step by step guide on the
 							parameters you can manipulate within the ThemeProvider. Once finished, you can download the
@@ -205,10 +200,10 @@ export default function Learn() {
 
 				<hr className={classes.hr} />
 
-				<Grid id="theming-tool" container direction="row" alignItems="center" className={classes.container}>
+				<Grid id="theme-styler" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
-							Theming Tool
+							Theme Styler
 						</Typography>
 						<Typography style={{ fontSize: 20 }} gutterBottom>
 							Style your Material-UI Theme Provider
@@ -216,7 +211,7 @@ export default function Learn() {
 						<Typography variant="body1" align="left" className={classes.paragraph} gutterBottom>
 							Our{' '}
 							<Link href="design">
-								<b>Theming Tool</b>
+								<b>Theme Styler</b>
 							</Link>{' '}
 							allows you to style your ThemeProvider component with a dynamic and visual interface. No
 							need to look at the documentation — just select the colors and styles you want and download
@@ -243,7 +238,7 @@ export default function Learn() {
 						<Typography variant="body1" align="left" className={classes.paragraph} gutterBottom>
 							Once you've downloaded the file created by our{' '}
 							<Link href="/design">
-								<b>Theming Tool</b>
+								<b>Theme Styler</b>
 							</Link>
 							, open up the json file and copy the object into your createMuiTheme function. This will
 							generate a theme based on the custom object you provide!
@@ -277,7 +272,7 @@ export default function Learn() {
 						<Typography variant="body1" align="left" className={classes.paragraph} gutterBottom>
 							mymui allows logged in users to save their themes when using our{' '}
 							<Link href="/design">
-								<b>Theming Tool</b>
+								<b>Theme Styler</b>
 							</Link>. As a logged in user, your themes will be stored in a user{' '}
 							<Link href="/dashboard">
 								<b>dashboard</b>
