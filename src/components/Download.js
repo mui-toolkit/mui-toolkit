@@ -19,7 +19,6 @@ const useStyles = makeStyles(theme => ({
 }));
 const refined = themeObject => {
   let refined = JSON.parse(JSON.stringify(themeObject));
-  console.log("refined", refined);
   delete refined.bookmarked;
   delete refined.bookmarksCount;
   delete refined.createdAt;
@@ -35,11 +34,9 @@ const refined = themeObject => {
 };
 export const Download = props => {
   const classes = useStyles();
-  console.log("PROPS IN DOWNLOAD", props);
 
   const download = async theme => {
     const refinedObj = await refined(theme);
-    console.log("refined", refinedObj);
     const fileToSave = new Blob([JSON.stringify(refinedObj)], {
       type: "application/json",
       name: "theme.json"

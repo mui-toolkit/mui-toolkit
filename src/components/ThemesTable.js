@@ -29,7 +29,6 @@ import saveAs from "file-saver";
 
 const refined = themeObject => {
   let refined = JSON.parse(JSON.stringify(themeObject));
-  console.log("refined", refined);
   delete refined.bookmarked;
   delete refined.bookmarksCount;
   delete refined.createdAt;
@@ -46,7 +45,6 @@ const refined = themeObject => {
 
 const download = async theme => {
   const refinedObj = await refined(theme);
-  console.log("refined", refinedObj);
   const fileToSave = new Blob([JSON.stringify(refinedObj)], {
     type: "application/json",
     name: "theme.json"
@@ -182,6 +180,10 @@ export default function ThemesTable({
   setBookmarkedThemes,
   setStarredThemes
 }) {
+  const favorite =
+    table === "B"
+      ? "Explore themes and bookmark 🔖 for future reference"
+      : "Explore themes and 🌟star🌟 them to love";
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
     lastEditAt: JSON.stringify(
@@ -195,7 +197,6 @@ export default function ThemesTable({
     favId: themeObject.favId,
     downloadTheme: { ...themeObject }
   }));
-  console.log("themeObject", rows[0].downloadTheme);
 
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
@@ -304,10 +305,15 @@ export default function ThemesTable({
   return !themes.length ? (
     <div>
       <h2>No Projects Available</h2>
-      <Link to="/design">
-        <h2>Build your first professional Material UI Project!</h2>
-      </Link>
-      ;
+      {table === "M" ? (
+        <Link to="/design">
+          <h2>Build your first professional Material UI Project!</h2>
+        </Link>
+      ) : (
+        <Link to="/explore">
+          <h2>{`${favorite}`}</h2>
+        </Link>
+      )}
     </div>
   ) : (
     <div>
