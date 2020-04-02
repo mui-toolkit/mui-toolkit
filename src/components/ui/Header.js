@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import { makeStyles } from "@material-ui/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import firebase from "firebase";
-import "firebase/auth";
-import Login from "../Login";
-import Grid from "@material-ui/core/Grid";
+import React, { useState } from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import { makeStyles } from '@material-ui/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import firebase from 'firebase';
+import 'firebase/auth';
+import Login from '../Login';
+import Grid from '@material-ui/core/Grid';
+import StartDialog from '../StartDialog';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -39,6 +40,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header(props) {
   const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleClick = e => {
     e.preventDefault();
@@ -72,20 +83,14 @@ export default function Header(props) {
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/"
-                label="Home"
+                to='/learn'
+                label='Learn'
               />
               <Tab
                 className={classes.tab}
-                component={Link}
-                to="/learn"
-                label="Learn"
-              />
-              <Tab
-                className={classes.tab}
-                component={Link}
-                to="/design"
-                label="Create"
+                onClick={handleClickOpen}
+                label='Create'
+
               />
               <Tab
                 className={classes.tab}
@@ -131,6 +136,7 @@ export default function Header(props) {
           </Toolbar>
         </AppBar>
         <div className={classes.toolBarMargin} />
+        <StartDialog handleClose={handleClose} open={open} />
       </React.Fragment>
     );
   }
@@ -153,7 +159,6 @@ export default function Header(props) {
             mymui.
           </Button>
           <Grid className={classes.tabContainer}>
-            <Tab className={classes.tab} component={Link} to="/" label="Home" />
             <Tab
               className={classes.tab}
               component={Link}
@@ -162,9 +167,8 @@ export default function Header(props) {
             />
             <Tab
               className={classes.tab}
-              component={Link}
-              to="/design"
-              label="Create"
+              onClick={handleClickOpen}
+              label='Create'
             />
             <Tab
               className={classes.tab}
@@ -198,6 +202,7 @@ export default function Header(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.toolBarMargin} />
+      <StartDialog handleClose={handleClose} open={open} />
     </React.Fragment>
   );
 }
