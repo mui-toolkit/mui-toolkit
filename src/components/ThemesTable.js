@@ -367,18 +367,7 @@ export default function ThemesTable({
                           <VisibilityIcon />
                         </IconButton>
                       </Tooltip>
-                      {row.userId !== signedInUserId ? (
-                        <Tooltip title="Download">
-                          <IconButton
-                            aria-label="download"
-                            onClick={() => download(row.downloadTheme)}
-                          >
-                            <SystemUpdateAltIcon
-                              style={{ marginLeft: "5px" }}
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      ) : (
+                      {table === "M" ? (
                         <Tooltip title="Edit Theme">
                           <IconButton
                             aria-label="edit"
@@ -389,21 +378,19 @@ export default function ThemesTable({
                             <EditIcon />
                           </IconButton>
                         </Tooltip>
-                      )}
-
-                      {row.userId !== signedInUserId ? (
-                        <Tooltip
-                          title={
-                            table === "S" ? "Remove Star" : "Remove Bookmark"
-                          }
-                        >
+                      ) : (
+                        <Tooltip title="Download">
                           <IconButton
-                            onClick={() => handleFav(table, row.themeId)}
+                            aria-label="download"
+                            onClick={() => download(row.downloadTheme)}
                           >
-                            {table === "S" ? <StarIcon /> : <BookmarkIcon />}
+                            <SystemUpdateAltIcon
+                              style={{ marginLeft: "5px" }}
+                            />
                           </IconButton>
                         </Tooltip>
-                      ) : (
+                      )}
+                      {table === "M" ? (
                         <Tooltip title="Delete Theme">
                           <IconButton
                             aria-label="delete"
@@ -416,6 +403,18 @@ export default function ThemesTable({
                             }
                           >
                             <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip
+                          title={
+                            table === "S" ? "Remove Star" : "Remove Bookmark"
+                          }
+                        >
+                          <IconButton
+                            onClick={() => handleFav(table, row.themeId)}
+                          >
+                            {table === "S" ? <StarIcon /> : <BookmarkIcon />}
                           </IconButton>
                         </Tooltip>
                       )}
