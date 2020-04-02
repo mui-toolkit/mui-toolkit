@@ -19,7 +19,7 @@ import GridBuilder from './GridBuilder/GridBuilder';
 const defaultUser = {
   loggedIn: false,
   email: '',
-  uid: '',
+  uid: ''
 };
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -32,7 +32,7 @@ function onAuthStateChange(callback) {
           loggedIn: true,
           email: user.email,
           uid: user.uid,
-          admin: user.admin,
+          admin: user.admin
         });
       });
     } else {
@@ -57,27 +57,27 @@ function App() {
     <BrowserRouter>
       <Header user={user} />
       <Switch>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/learn' component={Learn} />
-        <Route exact path='/design' component={() => <Store user={user} />} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/learn" component={Learn} />
+        <Route exact path="/design" component={() => <Store user={user} />} />
         <Route
           render={props => <Store {...props} />}
           exact
-          path='/design/:themeId/:signedInUserId'
+          path="/design/:themeId/:signedInUserId"
         />
 
         <Route
           render={props => <WebPreview {...props} />}
           exact
-          path='/webpreview/:themeId'
+          path="/webpreview/:themeId"
         />
-        <Route exact path='/explore' component={Explore} />
-        <Route exact path='/gridbuilder' component={GridBuilder} />
+        <Route exact path="/explore" component={Explore} />
+        <Route exact path="/gridbuilder" component={GridBuilder} />
 
         {!user.loggedIn && (
           <Switch>
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/signup' component={Signup} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
           </Switch>
         )}
 
@@ -86,16 +86,15 @@ function App() {
             {/* Routes placed here are only available after logging in */}
             <Route
               exact
-              path='/dashboard'
+              path="/dashboard"
               component={() => <Dashboard user={user} />}
             />
 
-            <Route exact path='/themestable' component={ThemesTable} />
+            <Route exact path="/themestable" component={ThemesTable} />
 
-            <Route exact path='/userprofile' component={UserProfile} />
-            {/* <Route exact path="/admin" component={Auth} /> */}
+            <Route exact path="/userprofile" component={UserProfile} />
 
-            {user.admin && <Route exact path='/admin' component={Auth} />}
+            {user.admin && <Route exact path="/admin" component={Auth} />}
 
             {/* <Route exact path="/admin" component={() => <Auth user={user} />} /> */}
           </Switch>
