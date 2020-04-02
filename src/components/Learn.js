@@ -4,6 +4,7 @@ import muiLogo from '.././imgs/material-ui-logo.png';
 import Grid from '@material-ui/core/Grid';
 import { Typography, Paper } from '@material-ui/core';
 import { HashLink as Link } from 'react-router-hash-link';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 const useStyles = makeStyles({
 	root: {
@@ -44,7 +45,13 @@ export default function Learn() {
 	return (
 		<React.Fragment>
 			<div className={classes.root}>
-				<Grid container direction="row" alignItems="center" className={classes.container}>
+				<Grid
+					id="table-of-contents"
+					container
+					direction="row"
+					alignItems="center"
+					className={classes.container}
+				>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
 							Learn
@@ -93,9 +100,15 @@ export default function Learn() {
 					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
-				<Grid container direction="row" alignItems="center" className={classes.container}>
+				<Grid
+					id="what-is-material-ui"
+					container
+					direction="row"
+					alignItems="center"
+					className={classes.container}
+				>
 					<Grid item className={classes.title} xs={6}>
-						<Typography id="what-is-material-ui" variant="h3" align="left" gutterBottom>
+						<Typography variant="h3" align="left" gutterBottom>
 							Material-UI
 						</Typography>
 						<Typography gutterBottom style={{ fontSize: 20 }}>
@@ -117,14 +130,20 @@ export default function Learn() {
 							about Theming.
 						</Typography>
 					</Grid>
+
 					<Grid item align="center" className={classes.title} xs={6}>
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
 					</Grid>
+					<Grid container direction="row-reverse" alignItems="flex-end">
+						<Link to="#table-of-contents">
+							<ArrowUpwardIcon />
+						</Link>
+					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
-				<Grid container direction="row" alignItems="center" className={classes.container}>
+				<Grid id="what-is-mymui" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
-						<Typography id="what-is-mymui" variant="h3" align="left" gutterBottom>
+						<Typography variant="h3" align="left" gutterBottom>
 							mymui.
 						</Typography>
 						<Typography style={{ fontSize: 20 }} gutterBottom>
@@ -148,6 +167,11 @@ export default function Learn() {
 					<Grid item align="center" className={classes.title} xs={6}>
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
 					</Grid>
+					<Grid container direction="row-reverse" alignItems="flex-end">
+						<Link to="#table-of-contents">
+							<ArrowUpwardIcon />
+						</Link>
+					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
 
@@ -166,6 +190,11 @@ export default function Learn() {
 							get you're desired layout.
 						</Typography>
 					</Grid>
+					<Grid container direction="row-reverse" alignItems="flex-end">
+						<Link to="#table-of-contents">
+							<ArrowUpwardIcon />
+						</Link>
+					</Grid>
 				</Grid>
 
 				<hr className={classes.hr} />
@@ -183,6 +212,11 @@ export default function Learn() {
 							intuitive process. No need to look at the documentation to find the code, just select the
 							colors and styles you want and download the code!
 						</Typography>
+					</Grid>
+					<Grid container direction="row-reverse" alignItems="flex-end">
+						<Link to="#table-of-contents">
+							<ArrowUpwardIcon />
+						</Link>
 					</Grid>
 				</Grid>
 
@@ -210,6 +244,11 @@ export default function Learn() {
 					<Grid item align="center" className={classes.title} xs={6}>
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
 					</Grid>
+					<Grid container direction="row-reverse" alignItems="flex-end">
+						<Link to="#table-of-contents">
+							<ArrowUpwardIcon />
+						</Link>
+					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
 				<Grid id="save" container direction="row" alignItems="center" className={classes.container}>
@@ -229,6 +268,11 @@ export default function Learn() {
 					<Grid item align="center" className={classes.title} xs={6}>
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
 					</Grid>
+					<Grid container direction="row-reverse" alignItems="flex-end">
+						<Link to="#table-of-contents">
+							<ArrowUpwardIcon />
+						</Link>
+					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
 				<Grid id="share" container direction="row" alignItems="center" className={classes.container}>
@@ -247,6 +291,11 @@ export default function Learn() {
 					</Grid>
 					<Grid item align="center" className={classes.title} xs={6}>
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
+					</Grid>
+					<Grid container direction="row-reverse" alignItems="flex-end">
+						<Link to="#table-of-contents">
+							<ArrowUpwardIcon />
+						</Link>
 					</Grid>
 				</Grid>
 			</div>
