@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
 
 export const Store = props => {
   const { themeId, signedInUserId } = useParams();
-  const [favorite, setFavorite] = useState({});
+  console.log("signedInUserId", signedInUserId);
+  // const [favorite, setFavorite] = useState({});
   const classes = useStyles();
 
   //General
@@ -331,35 +332,35 @@ export const Store = props => {
     }
   }, []);
 
-  useEffect(() => {
-    if (themeId) {
-      const fav = {};
-      const response = async () => {
-        // get favorite theme to pass
-        await db
-          .collection("FavoritedThemes")
-          .where("signedInUserId", "==", `${signedInUserId}`)
-          .where("themeId", "==", `${themeId}`)
-          .get()
-          .then(snapshot => {
-            if (snapshot.empty) {
-              console.log("Nothing favorited yet");
-              return;
-            }
-            snapshot.forEach(doc => {
-              console.log(doc.id, "favorited=>", doc.data());
-              setFavorite({ ...doc.data(), favId: doc.id });
-            });
-          })
-          .catch(err => {
-            console.log("Error getting favorited themes", err);
-          });
-      };
-      response();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (themeId) {
+  //     const fav = {};
+  //     const response = async () => {
+  //       // get favorite theme to pass
+  //       await db
+  //         .collection("FavoritedThemes")
+  //         .where("signedInUserId", "==", `${signedInUserId}`)
+  //         .where("themeId", "==", `${themeId}`)
+  //         .get()
+  //         .then(snapshot => {
+  //           if (snapshot.empty) {
+  //             console.log("Nothing favorited yet");
+  //             return;
+  //           }
+  //           snapshot.forEach(doc => {
+  //             console.log(doc.id, "favorited=>", doc.data());
+  //             setFavorite({ ...doc.data(), favId: doc.id });
+  //           });
+  //         })
+  //         .catch(err => {
+  //           console.log("Error getting favorited themes", err);
+  //         });
+  //     };
+  //     response();
+  //   }
+  // }, []);
 
-  console.log("FAV IN STORE", favorite);
+  // console.log("FAV IN STORE", favorite);
   const customTheme = createMuiTheme(downloadTheme);
   return (
     <React.Fragment>
@@ -371,7 +372,6 @@ export const Store = props => {
         user={props.user}
         themeId={themeId}
         signedInUserId={signedInUserId}
-        favorite={favorite}
         //General
         color={color}
         setColor={setColor}
