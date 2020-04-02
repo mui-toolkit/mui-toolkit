@@ -27,8 +27,27 @@ import StarIcon from "@material-ui/icons/Star";
 import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
 import saveAs from "file-saver";
 
+const refined = themeObject => {
+  let refined = JSON.parse(JSON.stringify(themeObject));
+  console.log("refined", refined);
+  delete refined.bookmarked;
+  delete refined.bookmarksCount;
+  delete refined.createdAt;
+  delete refined.createdBy;
+  delete refined.lastEditAt;
+  delete refined.starsCount;
+  delete refined.themeId;
+  delete refined.userId;
+  delete refined.themeName;
+  delete refined.explore;
+
+  return refined;
+};
+
 const download = async theme => {
-  const fileToSave = new Blob([JSON.stringify(theme)], {
+  const refinedObj = await refined(theme);
+  console.log("refined", refinedObj);
+  const fileToSave = new Blob([JSON.stringify(refinedObj)], {
     type: "application/json",
     name: "theme.json"
   });
@@ -65,40 +84,42 @@ const headCells = [
   {
     id: "themeName",
     columnAlignment: true,
-    disablePadding: true,
-    label: "Theme Name",
-    minWidth: 170
+    disablePadding: false,
+    label: "Theme Name"
   },
   {
     id: "lastEditAt",
-    columnAlignment: false,
-    disablePadding: true,
-    label: "Date edited",
-    minWidth: 100
+    columnAlignment: true,
+    disablePadding: false,
+    label: "Date edited"
   },
 
   {
     id: "primaryPalette",
     label: "Primary Palette",
-    columnAlignment: false,
+    columnAlignment: true,
     disablePadding: false,
-    minWidth: 80,
     format: value => value.toLocaleString()
   },
   {
     id: "secondaryPalette",
     label: "Secondary Palette",
-    columnAlignment: false,
+    columnAlignment: true,
     disablePadding: false,
-    minWidth: 80,
     format: value => value.toLocaleString()
   },
   {
     id: "typography",
     label: "Font Family",
-    columnAlignment: false,
+    columnAlignment: true,
     disablePadding: false,
-    minWidth: 100,
+    format: value => value.toFixed(2)
+  },
+  {
+    id: "actions",
+    label: "Actions",
+    columnAlignment: true,
+    disablePadding: false,
     format: value => value.toFixed(2)
   }
 ];
@@ -146,26 +167,9 @@ EnhancedTableHead.propTypes = {
 };
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%"
-  },
   paper: {
     width: "100%",
-    marginBottom: theme.spacing(2)
-  },
-  table: {
-    minWidth: 850
-  },
-  visuallyHidden: {
-    border: 0,
-    clip: "rect(0 0 0 0)",
-    height: 1,
-    margin: -1,
-    overflow: "hidden",
-    padding: 0,
-    position: "absolute",
-    top: 20,
-    width: 1
+    padding: "1em"
   }
 }));
 
@@ -191,6 +195,7 @@ export default function ThemesTable({
     favId: themeObject.favId,
     downloadTheme: { ...themeObject }
   }));
+  console.log("themeObject", rows[0].downloadTheme);
 
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
@@ -305,7 +310,7 @@ export default function ThemesTable({
       ;
     </div>
   ) : (
-    <div className={classes.root}>
+    <div>
       <Paper className={classes.paper}>
         <Typography className={classes.title} variant="h6" id="tableTitle">
           {tableTitle}
@@ -323,6 +328,7 @@ export default function ThemesTable({
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              style={{ align: "right" }}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
@@ -346,12 +352,10 @@ export default function ThemesTable({
                       >
                         {row.themeName}
                       </TableCell>
-                      <TableCell align="right">{row.lastEditAt}</TableCell>
-                      <TableCell align="right">{row.primaryPalette}</TableCell>
-                      <TableCell align="right">
-                        {row.secondaryPalette}
-                      </TableCell>
-                      <TableCell align="right">{row.typography}</TableCell>
+                      <TableCell align="left">{row.lastEditAt}</TableCell>
+                      <TableCell align="left">{row.primaryPalette}</TableCell>
+                      <TableCell align="left">{row.secondaryPalette}</TableCell>
+                      <TableCell align="left">{row.typography}</TableCell>
 
                       <Tooltip title="Preview Theme">
                         <IconButton
@@ -372,7 +376,6 @@ export default function ThemesTable({
                             <SystemUpdateAltIcon
                               style={{ marginLeft: "5px" }}
                             />
-                            >{/* <Download downloadTheme={row} /> */}
                           </IconButton>
                         </Tooltip>
                       ) : (
@@ -437,7 +440,6 @@ export default function ThemesTable({
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
