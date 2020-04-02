@@ -85,7 +85,13 @@ export default function Header(props) {
                 className={classes.tab}
                 component={Link}
                 to='/design'
-                label='Start'
+                label='Create'
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to='/explore'
+                label='Explore'
               />
               <Tab
                 className={classes.tab}
@@ -131,7 +137,13 @@ export default function Header(props) {
               className={classes.tab}
               component={Link}
               to='/design'
-              label='Start'
+              label='Create'
+            />
+            <Tab
+              className={classes.tab}
+              component={Link}
+              to='/explore'
+              label='Explore'
             />
             {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
@@ -151,9 +163,8 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              to="/"
-              label="Logout"
-
+              to='/'
+              label='Logout'
               onClick={handleClick}
             />
           </Grid>
