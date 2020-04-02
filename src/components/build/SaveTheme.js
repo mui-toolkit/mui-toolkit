@@ -49,15 +49,15 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
   let history = useHistory();
 
   const handleClickOpen = () => {
-    if (
-      downloadTheme.userId !== signedInUserId ||
-      downloadTheme.userId !== "guest"
-    ) {
-      console.log("someone elses theme");
-      setOpen(true);
-    }
+    // if (
+    //   downloadTheme.userId !== signedInUserId ||
+    //   downloadTheme.userId !== "guest"
+    // ) {
+    //   console.log("someone elses theme");
+    //   setOpen(true);
+    // }
     // need to test if coming from themes table
-    else if (!user) {
+    if (!user) {
       setOpen(false);
       setMessage("Theme Edited and Saved");
       setSnackOpen(true);

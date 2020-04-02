@@ -297,7 +297,7 @@ export default function Dashboard({ user }) {
           >
             mymui.
           </Button>
-          <Tooltip title="your stars">
+          <IconButton title="your stars">
             <Badge
               badgeContent={themes.reduce(
                 (acc, themeObj) => acc + Number(themeObj.starsCount),
@@ -307,7 +307,7 @@ export default function Dashboard({ user }) {
             >
               <StarIcon />
             </Badge>
-          </Tooltip>
+          </IconButton>
           <Avatar>
             {foundUser
               ? `${foundUser.firstName[0]}${foundUser.lastName[0]}`
