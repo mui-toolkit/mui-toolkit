@@ -93,11 +93,11 @@ export const ColorGenerator = props => {
     console.log('COLORS LENGTH', colors.length);
 
     const palette = generate(
-      colors[Math.floor(Math.random() * Math.floor(33))],
+      colors[Math.floor(Math.random() * Math.floor(37))],
     );
 
     const secondPalette = generate(
-      colors[Math.floor(Math.random() * Math.floor(33))],
+      colors[Math.floor(Math.random() * Math.floor(37))],
     );
 
     let randomColorArray = [];
