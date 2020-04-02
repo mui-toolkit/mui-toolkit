@@ -294,7 +294,16 @@ export default function Dashboard({ user }) {
           </IconButton>
           <Button
             component={Link}
-            to="/"
+            to={{
+              pathname: "/",
+              state: {
+                themes,
+                starredThemes,
+                bookmarkedThemes,
+                signedInUserId,
+                foundUser
+              }
+            }}
             disableRipple
             style={{
               fontFamily: "Roboto",
