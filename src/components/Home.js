@@ -4,7 +4,7 @@ import { Grid, Button } from '@material-ui/core';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { Link } from 'react-router-dom';
-import { unaryExpression } from '@babel/types';
+import StartDialog from './StartDialog';
 
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -19,6 +19,17 @@ function onAuthStateChange(callback) {
 export default function Home() {
   const [user, setUser] = useState({ loggedIn: false });
   const [error, setError] = useState('');
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
     // return async () => {
@@ -99,8 +110,7 @@ export default function Home() {
             </Grid>
             <Grid item>
               <Button
-                component={Link}
-                to='/design'
+                onClick={handleClickOpen}
                 disableRipple
                 variant='contained'
                 style={{
@@ -119,6 +129,7 @@ export default function Home() {
           </Grid>
         </Grid>
       </div>
+      <StartDialog handleClose={handleClose} open={open} />
     </div>
   );
 }
