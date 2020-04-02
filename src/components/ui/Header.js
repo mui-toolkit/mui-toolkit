@@ -14,28 +14,28 @@ import StartDialog from '../StartDialog';
 
 const useStyles = makeStyles(theme => ({
   button: {
-    marginRight: '20px',
-    '&:hover': {
-      backgroundColor: 'transparent',
+    marginRight: "20px",
+    "&:hover": {
+      backgroundColor: "transparent"
     },
     fontWeight: 400,
-    textTransform: 'none',
+    textTransform: "none",
     borderRadius: 5,
     height: 46,
-    padding: 10,
+    padding: 10
   },
   tabContainer: {
-    marginLeft: 'auto',
+    marginLeft: "auto"
   },
   tab: {
-    textTransform: 'none',
+    textTransform: "none",
     fontWeight: 400,
-    fontSize: '1rem',
+    fontSize: "1rem",
     minWidth: 10,
-    marginLeft: '25px',
-    color: '#000',
-    fontFamily: 'Roboto',
-  },
+    marginLeft: "25px",
+    color: "#000",
+    fontFamily: "Roboto"
+  }
 }));
 
 export default function Header(props) {
@@ -57,23 +57,23 @@ export default function Header(props) {
       .auth()
       .signOut()
       .then(() => {
-        console.log('user signed out', props);
+        console.log("user signed out", props);
       });
   };
   if (!props.user.loggedIn) {
     return (
       <React.Fragment>
-        <AppBar position='fixed' style={{ background: '#fff' }}>
+        <AppBar position="fixed" style={{ background: "#fff" }}>
           <Toolbar>
             <Button
               component={Link}
-              to='/'
+              to="/"
               disableRipple
               style={{
-                fontFamily: 'Roboto',
+                fontFamily: "Roboto",
                 fontWeight: 200,
                 fontSize: 28,
-                color: '#000',
+                color: "#000"
               }}
               className={classes.button}
             >
@@ -90,18 +90,46 @@ export default function Header(props) {
                 className={classes.tab}
                 onClick={handleClickOpen}
                 label='Create'
+
               />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to='/explore'
-                label='Explore'
+                to={{
+                  pathname: "/explore",
+                  state: {
+                    themes: [
+                      {
+                        themeId: 0,
+                        themeName:
+                          "You need to login to have access to these features"
+                      }
+                    ],
+                    starredThemes: [
+                      {
+                        themeId: 0,
+                        themeName:
+                          "You need to login to have access to these features"
+                      }
+                    ],
+                    bookmarkedThemes: [
+                      {
+                        themeId: 0,
+                        themeName:
+                          "You need to login to have access to these features"
+                      }
+                    ],
+                    signedInUserId: "guest",
+                    foundUser: { username: "guest" }
+                  }
+                }}
+                label="Explore"
               />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to='/signup'
-                label='Signup'
+                to="/signup"
+                label="Signup"
               />
             </Tabs>
             <Login />
@@ -114,17 +142,17 @@ export default function Header(props) {
   }
   return (
     <React.Fragment>
-      <AppBar position='fixed' style={{ background: '#fff' }}>
+      <AppBar position="fixed" style={{ background: "#fff" }}>
         <Toolbar>
           <Button
             component={Link}
-            to='/'
+            to="/"
             disableRipple
             style={{
-              fontFamily: 'Roboto',
+              fontFamily: "Roboto",
               fontWeight: 200,
               fontSize: 28,
-              color: '#000',
+              color: "#000"
             }}
             className={classes.button}
           >
@@ -134,8 +162,8 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              to='/learn'
-              label='Learn'
+              to="/learn"
+              label="Learn"
             />
             <Tab
               className={classes.tab}
@@ -145,29 +173,29 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               component={Link}
-              to='/explore'
-              label='Explore'
+              to="/explore"
+              label="Explore"
             />
             {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
               component={Link}
-              to='/dashboard'
-              label='Dashboard'
+              to="/dashboard"
+              label="Dashboard"
             />
             {props.user.admin && (
               <Tab
                 className={classes.tab}
                 component={Link}
-                to='/admin'
-                label='Admin'
+                to="/admin"
+                label="Admin"
               />
             )}
             <Tab
               className={classes.tab}
               component={Link}
-              to='/'
-              label='Logout'
+              to="/"
+              label="Logout"
               onClick={handleClick}
             />
           </Grid>

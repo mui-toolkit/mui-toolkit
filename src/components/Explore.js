@@ -32,9 +32,37 @@ const useStyles = makeStyles({
 export default function Explore() {
   const classes = useStyles();
   let location = useLocation();
+  if (!location.state) {
+    location.state = {
+      themes: [
+        {
+          themeId: 0,
+          themeName: "You need to login to have access to these features"
+        }
+      ],
+      starredThemes: [
+        {
+          themeId: 0,
+          themeName: "You need to login to have access to these features"
+        }
+      ],
+      bookmarkedThemes: [
+        {
+          themeId: 0,
+          themeName: "You need to login to have access to these features"
+        }
+      ],
+      signedInUserId: "guest",
+      foundUser: { username: "guest" }
+    };
+  }
+  console.log("Explore -> location", location);
   let savedThemes = location.state.themes.slice();
+  console.log("Explore -> savedThemes", savedThemes);
   let myStarredThemes = location.state.starredThemes;
+  console.log("Explore -> myStarredThemes", myStarredThemes);
   let myBookmarkedThemes = location.state.bookmarkedThemes;
+  console.log("Explore -> myBookmarkedThemes", myBookmarkedThemes);
   const signedInUserId = location.state.signedInUserId;
   let foundUser = location.state.foundUser;
 
@@ -149,7 +177,7 @@ export default function Explore() {
           </Grid>
           {selectedIndex === 0 && (
             <ExploreTable
-              themesToMap={exploreThemes}
+              themesToMap={exploreThemes.reverse()}
               signedInUserId={signedInUserId}
             />
           )}

@@ -1,155 +1,155 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import HomeIcon from '@material-ui/icons/Home';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import FaceIcon from '@material-ui/icons/Face';
-import PaletteIcon from '@material-ui/icons/Palette';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import PostAddIcon from '@material-ui/icons/PostAdd';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import StarIcon from '@material-ui/icons/Star';
-import ThemesTable from './ThemesTable';
-import UserProfile from './UserProfile';
-import firebase from 'firebase';
-import 'firebase/auth';
-import { db } from '../config/firebase';
-import Button from '@material-ui/core/Button';
-import ImageSearchIcon from '@material-ui/icons/ImageSearch';
-import BookmarksIcon from '@material-ui/icons/Bookmarks';
-import StarsIcon from '@material-ui/icons/Stars';
-import Avatar from '@material-ui/core/Avatar';
-import Tooltip from '@material-ui/core/Tooltip';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Drawer from "@material-ui/core/Drawer";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import HomeIcon from "@material-ui/icons/Home";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import FaceIcon from "@material-ui/icons/Face";
+import PaletteIcon from "@material-ui/icons/Palette";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import PostAddIcon from "@material-ui/icons/PostAdd";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import StarIcon from "@material-ui/icons/Star";
+import ThemesTable from "./ThemesTable";
+import UserProfile from "./UserProfile";
+import firebase from "firebase";
+import "firebase/auth";
+import { db } from "../config/firebase";
+import Button from "@material-ui/core/Button";
+import ImageSearchIcon from "@material-ui/icons/ImageSearch";
+import BookmarksIcon from "@material-ui/icons/Bookmarks";
+import StarsIcon from "@material-ui/icons/Stars";
+import Avatar from "@material-ui/core/Avatar";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    display: "flex"
   },
   toolbar: {
-    paddingRight: 24,
+    paddingRight: 24
   },
   toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 8px",
+    ...theme.mixins.toolbar
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+      duration: theme.transitions.duration.leavingScreen
+    })
   },
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 36
   },
   menuButtonHidden: {
-    display: 'none',
+    display: "none"
   },
   title: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
+    position: "relative",
+    whiteSpace: "nowrap",
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
+    overflowX: "hidden",
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
+    [theme.breakpoints.up("sm")]: {
+      width: theme.spacing(9)
+    }
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
+    height: "100vh",
+    overflow: "auto"
   },
   container: {
-    paddingTop: '1em',
-    paddingBottom: theme.spacing(4),
+    paddingTop: "1em",
+    paddingBottom: theme.spacing(4)
   },
   paper: {
     padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-    maxHeight: '80vh',
-    width: '80vw',
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column",
+    maxHeight: "80vh",
+    width: "80vw"
   },
   fixedHeight: {
-    maxHeight: '80vh',
+    maxHeight: "80vh"
   },
   button: {
-    marginRight: '20px',
-    '&:hover': {
-      backgroundColor: 'transparent',
+    marginRight: "20px",
+    "&:hover": {
+      backgroundColor: "transparent"
     },
     fontWeight: 400,
-    textTransform: 'none',
+    textTransform: "none",
     borderRadius: 5,
     height: 46,
-    padding: 10,
-  },
+    padding: 10
+  }
 }));
 
 export default function Dashboard({ user }) {
   // console.log("Dashboard -> user", user);
   // const userName = JSON.stringify(user.email).slice(0, user.email.indexOf("@"));
-  // console.log("Dashboard -> userName", userName);
+
   const signedInUserId = user.uid;
   const [themes, setThemes] = useState([]);
   const [starredThemes, setStarredThemes] = useState([]);
   const [bookmarkedThemes, setBookmarkedThemes] = useState([]);
-  const [foundUser, setFoundUser] = useState('');
+  const [foundUser, setFoundUser] = useState("");
 
   useEffect(() => {
     const response = async () => {
       await db
-        .collection('Users')
+        .collection("Users")
         .doc(`${user.uid}`)
         .get()
         .then(async doc => {
           if (!doc.exists) {
-            console.log('No such document!');
+            console.log("No such document!");
           } else {
             await setFoundUser(doc.data());
           }
@@ -161,31 +161,31 @@ export default function Dashboard({ user }) {
     response();
   }, []);
   //saved themes
-  console.log('found user between useEffects', foundUser);
+  console.log("found user between useEffects", foundUser);
   useEffect(() => {
     const userThemes = [];
     const unsub = async () => {
       await db
-        .collection('CustomizedThemes')
-        .where('userId', '==', `${user.uid}`)
+        .collection("CustomizedThemes")
+        .where("userId", "==", `${user.uid}`)
         .get()
         .then(snapshot => {
           if (snapshot.empty) {
-            console.log('No matching documents.');
+            console.log("No matching documents.");
             return;
           }
           snapshot.forEach(theme => {
-            console.log(theme.id, '=>', theme.data());
+            console.log(theme.id, "=>", theme.data());
             userThemes.push({
               ...theme.data(),
               themeId: theme.id,
-              userName: foundUser.username,
+              userName: foundUser.username
             });
             setThemes([...userThemes]);
           });
         })
         .catch(err => {
-          console.log('Error getting documents', err);
+          console.log("Error getting documents", err);
         });
     };
     unsub();
@@ -198,16 +198,16 @@ export default function Dashboard({ user }) {
     const unsubscribe = async () => {
       //bookmarked
       await db
-        .collection('Users')
+        .collection("Users")
         .doc(`${user.uid}`)
         .get()
         .then(async doc => {
           if (!doc.exists) {
-            console.log('No such document!');
+            console.log("No such document!");
           } else {
             doc.data().bookmarked.forEach(async item => {
               let query = await db
-                .collection('CustomizedThemes')
+                .collection("CustomizedThemes")
                 .doc(`${item}`)
                 .get()
                 .then(themedoc => {
@@ -217,22 +217,22 @@ export default function Dashboard({ user }) {
           }
         })
         .catch(err => {
-          console.log('Error getting document', err);
+          console.log("Error getting document", err);
         });
       setBookmarkedThemes(bookmarked);
 
       //starred
       await db
-        .collection('Users')
+        .collection("Users")
         .doc(`${user.uid}`)
         .get()
         .then(async doc => {
           if (!doc.exists) {
-            console.log('No such document!');
+            console.log("No such document!");
           } else {
             doc.data().starred.forEach(async item => {
               let query = await db
-                .collection('CustomizedThemes')
+                .collection("CustomizedThemes")
                 .doc(`${item}`)
                 .get()
                 .then(themedoc => {
@@ -242,16 +242,16 @@ export default function Dashboard({ user }) {
           }
         })
         .catch(err => {
-          console.log('Error getting document', err);
+          console.log("Error getting document", err);
         });
       setStarredThemes(starred);
     };
     unsubscribe();
   }, []);
-  console.log('DASHBOARD FOUNDUSER', foundUser, signedInUserId);
-  console.log('USERS SAVED THEMES', themes);
-  console.log('STARRED', starredThemes);
-  console.log('BOOKMARKED', bookmarkedThemes);
+  console.log("DASHBOARD FOUNDUSER", foundUser, signedInUserId);
+  console.log("USERS SAVED THEMES", themes);
+  console.log("STARRED", starredThemes);
+  console.log("BOOKMARKED", bookmarkedThemes);
 
   const classes = useStyles();
 
@@ -273,33 +273,33 @@ export default function Dashboard({ user }) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position='fixed'
+        position="fixed"
         className={clsx(classes.appBar, open && classes.appBarShift)}
-        style={{ background: '#fff' }}
+        style={{ background: "#fff" }}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
-            edge='start'
-            color='inherit'
-            aria-label='open drawer'
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
             onClick={handleDrawerOpen}
             className={clsx(
               classes.menuButton,
-              open && classes.menuButtonHidden,
+              open && classes.menuButtonHidden
             )}
-            style={{ color: '#000' }}
+            style={{ color: "#000" }}
           >
             <MenuIcon />
           </IconButton>
           <Button
             component={Link}
-            to='/'
+            to="/"
             disableRipple
             style={{
-              fontFamily: 'Roboto',
+              fontFamily: "Roboto",
               fontWeight: 200,
               fontSize: 28,
-              color: '#000',
+              color: "#000"
             }}
             className={classes.button}
           >
@@ -308,16 +308,16 @@ export default function Dashboard({ user }) {
           <Avatar>
             {foundUser
               ? `${foundUser.firstName[0]}${foundUser.lastName[0]}`
-              : ''}
+              : ""}
           </Avatar>
 
-          <IconButton title='your stars'>
+          <IconButton title="your stars">
             <Badge
               badgeContent={themes.reduce(
                 (acc, themeObj) => acc + Number(themeObj.starsCount),
-                0,
+                0
               )}
-              color='secondary'
+              color="secondary"
             >
               <StarIcon />
             </Badge>
@@ -325,9 +325,9 @@ export default function Dashboard({ user }) {
         </Toolbar>
       </AppBar>
       <Drawer
-        variant='permanent'
+        variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
         }}
         open={open}
       >
@@ -346,7 +346,7 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary='Dashboard' />
+            <ListItemText primary="Dashboard" />
           </ListItem>
           <ListItem
             button
@@ -356,9 +356,9 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <FaceIcon />
             </ListItemIcon>
-            <ListItemText primary='User Profile' />
+            <ListItemText primary="User Profile" />
           </ListItem>
-          <Divider variant='inset' />
+          <Divider variant="inset" />
           <ListItem
             button
             selected={selectedIndex === 2}
@@ -367,7 +367,7 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <PaletteIcon />
             </ListItemIcon>
-            <ListItemText primary='My Saved Themes' />
+            <ListItemText primary="My Saved Themes" />
           </ListItem>
           <ListItem
             button
@@ -377,7 +377,7 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <BookmarksIcon />
             </ListItemIcon>
-            <ListItemText primary='Bookmarked Themes' />
+            <ListItemText primary="Bookmarked Themes" />
           </ListItem>
           <ListItem
             button
@@ -387,39 +387,39 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <StarsIcon />
             </ListItemIcon>
-            <ListItemText primary='Starred Themes' />
+            <ListItemText primary="Starred Themes" />
           </ListItem>
-          <Divider variant='inset' />
+          <Divider variant="inset" />
           <ListItem
             button
             component={Link}
             to={{
-              pathname: '/explore',
+              pathname: "/explore",
               state: {
                 themes,
                 starredThemes,
                 bookmarkedThemes,
                 signedInUserId,
-                foundUser,
-              },
+                foundUser
+              }
             }}
           >
             <ListItemIcon>
               <ImageSearchIcon />
             </ListItemIcon>
-            <ListItemText primary='Explore' />
+            <ListItemText primary="Explore" />
           </ListItem>
-          <ListItem button component={Link} to='/design'>
+          <ListItem button component={Link} to="/design">
             <ListItemIcon>
               <PostAddIcon />
             </ListItemIcon>
-            <ListItemText primary='Add New Project' />
+            <ListItemText primary="Add New Project" />
           </ListItem>
-          <ListItem button component={Link} to='/'>
+          <ListItem button component={Link} to="/">
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary='Home' />
+            <ListItemText primary="Home" />
           </ListItem>
         </div>
         {/* <Divider />
@@ -438,29 +438,44 @@ export default function Dashboard({ user }) {
                 <ThemesTable
                   setThemes={setThemes}
                   themes={themes}
-                  tableTitle={'Saved Themes'}
+                  tableTitle={"Saved Themes"}
                   signedInUserId={signedInUserId}
-                  table={'M'}
+                  table={"M"}
+                  signedInUserId={signedInUserId}
+                  foundUser={foundUser}
+                  linkedThemes={themes}
+                  linkedStarredThemes={starredThemes}
+                  linkedBookmarkedThemes={bookmarkedThemes}
                 />
               )}
               {selectedIndex === 3 && (
                 <ThemesTable
                   setThemes={setThemes}
                   themes={bookmarkedThemes}
-                  tableTitle={'Bookmarked Themes'}
+                  tableTitle={"Bookmarked Themes"}
                   signedInUserId={signedInUserId}
-                  table={'B'}
+                  table={"B"}
                   setBookmarkedThemes={setBookmarkedThemes}
+                  signedInUserId={signedInUserId}
+                  foundUser={foundUser}
+                  linkedThemes={themes}
+                  linkedStarredThemes={starredThemes}
+                  linkedBookmarkedThemes={bookmarkedThemes}
                 />
               )}
               {selectedIndex === 4 && (
                 <ThemesTable
                   setThemes={setThemes}
                   themes={starredThemes}
-                  tableTitle={'Favorite Themes'}
+                  tableTitle={"Favorite Themes"}
                   signedInUserId={signedInUserId}
-                  table={'S'}
+                  table={"S"}
                   setStarredThemes={setStarredThemes}
+                  signedInUserId={signedInUserId}
+                  foundUser={foundUser}
+                  linkedThemes={themes}
+                  linkedStarredThemes={starredThemes}
+                  linkedBookmarkedThemes={bookmarkedThemes}
                 />
               )}
             </Grid>
