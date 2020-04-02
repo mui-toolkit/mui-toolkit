@@ -18,6 +18,7 @@ import StarIcon from "@material-ui/icons/Star";
 import firebase from "firebase";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import HomeIcon from "@material-ui/icons/Home";
 import { db } from "../config/firebase";
 
 const useStyles = makeStyles({
@@ -51,38 +52,40 @@ function ExploreTable({ signedInUserId, themesToMap }) {
   const [stars, setStars] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = async () => {
-      await db
-        .collection("Users")
-        .doc(`${signedInUserId}`)
-        .get()
-        .then(async doc => {
-          if (doc.data().bookmarked) {
-            setBookmarks(doc.data().bookmarked);
-          } else {
-            setBookmarks([]);
-          }
-        })
-        .catch(err => {
-          console.error(err);
-        });
+    if (signedInUserId !== "guest") {
+      const unsubscribe = async () => {
+        await db
+          .collection("Users")
+          .doc(`${signedInUserId}`)
+          .get()
+          .then(async doc => {
+            if (doc.data().bookmarked) {
+              setBookmarks(doc.data().bookmarked);
+            } else {
+              setBookmarks([]);
+            }
+          })
+          .catch(err => {
+            console.error(err);
+          });
 
-      await db
-        .collection("Users")
-        .doc(`${signedInUserId}`)
-        .get()
-        .then(async doc => {
-          if (doc.data().starred) {
-            setStars(doc.data().starred);
-          } else {
-            setStars([]);
-          }
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    };
-    unsubscribe();
+        await db
+          .collection("Users")
+          .doc(`${signedInUserId}`)
+          .get()
+          .then(async doc => {
+            if (doc.data().starred) {
+              setStars(doc.data().starred);
+            } else {
+              setStars([]);
+            }
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      };
+      unsubscribe();
+    }
   }, []);
 
   const handleClick = (event, theme) => {
@@ -221,44 +224,55 @@ function ExploreTable({ signedInUserId, themesToMap }) {
             }}
           >
             <Paper style={{ padding: "1em" }}>
-              <Tooltip title="Star">
-                <IconButton
-                  aria-label="star"
-                  onClick={() => handleFavStar(selected.themeId)}
-                >
-                  <Badge color="secondary">
-                    {stars.includes(selected.themeId) || stars.length === 0 ? (
-                      <StarIcon />
-                    ) : (
-                      <StarBorderIcon />
-                    )}
-                  </Badge>
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Preview Theme">
-                <IconButton
-                  component={Link}
-                  to={`/webpreview/${selected.themeId}`}
-                  target="_blank"
-                >
-                  <VisibilityIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Bookmark">
-                <IconButton
-                  aria-label="bookmark"
-                  onClick={() => handleFavBookmark(selected.themeId)}
-                >
-                  <Badge color="secondary">
-                    {bookmarks.includes(selected.themeId) ||
-                    bookmarks.length === 0 ? (
-                      <BookmarkIcon />
-                    ) : (
-                      <BookmarkBorderIcon />
-                    )}
-                  </Badge>
-                </IconButton>
-              </Tooltip>
+              {signedInUserId !== "guest" ? (
+                <Grid>
+                  <Tooltip title="Star">
+                    <IconButton
+                      aria-label="star"
+                      onClick={() => handleFavStar(selected.themeId)}
+                    >
+                      <Badge color="secondary">
+                        {stars.includes(selected.themeId) ||
+                        stars.length === 0 ? (
+                          <StarIcon />
+                        ) : (
+                          <StarBorderIcon />
+                        )}
+                      </Badge>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Preview Theme">
+                    <IconButton
+                      component={Link}
+                      to={`/webpreview/${selected.themeId}`}
+                      target="_blank"
+                    >
+                      <VisibilityIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Bookmark">
+                    <IconButton
+                      aria-label="bookmark"
+                      onClick={() => handleFavBookmark(selected.themeId)}
+                    >
+                      <Badge color="secondary">
+                        {bookmarks.includes(selected.themeId) ||
+                        bookmarks.length === 0 ? (
+                          <BookmarkIcon />
+                        ) : (
+                          <BookmarkBorderIcon />
+                        )}
+                      </Badge>
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+              ) : (
+                <Tooltip title="Access to extra features requires login">
+                  <IconButton component={Link} to={`/`}>
+                    <HomeIcon />
+                  </IconButton>
+                </Tooltip>
+              )}
             </Paper>
           </Popover>
         </Grid>

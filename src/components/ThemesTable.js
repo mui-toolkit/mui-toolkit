@@ -178,7 +178,11 @@ export default function ThemesTable({
   signedInUserId,
   table,
   setBookmarkedThemes,
-  setStarredThemes
+  setStarredThemes,
+  foundUser,
+  linkedThemes,
+  linkedStarredThemes,
+  linkedBookmarkedThemes
 }) {
   const favorite =
     table === "B"
@@ -310,7 +314,18 @@ export default function ThemesTable({
           <h2>Build your first professional Material UI Project!</h2>
         </Link>
       ) : (
-        <Link to="/explore">
+        <Link
+          to={{
+            pathname: "/explore",
+            state: {
+              themes: linkedThemes,
+              starredThemes: linkedStarredThemes,
+              bookmarkedThemes: linkedBookmarkedThemes,
+              signedInUserId,
+              foundUser
+            }
+          }}
+        >
           <h2>{`${favorite}`}</h2>
         </Link>
       )}
