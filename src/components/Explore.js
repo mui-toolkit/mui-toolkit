@@ -77,7 +77,6 @@ export default function Explore() {
     themeObj.trending = themeObj.bookmarksCount + themeObj.starsCount;
   });
   // *************
-  console.log("explorable themes================>>>>>", exploreThemes);
 
   return (
     <React.Fragment>

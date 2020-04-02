@@ -35,6 +35,7 @@ import ImageSearchIcon from "@material-ui/icons/ImageSearch";
 import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import StarsIcon from "@material-ui/icons/Stars";
 import Avatar from "@material-ui/core/Avatar";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const drawerWidth = 240;
 
@@ -136,8 +137,6 @@ export default function Dashboard({ user }) {
   const [starredThemes, setStarredThemes] = useState([]);
   const [bookmarkedThemes, setBookmarkedThemes] = useState([]);
   const [foundUser, setFoundUser] = useState("");
-  const [stars, setStars] = useState([]);
-  const userStars = 0;
 
   useEffect(() => {
     const response = async () => {
@@ -262,28 +261,6 @@ export default function Dashboard({ user }) {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const updateStars = async () => {
-    // users total star count
-    var starredArr = [];
-    await db
-      .collection("FavoritedThemes")
-      .where("createdByUserId", "==", `${user.uid}`)
-      .get()
-      .then(snapshot => {
-        if (snapshot.empty) {
-          console.log("Nothing starred yet");
-          return;
-        }
-        snapshot.forEach(doc => {
-          console.log(doc.id, "starred=>", doc.data().starsCount);
-          starredArr.push(doc.data().starsCount);
-          setStars(starredArr);
-        });
-      })
-      .catch(err => {
-        console.log("Error getting starred themes", err);
-      });
-  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -320,9 +297,12 @@ export default function Dashboard({ user }) {
           >
             mymui.
           </Button>
-          <IconButton syle={{ color: "#000" }} onClick={() => updateStars()}>
+          <IconButton title="your stars">
             <Badge
-              badgeContent={stars.reduce((acc, x) => acc + x, 0)}
+              badgeContent={themes.reduce(
+                (acc, themeObj) => acc + Number(themeObj.starsCount),
+                0
+              )}
               color="secondary"
             >
               <StarIcon />
