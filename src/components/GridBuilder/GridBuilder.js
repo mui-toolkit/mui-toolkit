@@ -6,28 +6,32 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DragNDrop from './DragNDrop';
 import { cloneDeep } from 'lodash';
 import { ChangeSize } from './ChangeSize';
+import { GridContainerPosition } from './GridContainerPosition';
 
 // imgs/12columns.jpg
 
 const useStyles = makeStyles({
   container: {
-    padding: '5em 2em 5em 2em',
+    padding: '5em 0 5em 0',
   },
   paper: {
     padding: '1em',
-    height: '100vh',
+    // height: '100vh',
   },
   paperGrid: {
     // height: '100vh',
     backgroundImage: `url(${twelvecolumns})`,
     backgroundSize: '8.34%',
     border: '2px dashed #da0000',
+    position: '-webkit-sticky',
+    position: 'sticky',
+    zIndex: 1200,
+    top: '6em',
   },
   box: {
     border: '2px solid #818181',
     height: '100px',
     padding: '3em 0 5em 0',
-    // width: '100%',
   },
   containerStyle: {
     border: '2px dashed #da0000',
@@ -46,6 +50,11 @@ export default function GridBuilder() {
   const [size, setSize] = useState(12);
   const [letter, setLetter] = useState(101);
 
+  //position state
+  const [direction, setDirection] = useState('row');
+  const [justify, setJustify] = useState('flex-start');
+  const [alignItems, setAlignItems] = useState('flex-start');
+
   const data = [
     {
       cols: 9,
@@ -59,7 +68,7 @@ export default function GridBuilder() {
     {
       cols: 3,
       paper: classes.paper,
-      items: [{ id: 'd', cols: 12, color: '#be00f8' }],
+      items: [{ id: 'd', cols: 12, color: '#f8eb00' }],
     },
   ];
 
@@ -109,7 +118,7 @@ export default function GridBuilder() {
         if (newList[1].items.length === 0) {
           setLetter(letter + 1);
           newList[1].items = [
-            { id: String.fromCharCode(letter), cols: 12, color: '#f8eb00' },
+            { id: String.fromCharCode(letter), cols: 12, color: '#be00f8' },
           ];
         }
         return newList;
@@ -169,6 +178,20 @@ export default function GridBuilder() {
     });
   };
 
+  const gridCodeBuilder = () => {
+    let numberOfGridItems = list[0].items.length;
+
+    let items = list[0].items;
+
+    let gridItemMap = items.map(
+      item => `<Grid item xs={${item.cols}} > ${item.id} </Grid>`,
+    );
+
+    console.log('GRID ITEMS ========', gridItemMap);
+
+    return gridItemMap.join('\n');
+  };
+
   return (
     <React.Fragment>
       <Grid
@@ -190,7 +213,13 @@ export default function GridBuilder() {
             }
           >
             <Paper className={group.paper}>
-              <Grid container direction='row' justify='flex-end'>
+              <Grid
+                container
+                direction='row'
+                direction={grpI ? null : `${direction}`}
+                justify={grpI ? 'center' : `${justify}`}
+                alignItems={grpI ? null : `${alignItems}`}
+              >
                 {group.items.map((item, itemI) => (
                   <Grid
                     item
@@ -219,28 +248,60 @@ export default function GridBuilder() {
                       justify='center'
                       alignItems='center'
                     >
-                      <Grid item>
-                        <Typography
-                          style={{ marginRight: '5px', fontWeight: 800 }}
-                        >{`${item.id} = `}</Typography>
-                      </Grid>
-                      <Grid item>
-                        <ChangeSize
-                          handleChangeSize={handleChangeSize}
-                          size={size}
-                          setSize={setSize}
-                          grpI={grpI}
-                          itemI={itemI}
-                          list={list}
-                        />
-                      </Grid>
-                      <Typography item>column(s)</Typography>
+                      {grpI ? (
+                        <React.Fragment>
+                          <Typography style={{ fontWeight: 800, fontSize: 23 }}>
+                            Drag and Drop Me!
+                          </Typography>
+                          <Typography
+                            style={{
+                              fontWeight: 500,
+                            }}
+                          >
+                            {`${item.id} = 12 columns`}{' '}
+                          </Typography>
+                        </React.Fragment>
+                      ) : (
+                        <React.Fragment>
+                          <Grid item>
+                            <Typography
+                              style={{ marginRight: '5px', fontWeight: 800 }}
+                            >{`${item.id} = `}</Typography>
+                          </Grid>
+                          <Grid item>
+                            <ChangeSize
+                              handleChangeSize={handleChangeSize}
+                              size={size}
+                              setSize={setSize}
+                              grpI={grpI}
+                              itemI={itemI}
+                              list={list}
+                            />
+                          </Grid>
+                          <Typography item>column(s)</Typography>
+                        </React.Fragment>
+                      )}
                     </Grid>
-                    <Button onClick={e => handleDelete(e, { grpI, itemI })}>
-                      <DeleteForeverIcon />
-                    </Button>
+                    {grpI ? null : (
+                      <Button onClick={e => handleDelete(e, { grpI, itemI })}>
+                        <DeleteForeverIcon />
+                      </Button>
+                    )}
                   </Grid>
                 ))}
+                {grpI === 1 ? (
+                  <Grid item>
+                    <pre>{`<Grid container \n direction={${direction}} \n justify={${justify}} \n alignItems={${alignItems}}> \n ${gridCodeBuilder()} \n </Grid>`}</pre>
+                    <GridContainerPosition
+                      direction={direction}
+                      setDirection={setDirection}
+                      justify={justify}
+                      setJustify={setJustify}
+                      alignItems={alignItems}
+                      setAlignItems={setAlignItems}
+                    />
+                  </Grid>
+                ) : null}
               </Grid>
             </Paper>
           </Grid>
