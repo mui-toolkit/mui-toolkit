@@ -68,7 +68,7 @@ export default function GridBuilder() {
   //position state
   const [direction, setDirection] = useState('row');
   const [justify, setJustify] = useState('flex-start');
-  const [alignItems, setAlignItems] = useState('flex-start');
+  const [alignItems, setAlignItems] = useState('center');
 
   const colors = [
     '#f8eb00', // yellow
@@ -278,7 +278,7 @@ export default function GridBuilder() {
                       container
                       direction='row'
                       justify='center'
-                      alignItems='center'
+                      alignItems={alignItems}
                     >
                       {grpI ? (
                         <React.Fragment>
@@ -332,7 +332,9 @@ export default function GridBuilder() {
                         marginBottom: '1em',
                       }}
                     >
-                      <pre>{`<Grid container\n${'  '}direction={${direction}}\n${'  '}justify={${justify}}\n${'  '}alignItems={${alignItems}}\n>\n${gridCodeBuilder()} \n</Grid>`}</pre>
+                      <pre data-lang='javascript'>
+                        {`<Grid container\n${'  '}direction={${direction}}\n${'  '}justify={${justify}}\n${'  '}alignItems={${alignItems}}\n>\n${gridCodeBuilder()} \n</Grid>`}
+                      </pre>
                     </Paper>
                     <GridContainerPosition
                       direction={direction}

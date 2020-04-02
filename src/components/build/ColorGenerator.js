@@ -18,8 +18,6 @@ import {
 } from '@ant-design/colors';
 import { generate, presetPalettes } from '@ant-design/colors';
 
-const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-
 const useStyles = makeStyles(() => ({
   button: {
     marginRight: '20px',
@@ -37,14 +35,6 @@ const useStyles = makeStyles(() => ({
 export const ColorGenerator = props => {
   const classes = useStyles();
   const { setColor, setSecondaryColor, setDefaultColor, setPaperColor } = props;
-
-  // const { setColor, setSecondaryColor, setDefaultColor, setPaperColor } = props;
-  // const url = 'http://colormind.io/api/';
-  // let data = {
-  //   model: 'default',
-  //   input: ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
-  // };
-  // let palette;
 
   const colorGeneration = () => {
     // const palette = generate('#FB8C00', {
