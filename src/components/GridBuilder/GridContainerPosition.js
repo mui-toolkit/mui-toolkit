@@ -46,11 +46,11 @@ export const GridContainerPosition = (props) => {
 					value={direction}
 					onChange={handleDirectionChange}
 				>
-					<FormControlLabel value="row" control={<Radio />} label="Row" />
+					<FormControlLabel value="row" control={<Radio />} label="row" />
 					<FormControlLabel value="row-reverse" control={<Radio />} label="row-reverse" />
-					<FormControlLabel value="column" control={<Radio />} label="Column" />
+					<FormControlLabel value="column" control={<Radio />} label="column" />
 					<FormControlLabel value="column-reverse" control={<Radio />} label="column-reverse" />
-					<FormControlLabel value="" control={<Radio />} label="None" />
+					<FormControlLabel value="" control={<Radio />} label="none" />
 				</RadioGroup>
 				<FormLabel component="legend">Justify</FormLabel>
 				<RadioGroup row aria-label="justify" name="justify" value={justify} onChange={handleJustifyChange}>
@@ -60,7 +60,7 @@ export const GridContainerPosition = (props) => {
 					<FormControlLabel value="space-between" control={<Radio />} label="space-between" />
 					<FormControlLabel value="space-around" control={<Radio />} label="space-around" />
 					<FormControlLabel value="space-evenly" control={<Radio />} label="space-evenly" />
-					<FormControlLabel value="" control={<Radio />} label="None" />
+					<FormControlLabel value="" control={<Radio />} label="none" />
 				</RadioGroup>
 
 				<FormLabel component="legend">Align Items</FormLabel>
@@ -76,7 +76,7 @@ export const GridContainerPosition = (props) => {
 					<FormControlLabel value="flex-end" control={<Radio />} label="flex-end" />
 					<FormControlLabel value="stretch" control={<Radio />} label="stretch" />
 					<FormControlLabel value="baseline" control={<Radio />} label="baseline" />
-					<FormControlLabel value="" control={<Radio />} label="None" />
+					<FormControlLabel value="" control={<Radio />} label="none" />
 				</RadioGroup>
 			</FormControl>
 		</React.Fragment>
