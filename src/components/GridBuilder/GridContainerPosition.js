@@ -60,6 +60,7 @@ export const GridContainerPosition = (props) => {
 					<FormControlLabel value="space-between" control={<Radio />} label="space-between" />
 					<FormControlLabel value="space-around" control={<Radio />} label="space-around" />
 					<FormControlLabel value="space-evenly" control={<Radio />} label="space-evenly" />
+					<FormControlLabel value="" control={<Radio />} label="None" />
 				</RadioGroup>
 
 				<FormLabel component="legend">Align Items</FormLabel>
