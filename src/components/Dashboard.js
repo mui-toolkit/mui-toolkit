@@ -35,7 +35,7 @@ import ImageSearchIcon from "@material-ui/icons/ImageSearch";
 import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import StarsIcon from "@material-ui/icons/Stars";
 import Avatar from "@material-ui/core/Avatar";
-import ViewCompactOutlinedIcon from '@material-ui/icons/ViewCompactOutlined';
+import ViewCompactOutlinedIcon from "@material-ui/icons/ViewCompactOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
 
 const drawerWidth = 240;
@@ -414,13 +414,13 @@ export default function Dashboard({ user }) {
             <ListItemIcon>
               <ViewCompactOutlinedIcon />
             </ListItemIcon>
-            <ListItemText primary="Grid" />
+            <ListItemText primary="Grid Builder" />
           </ListItem>
           <ListItem button component={Link} to="/design">
             <ListItemIcon>
               <PostAddIcon />
             </ListItemIcon>
-            <ListItemText primary="Add New Project" />
+            <ListItemText primary="Theme Styler" />
           </ListItem>
           <ListItem button component={Link} to="/">
             <ListItemIcon>
