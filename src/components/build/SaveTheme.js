@@ -39,7 +39,6 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
   console.log("SaveTheme -> downloadTheme", downloadTheme);
   console.log("SaveTheme -> user", user);
   console.log("SaveTheme -> signedInUserId", signedInUserId);
-  // might need a test if navigating to another user's theme
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -116,14 +115,14 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
   };
 
   const saveNewTheme = async themeName => {
-    if (!signedInUserId) {
-      downloadTheme.userId = user.uid;
-      downloadTheme.themeName = themeName;
-      downloadTheme.createdBy = user.email;
-    } else {
-      downloadTheme.userId = signedInUserId;
-      downloadTheme.themeName = themeName;
-    }
+    // if (!signedInUserId) {
+    downloadTheme.userId = user.uid;
+    downloadTheme.themeName = themeName;
+    downloadTheme.createdBy = user.email;
+    // } else {
+    //   downloadTheme.userId = signedInUserId;
+    //   downloadTheme.themeName = themeName;
+    // }
     // new customized theme
     await db
       .collection("CustomizedThemes")
@@ -148,13 +147,17 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       });
   };
 
+  // const saveNewPalette = async themeName => {
+  //   await saveNewTheme(themeName);
+  //   if (signedInUserId) {
+  //     await addThemeToUser(themeName, signedInUserId);
+  //   } else await addThemeToUser(themeName, user.uid);
+  // };
   const saveNewPalette = async themeName => {
     await saveNewTheme(themeName);
-    if (signedInUserId) {
-      await addThemeToUser(themeName, signedInUserId);
-    } else await addThemeToUser(themeName, user.uid);
+    await addThemeToUser(themeName, user.uid);
+    // setNewFavoriteTheme(downloadTheme);
   };
-
   const updateTheme = async oldThemeName => {
     downloadTheme.lastEditAt = new Date();
     await db
