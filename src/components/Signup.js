@@ -30,6 +30,7 @@ export function Signup(props) {
   var provider = new firebase.auth.GoogleAuthProvider();
   var providerGH = new firebase.auth.GithubAuthProvider();
   providerGH.addScope('repo');
+
   const handleClick = () => {
     setOpen(true);
   };
@@ -225,13 +226,14 @@ export function Signup(props) {
                         var token = result.credential.accessToken;
                         // The signed-in user info.
                         var user = result.user;
-                        console.log('google user', user);
                         db.collection('Users')
                           .doc(user.uid)
                           .set({
                             email: user.email,
-                            themes: [],
-                            username: user.email
+                            username: user.email,
+                            firstName: user.displayName.split(' ')[0],
+                            lastName: user.displayName.split(' ')[1]
+                            // themes: [],
                           });
                       })
                       .catch(function(error) {
@@ -273,13 +275,14 @@ export function Signup(props) {
                         var token = result.credential.accessToken;
                         // The signed-in user info.
                         var user = result.user;
-                        console.log('GH user', user);
                         db.collection('Users')
                           .doc(user.uid)
                           .set({
                             email: user.email,
-                            themes: [],
-                            username: user.email
+                            username: user.email,
+                            firstName: user.displayName.split(' ')[0],
+                            lastName: user.displayName.split(' ')[1]
+                            // themes: [],
                           });
                       })
                       .catch(function(error) {

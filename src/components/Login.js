@@ -58,6 +58,7 @@ const useStyles = makeStyles(theme => ({
 
 export function Login(provider) {
   var provider = new firebase.auth.GoogleAuthProvider();
+  var providerGH = new firebase.auth.GithubAuthProvider();
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -66,8 +67,7 @@ export function Login(provider) {
   const [data, setData] = useState(null);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState('xs');
-  var providerGH = new firebase.auth.GithubAuthProvider();
-  providerGH.addScope('repo');
+
   const handleMaxWidthChange = event => {
     setMaxWidth(event.target.value);
   };
@@ -145,16 +145,7 @@ export function Login(provider) {
         fullWidth={fullWidth}
         maxWidth={maxWidth}
       >
-        <Paper
-        // className={classes.paper}
-        // style={{
-        //   display: 'flex',
-        //   flexDirection: 'column',
-        //   margin: 'auto',
-        //   width: 'fit-content',
-        //   backgroundColor: '#fff'
-        // }}
-        >
+        <Paper>
           <Typography
             id="form-dialog-title"
             align="center"
@@ -225,6 +216,7 @@ export function Login(provider) {
                     var token = result.credential.accessToken;
                     // The signed-in user info.
                     var user = result.user;
+                    console.log('google user', user);
                   })
                   .catch(function(error) {
                     // Handle Errors here.
@@ -279,7 +271,6 @@ export function Login(provider) {
                     }
                   });
               }}
-              className="googleBtn"
               type="button"
               style={{
                 fontSize: 10,

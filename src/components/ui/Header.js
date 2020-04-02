@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
 import 'firebase/auth';
@@ -32,9 +32,9 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 400,
     fontSize: "1rem",
     minWidth: 10,
-    marginLeft: "25px",
-    color: "#000",
-    fontFamily: "Roboto"
+    marginLeft: '25px',
+    color: '#000',
+    fontFamily: 'Roboto'
   }
 }));
 
@@ -57,13 +57,15 @@ export default function Header(props) {
       .auth()
       .signOut()
       .then(() => {
-        console.log("user signed out", props);
+        console.log('user signed out', props);
+        window.location = '/';
+        return <Redirect to="/" />;
       });
   };
   if (!props.user.loggedIn) {
     return (
       <React.Fragment>
-        <AppBar position="fixed" style={{ background: "#fff" }}>
+        <AppBar position="fixed" style={{ background: '#fff' }}>
           <Toolbar>
             <Button
               component={Link}
@@ -90,7 +92,6 @@ export default function Header(props) {
                 className={classes.tab}
                 onClick={handleClickOpen}
                 label='Create'
-
               />
               <Tab
                 className={classes.tab}
@@ -142,7 +143,7 @@ export default function Header(props) {
   }
   return (
     <React.Fragment>
-      <AppBar position="fixed" style={{ background: "#fff" }}>
+      <AppBar position="fixed" style={{ background: '#fff' }}>
         <Toolbar>
           <Button
             component={Link}
@@ -152,7 +153,7 @@ export default function Header(props) {
               fontFamily: "Roboto",
               fontWeight: 200,
               fontSize: 28,
-              color: "#000"
+              color: '#000'
             }}
             className={classes.button}
           >
