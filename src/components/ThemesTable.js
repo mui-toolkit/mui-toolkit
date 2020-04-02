@@ -18,9 +18,6 @@ import Switch from "@material-ui/core/Switch";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import WebPreview from "../WebPreview/WebPreview";
-import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
 import Tooltip from "@material-ui/core/Tooltip";
 import EditIcon from "@material-ui/icons/Edit";
 import { db } from "../config/firebase";
@@ -272,7 +269,7 @@ export default function ThemesTable({
         );
       })
       .catch(function(error) {
-        console.log("Error deleting theme: ", error);
+        console.error(error);
       });
     //delete from user themes array
     await db
