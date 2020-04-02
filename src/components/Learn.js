@@ -64,6 +64,7 @@ export default function Learn() {
 						<br />
 						<Typography> CONTENTS</Typography>
 						<Link
+							smooth
 							to="#what-is-material-ui"
 							className={classes.contentLinks}
 							// href='https://material-ui.com/customization/theming/'
@@ -71,11 +72,11 @@ export default function Learn() {
 							What is Material-Ui?
 						</Link>
 						<br />
-						<Link className={classes.contentLinks} to="#what-is-mymui">
+						<Link className={classes.contentLinks} smooth to="#what-is-mymui">
 							What is mymui?
 						</Link>
 						<br />
-						<Link to="#grid-builder" className={classes.contentLinks}>
+						<Link smooth to="#grid-builder" className={classes.contentLinks}>
 							Grid Builder
 						</Link>
 						<br />
@@ -83,15 +84,15 @@ export default function Learn() {
 							Theming Tool
 						</Link>
 						<br />
-						<Link to="#download" className={classes.contentLinks}>
+						<Link smooth to="#download" className={classes.contentLinks}>
 							Download
 						</Link>
 						<br />
-						<Link to="#save" className={classes.contentLinks}>
+						<Link smooth to="#save" className={classes.contentLinks}>
 							Save
 						</Link>
 						<br />
-						<Link to="#share" className={classes.contentLinks}>
+						<Link smooth to="#share" className={classes.contentLinks}>
 							Share
 						</Link>
 					</Grid>
