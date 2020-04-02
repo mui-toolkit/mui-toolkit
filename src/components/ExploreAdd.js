@@ -84,9 +84,11 @@ export default function ExploreAdd({
             onChange={handleChange}
             style={{ width: "100%" }}
           >
-            {savedThemes.map(theme => (
-              <MenuItem value={theme.themeId}>{theme.themeName}</MenuItem>
-            ))}
+            {savedThemes
+              .filter(theme => theme.explore === false)
+              .map(theme => (
+                <MenuItem value={theme.themeId}>{theme.themeName}</MenuItem>
+              ))}
           </Select>
         </DialogContent>
         <DialogActions>

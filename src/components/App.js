@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import Header from '../components/ui/Header';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from './Home';
-import Learn from './Learn';
-import Login from './Login';
-import Signup from './Signup';
-import ThemesTable from './ThemesTable';
-import Dashboard from './Dashboard';
-import UserProfile from './UserProfile';
-import { Auth } from './auth';
-import firebase from 'firebase';
-import 'firebase/auth';
-import { Store } from './build/';
-import WebPreview from '../WebPreview/WebPreview';
-import Explore from './Explore';
-import GridBuilder from './GridBuilder/GridBuilder';
+import React, { useState, useEffect } from "react";
+import Header from "../components/ui/Header";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Home from "./Home";
+import Learn from "./Learn";
+import Login from "./Login";
+import Signup from "./Signup";
+import ThemesTable from "./ThemesTable";
+import Dashboard from "./Dashboard";
+import UserProfile from "./UserProfile";
+import { Auth } from "./auth";
+import firebase from "firebase";
+import "firebase/auth";
+import { Store } from "./build/";
+import WebPreview from "../WebPreview/WebPreview";
+import Explore from "./Explore";
+import GridBuilder from "./GridBuilder/GridBuilder";
 
 const defaultUser = {
   loggedIn: false,
@@ -51,7 +51,7 @@ function App() {
     // };
   }, []);
 
-  console.log('App -> user', user);
+  console.log("App -> user", user);
 
   return (
     <BrowserRouter>
@@ -65,15 +65,13 @@ function App() {
           exact
           path="/design/:themeId/:signedInUserId"
         />
-
         <Route
           render={props => <WebPreview {...props} />}
           exact
           path="/webpreview/:themeId"
         />
         <Route exact path="/explore" component={Explore} />
-        <Route exact path="/gridbuilder" component={GridBuilder} />
-
+        <Route exact path="/grid" component={GridBuilder} />
         {!user.loggedIn && (
           <Switch>
             <Route exact path="/login" component={Login} />
@@ -84,6 +82,11 @@ function App() {
         {user.loggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route
+              render={props => <Store {...props} />}
+              exact
+              path="/design/:themeId/:signedInUserId"
+            />
             <Route
               exact
               path="/dashboard"

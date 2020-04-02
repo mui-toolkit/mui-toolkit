@@ -10,26 +10,27 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import Login from '../Login';
 import Grid from '@material-ui/core/Grid';
+import StartDialog from '../StartDialog';
 
 const useStyles = makeStyles(theme => ({
   button: {
-    marginRight: '20px',
-    '&:hover': {
-      backgroundColor: 'transparent'
+    marginRight: "20px",
+    "&:hover": {
+      backgroundColor: "transparent"
     },
     fontWeight: 400,
-    textTransform: 'none',
+    textTransform: "none",
     borderRadius: 5,
     height: 46,
     padding: 10
   },
   tabContainer: {
-    marginLeft: 'auto'
+    marginLeft: "auto"
   },
   tab: {
-    textTransform: 'none',
+    textTransform: "none",
     fontWeight: 400,
-    fontSize: '1rem',
+    fontSize: "1rem",
     minWidth: 10,
     marginLeft: '25px',
     color: '#000',
@@ -39,6 +40,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header(props) {
   const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleClick = e => {
     e.preventDefault();
@@ -61,10 +72,10 @@ export default function Header(props) {
               to="/"
               disableRipple
               style={{
-                fontFamily: 'Roboto',
+                fontFamily: "Roboto",
                 fontWeight: 200,
                 fontSize: 28,
-                color: '#000'
+                color: "#000"
               }}
               className={classes.button}
             >
@@ -74,25 +85,45 @@ export default function Header(props) {
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/"
-                label="Home"
+                to='/learn'
+                label='Learn'
+              />
+              <Tab
+                className={classes.tab}
+                onClick={handleClickOpen}
+                label='Create'
               />
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/learn"
-                label="Learn"
-              />
-              <Tab
-                className={classes.tab}
-                component={Link}
-                to="/design"
-                label="Create"
-              />
-              <Tab
-                className={classes.tab}
-                component={Link}
-                to="/explore"
+                to={{
+                  pathname: "/explore",
+                  state: {
+                    themes: [
+                      {
+                        themeId: 0,
+                        themeName:
+                          "You need to login to have access to these features"
+                      }
+                    ],
+                    starredThemes: [
+                      {
+                        themeId: 0,
+                        themeName:
+                          "You need to login to have access to these features"
+                      }
+                    ],
+                    bookmarkedThemes: [
+                      {
+                        themeId: 0,
+                        themeName:
+                          "You need to login to have access to these features"
+                      }
+                    ],
+                    signedInUserId: "guest",
+                    foundUser: { username: "guest" }
+                  }
+                }}
                 label="Explore"
               />
               <Tab
@@ -106,6 +137,7 @@ export default function Header(props) {
           </Toolbar>
         </AppBar>
         <div className={classes.toolBarMargin} />
+        <StartDialog handleClose={handleClose} open={open} />
       </React.Fragment>
     );
   }
@@ -118,7 +150,7 @@ export default function Header(props) {
             to="/"
             disableRipple
             style={{
-              fontFamily: 'Roboto',
+              fontFamily: "Roboto",
               fontWeight: 200,
               fontSize: 28,
               color: '#000'
@@ -128,7 +160,6 @@ export default function Header(props) {
             mymui.
           </Button>
           <Grid className={classes.tabContainer}>
-            <Tab className={classes.tab} component={Link} to="/" label="Home" />
             <Tab
               className={classes.tab}
               component={Link}
@@ -137,9 +168,8 @@ export default function Header(props) {
             />
             <Tab
               className={classes.tab}
-              component={Link}
-              to="/design"
-              label="Create"
+              onClick={handleClickOpen}
+              label='Create'
             />
             <Tab
               className={classes.tab}
@@ -173,6 +203,7 @@ export default function Header(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.toolBarMargin} />
+      <StartDialog handleClose={handleClose} open={open} />
     </React.Fragment>
   );
 }

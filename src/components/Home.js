@@ -4,7 +4,8 @@ import { Grid, Button } from '@material-ui/core';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { Link } from 'react-router-dom';
-import { unaryExpression } from '@babel/types';
+import StartDialog from './StartDialog';
+import muilogo from '.././imgs/mui-logo.jpg';
 
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -19,6 +20,17 @@ function onAuthStateChange(callback) {
 export default function Home() {
   const [user, setUser] = useState({ loggedIn: false });
   const [error, setError] = useState('');
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
     // return async () => {
@@ -29,33 +41,52 @@ export default function Home() {
     <div>
       <div>
         <Grid container direction='column' style={{ marginTop: '10em' }}>
-          <Grid
+          {/* <Grid
             item
             container
             direction='row'
             justify='center'
             alignItems='center'
-          >
-            <Typography
-              variant='h4'
-              style={{ marginRight: '5px' }}
-              gutterBottom
-            >
-              Welcome to{' '}
-            </Typography>
-            <Typography
-              variant='h4'
-              style={{
-                fontFamily: 'Roboto',
-                fontWeight: 200,
-                fontSize: 30,
-                color: '#000',
-              }}
-              gutterBottom
-            >
-              mymui.
-            </Typography>
+          > */}
+          <Grid container direction='column' align='center'>
+            <Grid item>
+              <img alt='mui logo' src={muilogo} style={{ width: '5%' }} />
+            </Grid>
+            <Grid item>
+              <Grid
+                container
+                direction='row'
+                justify='center'
+                style={{ marginTop: '1.5em' }}
+              >
+                <Grid item>
+                  <Typography
+                    variant='h4'
+                    style={{ marginRight: '5px' }}
+                    gutterBottom
+                  >
+                    Welcome to{' '}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant='h4'
+                    style={{
+                      fontFamily: 'Roboto',
+                      fontWeight: 200,
+                      fontSize: 30,
+                      color: '#000',
+                    }}
+                    gutterBottom
+                  >
+                    mymui.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
+
+          {/* </Grid> */}
 
           <Grid container justify='center' alignItems='center'>
             <Typography
@@ -63,8 +94,8 @@ export default function Home() {
               align='center'
               style={{ color: '#818181' }}
             >
-              <b>Build</b> and <b>style</b> Material-UI <b>components</b> easier
-              and faster.
+              <b>Build</b> and <b>style</b> Material-UI <b>components</b>{' '}
+              quickly and easily.
               <br />
               <b>Save</b> and <b>edit</b> your progress. <b>Share</b> and
               <b> explore</b> with others.
@@ -99,8 +130,7 @@ export default function Home() {
             </Grid>
             <Grid item>
               <Button
-                component={Link}
-                to='/design'
+                onClick={handleClickOpen}
                 disableRipple
                 variant='contained'
                 style={{
@@ -119,6 +149,7 @@ export default function Home() {
           </Grid>
         </Grid>
       </div>
+      <StartDialog handleClose={handleClose} open={open} />
     </div>
   );
 }

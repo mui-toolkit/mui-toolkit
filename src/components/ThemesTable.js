@@ -1,30 +1,56 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 // import Download from "./Download";
-import PropTypes from 'prop-types';
-import { lighten, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import Tooltip from '@material-ui/core/Tooltip';
-import EditIcon from '@material-ui/icons/Edit';
-import { db } from '../config/firebase';
-import firebase from 'firebase';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
-import StarIcon from '@material-ui/icons/Star';
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+import PropTypes from "prop-types";
+import { lighten, makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import Tooltip from "@material-ui/core/Tooltip";
+import EditIcon from "@material-ui/icons/Edit";
+import { db } from "../config/firebase";
+import firebase from "firebase";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
+import StarIcon from "@material-ui/icons/Star";
+import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
+import saveAs from "file-saver";
+
+const refined = themeObject => {
+  let refined = JSON.parse(JSON.stringify(themeObject));
+  delete refined.bookmarked;
+  delete refined.bookmarksCount;
+  delete refined.createdAt;
+  delete refined.createdBy;
+  delete refined.lastEditAt;
+  delete refined.starsCount;
+  delete refined.themeId;
+  delete refined.userId;
+  delete refined.themeName;
+  delete refined.explore;
+
+  return refined;
+};
+
+const download = async theme => {
+  const refinedObj = await refined(theme);
+  const fileToSave = new Blob([JSON.stringify(refinedObj)], {
+    type: "application/json",
+    name: "theme.json"
+  });
+  return await saveAs(fileToSave, "theme.json");
+};
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -37,7 +63,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -54,46 +80,46 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'themeName',
+    id: "themeName",
     columnAlignment: true,
     disablePadding: false,
-    label: 'Theme Name',
+    label: "Theme Name"
   },
   {
-    id: 'lastEditAt',
+    id: "lastEditAt",
     columnAlignment: true,
     disablePadding: false,
-    label: 'Date edited',
+    label: "Date edited"
   },
 
   {
-    id: 'primaryPalette',
-    label: 'Primary Palette',
+    id: "primaryPalette",
+    label: "Primary Palette",
     columnAlignment: true,
     disablePadding: false,
-    format: value => value.toLocaleString(),
+    format: value => value.toLocaleString()
   },
   {
-    id: 'secondaryPalette',
-    label: 'Secondary Palette',
+    id: "secondaryPalette",
+    label: "Secondary Palette",
     columnAlignment: true,
     disablePadding: false,
-    format: value => value.toLocaleString(),
+    format: value => value.toLocaleString()
   },
   {
-    id: 'typography',
-    label: 'Font Family',
+    id: "typography",
+    label: "Font Family",
     columnAlignment: true,
     disablePadding: false,
-    format: value => value.toFixed(2),
+    format: value => value.toFixed(2)
   },
   {
-    id: 'actions',
-    label: 'Actions',
+    id: "actions",
+    label: "Actions",
     columnAlignment: true,
     disablePadding: false,
-    format: value => value.toFixed(2),
-  },
+    format: value => value.toFixed(2)
+  }
 ];
 
 function EnhancedTableHead(props) {
@@ -108,19 +134,19 @@ function EnhancedTableHead(props) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align={headCell.columnAlignment ? 'left' : 'right'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            align={headCell.columnAlignment ? "left" : "right"}
+            padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </span>
               ) : null}
             </TableSortLabel>
@@ -134,15 +160,15 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  orderBy: PropTypes.string.isRequired
 };
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    width: '100%',
-    padding: '1em',
-  },
+    width: "100%",
+    padding: "1em"
+  }
 }));
 
 export default function ThemesTable({
@@ -153,11 +179,19 @@ export default function ThemesTable({
   table,
   setBookmarkedThemes,
   setStarredThemes,
+  foundUser,
+  linkedThemes,
+  linkedStarredThemes,
+  linkedBookmarkedThemes
 }) {
+  const favorite =
+    table === "B"
+      ? "Explore themes and bookmark 🔖 for future reference"
+      : "Explore themes and 🌟star🌟 them to love";
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
     lastEditAt: JSON.stringify(
-      new Date(themeObject.lastEditAt.seconds * 1000),
+      new Date(themeObject.lastEditAt.seconds * 1000)
     ).slice(1, 11),
     primaryPalette: themeObject.palette.primary.main,
     secondaryPalette: themeObject.palette.secondary.main,
@@ -165,18 +199,19 @@ export default function ThemesTable({
     themeId: themeObject.themeId,
     userId: themeObject.userId,
     favId: themeObject.favId,
+    downloadTheme: { ...themeObject }
   }));
 
   const classes = useStyles();
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("");
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -194,64 +229,64 @@ export default function ThemesTable({
   };
 
   const handleFav = async (table, themeId) => {
-    if (table === 'S') {
+    if (table === "S") {
       await db
-        .collection('Users')
+        .collection("Users")
         .doc(`${signedInUserId}`)
         .update({
-          starred: firebase.firestore.FieldValue.arrayRemove(`${themeId}`),
+          starred: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
         })
         .then(() => {
           console.log(`removed ${themeId} from users starred array`);
           setStarredThemes(prevStarredThemes =>
-            prevStarredThemes.filter(theme => theme.themeId !== themeId),
+            prevStarredThemes.filter(theme => theme.themeId !== themeId)
           );
         });
       await db
-        .collection('CustomizedThemes')
+        .collection("CustomizedThemes")
         .doc(`${themeId}`)
         .update({
-          starsCount: firebase.firestore.FieldValue.increment(-1),
+          starsCount: firebase.firestore.FieldValue.increment(-1)
         })
         .then(() => {
-          console.log('decrement starsCount');
+          console.log("decrement starsCount");
         });
-    } else if (table === 'B') {
+    } else if (table === "B") {
       await db
-        .collection('Users')
+        .collection("Users")
         .doc(`${signedInUserId}`)
         .update({
-          bookmarked: firebase.firestore.FieldValue.arrayRemove(`${themeId}`),
+          bookmarked: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
         })
         .then(() => {
           console.log(`removed ${themeId} from users bookmarked array`);
           setBookmarkedThemes(prevBookmarkedThemes =>
-            prevBookmarkedThemes.filter(theme => theme.themeId !== themeId),
+            prevBookmarkedThemes.filter(theme => theme.themeId !== themeId)
           );
         });
       await db
-        .collection('CustomizedThemes')
+        .collection("CustomizedThemes")
         .doc(`${themeId}`)
         .update({
-          bookmarksCount: firebase.firestore.FieldValue.increment(-1),
+          bookmarksCount: firebase.firestore.FieldValue.increment(-1)
         })
         .then(() => {
-          console.log('decrement bookmarkscount');
+          console.log("decrement bookmarkscount");
         });
     }
   };
   const handleDelete = async (themeId, userId, themeName) => {
     // delete collection
     await db
-      .collection('CustomizedThemes')
+      .collection("CustomizedThemes")
       .doc(`${themeId}`)
       .delete()
       .then(function() {
-        console.log('Deleted Saved Theme from collection');
+        console.log("Deleted Saved Theme from collection");
       })
       .then(response => {
         setThemes(prevThemes =>
-          prevThemes.filter(theme => theme.themeId !== themeId),
+          prevThemes.filter(theme => theme.themeId !== themeId)
         );
       })
       .catch(function(error) {
@@ -259,13 +294,13 @@ export default function ThemesTable({
       });
     //delete from user themes array
     await db
-      .collection('Users')
+      .collection("Users")
       .doc(`${userId}`)
       .update({
-        themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`),
+        themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
       })
       .then(() => {
-        console.log('deleted reference to this theme');
+        console.log("deleted reference to this theme");
       });
   };
   const emptyRows =
@@ -274,23 +309,39 @@ export default function ThemesTable({
   return !themes.length ? (
     <div>
       <h2>No Projects Available</h2>
-      <Link to='/design'>
-        <h2>Build your first professional Material UI Project!</h2>
-      </Link>
-      ;
+      {table === "M" ? (
+        <Link to="/design">
+          <h2>Build your first professional Material UI Project!</h2>
+        </Link>
+      ) : (
+        <Link
+          to={{
+            pathname: "/explore",
+            state: {
+              themes: linkedThemes,
+              starredThemes: linkedStarredThemes,
+              bookmarkedThemes: linkedBookmarkedThemes,
+              signedInUserId,
+              foundUser
+            }
+          }}
+        >
+          <h2>{`${favorite}`}</h2>
+        </Link>
+      )}
     </div>
   ) : (
     <div>
       <Paper className={classes.paper}>
-        <Typography className={classes.title} variant='h6' id='tableTitle'>
+        <Typography className={classes.title} variant="h6" id="tableTitle">
           {tableTitle}
         </Typography>
         <TableContainer>
           <Table
             className={classes.table}
-            aria-labelledby='tableTitle'
-            size={dense ? 'small' : 'medium'}
-            aria-label='enhanced table'
+            aria-labelledby="tableTitle"
+            size={dense ? "small" : "medium"}
+            aria-label="enhanced table"
           >
             <EnhancedTableHead
               classes={classes}
@@ -298,7 +349,7 @@ export default function ThemesTable({
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
-              style={{ align: 'right' }}
+              style={{ align: "right" }}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
@@ -309,45 +360,38 @@ export default function ThemesTable({
                   return (
                     <TableRow
                       hover
-                      role='checkbox'
+                      role="checkbox"
                       tabIndex={-1}
                       key={row.themeId}
-                      style={{ color: 'inherit', textDecoration: 'inherit' }}
+                      style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       <TableCell
-                        component='th'
+                        component="th"
                         id={labelId}
-                        scope='row'
-                        padding='none'
+                        scope="row"
+                        padding="none"
                       >
                         {row.themeName}
                       </TableCell>
-                      <TableCell align='left'>{row.lastEditAt}</TableCell>
-                      <TableCell align='left'>{row.primaryPalette}</TableCell>
-                      <TableCell align='left'>{row.secondaryPalette}</TableCell>
-                      <TableCell align='left'>{row.typography}</TableCell>
+                      <TableCell align="left">{row.lastEditAt}</TableCell>
+                      <TableCell align="left">{row.primaryPalette}</TableCell>
+                      <TableCell align="left">{row.secondaryPalette}</TableCell>
+                      <TableCell align="left">{row.typography}</TableCell>
 
-                      <Tooltip title='Preview Theme'>
+                      <Tooltip title="Preview Theme">
                         <IconButton
-                          aria-label='preview'
+                          aria-label="preview"
                           component={Link}
                           to={`/webpreview/${row.themeId}`}
-                          target='_blank'
+                          target="_blank"
                         >
                           <VisibilityIcon />
                         </IconButton>
                       </Tooltip>
-                      {row.userId !== signedInUserId ? (
-                        <Tooltip title='Download'>
-                          <IconButton aria-label='download'>
-                            <SystemUpdateAltIcon />
-                            {/* <Download downloadTheme={row} /> */}
-                          </IconButton>
-                        </Tooltip>
-                      ) : (
-                        <Tooltip title='Edit Theme'>
+                      {table === "M" ? (
+                        <Tooltip title="Edit Theme">
                           <IconButton
-                            aria-label='edit'
+                            aria-label="edit"
                             // key={row.themeId}
                             component={Link}
                             to={`/design/${row.themeId}/${signedInUserId}`}
@@ -355,33 +399,43 @@ export default function ThemesTable({
                             <EditIcon />
                           </IconButton>
                         </Tooltip>
+                      ) : (
+                        <Tooltip title="Download">
+                          <IconButton
+                            aria-label="download"
+                            onClick={() => download(row.downloadTheme)}
+                          >
+                            <SystemUpdateAltIcon
+                              style={{ marginLeft: "5px" }}
+                            />
+                          </IconButton>
+                        </Tooltip>
                       )}
-
-                      {row.userId !== signedInUserId ? (
+                      {table === "M" ? (
+                        <Tooltip title="Delete Theme">
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() =>
+                              handleDelete(
+                                row.themeId,
+                                row.userId,
+                                row.themeName
+                              )
+                            }
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      ) : (
                         <Tooltip
                           title={
-                            table === 'S' ? 'Remove Star' : 'Remove Bookmark'
+                            table === "S" ? "Remove Star" : "Remove Bookmark"
                           }
                         >
                           <IconButton
                             onClick={() => handleFav(table, row.themeId)}
                           >
-                            {table === 'S' ? <StarIcon /> : <BookmarkIcon />}
-                          </IconButton>
-                        </Tooltip>
-                      ) : (
-                        <Tooltip title='Delete Theme'>
-                          <IconButton
-                            aria-label='delete'
-                            onClick={() =>
-                              handleDelete(
-                                row.themeId,
-                                row.userId,
-                                row.themeName,
-                              )
-                            }
-                          >
-                            <DeleteIcon />
+                            {table === "S" ? <StarIcon /> : <BookmarkIcon />}
                           </IconButton>
                         </Tooltip>
                       )}
@@ -398,7 +452,7 @@ export default function ThemesTable({
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component='div'
+          component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
@@ -408,7 +462,7 @@ export default function ThemesTable({
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label='Dense padding'
+        label="Dense padding"
       />
     </div>
   );

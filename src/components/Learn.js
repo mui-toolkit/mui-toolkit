@@ -2,7 +2,19 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import muiLogo from '.././imgs/material-ui-logo.png';
 import Grid from '@material-ui/core/Grid';
-import { Typography, Paper, Link } from '@material-ui/core';
+import { Typography, Link } from '@material-ui/core';
+import { HashLink } from 'react-router-hash-link';
+
+import mui1 from '.././imgs/mui1.jpg';
+import mui2 from '.././imgs/mui2.jpg';
+import mui3 from '.././imgs/mui3.jpg';
+import mui4 from '.././imgs/mui4.jpg';
+import mui5 from '.././imgs/mui5.jpg';
+import mui6 from '.././imgs/mui6.jpg';
+import mui7 from '.././imgs/mui7.jpg';
+import mui8 from '.././imgs/mui8.jpg';
+
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 const useStyles = makeStyles({
   root: {
@@ -44,6 +56,7 @@ export default function Learn() {
     <React.Fragment>
       <div className={classes.root}>
         <Grid
+          id='learn'
           container
           direction='row'
           alignItems='center'
@@ -65,61 +78,53 @@ export default function Learn() {
             </Typography>
             <br />
             <Typography> CONTENTS</Typography>
-            <Link
+            <HashLink
+              smooth
+              to='#what-is-material-ui'
               className={classes.contentLinks}
-              href='https://material-ui.com/customization/theming/'
             >
               What is Material-Ui?
-            </Link>
+            </HashLink>
             <br />
-            <Link
+            <HashLink
               className={classes.contentLinks}
-              href='https://material-ui.com/customization/theming/'
+              smooth
+              to='#what-is-mymui'
             >
               What is mymui?
-            </Link>
+            </HashLink>
             <br />
-            <Link
+            <HashLink
+              smooth
+              to='#grid-builder'
               className={classes.contentLinks}
-              href='https://material-ui.com/customization/theming/'
             >
               Grid Builder
-            </Link>
+            </HashLink>
             <br />
-            <Link
-              className={classes.contentLinks}
-              href='https://material-ui.com/customization/theming/'
-            >
-              Theming Tool
-            </Link>
+            <HashLink to='#theme-styler' className={classes.contentLinks}>
+              Theme Styler
+            </HashLink>
             <br />
-            <Link
-              className={classes.contentLinks}
-              href='https://material-ui.com/customization/theming/'
-            >
+            <HashLink smooth to='#download' className={classes.contentLinks}>
               Download
-            </Link>
+            </HashLink>
             <br />
-            <Link
-              className={classes.contentLinks}
-              href='https://material-ui.com/customization/theming/'
-            >
+            <HashLink smooth to='#save' className={classes.contentLinks}>
               Save
-            </Link>
+            </HashLink>
             <br />
-            <Link
-              className={classes.contentLinks}
-              href='https://material-ui.com/customization/theming/'
-            >
+            <HashLink smooth to='#share' className={classes.contentLinks}>
               Share
-            </Link>
+            </HashLink>
           </Grid>
           <Grid item align='center' className={classes.title} xs={6}>
-            <img alt='mui logo' src={muiLogo} style={{ width: '20%' }} />
+            <img alt='mui logo' src={mui1} />
           </Grid>
         </Grid>
         <hr className={classes.hr} />
         <Grid
+          id='what-is-material-ui'
           container
           direction='row'
           alignItems='center'
@@ -131,7 +136,7 @@ export default function Learn() {
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20 }}>
               {' '}
-              What is material-ui?
+              What is Material-UI?
             </Typography>
             <Typography
               variant='body1'
@@ -139,10 +144,10 @@ export default function Learn() {
               gutterBottom
               className={classes.paragraph}
             >
-              Material UI is a popular React UI Framework with 55.5k stars on
-              Github. Material UI has created what's called a{' '}
-              <Link href='https://material-ui.com/customization/theming/'>
-                Theme Provider
+              Material-UI is a popular React UI Framework with 55.5k stars on
+              Github. Material-UI has created what's called a{' '}
+              <Link href='https://material-ui.com/styles/api/#themeprovider'>
+                ThemeProvider
               </Link>{' '}
               component that allows you to inject a theme into your application.
               <br />
@@ -150,21 +155,29 @@ export default function Learn() {
               ThemeProvider relies on the context feature of React in order to
               pass your custom theme down to the components. This means the
               ThemeProvider component will need to be the parent component that
-              wraps all your other components you want styled. This feature
-              allows for less in-line styling and keeps a consistent style
-              throughout your application. Visit{' '}
+              wraps all the other components you want styled. This feature
+              allows for less in-line styling, and allows for consistent styling
+              throughout your application. Check out Material-Ui's documentation
+              to learn more about{' '}
               <Link href='https://material-ui.com/customization/theming/'>
-                Material UI
-              </Link>{' '}
-              to learn more about Theming.
+                theming
+              </Link>
+              .
             </Typography>
           </Grid>
+
           <Grid item align='center' className={classes.title} xs={6}>
-            <img alt='mui logo' src={muiLogo} style={{ width: '20%' }} />
+            <img alt='mui2' src={mui2} />
+          </Grid>
+          <Grid container direction='row-reverse' alignItems='flex-end'>
+            <HashLink to='#learn'>
+              <ArrowUpwardIcon />
+            </HashLink>
           </Grid>
         </Grid>
         <hr className={classes.hr} />
         <Grid
+          id='what-is-mymui'
           container
           direction='row'
           alignItems='center'
@@ -183,29 +196,45 @@ export default function Learn() {
               className={classes.paragraph}
               gutterBottom
             >
-              mymui provides two main tools for styling and building Material UI
-              components easier and faster. <br />
+              mymui provides two tools for styling and building Material-UI
+              components quickly and easily. <br />
               <br />
-              The first is the <b>Theming Tool</b>. The <b>Theming Tool</b>{' '}
-              allows you to customize your Material UI theme without having to
-              look at the documentation. The interface is user friendly, and
-              gives you a step by step guide on the features you are
-              customizing. Once finished, you can download the json file and
-              copy and paste the code into your own file.
+              The first is the{' '}
+              <Link href='/design'>
+                <b>Theme Styler</b>
+              </Link>
+              , which allows you to customize your Material-UI theme without
+              having to frequently refer to documentation. The dynamic interface
+              provides a step by step guide on the parameters you can manipulate
+              within the ThemeProvider. Once finished, you can download the json
+              file and copy and paste the code into your own project.
               <br />
               <br />
-              The second tool is the <b>Grid Builder</b>. This tool follows the
-              12 column grid system and is meant to help users understand how{' '}
-              <b>Material UI</b> structures their grid layouts and positionings.
+              The second tool is the{' '}
+              <Link href='/grid'>
+                <b>Grid Builder</b>
+              </Link>
+              . This tool follows the 12 column grid system, and is meant to
+              help users visualize how Material-UI structures{' '}
+              <Link href='https://material-ui.com/components/grid'>
+                grid layouts
+              </Link>{' '}
+              and positioning.
             </Typography>
           </Grid>
           <Grid item align='center' className={classes.title} xs={6}>
-            <img alt='mui logo' src={muiLogo} style={{ width: '20%' }} />
+            <img alt='mui3' src={mui3} style={{ width: '100%' }} />
+          </Grid>
+          <Grid container direction='row-reverse' alignItems='flex-end'>
+            <HashLink to='#learn'>
+              <ArrowUpwardIcon />
+            </HashLink>
           </Grid>
         </Grid>
         <hr className={classes.hr} />
 
         <Grid
+          id='grid-builder'
           container
           direction='row'
           alignItems='center'
@@ -225,17 +254,32 @@ export default function Learn() {
               gutterBottom
             >
               If you have trouble understanding grid systems and layouts, this
-              tool is for you! <b>Grid Builder</b> helps you understand how{' '}
-              <b>Material UI</b> uses grid containers and items. It also helps
-              you understand how to <b>position</b> and <b>align</b> your items
-              to get you're desired layout.
+              tool is for you!{' '}
+              <Link href='/grid'>
+                <b>Grid Builder</b>
+              </Link>{' '}
+              helps visualize how Material-UI uses{' '}
+              <Link href='https://material-ui.com/components/grid/'>
+                grid containers and items
+              </Link>
+              . It also helps you understand how to position and align your
+              items to achieve your desired layout.
             </Typography>
+          </Grid>
+          <Grid item align='center' className={classes.title} xs={6}>
+            <img alt='mui4' src={mui4} style={{ width: '100%' }} />
+          </Grid>
+          <Grid container direction='row-reverse' alignItems='flex-end'>
+            <HashLink to='#learn'>
+              <ArrowUpwardIcon />
+            </HashLink>
           </Grid>
         </Grid>
 
         <hr className={classes.hr} />
 
         <Grid
+          id='theme-styler'
           container
           direction='row'
           alignItems='center'
@@ -243,10 +287,10 @@ export default function Learn() {
         >
           <Grid item className={classes.title} xs={6}>
             <Typography variant='h3' align='left' gutterBottom>
-              Theming Tool
+              Theme Styler
             </Typography>
             <Typography style={{ fontSize: 20 }} gutterBottom>
-              Style your Material UI Theme Provider
+              Style your Material-UI Theme Provider
             </Typography>
             <Typography
               variant='body1'
@@ -254,17 +298,29 @@ export default function Learn() {
               className={classes.paragraph}
               gutterBottom
             >
-              Our theming tool allows you to style your <b>Theme Provider</b>{' '}
-              component in an easy and intuitive process. No need to look at the
-              documentation to find the code, just select the colors and styles
-              you want and download the code!
+              Our{' '}
+              <Link href='design'>
+                <b>Theme Styler</b>
+              </Link>{' '}
+              allows you to style your ThemeProvider component with a dynamic
+              and visual interface. No need to look at the documentation — just
+              select the colors and styles you want and download your theme!
             </Typography>
+          </Grid>
+          <Grid item align='center' className={classes.title} xs={6}>
+            <img alt='mui5' src={mui5} style={{ width: '100%' }} />
+          </Grid>
+          <Grid container direction='row-reverse' alignItems='flex-end'>
+            <HashLink to='#learn'>
+              <ArrowUpwardIcon />
+            </HashLink>
           </Grid>
         </Grid>
 
         <hr className={classes.hr} />
 
         <Grid
+          id='download'
           container
           direction='row'
           alignItems='center'
@@ -275,7 +331,7 @@ export default function Learn() {
               Download
             </Typography>
             <Typography style={{ fontSize: 20 }} gutterBottom>
-              What do I do with my download?
+              What do I do with my downloaded file?
             </Typography>
             <Typography
               variant='body1'
@@ -283,25 +339,34 @@ export default function Learn() {
               className={classes.paragraph}
               gutterBottom
             >
-              Once you've downloaded the file created by our <b>Theming Tool</b>
-              , open up the json file and copy the object into your{' '}
-              <b>createMuiTheme</b> function. This will generate a theme based
-              on the object you copied and pasted into it.
+              Once you've downloaded the file created by our{' '}
+              <Link href='/design'>
+                <b>Theme Styler</b>
+              </Link>
+              , open up the json file and copy the object into your
+              createMuiTheme function. This will generate a theme based on the
+              custom object you provide!
               <br />
               <br />
               Visit the{' '}
               <Link href='https://material-ui.com/customization/theming/#api'>
-                Material UI API
+                Material-UI's API
               </Link>{' '}
-              documentation to understand more about how this works.
+              documentation for more information on this works.
             </Typography>
           </Grid>
           <Grid item align='center' className={classes.title} xs={6}>
-            <img alt='mui logo' src={muiLogo} style={{ width: '20%' }} />
+            <img alt='mui6' src={mui6} style={{ width: '100%' }} />
+          </Grid>
+          <Grid container direction='row-reverse' alignItems='flex-end'>
+            <HashLink to='#learn'>
+              <ArrowUpwardIcon />
+            </HashLink>
           </Grid>
         </Grid>
         <hr className={classes.hr} />
         <Grid
+          id='save'
           container
           direction='row'
           alignItems='center'
@@ -320,18 +385,29 @@ export default function Learn() {
               className={classes.paragraph}
               gutterBottom
             >
-              mymui allows signed up users to save their progress when using our{' '}
-              <b>Theming Tool</b>. As a signed in user, you're themes will be
-              stored in a user dashboard where you can save, edit, preview, and
-              delete your themes.
+              mymui allows logged in users to save their themes when using our{' '}
+              <Link href='/design'>
+                <b>Theme Styler</b>
+              </Link>
+              . As a logged in user, your themes will be stored in a user{' '}
+              <Link href='/dashboard'>
+                <b>dashboard</b>
+              </Link>{' '}
+              where you can save, edit, preview, and delete your themes.
             </Typography>
           </Grid>
           <Grid item align='center' className={classes.title} xs={6}>
-            <img alt='mui logo' src={muiLogo} style={{ width: '20%' }} />
+            <img alt='mui8' src={mui8} style={{ width: '100%' }} />
+          </Grid>
+          <Grid container direction='row-reverse' alignItems='flex-end'>
+            <HashLink to='#learn'>
+              <ArrowUpwardIcon />
+            </HashLink>
           </Grid>
         </Grid>
         <hr className={classes.hr} />
         <Grid
+          id='share'
           container
           direction='row'
           alignItems='center'
@@ -350,14 +426,23 @@ export default function Learn() {
               className={classes.paragraph}
               gutterBottom
             >
-              Upload and share your the themes you've created on our explore
-              page! The explore page allows you to view, star, and bookmark
-              themes that inspire you. The explore page is a source of
-              inspiration to get you started on a Material-UI theme.
+              Upload and share your the themes you've created on our{' '}
+              <Link href='/explore'>
+                {' '}
+                <b>explore page</b>
+              </Link>
+              ! The explore page allows you to view, star, and bookmark themes
+              created by other users, and share your custom themes with the
+              mymui community.
             </Typography>
           </Grid>
           <Grid item align='center' className={classes.title} xs={6}>
-            <img alt='mui logo' src={muiLogo} style={{ width: '20%' }} />
+            <img alt='mui7' src={mui7} style={{ width: '100%' }} />
+          </Grid>
+          <Grid container direction='row-reverse' alignItems='flex-end'>
+            <HashLink to='#learn'>
+              <ArrowUpwardIcon />
+            </HashLink>
           </Grid>
         </Grid>
       </div>
