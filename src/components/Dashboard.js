@@ -134,7 +134,7 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard({ user }) {
   // console.log("Dashboard -> user", user);
   // const userName = JSON.stringify(user.email).slice(0, user.email.indexOf("@"));
-  // console.log("Dashboard -> userName", userName);
+
   const signedInUserId = user.uid;
   const [themes, setThemes] = useState([]);
   const [starredThemes, setStarredThemes] = useState([]);

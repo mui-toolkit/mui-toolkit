@@ -25,6 +25,15 @@ import firebase from "firebase";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import StarIcon from "@material-ui/icons/Star";
 import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
+import saveAs from "file-saver";
+
+const download = async theme => {
+  const fileToSave = new Blob([JSON.stringify(theme)], {
+    type: "application/json",
+    name: "theme.json"
+  });
+  return await saveAs(fileToSave, "theme.json");
+};
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -179,7 +188,8 @@ export default function ThemesTable({
     typography: themeObject.typography.fontFamily,
     themeId: themeObject.themeId,
     userId: themeObject.userId,
-    favId: themeObject.favId
+    favId: themeObject.favId,
+    downloadTheme: { ...themeObject }
   }));
 
   const classes = useStyles();
@@ -355,9 +365,14 @@ export default function ThemesTable({
                       </Tooltip>
                       {row.userId !== signedInUserId ? (
                         <Tooltip title="Download">
-                          <IconButton aria-label="download">
-                            <SystemUpdateAltIcon />
-                            {/* <Download downloadTheme={row} /> */}
+                          <IconButton
+                            aria-label="download"
+                            onClick={() => download(row.downloadTheme)}
+                          >
+                            <SystemUpdateAltIcon
+                              style={{ marginLeft: "5px" }}
+                            />
+                            >{/* <Download downloadTheme={row} /> */}
                           </IconButton>
                         </Tooltip>
                       ) : (
