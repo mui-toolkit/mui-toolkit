@@ -2,8 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import muiLogo from '.././imgs/material-ui-logo.png';
 import Grid from '@material-ui/core/Grid';
-import { Typography, Paper } from '@material-ui/core';
-import { HashLink as Link } from 'react-router-hash-link';
+import { Typography, Paper, Link } from '@material-ui/core';
+import { HashLink } from 'react-router-hash-link';
+
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 const useStyles = makeStyles({
@@ -45,13 +46,7 @@ export default function Learn() {
 	return (
 		<React.Fragment>
 			<div className={classes.root}>
-				<Grid
-					id="table-of-contents"
-					container
-					direction="row"
-					alignItems="center"
-					className={classes.container}
-				>
+				<Grid id="learn" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
 							Learn
@@ -63,38 +58,38 @@ export default function Learn() {
 						</Typography>
 						<br />
 						<Typography> CONTENTS</Typography>
-						<Link
+						<HashLink
 							smooth
 							to="#what-is-material-ui"
 							className={classes.contentLinks}
 							// href='https://material-ui.com/customization/theming/'
 						>
 							What is Material-Ui?
-						</Link>
+						</HashLink>
 						<br />
-						<Link className={classes.contentLinks} smooth to="#what-is-mymui">
+						<HashLink className={classes.contentLinks} smooth to="#what-is-mymui">
 							What is mymui?
-						</Link>
+						</HashLink>
 						<br />
-						<Link smooth to="#grid-builder" className={classes.contentLinks}>
+						<HashLink smooth to="#grid-builder" className={classes.contentLinks}>
 							Grid Builder
-						</Link>
+						</HashLink>
 						<br />
-						<Link to="#theming-tool" className={classes.contentLinks}>
+						<HashLink to="#theming-tool" className={classes.contentLinks}>
 							Theming Tool
-						</Link>
+						</HashLink>
 						<br />
-						<Link smooth to="#download" className={classes.contentLinks}>
+						<HashLink smooth to="#download" className={classes.contentLinks}>
 							Download
-						</Link>
+						</HashLink>
 						<br />
-						<Link smooth to="#save" className={classes.contentLinks}>
+						<HashLink smooth to="#save" className={classes.contentLinks}>
 							Save
-						</Link>
+						</HashLink>
 						<br />
-						<Link smooth to="#share" className={classes.contentLinks}>
+						<HashLink smooth to="#share" className={classes.contentLinks}>
 							Share
-						</Link>
+						</HashLink>
 					</Grid>
 					<Grid item align="center" className={classes.title} xs={6}>
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
@@ -117,10 +112,10 @@ export default function Learn() {
 							What is Material-UI?
 						</Typography>
 						<Typography variant="body1" align="left" gutterBottom className={classes.paragraph}>
-							Material UI is a popular React UI Framework with 55.5k stars on Github. Material UI has
+							Material-UI is a popular React UI Framework with 55.5k stars on Github. Material UI has
 							created what's called a{' '}
-							<Link href="https://material-ui.com/customization/theming/">Theme Provider</Link> component
-							that allows you to inject a theme into your application.
+							<Link href="https://material-ui.com/styles/api/#themeprovider">Theme Provider</Link>{' '}
+							component that allows you to inject a theme into your application.
 							<br />
 							<br />
 							ThemeProvider relies on the context feature of React in order to pass your custom theme down
@@ -136,9 +131,9 @@ export default function Learn() {
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
 					</Grid>
 					<Grid container direction="row-reverse" alignItems="flex-end">
-						<Link to="#table-of-contents">
+						<HashLink to="#learn">
 							<ArrowUpwardIcon />
-						</Link>
+						</HashLink>
 					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
@@ -169,9 +164,9 @@ export default function Learn() {
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
 					</Grid>
 					<Grid container direction="row-reverse" alignItems="flex-end">
-						<Link to="#table-of-contents">
+						<HashLink to="#learn">
 							<ArrowUpwardIcon />
-						</Link>
+						</HashLink>
 					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
@@ -192,9 +187,9 @@ export default function Learn() {
 						</Typography>
 					</Grid>
 					<Grid container direction="row-reverse" alignItems="flex-end">
-						<Link to="#table-of-contents">
+						<HashLink to="#learn">
 							<ArrowUpwardIcon />
-						</Link>
+						</HashLink>
 					</Grid>
 				</Grid>
 
@@ -215,9 +210,9 @@ export default function Learn() {
 						</Typography>
 					</Grid>
 					<Grid container direction="row-reverse" alignItems="flex-end">
-						<Link to="#table-of-contents">
+						<HashLink to="#learn">
 							<ArrowUpwardIcon />
-						</Link>
+						</HashLink>
 					</Grid>
 				</Grid>
 
@@ -246,9 +241,9 @@ export default function Learn() {
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
 					</Grid>
 					<Grid container direction="row-reverse" alignItems="flex-end">
-						<Link to="#table-of-contents">
+						<HashLink to="#learn">
 							<ArrowUpwardIcon />
-						</Link>
+						</HashLink>
 					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
@@ -270,9 +265,9 @@ export default function Learn() {
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
 					</Grid>
 					<Grid container direction="row-reverse" alignItems="flex-end">
-						<Link to="#table-of-contents">
+						<HashLink to="#learn">
 							<ArrowUpwardIcon />
-						</Link>
+						</HashLink>
 					</Grid>
 				</Grid>
 				<hr className={classes.hr} />
@@ -294,9 +289,9 @@ export default function Learn() {
 						<img alt="mui logo" src={muiLogo} style={{ width: '20%' }} />
 					</Grid>
 					<Grid container direction="row-reverse" alignItems="flex-end">
-						<Link to="#table-of-contents">
+						<HashLink to="#learn">
 							<ArrowUpwardIcon />
-						</Link>
+						</HashLink>
 					</Grid>
 				</Grid>
 			</div>
