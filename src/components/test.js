@@ -213,7 +213,7 @@ export default function GridBuilder() {
 <Grid item xs={9}>
           <Paper className={classes.paperGrid}>
             <Grid container direction='row' justify='flex-start'>
-              
+
               <Grid item className={classes.box} xs={4} align='center'>
                 a = 4 columns
               </Grid>
@@ -229,8 +229,8 @@ export default function GridBuilder() {
             </Grid>
           </Paper>
         </Grid>
-        
-        
+
+
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <Typography variant='h4' gutterBottom>
@@ -247,11 +247,11 @@ export default function GridBuilder() {
             </Grid>
           </Paper>
         </Grid>
-        
-        
+
+
         /////
-        
-        
+
+
         const data = [
           {
             cols: 9,
