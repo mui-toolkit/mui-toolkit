@@ -22,18 +22,14 @@ import {
   grey,
 } from '@ant-design/colors';
 
-// imgs/12columns.jpg
-
 const useStyles = makeStyles({
   container: {
     padding: '5em 0 5em 0',
   },
   paper: {
     padding: '1em',
-    // height: '100vh',
   },
   paperGrid: {
-    // height: '100vh',
     backgroundImage: `url(${twelvecolumns})`,
     backgroundSize: '8.34%',
     border: '2px dashed #da0000',
@@ -129,14 +125,11 @@ export default function GridBuilder() {
   };
 
   const handleDragEnter = (e, params) => {
-    console.log('entering drag', params);
-
     if (colorIndex === 9) {
       setColorIndex(0);
     } else {
       const currentItem = dragItem.current;
       if (e.target !== dragNode.current) {
-        console.log('target is not the same');
         setList(oldList => {
           let newList = JSON.parse(JSON.stringify(oldList));
           newList[params.grpI].items.splice(
@@ -171,9 +164,6 @@ export default function GridBuilder() {
   };
 
   const handleDelete = (e, params) => {
-    console.log('PARAMS', params);
-    console.log('ITEM', list[0].items[params.itemI].id);
-
     let id = list[0].items[params.itemI].id;
 
     setList(prevList => {
@@ -188,10 +178,6 @@ export default function GridBuilder() {
   };
 
   const handleChangeSize = (e, params, newSize) => {
-    console.log('PARAMS', params);
-    console.log('ITEM', list[0].items[params.itemI].id);
-    console.log('SIZE', newSize);
-
     let id = list[params.grpI].items[params.itemI].id;
 
     list[params.grpI].items.forEach(item => {

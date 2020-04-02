@@ -16,7 +16,7 @@ import {
   magenta,
   grey,
 } from '@ant-design/colors';
-import { generate, presetPalettes } from '@ant-design/colors';
+import { generate } from '@ant-design/colors';
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -37,10 +37,6 @@ export const ColorGenerator = props => {
   const { setColor, setSecondaryColor, setDefaultColor, setPaperColor } = props;
 
   const colorGeneration = () => {
-    // const palette = generate('#FB8C00', {
-    //   theme: 'dark',
-    //   backgroundColor: '#141414',
-    // });
     const colors = [
       '#FF8A65',
       '#6A1B9A',
