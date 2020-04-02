@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import firebase from 'firebase';
 import 'firebase/auth';
+import { db } from '../config/firebase';
 import {
   Dialog,
   DialogActions,
@@ -16,7 +17,6 @@ import {
   Paper
 } from '@material-ui/core/';
 import Tab from '@material-ui/core/Tab';
-import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -56,7 +56,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function Login() {
+export function Login(provider) {
+  var provider = new firebase.auth.GoogleAuthProvider();
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -65,7 +66,8 @@ export function Login() {
   const [data, setData] = useState(null);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState('xs');
-
+  var providerGH = new firebase.auth.GithubAuthProvider();
+  providerGH.addScope('repo');
   const handleMaxWidthChange = event => {
     setMaxWidth(event.target.value);
   };
@@ -76,6 +78,8 @@ export function Login() {
 
   const handleClick = () => {
     setOpenSnack(true);
+    setEmail();
+    setPassword();
   };
   const handleClose = (event, reason) => {
     console.log('hanCl');
@@ -141,7 +145,6 @@ export function Login() {
         fullWidth={fullWidth}
         maxWidth={maxWidth}
       >
-
         <Paper
         // className={classes.paper}
         // style={{
@@ -152,7 +155,6 @@ export function Login() {
         //   backgroundColor: '#fff'
         // }}
         >
-
           <Typography
             id="form-dialog-title"
             align="center"
@@ -212,6 +214,85 @@ export function Login() {
               className={classes.button}
             >
               Login
+            </Button>
+
+            <Button
+              onClick={() => {
+                firebase
+                  .auth()
+                  .signInWithPopup(provider)
+                  .then(function(result) {
+                    var token = result.credential.accessToken;
+                    // The signed-in user info.
+                    var user = result.user;
+                  })
+                  .catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    var email = error.email;
+                    var credential = error.credential;
+                    console.log('google error', error);
+                  });
+              }}
+              className="googleBtn"
+              type="button"
+              style={{ fontSize: 10, marginRight: '20px' }}
+            >
+              <img
+                style={{ width: '12px', marginRight: '5px' }}
+                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                alt="logo"
+              />
+              Login With Google
+            </Button>
+            <Button
+              onClick={() => {
+                firebase
+                  .auth()
+                  .signInWithPopup(providerGH)
+                  .then(function(result) {
+                    // This gives you a GitHub Access Token.
+                    var token = result.credential.accessToken;
+                    // The signed-in user info.
+                    var user = result.user;
+                    console.log('GH user', user);
+                  })
+                  .catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                    if (
+                      errorCode ===
+                      'auth/account-exists-with-different-credential'
+                    ) {
+                      alert(
+                        'You have signed up with a different provider for that email.'
+                      );
+                      // Handle linking here if your app allows it.
+                    } else {
+                      console.error(error);
+                    }
+                  });
+              }}
+              className="googleBtn"
+              type="button"
+              style={{
+                fontSize: 10,
+                marginTop: '5px',
+                borderRadius: '5px'
+              }}
+            >
+              <img
+                style={{ width: '30px', marginRight: '5px' }}
+                src="https://upload.wikimedia.org/wikipedia/commons/5/54/GitHub_Logo.png"
+                alt="logo"
+              />
+              Login with Github
             </Button>
           </DialogActions>
         </Paper>

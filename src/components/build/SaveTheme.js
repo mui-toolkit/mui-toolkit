@@ -18,6 +18,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
+import { sign } from "crypto";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -33,18 +34,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const SaveTheme = ({
-  downloadTheme,
-  user,
-  themeId,
-  starClicked,
-  bookmarkClicked
-}) => {
-  console.log("starClicked", starClicked);
-  console.log("bookmarkClicked", bookmarkClicked);
+export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
   console.log("SaveTheme -> themeId", themeId);
   console.log("SaveTheme -> downloadTheme", downloadTheme);
   console.log("SaveTheme -> user", user);
+  console.log("SaveTheme -> signedInUserId", signedInUserId);
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -54,7 +48,14 @@ export const SaveTheme = ({
   let history = useHistory();
 
   const handleClickOpen = () => {
-    // need to test if coming from themes table // can also check if (prop threaded theme)
+    // if (
+    //   downloadTheme.userId !== signedInUserId ||
+    //   downloadTheme.userId !== "guest"
+    // ) {
+    //   console.log("someone elses theme");
+    //   setOpen(true);
+    // }
+    // need to test if coming from themes table
     if (!user) {
       setOpen(false);
       setMessage("Theme Edited and Saved");
@@ -114,16 +115,21 @@ export const SaveTheme = ({
   };
 
   const saveNewTheme = async themeName => {
-    console.log(downloadTheme);
+    // if (!signedInUserId) {
     downloadTheme.userId = user.uid;
     downloadTheme.themeName = themeName;
     downloadTheme.createdBy = user.email;
+    // } else {
+    //   downloadTheme.userId = signedInUserId;
+    //   downloadTheme.themeName = themeName;
+    // }
+    // new customized theme
     await db
       .collection("CustomizedThemes")
-      .doc()
-      .set({ ...downloadTheme })
-      .then(function() {
-        console.log(`Added Theme ${themeName} to collection`);
+      .add({ ...downloadTheme })
+      .then(function(docRef) {
+        console.log(`Added Theme ${themeName} to collection`, docRef.id);
+        downloadTheme.themeId = docRef.id;
       })
       .catch(function(error) {
         console.log("Error creating a new theme: ", error);
@@ -141,11 +147,17 @@ export const SaveTheme = ({
       });
   };
 
+  // const saveNewPalette = async themeName => {
+  //   await saveNewTheme(themeName);
+  //   if (signedInUserId) {
+  //     await addThemeToUser(themeName, signedInUserId);
+  //   } else await addThemeToUser(themeName, user.uid);
+  // };
   const saveNewPalette = async themeName => {
-    saveNewTheme(themeName);
-    addThemeToUser(themeName, user.uid);
+    await saveNewTheme(themeName);
+    await addThemeToUser(themeName, user.uid);
+    // setNewFavoriteTheme(downloadTheme);
   };
-
   const updateTheme = async oldThemeName => {
     downloadTheme.lastEditAt = new Date();
     await db
@@ -184,10 +196,8 @@ export const SaveTheme = ({
   };
 
   const editAndSavePalette = async => {
-    console.log("editAndSavePalette -> userId", downloadTheme);
     updateTheme(downloadTheme.themeName);
     updateUsersTheme(downloadTheme.themeName, downloadTheme.userId);
-    console.log("updating.........");
   };
   return (
     <div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+// import Download from "./Download";
 import PropTypes from "prop-types";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -18,13 +18,13 @@ import Switch from "@material-ui/core/Switch";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import WebPreview from "../WebPreview/WebPreview";
-import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
 import Tooltip from "@material-ui/core/Tooltip";
 import EditIcon from "@material-ui/icons/Edit";
 import { db } from "../config/firebase";
 import firebase from "firebase";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
+import StarIcon from "@material-ui/icons/Star";
+import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -164,7 +164,10 @@ export default function ThemesTable({
   setThemes,
   themes,
   tableTitle,
-  signedInUserId
+  signedInUserId,
+  table,
+  setBookmarkedThemes,
+  setStarredThemes
 }) {
   const rows = themes.map(themeObject => ({
     themeName: themeObject.themeName,
@@ -205,6 +208,53 @@ export default function ThemesTable({
     setDense(event.target.checked);
   };
 
+  const handleFav = async (table, themeId) => {
+    if (table === "S") {
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .update({
+          starred: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
+        })
+        .then(() => {
+          console.log(`removed ${themeId} from users starred array`);
+          setStarredThemes(prevStarredThemes =>
+            prevStarredThemes.filter(theme => theme.themeId !== themeId)
+          );
+        });
+      await db
+        .collection("CustomizedThemes")
+        .doc(`${themeId}`)
+        .update({
+          starsCount: firebase.firestore.FieldValue.increment(-1)
+        })
+        .then(() => {
+          console.log("decrement starsCount");
+        });
+    } else if (table === "B") {
+      await db
+        .collection("Users")
+        .doc(`${signedInUserId}`)
+        .update({
+          bookmarked: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
+        })
+        .then(() => {
+          console.log(`removed ${themeId} from users bookmarked array`);
+          setBookmarkedThemes(prevBookmarkedThemes =>
+            prevBookmarkedThemes.filter(theme => theme.themeId !== themeId)
+          );
+        });
+      await db
+        .collection("CustomizedThemes")
+        .doc(`${themeId}`)
+        .update({
+          bookmarksCount: firebase.firestore.FieldValue.increment(-1)
+        })
+        .then(() => {
+          console.log("decrement bookmarkscount");
+        });
+    }
+  };
   const handleDelete = async (themeId, userId, themeName) => {
     // delete collection
     await db
@@ -220,7 +270,7 @@ export default function ThemesTable({
         );
       })
       .catch(function(error) {
-        console.log("Error deleting theme: ", error);
+        console.error(error);
       });
     //delete from user themes array
     await db
@@ -303,26 +353,54 @@ export default function ThemesTable({
                           <VisibilityIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Edit Theme">
-                        <IconButton
-                          aria-label="edit"
-                          // key={row.themeId}
-                          component={Link}
-                          to={`/design/${row.themeId}/${signedInUserId}`}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete Theme">
-                        <IconButton
-                          aria-label="delete"
-                          onClick={() =>
-                            handleDelete(row.themeId, row.userId, row.themeName)
+                      {row.userId !== signedInUserId ? (
+                        <Tooltip title="Download">
+                          <IconButton aria-label="download">
+                            <SystemUpdateAltIcon />
+                            {/* <Download downloadTheme={row} /> */}
+                          </IconButton>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="Edit Theme">
+                          <IconButton
+                            aria-label="edit"
+                            // key={row.themeId}
+                            component={Link}
+                            to={`/design/${row.themeId}/${signedInUserId}`}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+
+                      {row.userId !== signedInUserId ? (
+                        <Tooltip
+                          title={
+                            table === "S" ? "Remove Star" : "Remove Bookmark"
                           }
                         >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
+                          <IconButton
+                            onClick={() => handleFav(table, row.themeId)}
+                          >
+                            {table === "S" ? <StarIcon /> : <BookmarkIcon />}
+                          </IconButton>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="Delete Theme">
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() =>
+                              handleDelete(
+                                row.themeId,
+                                row.userId,
+                                row.themeName
+                              )
+                            }
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
                     </TableRow>
                   );
                 })}
