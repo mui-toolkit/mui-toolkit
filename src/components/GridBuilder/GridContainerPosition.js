@@ -76,6 +76,7 @@ export const GridContainerPosition = (props) => {
 					<FormControlLabel value="flex-end" control={<Radio />} label="flex-end" />
 					<FormControlLabel value="stretch" control={<Radio />} label="stretch" />
 					<FormControlLabel value="baseline" control={<Radio />} label="baseline" />
+					<FormControlLabel value="" control={<Radio />} label="None" />
 				</RadioGroup>
 			</FormControl>
 		</React.Fragment>
