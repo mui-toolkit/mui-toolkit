@@ -189,7 +189,7 @@ export default function WebPreview(props) {
                 noWrap
                 className={classes.title}
               >
-                This is A Web Live Web Preview of Your Theme
+                This is A Live Web Preview of Your Theme
               </Typography>
               <IconButton color="inherit">
                 <Badge badgeContent={4} color="error">
