@@ -341,6 +341,7 @@ export default function Learn() {
 						</HashLink>
 					</Grid>
 				</Grid>
+				<hr className={classes.hr} />
 				<Grid id="about" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
