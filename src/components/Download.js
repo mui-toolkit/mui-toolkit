@@ -29,6 +29,7 @@ const refined = themeObject => {
   delete refined.userId;
   delete refined.themeName;
   delete refined.explore;
+  delete refined.userName
 
   return refined;
 };
