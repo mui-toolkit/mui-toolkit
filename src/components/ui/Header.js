@@ -186,8 +186,7 @@ export default function Header(props) {
                   starredThemes: [
                     {
                       themeId: 0,
-                      themeName: "logged in",
-
+                      themeName: "logged in"
                     }
                   ],
                   bookmarkedThemes: [
@@ -198,7 +197,7 @@ export default function Header(props) {
                   ],
                   signedInUserId: props.user.uid,
                   userName: props.user.email,
-                  status: 'loggedIn'
+                  status: "loggedIn"
                 }
               }}
               label="Explore"
