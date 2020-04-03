@@ -95,6 +95,9 @@ export default function Learn() {
 						<HashLink smooth to="#share" className={classes.contentLinks}>
 							Share
 						</HashLink>
+						<HashLink smooth to="#about" className={classes.contentLinks}>
+							About
+						</HashLink>
 					</Grid>
 					<Grid item align="center" className={classes.title} xs={6}>
 						<img alt="mui logo" src={mui1} />
@@ -337,7 +340,7 @@ export default function Learn() {
 						</HashLink>
 					</Grid>
 				</Grid>
-				<Grid id="share" container direction="row" alignItems="center" className={classes.container}>
+				<Grid id="about" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
 							About
