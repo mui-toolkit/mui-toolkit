@@ -32,7 +32,7 @@
 #### Theme Styler features
 ![](https://media.giphy.com/media/Quyq8vrg08lNK9oKuu/giphy.gif)
 
-### Downloading + applying a theme
+#### Downloading + applying a theme
 ![](https://media.giphy.com/media/H6Q07q2pg6wJiekq5L/giphy.gif)
 
 #### Grid Builder features
@@ -42,7 +42,7 @@
 ![](https://media.giphy.com/media/YRmrGM9IcowfvqUF3d/giphy.gif)
 
 #### Dashboard features
-![](Chat-App-DropSpaces-Demo.gif)
+![](https://media.giphy.com/media/f3e1HZ64ZtjzKMgPjJ/giphy.gif)
 
 #### Admin Page features
 
@@ -62,18 +62,37 @@
 - Run into a problem? There's probably a library for that (but the documentation isn't always great!)
 
 ```javascript 
-// example socket flow 
+// example Firestore query
 
-// in our React component we define an event handler containing our thunk
-async handleCreateRoom(event) {
-    event.preventDefault();
-    const roomName = this.state.roomName;
-    const ownerId = this.props.user._id;
-    await this.props.createRoom(roomName, ownerId);
-    this.setState({
-      roomName: ""
-    });
-  }
+// in our React component we make a request for dashboard info, first finding the user and their associated themes, then subsequently making a call for each theme associated with the user.
+
+useEffect(() => {
+    const userThemes = [];
+    const unsub = async () => {
+      await db
+        .collection("CustomizedThemes")
+        .where("userId", "==", `${user.uid}`)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log("No matching documents.");
+            return;
+          }
+          snapshot.forEach(theme => {
+            userThemes.push({
+              ...theme.data(),
+              themeId: theme.id,
+              userName: foundUser.username
+            });
+            setThemes([...userThemes]);
+          });
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    };
+    unsub();
+  }, []);
   
 // our thunk contains a socket.emit function which communicates with and sends
 // data to our server
