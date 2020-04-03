@@ -229,7 +229,7 @@ export default function Explore() {
               />
             ) : (
               <Tooltip title="Access to extra features requires signingup or logging in">
-                <IconButton component={Link} to={`/`}>
+                <IconButton component={Link} to={`/signup`}>
                   <HomeIcon />
                   Sign in
                 </IconButton>
