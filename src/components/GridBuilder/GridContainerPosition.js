@@ -1,10 +1,12 @@
-import React from "react";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import { Typography, Grid } from "@material-ui/core";
+import React from 'react';
+import {
+  Typography,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from '@material-ui/core';
 
 export const GridContainerPosition = props => {
   const {
@@ -13,7 +15,7 @@ export const GridContainerPosition = props => {
     justify,
     setJustify,
     alignItems,
-    setAlignItems
+    setAlignItems,
   } = props;
 
   const handleDirectionChange = event => {
@@ -29,107 +31,107 @@ export const GridContainerPosition = props => {
   return (
     <React.Fragment>
       <Typography
-        variant="h6"
+        variant='h6'
         style={{
           fontWeight: 400,
-          color: "#9eb341",
-          border: "2px dashed #da0000",
-          padding: "0px 0px 0px 3px"
+          color: '#9eb341',
+          border: '2px dashed #da0000',
+          padding: '0px 0px 0px 3px',
         }}
         gutterBottom
       >
         Grid Container Prop Settings
       </Typography>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Direction</FormLabel>
+      <FormControl component='fieldset'>
+        <FormLabel component='legend'>Direction</FormLabel>
         <RadioGroup
           row
-          aria-label="direction"
-          name="direction"
+          aria-label='direction'
+          name='direction'
           value={direction}
           onChange={handleDirectionChange}
         >
-          <FormControlLabel value="row" control={<Radio />} label="row" />
+          <FormControlLabel value='row' control={<Radio />} label='row' />
           <FormControlLabel
-            value="row-reverse"
+            value='row-reverse'
             control={<Radio />}
-            label="row-reverse"
+            label='row-reverse'
           />
-          <FormControlLabel value="column" control={<Radio />} label="column" />
+          <FormControlLabel value='column' control={<Radio />} label='column' />
           <FormControlLabel
-            value="column-reverse"
+            value='column-reverse'
             control={<Radio />}
-            label="column-reverse"
+            label='column-reverse'
           />
-          <FormControlLabel value="" control={<Radio />} label="none" />
+          <FormControlLabel value='' control={<Radio />} label='none' />
         </RadioGroup>
-        <FormLabel component="legend">Justify</FormLabel>
+        <FormLabel component='legend'>Justify</FormLabel>
         <RadioGroup
           row
-          aria-label="justify"
-          name="justify"
+          aria-label='justify'
+          name='justify'
           value={justify}
           onChange={handleJustifyChange}
         >
           <FormControlLabel
-            value="flex-start"
+            value='flex-start'
             control={<Radio />}
-            label="flex-start"
+            label='flex-start'
           />
-          <FormControlLabel value="center" control={<Radio />} label="center" />
+          <FormControlLabel value='center' control={<Radio />} label='center' />
           <FormControlLabel
-            value="flex-end"
+            value='flex-end'
             control={<Radio />}
-            label="flex-end"
-          />
-          <FormControlLabel
-            value="space-between"
-            control={<Radio />}
-            label="space-between"
+            label='flex-end'
           />
           <FormControlLabel
-            value="space-around"
+            value='space-between'
             control={<Radio />}
-            label="space-around"
+            label='space-between'
           />
           <FormControlLabel
-            value="space-evenly"
+            value='space-around'
             control={<Radio />}
-            label="space-evenly"
+            label='space-around'
           />
-          <FormControlLabel value="" control={<Radio />} label="none" />
+          <FormControlLabel
+            value='space-evenly'
+            control={<Radio />}
+            label='space-evenly'
+          />
+          <FormControlLabel value='' control={<Radio />} label='none' />
         </RadioGroup>
 
-        <FormLabel component="legend">Align Items</FormLabel>
+        <FormLabel component='legend'>Align Items</FormLabel>
         <RadioGroup
           row
-          aria-label="align-items"
-          name="align-items"
+          aria-label='align-items'
+          name='align-items'
           value={alignItems}
           onChange={handleAlignChange}
         >
           <FormControlLabel
-            value="flex-start"
+            value='flex-start'
             control={<Radio />}
-            label="flex-start"
+            label='flex-start'
           />
-          <FormControlLabel value="center" control={<Radio />} label="center" />
+          <FormControlLabel value='center' control={<Radio />} label='center' />
           <FormControlLabel
-            value="flex-end"
+            value='flex-end'
             control={<Radio />}
-            label="flex-end"
-          />
-          <FormControlLabel
-            value="stretch"
-            control={<Radio />}
-            label="stretch"
+            label='flex-end'
           />
           <FormControlLabel
-            value="baseline"
+            value='stretch'
             control={<Radio />}
-            label="baseline"
+            label='stretch'
           />
-          <FormControlLabel value="" control={<Radio />} label="none" />
+          <FormControlLabel
+            value='baseline'
+            control={<Radio />}
+            label='baseline'
+          />
+          <FormControlLabel value='' control={<Radio />} label='none' />
         </RadioGroup>
       </FormControl>
     </React.Fragment>
