@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import firebase from 'firebase';
-import 'firebase/auth';
-import { db } from '../config/firebase';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import firebase from "firebase";
+import "firebase/auth";
+import { db } from "../config/firebase";
 import {
   Dialog,
   DialogActions,
@@ -15,44 +15,44 @@ import {
   IconButton,
   Typography,
   Paper
-} from '@material-ui/core/';
-import Tab from '@material-ui/core/Tab';
+} from "@material-ui/core/";
+import Tab from "@material-ui/core/Tab";
 
 const useStyles = makeStyles(theme => ({
   button: {
-    marginRight: '20px',
-    '&:hover': {
-      backgroundColor: 'transparent'
+    marginRight: "20px",
+    "&:hover": {
+      backgroundColor: "transparent"
     },
     fontWeight: 400,
-    textTransform: 'none',
+    textTransform: "none",
     borderRadius: 5,
     height: 46,
     padding: 10,
-    alignItems: 'center'
+    alignItems: "center"
   },
-  title: { backgroundColor: '#3d4576' },
+  title: { backgroundColor: "#3d4576" },
   tab: {
-    textTransform: 'none',
+    textTransform: "none",
     fontWeight: 400,
-    fontSize: '1rem',
+    fontSize: "1rem",
     minWidth: 10,
-    marginLeft: '25px',
-    color: '#000',
-    fontFamily: 'Roboto'
+    marginLeft: "25px",
+    color: "#000",
+    fontFamily: "Roboto"
   },
   errorText: {
-    color: '#f50057',
+    color: "#f50057",
     marginBottom: 5,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 14
   },
   paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: 'auto',
-    width: 'fit-content',
-    backgroundColor: '#fff'
+    display: "flex",
+    flexDirection: "column",
+    margin: "auto",
+    width: "fit-content",
+    backgroundColor: "#fff"
   }
 }));
 
@@ -60,14 +60,15 @@ export function Login(provider) {
   var provider = new firebase.auth.GoogleAuthProvider();
   var providerGH = new firebase.auth.GithubAuthProvider();
   const classes = useStyles();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [openSnack, setOpenSnack] = useState(false);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(null);
   const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('xs');
-
+  const [maxWidth, setMaxWidth] = React.useState("xs");
+  var providerGH = new firebase.auth.GithubAuthProvider();
+  providerGH.addScope("repo");
   const handleMaxWidthChange = event => {
     setMaxWidth(event.target.value);
   };
@@ -82,8 +83,8 @@ export function Login(provider) {
     setPassword();
   };
   const handleClose = (event, reason) => {
-    console.log('hanCl');
-    if (reason === 'clickaway' || reason === 'timeout') {
+    console.log("hanCl");
+    if (reason === "clickaway" || reason === "timeout") {
       setOpenSnack(false);
       handleClick();
       return;
@@ -112,16 +113,16 @@ export function Login(provider) {
         if (!isEmpty(error)) {
           handleClick();
         }
-        console.log('error in login', error);
+        console.log("error in login", error);
       });
   };
 
   const validate = email => {
     let errors = {};
     if (!email) {
-      errors = 'Email address is required';
+      errors = "Email address is required";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors = 'Email address is invalid';
+      errors = "Email address is invalid";
     }
     return errors;
   };
@@ -141,7 +142,7 @@ export function Login(provider) {
         open={open}
         onClose={handleCancel}
         aria-labelledby="form-dialog-title"
-        style={{ backgroundColor: '#fff' }}
+        style={{ backgroundColor: "#fff" }}
         fullWidth={fullWidth}
         maxWidth={maxWidth}
       >
@@ -150,9 +151,9 @@ export function Login(provider) {
             id="form-dialog-title"
             align="center"
             style={{
-              color: '#fff',
+              color: "#fff",
               fontSize: 20,
-              fontFamily: 'Roboto',
+              fontFamily: "Roboto",
               lineHeight: 3
             }}
             className={classes.title}
@@ -168,13 +169,13 @@ export function Login(provider) {
               error={!isEmpty(validate(email)) && email.length > 0}
               helperText={
                 validate(email) && email.length > 0
-                  ? 'Please enter a valid email'
-                  : ''
+                  ? "Please enter a valid email"
+                  : ""
               }
               helperText={
                 !isEmpty(validate(email)) && email.length > 0
                   ? validate(email)
-                  : ''
+                  : ""
               }
             />
           </DialogContent>
@@ -185,7 +186,7 @@ export function Login(provider) {
               id="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              style={{ marginBottom: '20px' }}
+              style={{ marginBottom: "20px" }}
             />
           </DialogContent>
           {openSnack && (
@@ -197,10 +198,10 @@ export function Login(provider) {
             <Button
               onClick={handleSubmit}
               style={{
-                fontFamily: 'Roboto',
+                fontFamily: "Roboto",
                 fontSize: 14,
-                marginRight: '20px',
-                color: '#3F51B5'
+                marginRight: "20px",
+                color: "#3F51B5"
               }}
               className={classes.button}
             >
@@ -224,15 +225,15 @@ export function Login(provider) {
                     var errorMessage = error.message;
                     var email = error.email;
                     var credential = error.credential;
-                    console.log('google error', error);
+                    console.log("google error", error);
                   });
               }}
               className="googleBtn"
               type="button"
-              style={{ fontSize: 10, marginRight: '20px' }}
+              style={{ fontSize: 10, marginRight: "20px" }}
             >
               <img
-                style={{ width: '12px', marginRight: '5px' }}
+                style={{ width: "12px", marginRight: "5px" }}
                 src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
                 alt="logo"
               />
@@ -248,7 +249,7 @@ export function Login(provider) {
                     var token = result.credential.accessToken;
                     // The signed-in user info.
                     var user = result.user;
-                    console.log('GH user', user);
+                    console.log("GH user", user);
                   })
                   .catch(function(error) {
                     // Handle Errors here.
@@ -260,10 +261,10 @@ export function Login(provider) {
                     var credential = error.credential;
                     if (
                       errorCode ===
-                      'auth/account-exists-with-different-credential'
+                      "auth/account-exists-with-different-credential"
                     ) {
                       alert(
-                        'You have signed up with a different provider for that email.'
+                        "You have signed up with a different provider for that email."
                       );
                       // Handle linking here if your app allows it.
                     } else {
@@ -274,12 +275,12 @@ export function Login(provider) {
               type="button"
               style={{
                 fontSize: 10,
-                marginTop: '5px',
-                borderRadius: '5px'
+                marginTop: "5px",
+                borderRadius: "5px"
               }}
             >
               <img
-                style={{ width: '30px', marginRight: '5px' }}
+                style={{ width: "30px", marginRight: "5px" }}
                 src="https://upload.wikimedia.org/wikipedia/commons/5/54/GitHub_Logo.png"
                 alt="logo"
               />

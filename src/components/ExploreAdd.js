@@ -16,7 +16,7 @@ import { db } from "../config/firebase";
 export default function ExploreAdd({
   savedThemes,
   setExploreThemes,
-  foundUser
+  userName
 }) {
   const [open, setOpen] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState("");
@@ -26,14 +26,17 @@ export default function ExploreAdd({
       .collection("CustomizedThemes")
       .doc(`${themeObject.themeId}`)
       .update({
-        explore: true,
-        userName: foundUser.username
+        explore: true
+        // userName
       })
       .then(() => {
         console.log("updated explore status");
       })
       .then(response => {
-        setExploreThemes(prevThemes => [...prevThemes, themeObject]);
+        setExploreThemes(prevThemes => [
+          ...prevThemes,
+          { ...themeObject, userName }
+        ]);
       });
   };
   const handleChange = event => {
@@ -73,8 +76,7 @@ export default function ExploreAdd({
         <DialogTitle id="form-dialog-title">Share a Theme</DialogTitle>
         <DialogContent>
           <DialogContentText style={{ marginBottom: "1em" }}>
-            Add you're own theme to the explore page so others can see your
-            work!
+            Add your own theme to the explore page so others can see your work!
           </DialogContentText>
           <InputLabel id="demo-simple-select-label">Select a Theme</InputLabel>
           <Select
