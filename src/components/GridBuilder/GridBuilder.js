@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { Grid, Paper, Typography, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import twelvecolumns from '../../imgs/12columns.jpg';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import DragNDrop from './DragNDrop';
-import { cloneDeep } from 'lodash';
-import { ChangeSize } from './ChangeSize';
-import { GridContainerPosition } from './GridContainerPosition';
+import React, { useState, useRef } from "react";
+import { Grid, Paper, Typography, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import twelvecolumns from "../../imgs/12columns.jpg";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import DragNDrop from "./DragNDrop";
+import { cloneDeep } from "lodash";
+import { ChangeSize } from "./ChangeSize";
+import { GridContainerPosition } from "./GridContainerPosition";
 import {
   red,
   volcano,
@@ -19,40 +19,40 @@ import {
   geekblue,
   purple,
   magenta,
-  grey,
-} from '@ant-design/colors';
+  grey
+} from "@ant-design/colors";
 
 const useStyles = makeStyles({
   container: {
-    padding: '5em 0 5em 0',
+    padding: "5em 0 5em 0"
   },
   paper: {
-    padding: '1em',
+    padding: "1em"
   },
   paperGrid: {
     backgroundImage: `url(${twelvecolumns})`,
-    backgroundSize: '8.34%',
-    border: '2px dashed #da0000',
-    position: '-webkit-sticky',
-    position: 'sticky',
+    backgroundSize: "8.34%",
+    border: "2px dashed #da0000",
+    position: "-webkit-sticky",
+    position: "sticky",
     zIndex: 1200,
-    top: '6em',
+    top: "6em"
   },
   box: {
-    border: '2px solid #818181',
-    height: '100px',
-    padding: '3em 0 5em 0',
+    border: "2px solid #818181",
+    height: "100px",
+    padding: "3em 0 5em 0"
   },
   containerStyle: {
-    border: '2px dashed #da0000',
+    border: "2px dashed #da0000"
   },
   dragging: {
-    border: '2px solid #818181',
-    height: '100px',
-    padding: '3em 0 5em 0',
-    backgroundColor: '#da0000',
-    opacity: 0.5,
-  },
+    border: "2px solid #818181",
+    height: "100px",
+    padding: "3em 0 5em 0",
+    backgroundColor: "#da0000",
+    opacity: 0.5
+  }
 });
 
 export default function GridBuilder() {
@@ -62,21 +62,21 @@ export default function GridBuilder() {
   const [colorIndex, setColorIndex] = useState(1);
 
   //position state
-  const [direction, setDirection] = useState('row');
-  const [justify, setJustify] = useState('flex-start');
-  const [alignItems, setAlignItems] = useState('center');
+  const [direction, setDirection] = useState("row");
+  const [justify, setJustify] = useState("flex-start");
+  const [alignItems, setAlignItems] = useState("center");
 
   const colors = [
-    '#f8eb00', // yellow
-    '#be00f8', // purple
+    "#f8eb00", // yellow
+    "#be00f8", // purple
     green.primary,
-    '#00c7ce', // blue
-    '#ff5436', // red
-    '#7ed400', // yellow
-    '#f8eb00', // green
+    "#00c7ce", // blue
+    "#ff5436", // red
+    "#7ed400", // yellow
+    "#f8eb00", // green
     gold.primary, // gold
     blue.primary, //
-    magenta.primary,
+    magenta.primary
   ];
 
   const data = [
@@ -84,16 +84,16 @@ export default function GridBuilder() {
       cols: 9,
       paper: classes.paperGrid,
       items: [
-        { id: 'a', cols: 12, color: '#ff5436' },
-        { id: 'b', cols: 4, color: '#00c7ce' },
-        { id: 'c', cols: 5, color: '#7ed400' },
-      ],
+        { id: "a", cols: 12, color: "#ff5436" },
+        { id: "b", cols: 4, color: "#00c7ce" },
+        { id: "c", cols: 5, color: "#7ed400" }
+      ]
     },
     {
       cols: 3,
       paper: classes.paper,
-      items: [{ id: 'd', cols: 12, color: colors[colorIndex - 1] }],
-    },
+      items: [{ id: "d", cols: 12, color: colors[colorIndex - 1] }]
+    }
   ];
 
   const [list, setList] = useState(data);
@@ -103,10 +103,9 @@ export default function GridBuilder() {
   const dragNode = useRef();
 
   const handleDragStart = (e, params) => {
-    console.log('drag starting...,', params);
     dragItem.current = params;
     dragNode.current = e.target;
-    dragNode.current.addEventListener('dragend', handleDragEnd);
+    dragNode.current.addEventListener("dragend", handleDragEnd);
     setTimeout(() => {
       setDragging(true);
     }, 0);
@@ -135,7 +134,7 @@ export default function GridBuilder() {
           newList[params.grpI].items.splice(
             params.itemI,
             0,
-            newList[currentItem.grpI].items.splice(currentItem.itemI, 1)[0],
+            newList[currentItem.grpI].items.splice(currentItem.itemI, 1)[0]
           );
           dragItem.current = params;
           if (newList[1].items.length === 0) {
@@ -145,8 +144,8 @@ export default function GridBuilder() {
               {
                 id: String.fromCharCode(letter),
                 cols: 12,
-                color: `${colors[colorIndex]}`,
-              },
+                color: `${colors[colorIndex]}`
+              }
             ];
           }
           return newList;
@@ -156,9 +155,8 @@ export default function GridBuilder() {
   };
 
   const handleDragEnd = () => {
-    console.log('ending drag..');
     setDragging(false);
-    dragNode.current.removeEventListener('dragend', handleDragEnd);
+    dragNode.current.removeEventListener("dragend", handleDragEnd);
     dragItem.current = null;
     dragNode.current = null;
   };
@@ -169,10 +167,9 @@ export default function GridBuilder() {
     setList(prevList => {
       let newer = prevList[params.grpI].items.filter(item => item.id !== id);
 
-      console.log(newer);
       return [
         { cols: 9, paper: classes.paperGrid, items: [...newer] },
-        { ...prevList[1] },
+        { ...prevList[1] }
       ];
     });
   };
@@ -193,9 +190,9 @@ export default function GridBuilder() {
         {
           cols: 9,
           paper: classes.paperGrid,
-          items: [...list[0].items],
+          items: [...list[0].items]
         },
-        { ...prevList[1] },
+        { ...prevList[1] }
       ];
     });
   };
@@ -206,19 +203,19 @@ export default function GridBuilder() {
     let items = list[0].items;
 
     let gridItemMap = items.map(
-      item => `${'  '}<Grid item xs={${item.cols}} > ${item.id} </Grid>`,
+      item => `${"  "}<Grid item xs={${item.cols}} > ${item.id} </Grid>`
     );
 
-    return gridItemMap.join('\n');
+    return gridItemMap.join("\n");
   };
 
   return (
     <React.Fragment>
       <Grid
         container
-        direction='row'
+        direction="row"
         className={classes.container}
-        justify='flex-end'
+        justify="flex-end"
       >
         {list.map((group, grpI) => (
           <Grid
@@ -233,9 +230,9 @@ export default function GridBuilder() {
             <Paper className={group.paper}>
               <Grid
                 container
-                direction='row'
+                direction="row"
                 direction={grpI ? null : `${direction}`}
-                justify={grpI ? 'center' : `${justify}`}
+                justify={grpI ? "center" : `${justify}`}
                 alignItems={grpI ? null : `${alignItems}`}
               >
                 {group.items.map((item, itemI) => (
@@ -246,7 +243,7 @@ export default function GridBuilder() {
                       dragging ? getStyles({ grpI, itemI }) : classes.box
                     }
                     xs={item.cols}
-                    align='center'
+                    align="center"
                     draggable
                     onDragEnter={
                       dragging
@@ -259,11 +256,11 @@ export default function GridBuilder() {
                       handleDragStart(e, { grpI, itemI });
                     }}
                   >
-                    {' '}
+                    {" "}
                     <Grid
                       container
-                      direction='row'
-                      justify='center'
+                      direction="row"
+                      justify="center"
                       alignItems={alignItems}
                     >
                       {grpI ? (
@@ -273,17 +270,17 @@ export default function GridBuilder() {
                           </Typography>
                           <Typography
                             style={{
-                              fontWeight: 500,
+                              fontWeight: 500
                             }}
                           >
-                            {`${item.id} = 12 columns`}{' '}
+                            {`${item.id} = 12 columns`}{" "}
                           </Typography>
                         </React.Fragment>
                       ) : (
                         <React.Fragment>
                           <Grid item>
                             <Typography
-                              style={{ marginRight: '5px', fontWeight: 800 }}
+                              style={{ marginRight: "5px", fontWeight: 800 }}
                             >{`${item.id} = `}</Typography>
                           </Grid>
                           <Grid item>
@@ -311,15 +308,15 @@ export default function GridBuilder() {
                   <Grid item>
                     <Paper
                       style={{
-                        backgroundColor: '#3c3c3c',
-                        color: '#fff',
-                        padding: '.5em',
-                        marginTop: '1em',
-                        marginBottom: '1em',
+                        backgroundColor: "#3c3c3c",
+                        color: "#fff",
+                        padding: ".5em",
+                        marginTop: "1em",
+                        marginBottom: "1em"
                       }}
                     >
-                      <pre data-lang='javascript'>
-                        {`<Grid container\n${'  '}direction={${direction}}\n${'  '}justify={${justify}}\n${'  '}alignItems={${alignItems}}\n>\n${gridCodeBuilder()} \n</Grid>`}
+                      <pre data-lang="javascript">
+                        {`<Grid container\n${"  "}direction={${direction}}\n${"  "}justify={${justify}}\n${"  "}alignItems={${alignItems}}\n>\n${gridCodeBuilder()} \n</Grid>`}
                       </pre>
                     </Paper>
                     <GridContainerPosition

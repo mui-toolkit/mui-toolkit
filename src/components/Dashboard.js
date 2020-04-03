@@ -133,9 +133,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Dashboard({ user }) {
-  // console.log("Dashboard -> user", user);
-  // const userName = JSON.stringify(user.email).slice(0, user.email.indexOf("@"));
-
   const signedInUserId = user.uid;
   const [themes, setThemes] = useState([]);
   const [starredThemes, setStarredThemes] = useState([]);
@@ -162,7 +159,7 @@ export default function Dashboard({ user }) {
     response();
   }, []);
   //saved themes
-  console.log("found user between useEffects", foundUser);
+
   useEffect(() => {
     const userThemes = [];
     const unsub = async () => {
@@ -176,7 +173,6 @@ export default function Dashboard({ user }) {
             return;
           }
           snapshot.forEach(theme => {
-            console.log(theme.id, "=>", theme.data());
             userThemes.push({
               ...theme.data(),
               themeId: theme.id,
@@ -186,7 +182,7 @@ export default function Dashboard({ user }) {
           });
         })
         .catch(err => {
-          console.log("Error getting documents", err);
+          console.error(err);
         });
     };
     unsub();
@@ -218,7 +214,7 @@ export default function Dashboard({ user }) {
           }
         })
         .catch(err => {
-          console.log("Error getting document", err);
+          console.error(err);
         });
       setBookmarkedThemes(bookmarked);
 
@@ -243,16 +239,12 @@ export default function Dashboard({ user }) {
           }
         })
         .catch(err => {
-          console.log("Error getting document", err);
+          console.error(err);
         });
       setStarredThemes(starred);
     };
     unsubscribe();
   }, []);
-  console.log("DASHBOARD FOUNDUSER", foundUser, signedInUserId);
-  console.log("USERS SAVED THEMES", themes);
-  console.log("STARRED", starredThemes);
-  console.log("BOOKMARKED", bookmarkedThemes);
 
   const classes = useStyles();
 
@@ -438,8 +430,6 @@ export default function Dashboard({ user }) {
             <ListItemText primary="Home" />
           </ListItem>
         </div>
-        {/* <Divider />
-        public/private themes */}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -495,7 +485,6 @@ export default function Dashboard({ user }) {
                 />
               )}
             </Grid>
-            {/* PREVIEW */}
           </Grid>
         </Container>
       </main>

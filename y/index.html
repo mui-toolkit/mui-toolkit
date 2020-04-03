@@ -99,7 +99,7 @@
     <p id="load">Firebase SDK Loading&hellip;</p>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function() {
         // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
         // // The Firebase SDK is initialized and available here!
         //
@@ -112,17 +112,17 @@
 
         try {
           let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(
-            feature => typeof app[feature] === 'function'
+          let features = ["auth", "database", "messaging", "storage"].filter(
+            feature => typeof app[feature] === "function"
           );
           document.getElementById(
-            'load'
-          ).innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-          console.log('auth', auth);
+            "load"
+          ).innerHTML = `Firebase SDK loaded with ${features.join(", ")}`;
+          console.log("auth", auth);
         } catch (e) {
           console.error(e);
-          document.getElementById('load').innerHTML =
-            'Error loading the Firebase SDK, check the console.';
+          document.getElementById("load").innerHTML =
+            "Error loading the Firebase SDK, check the console.";
         }
       });
     </script>

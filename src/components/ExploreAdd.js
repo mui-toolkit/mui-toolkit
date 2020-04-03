@@ -18,7 +18,6 @@ export default function ExploreAdd({
   setExploreThemes,
   userName
 }) {
-  console.log("savedThemes", savedThemes);
   const [open, setOpen] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState("");
 
@@ -28,7 +27,6 @@ export default function ExploreAdd({
       .doc(`${themeObject.themeId}`)
       .update({
         explore: true
-        // userName
       })
       .then(() => {
         console.log("updated explore status");

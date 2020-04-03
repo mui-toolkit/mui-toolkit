@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import firebase from 'firebase';
-import 'firebase/auth';
-import { fc } from '../config/firebase';
-import 'firebase/functions';
-import { Grid, Button, TextField } from '@material-ui/core';
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import firebase from "firebase";
+import "firebase/auth";
+import { fc } from "../config/firebase";
+import "firebase/functions";
+import { Grid, Button, TextField } from "@material-ui/core";
 
 const UserContext = React.createContext({});
 const UserProvider = UserContext.Provider;
@@ -22,13 +22,12 @@ function onAuthStateChange(callback) {
 }
 
 export function Auth() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const handleSubmit = e => {
     e.preventDefault();
     // get email
     const adminEmail = email;
-    const addAdminRole = fc.httpsCallable('addAdminRole');
-    console.log('in auth handleSubmit');
+    const addAdminRole = fc.httpsCallable("addAdminRole");
     addAdminRole({ email: adminEmail })
       .then(result => {
         console.log(result);
@@ -38,20 +37,20 @@ export function Auth() {
         var code = error.code;
         var message = error.message;
         var details = error.details;
-        console.log('err in auth', error);
+        console.error(error);
         // ...
       });
-    setEmail('');
+    setEmail("");
   };
 
   return (
     <div>
-      <Grid container direction="column" style={{ marginTop: '10em' }}>
+      <Grid container direction="column" style={{ marginTop: "10em" }}>
         <Grid item container justify="center">
           <form
             onSubmit={handleSubmit}
             // class="center-align admin-actions"
-            style={{ margin: '40px auto; max-width: 300px' }}
+            style={{ margin: "40px auto; max-width: 300px" }}
           >
             <input
               type="email"
