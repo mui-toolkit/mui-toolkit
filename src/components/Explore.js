@@ -41,6 +41,7 @@ const useStyles = makeStyles({
 export default function Explore() {
   const classes = useStyles();
   let location = useLocation();
+  console.log("Explore -> location", location);
   const [isLoading, setLoading] = useState(true);
   if (!location.state) {
     location.state = {
