@@ -22,7 +22,7 @@
 ## Features
 - mymui provides two tools for styling and building Material-UI components quickly and easily
 - Theme Styler allows the customization of a Material-UI theme with a dynamic visual interface
-- Adjust color, button styling, typography, and alerts with palettes, switches, sliders++
+- Adjust color, button styling, typography, and alerts with palettes, switches, sliders + more
 - Download a custom theme and apply it to your project using Material-UI's ThemeProvider
 - Save and share your theme with the mymui community
 - Discover user created themes via the explore page
