@@ -28,11 +28,11 @@ export function PreviewGeneral() {
               <Typography variant='h5'>This is A Paper Component</Typography>
               <br />
               <Typography variant='body1'>
-                Alohamora wand elf parchment, Wingardium Leviosa hippogriff,
-                house dementors betrayal. Holly, Snape centaur portkey ghost
-                Hermione spell bezoar Scabbers. Peruvian-Night-Powder werewolf,
-                Dobby pear-tickle half-moon-glasses, Knight-Bus. Padfoot
-                snargaluff seeker.
+                Reparo incarcerous ennervate stupefy bulbadox aparecium
+                alohomora. Stupefy totalus anapneo immobulus cruciatus scourgify
+                morsmordre alohomora. Funnunculus inflamarae immobilus lumos
+                locomotor funnunculus aparecium. Impedimenta totalus reducto
+                rictusempra amortentia nox.
               </Typography>
               <br />
               <Grid item className={classes.button}>
