@@ -201,7 +201,6 @@ function ExploreTable({ signedInUserId, themesToMap }) {
               subtitle={<span>by: {theme.userName}</span>}
               actionIcon={
                 <IconButton
-                  // aria-label={`info about ${theme.themeId}`}
                   className={classes.icon}
                   onClick={e => handleClick(e, theme)}
                 >

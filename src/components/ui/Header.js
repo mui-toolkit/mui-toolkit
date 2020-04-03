@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import { makeStyles } from "@material-ui/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import firebase from "firebase";
-import "firebase/auth";
-import Login from "../Login";
-import Grid from "@material-ui/core/Grid";
-import StartDialog from "../StartDialog";
+import React, { useState } from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import { makeStyles } from '@material-ui/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import { Link, Redirect } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import firebase from 'firebase';
+import 'firebase/auth';
+import Login from '../Login';
+import Grid from '@material-ui/core/Grid';
+import StartDialog from '../StartDialog';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -32,14 +32,13 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 400,
     fontSize: "1rem",
     minWidth: 10,
-    marginLeft: "25px",
-    color: "#000",
-    fontFamily: "Roboto"
+    marginLeft: '25px',
+    color: '#000',
+    fontFamily: 'Roboto'
   }
 }));
 
 export default function Header(props) {
-  console.log("Header -> props", props);
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -58,13 +57,15 @@ export default function Header(props) {
       .auth()
       .signOut()
       .then(() => {
-        console.log("user signed out", props);
+        console.log('user signed out', props);
+        window.location = '/';
+        return <Redirect to="/" />;
       });
   };
   if (!props.user.loggedIn) {
     return (
       <React.Fragment>
-        <AppBar position="fixed" style={{ background: "#fff" }}>
+        <AppBar position="fixed" style={{ background: '#fff' }}>
           <Toolbar>
             <Button
               component={Link}
@@ -84,13 +85,13 @@ export default function Header(props) {
               <Tab
                 className={classes.tab}
                 component={Link}
-                to="/learn"
-                label="Learn"
+                to='/learn'
+                label='Learn'
               />
               <Tab
                 className={classes.tab}
                 onClick={handleClickOpen}
-                label="Create"
+                label='Create'
               />
               <Tab
                 className={classes.tab}
@@ -120,7 +121,7 @@ export default function Header(props) {
                       }
                     ],
                     signedInUserId: "guest",
-                    userName: "guest"
+                    foundUser: { username: "guest" }
                   }
                 }}
                 label="Explore"
@@ -142,7 +143,7 @@ export default function Header(props) {
   }
   return (
     <React.Fragment>
-      <AppBar position="fixed" style={{ background: "#fff" }}>
+      <AppBar position="fixed" style={{ background: '#fff' }}>
         <Toolbar>
           <Button
             component={Link}
@@ -152,7 +153,7 @@ export default function Header(props) {
               fontFamily: "Roboto",
               fontWeight: 200,
               fontSize: 28,
-              color: "#000"
+              color: '#000'
             }}
             className={classes.button}
           >
@@ -168,23 +169,15 @@ export default function Header(props) {
             <Tab
               className={classes.tab}
               onClick={handleClickOpen}
-              label="Create"
+              label='Create'
             />
             <Tab
               className={classes.tab}
               component={Link}
-              to={{
-                pathname: "/explore",
-                state: {
-                  themes: [],
-                  starredThemes: [],
-                  bookmarkedThemes: [],
-                  signedInUserId: props.user.uid
-                  // foundUser
-                }
-              }}
+              to="/explore"
               label="Explore"
             />
+            {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
               component={Link}
