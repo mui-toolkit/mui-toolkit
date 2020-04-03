@@ -18,16 +18,14 @@ import GridBuilder from "./GridBuilder/GridBuilder";
 
 const defaultUser = {
   loggedIn: false,
-  email: '',
-  uid: ''
+  email: "",
+  uid: ""
 };
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
       user.getIdTokenResult().then(idTokenResult => {
         user.admin = idTokenResult.claims.admin;
-        // console.log('user in onAuth', user.admin);
-        // console.log('idToken', idTokenResult);
         callback({
           loggedIn: true,
           email: user.email,
@@ -44,14 +42,8 @@ function onAuthStateChange(callback) {
 function App() {
   const [user, setUser] = useState({ loggedIn: true });
   useEffect(() => {
-    // do equivalent of unsubscribe
     const unsubscribe = onAuthStateChange(setUser);
-    // return async () => {
-    //   await unsubscribe();
-    // };
   }, []);
-
-  console.log("App -> user", user);
 
   return (
     <BrowserRouter>

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import Typography from '@material-ui/core/Typography';
-import { Grid, Button } from '@material-ui/core';
-import firebase from 'firebase';
-import 'firebase/auth';
-import { Link } from 'react-router-dom';
-import StartDialog from './StartDialog';
-import muilogo from '.././imgs/mui-logo.jpg';
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import Typography from "@material-ui/core/Typography";
+import { Grid, Button } from "@material-ui/core";
+import firebase from "firebase";
+import "firebase/auth";
+import { Link } from "react-router-dom";
+import StartDialog from "./StartDialog";
+import muilogo from ".././imgs/mui-logo.jpg";
 
 function onAuthStateChange(callback) {
   firebase.auth().onAuthStateChanged(user => {
@@ -19,7 +19,7 @@ function onAuthStateChange(callback) {
 
 export default function Home() {
   const [user, setUser] = useState({ loggedIn: false });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const [open, setOpen] = React.useState(false);
 
@@ -33,39 +33,36 @@ export default function Home() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
-    // return async () => {
-    //   await unsubscribe();
-    // };
   }, []);
   return (
     <div>
       <div>
-        <Grid container direction='column' style={{ marginTop: '10em' }}>
+        <Grid container direction="column" style={{ marginTop: "10em" }}>
           <Grid item>
             <Grid
               container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              style={{ marginTop: '1.5em' }}
+              direction="row"
+              justify="center"
+              alignItems="center"
+              style={{ marginTop: "1.5em" }}
             >
               <Grid item>
                 <Typography
-                  variant='h4'
-                  style={{ marginRight: '5px' }}
+                  variant="h4"
+                  style={{ marginRight: "5px" }}
                   gutterBottom
                 >
-                  Welcome to{' '}
+                  Welcome to{" "}
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography
-                  variant='h4'
+                  variant="h4"
                   style={{
-                    fontFamily: 'Roboto',
+                    fontFamily: "Roboto",
                     fontWeight: 200,
                     fontSize: 30,
-                    color: '#000',
+                    color: "#000"
                   }}
                   gutterBottom
                 >
@@ -75,13 +72,13 @@ export default function Home() {
             </Grid>
           </Grid>
 
-          <Grid container justify='center' alignItems='center'>
+          <Grid container justify="center" alignItems="center">
             <Typography
-              style={{ marginTop: '10px' }}
-              align='center'
-              style={{ color: '#818181' }}
+              style={{ marginTop: "10px" }}
+              align="center"
+              style={{ color: "#818181" }}
             >
-              <b>Build</b> and <b>style</b> Material-UI <b>components</b>{' '}
+              <b>Build</b> and <b>style</b> Material-UI <b>components</b>{" "}
               quickly and easily.
               <br />
               <b>Save</b> and <b>edit</b> your progress. <b>Share</b> and
@@ -91,26 +88,25 @@ export default function Home() {
 
           <Grid
             container
-            direction='row'
+            direction="row"
             spacing={2}
-            justify='center'
-            alignItems='center'
+            justify="center"
+            alignItems="center"
           >
             <Grid item>
               <Button
                 component={Link}
-                to='/learn'
+                to="/learn"
                 disableRipple
-                variant='contained'
+                variant="contained"
                 style={{
-                  fontFamily: 'Roboto',
+                  fontFamily: "Roboto",
                   fontWeight: 200,
                   fontSize: 24,
-                  color: '#000',
-                  marginTop: '1em',
-                  textTransform: 'none',
+                  color: "#000",
+                  marginTop: "1em",
+                  textTransform: "none"
                 }}
-                // className={classes.button}
               >
                 learn.
               </Button>
@@ -119,16 +115,15 @@ export default function Home() {
               <Button
                 onClick={handleClickOpen}
                 disableRipple
-                variant='contained'
+                variant="contained"
                 style={{
-                  fontFamily: 'Roboto',
+                  fontFamily: "Roboto",
                   fontWeight: 200,
                   fontSize: 24,
-                  color: '#000',
-                  marginTop: '1em',
-                  textTransform: 'none',
+                  color: "#000",
+                  marginTop: "1em",
+                  textTransform: "none"
                 }}
-                // className={classes.button}
               >
                 get started.
               </Button>

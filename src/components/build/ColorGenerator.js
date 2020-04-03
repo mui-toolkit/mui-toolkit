@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import CasinoTwoToneIcon from '@material-ui/icons/CasinoTwoTone';
+import React from "react";
+import { Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import CasinoTwoToneIcon from "@material-ui/icons/CasinoTwoTone";
 import {
   red,
   volcano,
@@ -14,22 +14,22 @@ import {
   geekblue,
   purple,
   magenta,
-  grey,
-} from '@ant-design/colors';
-import { generate } from '@ant-design/colors';
+  grey
+} from "@ant-design/colors";
+import { generate } from "@ant-design/colors";
 
 const useStyles = makeStyles(() => ({
   button: {
-    marginRight: '20px',
-    '&:hover': {
-      backgroundColor: 'transparent',
+    marginRight: "20px",
+    "&:hover": {
+      backgroundColor: "transparent"
     },
     fontWeight: 400,
-    textTransform: 'none',
+    textTransform: "none",
     borderRadius: 5,
     height: 46,
-    padding: 10,
-  },
+    padding: 10
+  }
 }));
 
 export const ColorGenerator = props => {
@@ -38,32 +38,32 @@ export const ColorGenerator = props => {
 
   const colorGeneration = () => {
     const colors = [
-      '#FF8A65',
-      '#6A1B9A',
-      '#FF5722',
-      '#43A047',
-      '#D81B60',
-      '#6A1B9A',
-      '#AFB42B',
-      '#FF5722',
-      '#FF6D00',
-      '#FFEA00',
-      '#69F0AE',
-      '#1DE9B6',
-      '#18FFFF',
-      '#A5D6A7',
-      '#64DD17',
-      '#E040FB',
-      '#01579B',
-      '#006064',
-      '#00796B',
-      '#BF360C',
-      '#311B92',
-      '#0D47A1',
-      '#8BC34A',
-      '#E65100',
-      '#1A237E',
-      '#311B92',
+      "#FF8A65",
+      "#6A1B9A",
+      "#FF5722",
+      "#43A047",
+      "#D81B60",
+      "#6A1B9A",
+      "#AFB42B",
+      "#FF5722",
+      "#FF6D00",
+      "#FFEA00",
+      "#69F0AE",
+      "#1DE9B6",
+      "#18FFFF",
+      "#A5D6A7",
+      "#64DD17",
+      "#E040FB",
+      "#01579B",
+      "#006064",
+      "#00796B",
+      "#BF360C",
+      "#311B92",
+      "#0D47A1",
+      "#8BC34A",
+      "#E65100",
+      "#1A237E",
+      "#311B92",
       red.primary,
       volcano.primary,
       gold.primary,
@@ -74,16 +74,15 @@ export const ColorGenerator = props => {
       blue.primary,
       geekblue.primary,
       purple.primary,
-      magenta.primary,
+      magenta.primary
     ];
-    console.log('COLORS LENGTH', colors.length);
 
     const palette = generate(
-      colors[Math.floor(Math.random() * Math.floor(37))],
+      colors[Math.floor(Math.random() * Math.floor(37))]
     );
 
     const secondPalette = generate(
-      colors[Math.floor(Math.random() * Math.floor(37))],
+      colors[Math.floor(Math.random() * Math.floor(37))]
     );
 
     let randomColorArray = [];
@@ -107,9 +106,9 @@ export const ColorGenerator = props => {
       <Button
         onClick={colorGeneration}
         style={{
-          fontFamily: 'Roboto',
+          fontFamily: "Roboto",
           fontSize: 14,
-          color: '#000',
+          color: "#000"
         }}
         className={classes.button}
       >
