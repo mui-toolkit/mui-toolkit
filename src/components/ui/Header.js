@@ -103,21 +103,21 @@ export default function Header(props) {
                       {
                         themeId: 0,
                         themeName:
-                          "You need to login to have access to these features"
+                          "You need to log in to have access to these features"
                       }
                     ],
                     starredThemes: [
                       {
                         themeId: 0,
                         themeName:
-                          "You need to login to have access to these features"
+                          "You need to log in to have access to these features"
                       }
                     ],
                     bookmarkedThemes: [
                       {
                         themeId: 0,
                         themeName:
-                          "You need to login to have access to these features"
+                          "You need to log in to have access to these features"
                       }
                     ],
                     signedInUserId: "guest",
@@ -130,7 +130,7 @@ export default function Header(props) {
                 className={classes.tab}
                 component={Link}
                 to="/signup"
-                label="Signup"
+                label="Sign up"
               />
             </Tabs>
             <Login />
@@ -222,7 +222,7 @@ export default function Header(props) {
               className={classes.tab}
               component={Link}
               to="/"
-              label="Logout"
+              label="Log out"
               onClick={handleClick}
             />
           </Grid>

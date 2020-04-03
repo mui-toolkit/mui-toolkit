@@ -267,7 +267,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
                 </Grid>
               ) : (
                 <Tooltip title="Access to extra features requires login">
-                  <IconButton component={Link} to={`/`}>
+                  <IconButton component={Link} to={`/signup`}>
                     <HomeIcon />
                   </IconButton>
                 </Tooltip>

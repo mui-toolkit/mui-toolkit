@@ -65,7 +65,7 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
     } else if (!user.loggedIn) {
       // not loggedin should send user to signup
       setMessage(
-        "You need to signup for an account in order to save. It's free!"
+        "You need to sign up for an account in order to save. It's free!"
       );
       setSnackOpen(true);
       setTimeout(function() {
