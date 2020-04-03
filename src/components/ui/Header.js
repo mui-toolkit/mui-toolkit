@@ -57,7 +57,6 @@ export default function Header(props) {
       .auth()
       .signOut()
       .then(() => {
-        console.log("user signed out", props);
         window.location = "/";
         return <Redirect to="/" />;
       });
@@ -202,7 +201,6 @@ export default function Header(props) {
               }}
               label="Explore"
             />
-            {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
               component={Link}

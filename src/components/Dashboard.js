@@ -132,9 +132,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Dashboard({ user }) {
-  // console.log("Dashboard -> user", user);
-  // const userName = JSON.stringify(user.email).slice(0, user.email.indexOf("@"));
-
   const signedInUserId = user.uid;
   const [themes, setThemes] = useState([]);
   const [starredThemes, setStarredThemes] = useState([]);
@@ -186,6 +183,7 @@ export default function Dashboard({ user }) {
         })
         .catch(err => {
           console.log('Error getting documents', err);
+          console.error(err);
         });
     };
     unsub();
@@ -218,6 +216,7 @@ export default function Dashboard({ user }) {
         })
         .catch(err => {
           console.log('Error getting document', err);
+          console.error(err);
         });
       setBookmarkedThemes(bookmarked);
 
@@ -243,6 +242,7 @@ export default function Dashboard({ user }) {
         })
         .catch(err => {
           console.log('Error getting document', err);
+          console.error(err);
         });
       setStarredThemes(starred);
     };
@@ -437,8 +437,6 @@ export default function Dashboard({ user }) {
             <ListItemText primary='Home' />
           </ListItem>
         </div>
-        {/* <Divider />
-        public/private themes */}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -494,7 +492,6 @@ export default function Dashboard({ user }) {
                 />
               )}
             </Grid>
-            {/* PREVIEW */}
           </Grid>
         </Container>
       </main>

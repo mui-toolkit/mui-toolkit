@@ -97,13 +97,11 @@ export const Buttons = (props) => {
 					<Typography className={classes.typography}>Button Hover Opacity</Typography>
 					{
 						<Slider
-							// defaultValue={buttonHoverOpacity}
 							value={buttonHoverOpacity}
 							step={0.01}
 							min={0.0}
 							max={1.0}
 							valueLabelDisplay="auto"
-							// getAriaValueText={changeButtonHoverOpacity}
 							onChange={changeButtonHoverOpacity}
 						/>
 					}

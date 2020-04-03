@@ -214,20 +214,6 @@ export const Build = props => {
             </Grid>
           </Paper>
         </Grid>
-        {/* BUILD NAV END */}
-        {/* Preview Start */}
-        <Grid item xs={9} className={classes.preview}>
-          <Paper
-            className={classes.previewPaper}
-            style={{ background: `${defaultColor}` }}
-          >
-            <ThemeProvider theme={customTheme}>
-              <PreviewAppBar />
-              <PreviewTabs tab={tab} changeTab={changeTab} />
-            </ThemeProvider>
-          </Paper>
-        </Grid>
-        {/* Preview End */}
       </Grid>
     </section>
   );
