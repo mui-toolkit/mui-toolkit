@@ -41,52 +41,39 @@ export default function Home() {
     <div>
       <div>
         <Grid container direction='column' style={{ marginTop: '10em' }}>
-          {/* <Grid
-            item
-            container
-            direction='row'
-            justify='center'
-            alignItems='center'
-          > */}
-          <Grid container direction='column' align='center'>
-            <Grid item>
-              <img alt='mui logo' src={muilogo} style={{ width: '5%' }} />
-            </Grid>
-            <Grid item>
-              <Grid
-                container
-                direction='row'
-                justify='center'
-                style={{ marginTop: '1.5em' }}
-              >
-                <Grid item>
-                  <Typography
-                    variant='h4'
-                    style={{ marginRight: '5px' }}
-                    gutterBottom
-                  >
-                    Welcome to{' '}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    variant='h4'
-                    style={{
-                      fontFamily: 'Roboto',
-                      fontWeight: 200,
-                      fontSize: 30,
-                      color: '#000',
-                    }}
-                    gutterBottom
-                  >
-                    mymui.
-                  </Typography>
-                </Grid>
+          <Grid item>
+            <Grid
+              container
+              direction='row'
+              justify='center'
+              alignItems='center'
+              style={{ marginTop: '1.5em' }}
+            >
+              <Grid item>
+                <Typography
+                  variant='h4'
+                  style={{ marginRight: '5px' }}
+                  gutterBottom
+                >
+                  Welcome to{' '}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant='h4'
+                  style={{
+                    fontFamily: 'Roboto',
+                    fontWeight: 200,
+                    fontSize: 30,
+                    color: '#000',
+                  }}
+                  gutterBottom
+                >
+                  mymui.
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
-
-          {/* </Grid> */}
 
           <Grid container justify='center' alignItems='center'>
             <Typography
