@@ -1,4 +1,4 @@
-# mymui 
+# mymui. 
 
 #### mymui allows users to customize a Material-UI theme and grid layout using a dynamic visual interface. Less documentation, more creativity! 
 
@@ -29,23 +29,37 @@
 - Grid Builder follows the 12 column grid system and visualizes how Material-UI structures grid layouts and positioning
 - Drag, drop, and resize grid containers, and observe the code adjust in real-time
 
+#### Theme Styler features
+![](https://media.giphy.com/media/Quyq8vrg08lNK9oKuu/giphy.gif)
+
+### Downloading + applying a theme
+![](https://media.giphy.com/media/H6Q07q2pg6wJiekq5L/giphy.gif)
+
 #### Grid Builder features
 ![](https://media.giphy.com/media/ZB2YL1oD16MjnVXOC9/giphy.gif)
-#### Drag and drop meeting items
-![](DnD-Demo.gif)
-#### Additional drop areas update your meeting items
+
+#### Explore Page features
+![](https://media.giphy.com/media/YRmrGM9IcowfvqUF3d/giphy.gif)
+
+#### Dashboard features
 ![](Chat-App-DropSpaces-Demo.gif)
 
+#### Admin Page features
+
+
 ## Project Challenges
-- Updating Mongoose arrays are more complicated that other transactions
-- Utilizing alternative ways of rendering components (props.children) for use with React-DnD
-- Roomifying chat adds additional complexity to managing socket connections
-- Managing socket connections with reference to users also adds complexity
-- Finding an efficient way of integrating sockets into the redux-thunk data flow
+- Managing the number of props + state of the custom theme object throughout our application — more than four dozen parameters! 
+- Assigning the logic of change handlers to different selection tools within the design page
+- Learning the functionality of a NoSQL database (Firestore), and the referencing of deeply nested objects
+- Firebase data flow, integration of Firebase + Google Cloud functions, and how authentication interacts with database
+- Implementing drag and drop functionality with vanilla Javascript rather than a library, and gaining an understanding of how implementation works under the hood
+- Building social aspects ie. starring and bookmarking themes — capturing and storing interactions between users 
 
 ## Learning Takeaways
-- Mongoose does not have built in support for findOrCreate functions and requires an npm package
-- Socket event handlers can assist with dispatching actions to our Redux store. 
+- System design and optimization of queries is essential to final user experience
+- Prop threading and state management can be daunting in larger React applications
+- Understanding the importance and implementation of UI frameworks with repsect to the final user experience
+- Run into a problem? There's probably a library for that (but the documentation isn't always great!)
 
 ```javascript 
 // example socket flow 
