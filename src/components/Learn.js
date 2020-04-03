@@ -95,6 +95,10 @@ export default function Learn() {
 						<HashLink smooth to="#share" className={classes.contentLinks}>
 							Share
 						</HashLink>
+						<br />
+						<HashLink smooth to="#about" className={classes.contentLinks}>
+							About
+						</HashLink>
 					</Grid>
 					<Grid item align="center" className={classes.title} xs={6}>
 						<img alt="mui logo" src={mui1} />
@@ -337,7 +341,7 @@ export default function Learn() {
 						</HashLink>
 					</Grid>
 				</Grid>
-				<Grid id="share" container direction="row" alignItems="center" className={classes.container}>
+				<Grid id="about" container direction="row" alignItems="center" className={classes.container}>
 					<Grid item className={classes.title} xs={6}>
 						<Typography variant="h3" align="left" gutterBottom>
 							About
@@ -347,7 +351,8 @@ export default function Learn() {
 						</Typography>
 						<Typography variant="body1" align="left" className={classes.paragraph} gutterBottom>
 							mymui was conceptulized and built by Manny Garcia, Nelson Liu, Rana Quadri, and Alexander
-							Wang.
+							Wang. <br /> <br />Created with React, Firebase, Firestore, Material-UI, FileSaver, and
+							thum.io.
 						</Typography>
 						<Link href="https://github.com/mui-toolkit/mui-toolkit">
 							<GitHubIcon />
