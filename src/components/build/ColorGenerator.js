@@ -13,8 +13,7 @@ import {
   blue,
   geekblue,
   purple,
-  magenta,
-  grey
+  magenta
 } from "@ant-design/colors";
 import { generate } from "@ant-design/colors";
 
