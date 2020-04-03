@@ -6,18 +6,15 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import HomeIcon from "@material-ui/icons/Home";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import FaceIcon from "@material-ui/icons/Face";
 import PaletteIcon from "@material-ui/icons/Palette";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -27,7 +24,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import StarIcon from "@material-ui/icons/Star";
 import ThemesTable from "./ThemesTable";
 import UserProfile from "./UserProfile";
-import firebase from "firebase";
 import "firebase/auth";
 import { db } from "../config/firebase";
 import Button from "@material-ui/core/Button";
@@ -36,7 +32,6 @@ import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import StarsIcon from "@material-ui/icons/Stars";
 import Avatar from "@material-ui/core/Avatar";
 import ViewCompactOutlinedIcon from "@material-ui/icons/ViewCompactOutlined";
-import Tooltip from "@material-ui/core/Tooltip";
 
 const drawerWidth = 240;
 
@@ -447,7 +442,6 @@ export default function Dashboard({ user }) {
                   tableTitle={"Saved Themes"}
                   signedInUserId={signedInUserId}
                   table={"M"}
-                  signedInUserId={signedInUserId}
                   foundUser={foundUser}
                   linkedThemes={themes}
                   linkedStarredThemes={starredThemes}
@@ -462,7 +456,6 @@ export default function Dashboard({ user }) {
                   signedInUserId={signedInUserId}
                   table={"B"}
                   setBookmarkedThemes={setBookmarkedThemes}
-                  signedInUserId={signedInUserId}
                   foundUser={foundUser}
                   linkedThemes={themes}
                   linkedStarredThemes={starredThemes}
@@ -477,7 +470,6 @@ export default function Dashboard({ user }) {
                   signedInUserId={signedInUserId}
                   table={"S"}
                   setStarredThemes={setStarredThemes}
-                  signedInUserId={signedInUserId}
                   foundUser={foundUser}
                   linkedThemes={themes}
                   linkedStarredThemes={starredThemes}

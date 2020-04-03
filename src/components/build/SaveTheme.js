@@ -7,18 +7,14 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
   Paper,
   Typography,
-  Fade,
-  Grow,
   Snackbar
 } from "@material-ui/core/";
 import SaveIcon from "@material-ui/icons/Save";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
-import { sign } from "crypto";
 
 const useStyles = makeStyles(theme => ({
   button: {
