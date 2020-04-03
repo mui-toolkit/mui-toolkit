@@ -30,19 +30,19 @@
 - Grid Builder follows the 12 column grid system and visualizes how Material-UI structures grid layouts and positioning
 - Drag, drop, and resize grid containers, and observe the code adjust in real-time
 
-#### Theme Styler features
+#### Theme Styler:
 ![](https://media.giphy.com/media/Quyq8vrg08lNK9oKuu/giphy.gif)
 
-#### Downloading + applying a theme
+#### Downloading + Applying a Theme:
 ![](https://media.giphy.com/media/H6Q07q2pg6wJiekq5L/giphy.gif)
 
-#### Grid Builder features
+#### Grid Builder:
 ![](https://media.giphy.com/media/ZB2YL1oD16MjnVXOC9/giphy.gif)
 
-#### Explore Page features
+#### Explore Page:
 ![](https://media.giphy.com/media/YRmrGM9IcowfvqUF3d/giphy.gif)
 
-#### Dashboard features
+#### Dashboard:
 ![](https://media.giphy.com/media/f3e1HZ64ZtjzKMgPjJ/giphy.gif)
 
 #### Admin Page features
