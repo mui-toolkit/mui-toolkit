@@ -95,6 +95,7 @@ export default function Learn() {
 						<HashLink smooth to="#share" className={classes.contentLinks}>
 							Share
 						</HashLink>
+						<br />
 						<HashLink smooth to="#about" className={classes.contentLinks}>
 							About
 						</HashLink>
