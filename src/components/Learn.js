@@ -351,7 +351,8 @@ export default function Learn() {
 						</Typography>
 						<Typography variant="body1" align="left" className={classes.paragraph} gutterBottom>
 							mymui was conceptulized and built by Manny Garcia, Nelson Liu, Rana Quadri, and Alexander
-							Wang.
+							Wang. <br /> <br />Created with React, Firebase, Firestore, Material-UI, FileSaver, and
+							thum.io.
 						</Typography>
 						<Link href="https://github.com/mui-toolkit/mui-toolkit">
 							<GitHubIcon />
