@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import {
   Grid,
   Paper,
   Button,
   Backdrop,
-  CircularProgress
+  CircularProgress,
+  Tooltip,
+  IconButton
 } from "@material-ui/core";
 import ExploreAdd from "./ExploreAdd";
 import ExploreTable from "./ExploreTable";
 import { db } from "../config/firebase";
-
+import HomeIcon from "@material-ui/icons/Home";
 const useStyles = makeStyles({
   title: {
     padding: "1em"
@@ -43,8 +46,9 @@ export default function Explore() {
     location.state = {
       themes: [
         {
-          themeId: 0,
-          themeName: "You need to login to have access to these features"
+          themeId: 1,
+          themeName: "You need to login to have access to these features",
+          explore: false
         }
       ],
       starredThemes: [
@@ -182,11 +186,20 @@ export default function Explore() {
               </Button>
             </Grid>
 
-            <ExploreAdd
-              savedThemes={savedThemes}
-              setExploreThemes={setExploreThemes}
-              userName={userName}
-            />
+            {signedInUserId !== "guest" ? (
+              <ExploreAdd
+                savedThemes={savedThemes}
+                setExploreThemes={setExploreThemes}
+                userName={userName}
+              />
+            ) : (
+              <Tooltip title="Access to extra features requires signingup or logging in">
+                <IconButton component={Link} to={`/`}>
+                  <HomeIcon />
+                  Sign in
+                </IconButton>
+              </Tooltip>
+            )}
           </Grid>
           {selectedIndex === 0 && (
             <ExploreTable
