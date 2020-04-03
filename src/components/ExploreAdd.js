@@ -18,6 +18,7 @@ export default function ExploreAdd({
   setExploreThemes,
   userName
 }) {
+  console.log("savedThemes", savedThemes);
   const [open, setOpen] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState("");
 

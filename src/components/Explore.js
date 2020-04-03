@@ -43,6 +43,8 @@ export default function Explore() {
   let location = useLocation();
   console.log("Explore -> location", location);
   const [isLoading, setLoading] = useState(true);
+  const [themes, setThemes] = useState([]);
+  // guest
   if (!location.state) {
     location.state = {
       themes: [
@@ -79,6 +81,7 @@ export default function Explore() {
   console.log("Explore -> signedInUserId", signedInUserId);
   let userName = location.state.userName;
   console.log("Explore -> userName", userName);
+  let status = location.state.status;
 
   const [exploreThemes, setExploreThemes] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -111,6 +114,37 @@ export default function Explore() {
         });
     };
     response();
+  }, []);
+
+  useEffect(() => {
+    const userThemes = [];
+    if (status === "loggedIn") {
+      const unsub = async () => {
+        await db
+          .collection("CustomizedThemes")
+          .where("userId", "==", `${signedInUserId}`)
+          .get()
+          .then(snapshot => {
+            if (snapshot.empty) {
+              console.log("No matching documents.");
+              return;
+            }
+            snapshot.forEach(theme => {
+              console.log(theme.id, "=>", theme.data());
+              userThemes.push({
+                ...theme.data(),
+                themeId: theme.id
+                // userName
+              });
+              setThemes([...userThemes]);
+            });
+          })
+          .catch(err => {
+            console.log("Error getting documents", err);
+          });
+      };
+      unsub();
+    }
   }, []);
 
   const handleClick = (event, index) => {
@@ -189,7 +223,7 @@ export default function Explore() {
 
             {signedInUserId !== "guest" ? (
               <ExploreAdd
-                savedThemes={savedThemes}
+                savedThemes={status === "loggedIn" ? themes : savedThemes}
                 setExploreThemes={setExploreThemes}
                 userName={userName}
               />
