@@ -1,17 +1,9 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-
+var firebase = require('firebase');
+var firebaseui = require('firebaseui');
 const cors = require('cors')({ origin: true });
-// const functions = require('firebase-functions');
 
-// const app = functions.https.onRequest((req, res) => {
-//     cors(req, res, () => {
-//         // Your app stuff here
-
-//         // Send Response
-//         res.status(200).send(<response data/>);
-//     });
-// });
 admin.initializeApp();
 
 exports.addAdminRole = functions.https.onCall((data, context) => {
