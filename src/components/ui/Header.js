@@ -185,7 +185,6 @@ export default function Header(props) {
               }}
               label="Explore"
             />
-            {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
               component={Link}

@@ -94,8 +94,8 @@ export default function Explore() {
           snapshot.forEach(doc => {
             explore.push({
               ...doc.data(),
-              themeId: doc.id,
-              userName: doc.data().userName
+              themeId: doc.id
+              // userName: doc.data().userName
             });
             setExploreThemes([...explore]);
             setLoading(false);

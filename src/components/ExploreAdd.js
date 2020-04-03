@@ -26,14 +26,17 @@ export default function ExploreAdd({
       .collection("CustomizedThemes")
       .doc(`${themeObject.themeId}`)
       .update({
-        explore: true,
-        userName
+        explore: true
+        // userName
       })
       .then(() => {
         console.log("updated explore status");
       })
       .then(response => {
-        setExploreThemes(prevThemes => [...prevThemes, themeObject]);
+        setExploreThemes(prevThemes => [
+          ...prevThemes,
+          { ...themeObject, userName }
+        ]);
       });
   };
   const handleChange = event => {
