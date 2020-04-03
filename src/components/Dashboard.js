@@ -256,7 +256,7 @@ export default function Dashboard({ user }) {
 
   const classes = useStyles();
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(2);
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
@@ -348,7 +348,7 @@ export default function Dashboard({ user }) {
         </div>
         <Divider />
         <div>
-          <ListItem
+          {/* <ListItem
             button
             selected={selectedIndex === 0}
             onClick={event => handleListItemClick(event, 0)}
@@ -357,7 +357,7 @@ export default function Dashboard({ user }) {
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
-          </ListItem>
+          </ListItem> */}
           <ListItem
             button
             selected={selectedIndex === 1}
@@ -446,7 +446,7 @@ export default function Dashboard({ user }) {
         <Container className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={8} lg={9}>
-              {selectedIndex === 0 && <div>SOME COOL USER DATA COMING</div>}
+              {/* {selectedIndex === 0 && <div></div>} */}
               {selectedIndex === 1 && (
                 <UserProfile user={foundUser} uid={user.uid} />
               )}
