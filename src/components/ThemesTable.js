@@ -248,7 +248,7 @@ export default function ThemesTable({
           starsCount: firebase.firestore.FieldValue.increment(-1)
         })
         .then(() => {
-          console.log("decrement starsCount");
+          // console.log("decrement starsCount");
         });
     } else if (table === "B") {
       await db
@@ -269,7 +269,7 @@ export default function ThemesTable({
           bookmarksCount: firebase.firestore.FieldValue.increment(-1)
         })
         .then(() => {
-          console.log("decrement bookmarkscount");
+          // console.log("decrement bookmarkscount");
         });
     }
   };
@@ -280,7 +280,7 @@ export default function ThemesTable({
       .doc(`${themeId}`)
       .delete()
       .then(function() {
-        console.log("Deleted Saved Theme from collection");
+        // console.log("Deleted Saved Theme from collection");
       })
       .then(response => {
         setThemes(prevThemes =>
@@ -298,7 +298,7 @@ export default function ThemesTable({
         themes: firebase.firestore.FieldValue.arrayRemove(`${themeName}`)
       })
       .then(() => {
-        console.log("deleted reference to this theme");
+        // console.log("deleted reference to this theme");
       });
   };
   const emptyRows =

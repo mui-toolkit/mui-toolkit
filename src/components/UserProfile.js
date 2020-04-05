@@ -78,7 +78,7 @@ export default function UserProfile({ uid, user }) {
         password
       })
       .then(() => {
-        console.log("updated user in db,props");
+        // console.log("updated user in db,props");
       });
   };
 

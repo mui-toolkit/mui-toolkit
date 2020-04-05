@@ -106,7 +106,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
           starred: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
         })
         .then(() => {
-          console.log(`removed ${themeId} from users starred array`);
+          // console.log(`removed ${themeId} from users starred array`);
           setStars(stars.filter(id => id !== themeId));
         });
       await db
@@ -115,9 +115,9 @@ function ExploreTable({ signedInUserId, themesToMap }) {
         .update({
           starsCount: firebase.firestore.FieldValue.increment(-1)
         })
-        .then(() => {
-          console.log("decrement starsCount");
-        });
+        // .then(() => {
+        //   console.log("decrement starsCount");
+        // });
     } else {
       // add to users star array, increment count
       await db
@@ -127,7 +127,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
           starred: firebase.firestore.FieldValue.arrayUnion(`${themeId}`)
         })
         .then(() => {
-          console.log(`added ${themeId} to users starred array`);
+          // console.log(`added ${themeId} to users starred array`);
           setStars(prevStars => [...prevStars, themeId]);
         });
       await db
@@ -137,7 +137,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
           starsCount: firebase.firestore.FieldValue.increment(1)
         })
         .then(() => {
-          console.log("incremented starsCount");
+          // console.log("incremented starsCount");
         });
     }
   };
@@ -151,7 +151,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
           bookmarked: firebase.firestore.FieldValue.arrayRemove(`${themeId}`)
         })
         .then(() => {
-          console.log(`removed ${themeId} from users bookmarked array`);
+          // console.log(`removed ${themeId} from users bookmarked array`);
           setBookmarks(bookmarks.filter(id => id !== themeId));
         });
       await db
@@ -161,7 +161,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
           bookmarksCount: firebase.firestore.FieldValue.increment(-1)
         })
         .then(() => {
-          console.log("decrement bookmarkscount");
+          // console.log("decrement bookmarkscount");
         });
     } else {
       // add to users bookmark array, increment count
@@ -172,7 +172,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
           bookmarked: firebase.firestore.FieldValue.arrayUnion(`${themeId}`)
         })
         .then(() => {
-          console.log(`added ${themeId} to users bookmarked array`);
+          // console.log(`added ${themeId} to users bookmarked array`);
           setBookmarks(prevBookmarks => [...prevBookmarks, themeId]);
         });
       await db
@@ -182,7 +182,7 @@ function ExploreTable({ signedInUserId, themesToMap }) {
           bookmarksCount: firebase.firestore.FieldValue.increment(1)
         })
         .then(() => {
-          console.log("incremented bookmarkscount");
+          // console.log("incremented bookmarkscount");
         });
     }
   };

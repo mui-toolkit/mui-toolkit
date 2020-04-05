@@ -29,9 +29,9 @@ export function Auth() {
     const adminEmail = email;
     const addAdminRole = fc.httpsCallable("addAdminRole");
     addAdminRole({ email: adminEmail })
-      .then(result => {
-        console.log(result);
-      })
+      // .then(result => {
+      //   console.log(result);
+      // })
       .catch(function(error) {
         // Getting the Error details.
         var code = error.code;

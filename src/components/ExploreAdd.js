@@ -26,9 +26,9 @@ export default function ExploreAdd({
       .update({
         explore: true
       })
-      .then(() => {
-        console.log("updated explore status");
-      })
+      // .then(() => {
+      //   console.log("updated explore status");
+      // })
       .then(response => {
         setExploreThemes(prevThemes => [
           ...prevThemes,

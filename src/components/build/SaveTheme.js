@@ -124,9 +124,9 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       .update({
         themes: firebase.firestore.FieldValue.arrayUnion(`${themeName}`)
       })
-      .then(() => {
-        console.log("updated user with reference to theme");
-      });
+      // .then(() => {
+      //   console.log("updated user with reference to theme");
+      // });
   };
   const saveNewPalette = async themeName => {
     await saveNewTheme(themeName);
@@ -138,9 +138,9 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       .collection("CustomizedThemes")
       .doc(`${themeId}`)
       .set({ ...downloadTheme })
-      .then(function() {
-        console.log(`Update ${oldThemeName} to collection`);
-      })
+      // .then(function() {
+      //   console.log(`Update ${oldThemeName} to collection`);
+      // })
       .catch(function(error) {
         console.error(error);
       });
@@ -154,9 +154,9 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       .update({
         themes: firebase.firestore.FieldValue.arrayRemove(`${oldThemeName}`)
       })
-      .then(() => {
-        console.log("deleted reference to this theme");
-      });
+      // .then(() => {
+      //   console.log("deleted reference to this theme");
+      // });
     // add updated to users array
     await db
       .collection("Users")
@@ -164,9 +164,9 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       .update({
         themes: firebase.firestore.FieldValue.arrayUnion(`${themeName}`)
       })
-      .then(() => {
-        console.log("updated user with reference to theme");
-      });
+      // .then(() => {
+      //   console.log("updated user with reference to theme");
+      // });
   };
 
   const editAndSavePalette = async => {
