@@ -1,7 +1,7 @@
 # mymui. 
 
 #### mymui allows users to customize a Material-UI theme and grid layout using a dynamic visual interface. Less documentation, more creativity! 
-##### Deployed on: https://mui-theme.web.app/
+##### Deployed on: https://my-mui.com/
 ##### Conceptulized and built by Manny Garcia, Nelson Liu, Rana Quadri, and Alexander Wang.
 
 ## Tech Stack
