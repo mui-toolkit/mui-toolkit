@@ -46,9 +46,6 @@
 #### Dashboard — View + Edit Saved Themes:
 ![](https://media.giphy.com/media/f3e1HZ64ZtjzKMgPjJ/giphy.gif)
 
-#### Admin Page features
-
-
 ## Project Challenges
 - Managing the number of props + state of the custom theme object throughout our application — more than four dozen parameters! 
 - Assigning the logic of change handlers to different selection tools within the design page
