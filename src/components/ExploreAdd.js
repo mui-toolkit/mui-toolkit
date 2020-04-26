@@ -9,8 +9,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import M from "minimatch";
-import { updateExpression } from "@babel/types";
 import { db } from "../config/firebase";
 
 export default function ExploreAdd({
@@ -18,7 +16,6 @@ export default function ExploreAdd({
   setExploreThemes,
   userName
 }) {
-  console.log("savedThemes", savedThemes);
   const [open, setOpen] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState("");
 
@@ -28,7 +25,6 @@ export default function ExploreAdd({
       .doc(`${themeObject.themeId}`)
       .update({
         explore: true
-        // userName
       })
       .then(() => {
         console.log("updated explore status");

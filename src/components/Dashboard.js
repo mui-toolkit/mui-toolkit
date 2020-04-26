@@ -6,18 +6,15 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import HomeIcon from "@material-ui/icons/Home";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import FaceIcon from "@material-ui/icons/Face";
 import PaletteIcon from "@material-ui/icons/Palette";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -27,7 +24,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import StarIcon from "@material-ui/icons/Star";
 import ThemesTable from "./ThemesTable";
 import UserProfile from "./UserProfile";
-import firebase from "firebase";
 import "firebase/auth";
 import { db } from "../config/firebase";
 import Button from "@material-ui/core/Button";
@@ -36,7 +32,6 @@ import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import StarsIcon from "@material-ui/icons/Stars";
 import Avatar from "@material-ui/core/Avatar";
 import ViewCompactOutlinedIcon from "@material-ui/icons/ViewCompactOutlined";
-import Tooltip from "@material-ui/core/Tooltip";
 
 const drawerWidth = 240;
 
@@ -133,9 +128,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Dashboard({ user }) {
-  // console.log("Dashboard -> user", user);
-  // const userName = JSON.stringify(user.email).slice(0, user.email.indexOf("@"));
-
   const signedInUserId = user.uid;
   const [themes, setThemes] = useState([]);
   const [starredThemes, setStarredThemes] = useState([]);
@@ -162,7 +154,7 @@ export default function Dashboard({ user }) {
     response();
   }, []);
   //saved themes
-  console.log("found user between useEffects", foundUser);
+
   useEffect(() => {
     const userThemes = [];
     const unsub = async () => {
@@ -176,7 +168,6 @@ export default function Dashboard({ user }) {
             return;
           }
           snapshot.forEach(theme => {
-            console.log(theme.id, "=>", theme.data());
             userThemes.push({
               ...theme.data(),
               themeId: theme.id,
@@ -186,7 +177,7 @@ export default function Dashboard({ user }) {
           });
         })
         .catch(err => {
-          console.log("Error getting documents", err);
+          console.error(err);
         });
     };
     unsub();
@@ -218,7 +209,7 @@ export default function Dashboard({ user }) {
           }
         })
         .catch(err => {
-          console.log("Error getting document", err);
+          console.error(err);
         });
       setBookmarkedThemes(bookmarked);
 
@@ -243,20 +234,16 @@ export default function Dashboard({ user }) {
           }
         })
         .catch(err => {
-          console.log("Error getting document", err);
+          console.error(err);
         });
       setStarredThemes(starred);
     };
     unsubscribe();
   }, []);
-  console.log("DASHBOARD FOUNDUSER", foundUser, signedInUserId);
-  console.log("USERS SAVED THEMES", themes);
-  console.log("STARRED", starredThemes);
-  console.log("BOOKMARKED", bookmarkedThemes);
 
   const classes = useStyles();
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(2);
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
@@ -348,7 +335,7 @@ export default function Dashboard({ user }) {
         </div>
         <Divider />
         <div>
-          <ListItem
+          {/* <ListItem
             button
             selected={selectedIndex === 0}
             onClick={event => handleListItemClick(event, 0)}
@@ -357,7 +344,7 @@ export default function Dashboard({ user }) {
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
-          </ListItem>
+          </ListItem> */}
           <ListItem
             button
             selected={selectedIndex === 1}
@@ -438,15 +425,13 @@ export default function Dashboard({ user }) {
             <ListItemText primary="Home" />
           </ListItem>
         </div>
-        {/* <Divider />
-        public/private themes */}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={8} lg={9}>
-              {selectedIndex === 0 && <div>SOME COOL USER DATA COMING</div>}
+              {/* {selectedIndex === 0 && <div></div>} */}
               {selectedIndex === 1 && (
                 <UserProfile user={foundUser} uid={user.uid} />
               )}
@@ -457,7 +442,6 @@ export default function Dashboard({ user }) {
                   tableTitle={"Saved Themes"}
                   signedInUserId={signedInUserId}
                   table={"M"}
-                  signedInUserId={signedInUserId}
                   foundUser={foundUser}
                   linkedThemes={themes}
                   linkedStarredThemes={starredThemes}
@@ -472,7 +456,6 @@ export default function Dashboard({ user }) {
                   signedInUserId={signedInUserId}
                   table={"B"}
                   setBookmarkedThemes={setBookmarkedThemes}
-                  signedInUserId={signedInUserId}
                   foundUser={foundUser}
                   linkedThemes={themes}
                   linkedStarredThemes={starredThemes}
@@ -487,7 +470,6 @@ export default function Dashboard({ user }) {
                   signedInUserId={signedInUserId}
                   table={"S"}
                   setStarredThemes={setStarredThemes}
-                  signedInUserId={signedInUserId}
                   foundUser={foundUser}
                   linkedThemes={themes}
                   linkedStarredThemes={starredThemes}
@@ -495,7 +477,6 @@ export default function Dashboard({ user }) {
                 />
               )}
             </Grid>
-            {/* PREVIEW */}
           </Grid>
         </Container>
       </main>

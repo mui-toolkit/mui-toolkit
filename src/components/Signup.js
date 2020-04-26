@@ -1,41 +1,40 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { Button, Snackbar, IconButton } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import TextField from '@material-ui/core/TextField';
-import firebase from 'firebase';
-import 'firebase/auth';
-import { db } from '../config/firebase';
+import React, { useState } from "react";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { Button, Snackbar, IconButton } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import TextField from "@material-ui/core/TextField";
+import firebase from "firebase";
+import "firebase/auth";
+import { db } from "../config/firebase";
 
 export function validate(values) {
   let errors = {};
   if (!values.email) {
-    errors.email = 'Email address is required';
+    errors.email = "Email address is required";
   } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-    errors.email = 'Email address is invalid';
+    errors.email = "Email address is invalid";
   }
   return errors;
 }
 
 export function Signup(props) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUserName] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUserName] = useState("");
   const [errors, setErrors] = useState({});
   const [open, setOpen] = React.useState(false);
   var provider = new firebase.auth.GoogleAuthProvider();
   var providerGH = new firebase.auth.GithubAuthProvider();
-  providerGH.addScope('repo');
+  providerGH.addScope("repo");
 
   const handleClick = () => {
     setOpen(true);
   };
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -44,11 +43,11 @@ export function Signup(props) {
   const validate = email => {
     let errors = {};
     if (!email) {
-      errors = 'Email address is required';
+      errors = "Email address is required";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors = 'Email address is invalid';
+      errors = "Email address is invalid";
     }
-    // console.log('val errors', errors, isEmpty(errors));
+
     return errors;
   };
   const isEmpty = obj => {
@@ -64,9 +63,8 @@ export function Signup(props) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(cred => {
-        console.log('cred', cred);
         return db
-          .collection('Users')
+          .collection("Users")
           .doc(cred.user.uid)
           .set({
             firstName: firstName,
@@ -76,20 +74,17 @@ export function Signup(props) {
             username: username
           })
           .then(() => {
-            console.log('created new user in db,props', props);
-            props.history.push('/');
+            props.history.push("/");
           });
       })
       .catch(function(error) {
         handleClick();
-        console.log('error in signup', error.code, error);
-        // alert(error.message);
-        // setOpen(true);
+        console.error(error.code, error);
       });
   };
 
   return (
-    <Grid container direction="row" style={{ marginTop: '5em' }}>
+    <Grid container direction="row" style={{ marginTop: "5em" }}>
       <Grid
         item
         container
@@ -112,7 +107,7 @@ export function Signup(props) {
           <Grid
             item
             container
-            style={{ maxWidth: '20em' }}
+            style={{ maxWidth: "20em" }}
             justify="center"
             alignItems="center"
           >
@@ -144,13 +139,13 @@ export function Signup(props) {
                 error={!isEmpty(validate(email)) && email.length > 0}
                 helperText={
                   validate(email) && email.length > 0
-                    ? 'Please enter a valid email'
-                    : ''
+                    ? "Please enter a valid email"
+                    : ""
                 }
                 helperText={
                   !isEmpty(validate(email)) && email.length > 0
                     ? validate(email)
-                    : ''
+                    : ""
                 }
                 label="Email"
                 id="email"
@@ -162,8 +157,8 @@ export function Signup(props) {
                 error={password.length > 0 && password.length < 6}
                 helperText={
                   password.length < 6 && password.length > 0
-                    ? 'Min 6 characters'
-                    : ''
+                    ? "Min 6 characters"
+                    : ""
                 }
                 type="password"
                 label="Password"
@@ -173,8 +168,8 @@ export function Signup(props) {
               />
               <Snackbar
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left'
+                  vertical: "bottom",
+                  horizontal: "left"
                 }}
                 open={open}
                 autoHideDuration={2000}
@@ -196,27 +191,27 @@ export function Signup(props) {
             </Grid>
             <ul
               style={{
-                listStyleType: 'none',
-                paddingInlineStart: '0px',
-                alignItems: 'center'
+                listStyleType: "none",
+                paddingInlineStart: "0px",
+                alignItems: "center"
               }}
             >
               <li>
-                {' '}
+                {" "}
                 <Button
                   style={{
                     fontSize: 10,
-                    marginTop: '5px',
-                    marginBottom: '5px',
-                    marginLeft: '15px',
-                    borderRadius: '5px'
+                    marginTop: "5px",
+                    marginBottom: "5px",
+                    marginLeft: "15px",
+                    borderRadius: "5px"
                   }}
                 >
                   <input type="submit" value="Sign Up with Email" />
                 </Button>
               </li>
               <li>
-                {' '}
+                {" "}
                 <Button
                   onClick={() => {
                     firebase
@@ -226,13 +221,13 @@ export function Signup(props) {
                         var token = result.credential.accessToken;
                         // The signed-in user info.
                         var user = result.user;
-                        db.collection('Users')
+                        db.collection("Users")
                           .doc(user.uid)
                           .set({
                             email: user.email,
                             username: user.email,
-                            firstName: user.displayName.split(' ')[0],
-                            lastName: user.displayName.split(' ')[1]
+                            firstName: user.displayName.split(" ")[0],
+                            lastName: user.displayName.split(" ")[1]
                             // themes: [],
                           });
                       })
@@ -242,7 +237,7 @@ export function Signup(props) {
                         var errorMessage = error.message;
                         var email = error.email;
                         var credential = error.credential;
-                        console.log('google error', error);
+                        console.error(error);
                       });
                   }}
                   className="googleBtn"
@@ -250,13 +245,13 @@ export function Signup(props) {
                   style={{
                     fontSize: 10,
                     // marginRight: '20px',
-                    marginTop: '5px',
-                    marginBottom: '5px',
-                    borderRadius: '5px'
+                    marginTop: "5px",
+                    marginBottom: "5px",
+                    borderRadius: "5px"
                   }}
                 >
                   <img
-                    style={{ width: '12px', marginRight: '5px' }}
+                    style={{ width: "12px", marginRight: "5px" }}
                     src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
                     alt="logo"
                   />
@@ -264,7 +259,7 @@ export function Signup(props) {
                 </Button>
               </li>
               <li>
-                {' '}
+                {" "}
                 <Button
                   onClick={() => {
                     firebase
@@ -275,32 +270,27 @@ export function Signup(props) {
                         var token = result.credential.accessToken;
                         // The signed-in user info.
                         var user = result.user;
-                        db.collection('Users')
+                        db.collection("Users")
                           .doc(user.uid)
                           .set({
                             email: user.email,
                             username: user.email,
-                            firstName: user.displayName.split(' ')[0],
-                            lastName: user.displayName.split(' ')[1]
-                            // themes: [],
+                            firstName: user.displayName.split(" ")[0],
+                            lastName: user.displayName.split(" ")[1]
                           });
                       })
                       .catch(function(error) {
-                        // Handle Errors here.
                         var errorCode = error.code;
                         var errorMessage = error.message;
-                        // The email of the user's account used.
                         var email = error.email;
-                        // The firebase.auth.AuthCredential type that was used.
                         var credential = error.credential;
                         if (
                           errorCode ===
-                          'auth/account-exists-with-different-credential'
+                          "auth/account-exists-with-different-credential"
                         ) {
                           alert(
-                            'You have signed up with a different provider for that email.'
+                            "You have signed up with a different provider for that email."
                           );
-                          // Handle linking here if your app allows it.
                         } else {
                           console.error(error);
                         }
@@ -310,12 +300,12 @@ export function Signup(props) {
                   type="button"
                   style={{
                     fontSize: 10,
-                    marginTop: '5px',
-                    borderRadius: '5px'
+                    marginTop: "5px",
+                    borderRadius: "5px"
                   }}
                 >
                   <img
-                    style={{ width: '30px', marginRight: '5px' }}
+                    style={{ width: "30px", marginRight: "5px" }}
                     src="https://upload.wikimedia.org/wikipedia/commons/5/54/GitHub_Logo.png"
                     alt="logo"
                   />

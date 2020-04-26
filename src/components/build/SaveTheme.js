@@ -7,18 +7,14 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
   Paper,
   Typography,
-  Fade,
-  Grow,
   Snackbar
 } from "@material-ui/core/";
 import SaveIcon from "@material-ui/icons/Save";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
-import { sign } from "crypto";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -35,10 +31,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
-  console.log("SaveTheme -> themeId", themeId);
-  console.log("SaveTheme -> downloadTheme", downloadTheme);
-  console.log("SaveTheme -> user", user);
-  console.log("SaveTheme -> signedInUserId", signedInUserId);
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -48,14 +40,6 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
   let history = useHistory();
 
   const handleClickOpen = () => {
-    // if (
-    //   downloadTheme.userId !== signedInUserId ||
-    //   downloadTheme.userId !== "guest"
-    // ) {
-    //   console.log("someone elses theme");
-    //   setOpen(true);
-    // }
-    // need to test if coming from themes table
     if (!user) {
       setOpen(false);
       setMessage("Theme Edited and Saved");
@@ -63,7 +47,6 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       setSaveThemeName(downloadTheme.themeName);
       editAndSavePalette(themeName);
     } else if (!user.loggedIn) {
-      // not loggedin should send user to signup
       setMessage(
         "You need to sign up for an account in order to save. It's free!"
       );
@@ -90,10 +73,8 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       .where("themes", "array-contains", `${themeName}`)
       .get()
       .then(querySnapshot => {
-        console.log("SaveTheme -> querySnapshot", querySnapshot.empty);
         return !querySnapshot.empty;
       });
-    console.log("SaveTheme -> checkDuplicate", checkDuplicate);
     return checkDuplicate;
   };
 
@@ -120,26 +101,20 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
       .doc(`${user.uid}`)
       .get()
       .then(doc => (userName = doc.data().username));
-    // if (!signedInUserId) {
+
     downloadTheme.userId = user.uid;
     downloadTheme.themeName = themeName;
     downloadTheme.createdBy = user.email;
     downloadTheme.userName = userName;
-    console.log("SaveTheme -> userName", userName);
-    // } else {
-    //   downloadTheme.userId = signedInUserId;
-    //   downloadTheme.themeName = themeName;
-    // }
-    // new customized theme
+
     await db
       .collection("CustomizedThemes")
       .add({ ...downloadTheme })
       .then(function(docRef) {
-        console.log(`Added Theme ${themeName} to collection`, docRef.id);
         downloadTheme.themeId = docRef.id;
       })
       .catch(function(error) {
-        console.log("Error creating a new theme: ", error);
+        console.error(error);
       });
   };
   const addThemeToUser = async (themeName, userId) => {
@@ -153,17 +128,9 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
         console.log("updated user with reference to theme");
       });
   };
-
-  // const saveNewPalette = async themeName => {
-  //   await saveNewTheme(themeName);
-  //   if (signedInUserId) {
-  //     await addThemeToUser(themeName, signedInUserId);
-  //   } else await addThemeToUser(themeName, user.uid);
-  // };
   const saveNewPalette = async themeName => {
     await saveNewTheme(themeName);
     await addThemeToUser(themeName, user.uid);
-    // setNewFavoriteTheme(downloadTheme);
   };
   const updateTheme = async oldThemeName => {
     downloadTheme.lastEditAt = new Date();
@@ -175,7 +142,7 @@ export const SaveTheme = ({ downloadTheme, user, themeId, signedInUserId }) => {
         console.log(`Update ${oldThemeName} to collection`);
       })
       .catch(function(error) {
-        console.log("Error updating a previously svaed theme: ", error);
+        console.error(error);
       });
   };
 

@@ -3,24 +3,9 @@ import { Grid, Paper, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import twelvecolumns from '../../imgs/12columns.jpg';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import DragNDrop from './DragNDrop';
-import { cloneDeep } from 'lodash';
 import { ChangeSize } from './ChangeSize';
 import { GridContainerPosition } from './GridContainerPosition';
-import {
-  red,
-  volcano,
-  gold,
-  yellow,
-  lime,
-  green,
-  cyan,
-  blue,
-  geekblue,
-  purple,
-  magenta,
-  grey,
-} from '@ant-design/colors';
+import { gold, green, blue, magenta } from '@ant-design/colors';
 
 const useStyles = makeStyles({
   container: {
@@ -67,15 +52,15 @@ export default function GridBuilder() {
   const [alignItems, setAlignItems] = useState('center');
 
   const colors = [
-    '#f8eb00', // yellow
-    '#be00f8', // purple
+    '#f8eb00',
+    '#be00f8',
     green.primary,
-    '#00c7ce', // blue
-    '#ff5436', // red
-    '#7ed400', // yellow
-    '#f8eb00', // green
-    gold.primary, // gold
-    blue.primary, //
+    '#00c7ce',
+    '#ff5436',
+    '#7ed400',
+    '#f8eb00',
+    gold.primary,
+    blue.primary,
     magenta.primary,
   ];
 
@@ -103,7 +88,6 @@ export default function GridBuilder() {
   const dragNode = useRef();
 
   const handleDragStart = (e, params) => {
-    console.log('drag starting...,', params);
     dragItem.current = params;
     dragNode.current = e.target;
     dragNode.current.addEventListener('dragend', handleDragEnd);
@@ -156,7 +140,6 @@ export default function GridBuilder() {
   };
 
   const handleDragEnd = () => {
-    console.log('ending drag..');
     setDragging(false);
     dragNode.current.removeEventListener('dragend', handleDragEnd);
     dragItem.current = null;
@@ -169,7 +152,6 @@ export default function GridBuilder() {
     setList(prevList => {
       let newer = prevList[params.grpI].items.filter(item => item.id !== id);
 
-      console.log(newer);
       return [
         { cols: 9, paper: classes.paperGrid, items: [...newer] },
         { ...prevList[1] },

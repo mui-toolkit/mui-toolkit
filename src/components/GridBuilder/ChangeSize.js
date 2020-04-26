@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import {
-  Grid,
-  Typography,
-  Link,
-  MenuItem,
-  FormControl,
-  Button,
-  Select,
-} from '@material-ui/core/';
+import { MenuItem, FormControl, Select } from '@material-ui/core/';
 
 export const ChangeSize = props => {
-  const { size, setSize, handleChangeSize, grpI, itemI, item, list } = props;
+  const { setSize, handleChangeSize, grpI, itemI, list } = props;
 
   let params = { grpI, itemI };
 

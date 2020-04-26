@@ -41,7 +41,6 @@ const useStyles = makeStyles({
 export default function Explore() {
   const classes = useStyles();
   let location = useLocation();
-  console.log("Explore -> location", location);
   const [isLoading, setLoading] = useState(true);
   const [themes, setThemes] = useState([]);
   // guest
@@ -70,17 +69,11 @@ export default function Explore() {
       userName: "guest"
     };
   }
-  console.log("Explore -> location", location);
   let savedThemes = location.state.themes.slice();
-  console.log("Explore -> savedThemes", savedThemes);
   let myStarredThemes = location.state.starredThemes;
-  console.log("Explore -> myStarredThemes", myStarredThemes);
   let myBookmarkedThemes = location.state.bookmarkedThemes;
-  console.log("Explore -> myBookmarkedThemes", myBookmarkedThemes);
   const signedInUserId = location.state.signedInUserId;
-  console.log("Explore -> signedInUserId", signedInUserId);
   let userName = location.state.userName;
-  console.log("Explore -> userName", userName);
   let status = location.state.status;
 
   const [exploreThemes, setExploreThemes] = useState([]);
@@ -103,7 +96,6 @@ export default function Explore() {
             explore.push({
               ...doc.data(),
               themeId: doc.id
-              // userName: doc.data().userName
             });
             setExploreThemes([...explore]);
             setLoading(false);
@@ -130,17 +122,15 @@ export default function Explore() {
               return;
             }
             snapshot.forEach(theme => {
-              console.log(theme.id, "=>", theme.data());
               userThemes.push({
                 ...theme.data(),
                 themeId: theme.id
-                // userName
               });
               setThemes([...userThemes]);
             });
           })
           .catch(err => {
-            console.log("Error getting documents", err);
+            console.error(err);
           });
       };
       unsub();
@@ -150,7 +140,6 @@ export default function Explore() {
   const handleClick = (event, index) => {
     setSelectedIndex(index);
   };
-  console.log("explore themes ======>>>", exploreThemes);
   // *************
   exploreThemes.map(themeObj => {
     themeObj.img = `https://image.thum.io/get/auth/8186-fe739dc2614dfdbf1478af6427346aa8/width/600/crop/800/https://mui-theme.firebaseapp.com/webpreview/${themeObj.themeId}`;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/styles";
@@ -57,7 +57,6 @@ export default function Header(props) {
       .auth()
       .signOut()
       .then(() => {
-        console.log("user signed out", props);
         window.location = "/";
         return <Redirect to="/" />;
       });
@@ -186,8 +185,7 @@ export default function Header(props) {
                   starredThemes: [
                     {
                       themeId: 0,
-                      themeName: "logged in",
-
+                      themeName: "logged in"
                     }
                   ],
                   bookmarkedThemes: [
@@ -198,12 +196,11 @@ export default function Header(props) {
                   ],
                   signedInUserId: props.user.uid,
                   userName: props.user.email,
-                  status: 'loggedIn'
+                  status: "loggedIn"
                 }
               }}
               label="Explore"
             />
-            {/* <Tab label={`Welcome, ${user.email}`} className={classes.tab} /> */}
             <Tab
               className={classes.tab}
               component={Link}
