@@ -164,13 +164,35 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired
 };
 
+// const useStyles = makeStyles(theme => ({
+//   paper: {
+//     width: "100%",
+//     padding: "1em"
+//   }
+// }));
 const useStyles = makeStyles(theme => ({
+  root: {
+    width: "100%"
+  },
   paper: {
     width: "100%",
-    padding: "1em"
+    marginBottom: theme.spacing(2)
+  },
+  table: {
+    minWidth: 750
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: "rect(0 0 0 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    top: 20,
+    width: 1
   }
-}));
-
+}))
 export default function ThemesTable({
   setThemes,
   themes,
