@@ -1,68 +1,61 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# mymui. 
 
-## Available Scripts
+#### mymui allows users to customize a Material-UI theme and grid layout using a dynamic visual interface. Less documentation, more creativity! 
+##### Deployed on: https://my-mui.com/
+##### Conceptualized and built by Manny Garcia, Nelson Liu, Rana Quadri, and Alexander Wang.
 
-In the project directory, you can run:
+## Tech Stack
+- [React](https://facebook.github.io/react/)
+- [Firebase](https://firebase.google.com/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+- [Firebase Authentication](https://firebase.google.com/docs/auth)
+- [Material-UI](https://material-ui.com/)
+- [Webpack](https://webpack.js.org/)
+- [FileSaver](https://www.npmjs.com/package/file-saver)
+- [thum.io](https://www.thum.io/)
 
-### `npm start`
+## Local Setup
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Run `git clone https://github.com/mui-toolkit/mui-toolkit.git` and navigate to the project folder with cd mui-toolkit
+2. Run `npm install`
+3. Run `npm run start` to start the app on http://localhost:3000/
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Features
+- mymui provides two tools for styling and building Material-UI components quickly and easily
+- Theme Styler allows the customization of a Material-UI theme with a dynamic visual interface
+- Adjust color, button styling, typography, and alerts with palettes, switches, sliders + more
+- Download a custom theme and apply it to your project using Material-UI's ThemeProvider
+- Save and share your theme with the mymui community
+- Discover user created themes via the explore page
+- Star and bookmark your favorite themes
+- Grid Builder follows the 12 column grid system and visualizes how Material-UI structures grid layouts and positioning
+- Drag, drop, and resize grid containers, and observe the code adjust in real-time
 
-### `npm test`
+#### Theme Styler — Creating a Custom Theme: 
+![](https://media.giphy.com/media/Quyq8vrg08lNK9oKuu/giphy.gif)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Downloading + Importing a Theme:
+![](https://media.giphy.com/media/H6Q07q2pg6wJiekq5L/giphy.gif)
 
-### `npm run build`
+#### Grid Builder — Adding Grid Containers + Resizing:
+![](https://media.giphy.com/media/ZB2YL1oD16MjnVXOC9/giphy.gif)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Explore Page — Share, View, Rate + Filter Created Themes:
+![](https://media.giphy.com/media/YRmrGM9IcowfvqUF3d/giphy.gif)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+#### Dashboard — View + Edit Saved Themes:
+![](https://media.giphy.com/media/f3e1HZ64ZtjzKMgPjJ/giphy.gif)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Challenges
+- Managing the number of props + state of the custom theme object throughout our application — more than four dozen parameters! 
+- Assigning the logic of change handlers to different selection tools within the design page
+- Learning the functionality of a NoSQL database (Firestore), and the referencing of deeply nested objects
+- Firebase data flow, integration of Firebase + Google Cloud functions, and how authentication interacts with database
+- Implementing drag and drop functionality with vanilla Javascript rather than a library, and gaining an understanding of how implementation works under the hood
+- Building social aspects ie. starring and bookmarking themes — capturing and storing interactions between users 
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Learning Takeaways
+- System design and optimization of queries is essential to final user experience
+- Prop threading and state management can be daunting in larger React applications
+- Understanding the importance and implementation of UI frameworks with repsect to the final user experience
+- Run into a problem? There's probably a library for that (but the documentation isn't always great!)
